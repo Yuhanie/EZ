@@ -1,160 +1,3 @@
-<style>
-    .five-star{
-        position: absolute;
-        top: 20px;
-        right: 50px;
-        transform: translate(-5%, -50%);
-        left:460px;
-        display: block;
-        border-left: 3.04px solid transparent;
-        border-right: 3.24px solid transparent;
-        border-bottom: 10px solid;
-        color: #8a93a0;
-        cursor: pointer;
-        transform:scale(1.5);
-    }
-    .five-star:before{
-        content: "";
-        position: absolute;
-        top: 8.65px;
-        left: -8.82px;
-        width: 0;
-        height: 0;
-        color:  #8a93a0;
-        display: block;
-        border-left: 12.5px solid transparent;
-        border-right: 12.5px solid transparent;
-        border-bottom: 9.08px solid ;
-        transform-origin: top center;
-        transform: rotate(36deg);
-    }
-    .five-star:after{
-        content: "";
-        position: absolute;
-        top: 8.65px;
-        left: -15px;
-        width: 0;
-        height: 0;
-        color:  #8a93a0;
-        display: block;
-        border-left: 12.5px solid transparent;
-        border-right: 12.5px solid transparent;
-        border-bottom: 9.08px solid;
-        transform-origin: top center;
-        transform: rotate(-36deg);
-    }
-
-    .heart{
-        position:absolute;
-        top:30px;
-        left:400px;
-        background-color: #8a93a0;
-        height: 20px;
-        width: 20px;
-        cursor: pointer;
-        transform: rotate(-45deg) scale(1);
-    }
-    .heart::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: 0;
-        background-color: inherit;
-        border-radius: 50%;
-        height: 20px;
-        width: 20px;
-    }
-    .heart::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: -50%;
-        background-color: inherit;
-        border-radius: 50%;
-        height: 20px;
-        width: 20px;
-    }
-
-    .card1{
-        position:relative;
-        display:flex;
-        background: #ffff;
-        width: 500px;
-        height: 330px;
-        left:130px;
-    }
-    .card2{
-        position:relative;
-        display:flex;
-        background: #ffff;
-        width: 500px;
-        height:330px;
-        bottom:1170px;
-        left:770px;
-    }
-    
-    .post-header{
-        position:relative;  
-        text-align:center;
-        height: 40px;
-		border-radius: 10px;
-    }
-
-    .post-body{
-        position:absolute;
-        top:100px;
-        left:40px;
-        width:430px;
-    }
-    .post-pic{
-        height:160px;
-        width:420px;
-        overflow:hidden;
-        
-    }
-    .post-pic-posi{
-        position:absolute;
-        top:100px;
-        left:40px;
-    }
-
-    .user-info-box{
-        position:absolute;
-        display:flex;
-        width:500px;
-        height:70px;
-        bottom:0px;
-        background:black;
-    }
-
-    .user-name{
-        color:#ffff;
-    }
-    .user-pic{
-        width:60px;
-        height:60px;
-        object-fit:cover;
-        border-radius:50px;
-    }
-
-    .user-info-name-posi{
-        position:absolute;
-        top:25px;
-        left:125px;
-    }
-    .user-info-pic-posi{
-        bottom:5px;
-        right:410px;
-        position:absolute;
-    }
-    
-    .backdrop-blur{
-        backdrop-filter:blur(5px);
-    }
-
-
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,11 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>筆記分享區</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="index.css">
 </head>
-<body bgcolor=F0F0F0>
+<body>
+
+
+<!--bar-->
+<nav class="navbar navbar-expand-lg navbar-light">
+        <div class ="container-fluid">
+            <!--logo -->
+            <a class="navbar-brand" href="#"><img width="175px" height="60px" src="pic/ezlogo.png"></a>
+            <!-- 手機版 -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#linkbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- 電腦版 -->
+            <div class="collapse navbar-collapse" id="linkbar">
+                <!-- 列出內容 -->
+                <ul class="navbar-nav me-auto">
+
+                    <form class="form-inline" role="search" action="/Search/SearchList" method="get" target="_blank">
+                        <div class="form-group">
+                        <input style="width: 900px; height:35px" list="theme" id="choice" name="choice" placeholder="Search..."/>
+                        <datalist id="theme">
+                            <option value="Python">
+                            <option value="Php">
+                            <option value="Java">
+                                            
+                        </datalist>
+                        <button class="btn my-5 my-sm-0" type="submit" style="background:none; margin-left:-3rem; color:cornflowerblue" >
+                        <i class="zi zi_search" ></i></button>
+                        </div>
+                        
+                        
+                    </form>
+                    
+                    
+                    
+                </ul>
+
+                <!-- 列在右邊 -->
+                <ul class="navbar-nav nav-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">問答區</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">我的角色</a>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn btn-success" type="submit" href="#">+</button>
+                </li>
+                </ul>
+            </div>
+
+
+        </div>
+    </nav><br><br>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

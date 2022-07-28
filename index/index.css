@@ -1,3 +1,6 @@
+
+/* index */
+
 .five-star{
     position: absolute;
     top: 20px;
@@ -80,7 +83,7 @@
     background: #ffff;
     width: 500px;
     height: 330px;
-    left:130px;
+    left:150px;
 }
 .card2{
     position:relative;
@@ -88,14 +91,13 @@
     background: #ffff;
     width: 500px;
     height:330px;
-    bottom:1170px;
-    left:770px;
+    bottom:1185px;
+    left:800px;
 }
 
 .post-header{
-    position:relative;  
-    text-align:center;
-    height: 40px;
+    position:absolute;  
+    top:25px;
     border-radius: 10px;
 }
 
@@ -151,18 +153,10 @@
     backdrop-filter:blur(5px);
 }
 
-
-
-
-
-
-
-
-
-
+/*  bar  */
 
 body{
-    background-color:beige;
+    background-color:#F0F0F0;
 }
 
 nav{
@@ -170,7 +164,7 @@ nav{
 }
 
 .navbar{
-    background-color:darkolivegreen;
+    background-color:#faf4ae;
 }
 
 li a{
@@ -183,7 +177,7 @@ li a:hover{
 }
 
 .navbar-toggler{
-    background-color: darkgreen !important;
+    background-color: rgb(242, 188, 171) !important;
 }
 
 @media(max-width:600px){

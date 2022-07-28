@@ -163,22 +163,54 @@ nav{
 }
 
 .navbar{
+    
     background-color:hwb(60 75% 1%);
 }
-
+.bar{
+    position:sticky;
+}
 li a{
     color: black !important;
     font-size:18px;
 }
 
 li a:hover{
-    color:midnightblue !important
+    color:#9999fa !important
 }
 
 .navbar-toggler{
     background-color: #f2ebab !important;
 }
-
+.navbar-beauty{
+    position:absolute;
+    border-radius: 10px 0 0 10px; 
+    bottom:15px; 
+    left:300px; 
+    width: 700px; 
+    height:40px; 
+    border:2px solid #FFE66F;
+}
+.search-btn{
+    position:absolute;
+    border:solid #FFE66F;
+    border-radius:0 10px 10px 0;
+    left:1000px;
+    height:40px;
+    width:40px;
+    bottom:15px;
+    background-color:#FFE66F;
+    color:black;
+}
+.add-post-btn{
+    position:absolute;  
+    height:40px;
+    width:40px;
+    bottom:15px; 
+    left:1350px;
+    border-radius:8px;
+    background-color:hwb(224 57% 4%);
+    color:white;
+}
 @media(max-width:600px){
     nav{
         height:auto;

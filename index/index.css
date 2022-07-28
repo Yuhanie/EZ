@@ -98,7 +98,6 @@
 .post-header{
     position:absolute;  
     top:25px;
-    border-radius: 10px;
 }
 
 .post-body{
@@ -164,7 +163,7 @@ nav{
 }
 
 .navbar{
-    background-color:#faf4ae;
+    background-color:hwb(60 75% 1%);
 }
 
 li a{
@@ -177,7 +176,7 @@ li a:hover{
 }
 
 .navbar-toggler{
-    background-color: rgb(242, 188, 171) !important;
+    background-color: #f2ebab !important;
 }
 
 @media(max-width:600px){

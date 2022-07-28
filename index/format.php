@@ -31,7 +31,7 @@
 
                     <form class="form-inline" role="search" action="/Search/SearchList" method="get" target="_blank">
                         <div class="form-group">
-                        <input style="width: 900px; height:35px" list="theme" id="choice" name="choice" placeholder="Search..."/>
+                        <input style="position:absolute; bottom:15px; left:300px; width: 700px; height:40px; border:2px solid #FFE66F;" list="theme" id="choice" name="choice" placeholder="搜尋標籤..."/>
                         <datalist id="theme">
                             <option value="Python">
                             <option value="Php">
@@ -50,17 +50,17 @@
                 </ul>
 
                 <!-- 列在右邊 -->
-                <ul class="navbar-nav nav-right">
+                <ul class="navbar-nav nav-right" >
                 <li class="nav-item">
-                    <a class="nav-link" href="#">問答區</a>
+                    <a class="nav-link" style="position:absolute; bottom:5px; left:1100px;" href="#">問答區</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">我的角色</a>
+                    <a class="nav-link" style="position:absolute;  bottom:5px; left:1210px;" href="#">我的角色</a>
                 </li>
 
                 <li class="nav-item">
-                    <button class="btn btn-success" type="submit" href="#">+</button>
+                    <button class="btn btn-success" style="position:absolute;  bottom:10px; left:1350px;" type="submit" href="#">+</button>
                 </li>
                 </ul>
             </div>

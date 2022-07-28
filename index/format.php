@@ -15,8 +15,8 @@
 </head>
 <body>
 
-
 <!--bar-->
+
 <nav class="navbar-expand-lg">
         <div class ="container-fluid bar navbar">
             <!--logo -->
@@ -51,11 +51,11 @@
                 <!-- 列在右邊 -->
                 <ul class="navbar-nav nav-right" >
                 <li class="nav-item">
-                    <a class="nav-link" style="position:absolute; bottom:5px; left:1100px; font-weight:bold;" href="#">問答區</a>
+                    <a class="nav-link" style="position:absolute; bottom:5px; left:1100px; font-weight:bold; font-size:20px;" href="#">問答區</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" style="position:absolute;  bottom:5px; left:1210px; font-weight:bold;" href="#">我的角色</a>
+                    <a class="nav-link" style="position:absolute;  bottom:5px; left:1210px; font-weight:bold; font-size:20px;" href="#">我的角色</a>
                 </li>
 
                 <li class="nav-item">
@@ -67,19 +67,7 @@
             </div>
     </nav><br><br><br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--文章區-->
 
 <div class="card1">
     <h1 class="post-header" style="left:40px;">爬蟲實作教學</h1> 

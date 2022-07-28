@@ -43,9 +43,9 @@
                         
                         
                     </form>
-                    
-                    <button class="search-btn" type="submit" ><i class="fas fa-search"></i></button>
-                    
+                    <li class="nav-item">
+                    <button class="nav-link search-btn" type="submit" ><i class="fas fa-search"></i></button>
+                    </li>
                 </ul>
 
                 <!-- 列在右邊 -->

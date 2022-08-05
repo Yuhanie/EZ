@@ -10,7 +10,7 @@
 //     console.error("新增失敗原因： ", error);
 // });
 
-/////
+//-------------------------------------------
 
 // var db = firebase.firestore();
 // db.collection("students").doc("image").set({
@@ -22,7 +22,7 @@
 //     console.log("新增成功");
 // })
 
-/////
+//-------------------------------------------
 
 // var db = firebase.firestore();
 // var ref = db.collection('upload file').doc('image');
@@ -35,26 +35,32 @@
 //   console.log('set data successful');
 // });
 
+//-------------------------------------------
 
-/////
 // Your web app's Firebase configuration
+function getdb(){
+alert("測試")
+
 const firebaseConfig = {
-    apiKey: '### FIREBASE API KEY ###',
-    authDomain: '### FIREBASE AUTH DOMAIN ###',
-    databaseURL: '### DATABASE DOMAIN ###',
-    projectId: '### CLOUD FIRESTORE PROJECT ID ###',
-    appId: '### APP PROJECT ID ###'
+  apiKey: "AIzaSyDpK9585Nist4dDRMyUbxf98APPUeF051g",
+  authDomain: "ez-group-6808f.firebaseapp.com",
+  projectId: "ez-group-6808f",
+  storageBucket: "ez-group-6808f.appspot.com",
+  messagingSenderId: "747617601049",
+  appId: "1:747617601049:web:f158c5e83fadb3505a0c88",
+  measurementId: "G-PGXTMCCV8T"
   }
   
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig)
   const db = firebase.firestore()
 
-  db.collection('users')
+  //console.log("a")
+  db.collection('test')
   .add({
-    id: 2,
-    name: "bbbb",
-    type: "png"
+    id: 1,
+    //name: "",
+    //type: ""
   })
   .then(function(docRef) {
     console.log('Document written with ID: ', docRef.id)
@@ -62,3 +68,4 @@ const firebaseConfig = {
   .catch(function(error) {
     console.error('Error adding document: ', error)
   })
+}

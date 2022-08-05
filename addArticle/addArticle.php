@@ -85,7 +85,8 @@
                     <br><br><br><br><br><br><br><br><br><br><br>
                 </div>
                 <br><br>
-                <div style="text-align:left"><input  type="text" placeholder="筆記標籤">
+                <div><input style="position:absolute; width:15%;" placeholder="筆記標籤">
+
             </div>
         </div>
         <br><br><br><br><br>

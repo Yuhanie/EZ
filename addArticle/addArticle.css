@@ -78,6 +78,7 @@ body {
 }
 
 .addArticle_container {
+    position:relative;
     display: flex;
     border-bottom: -8%;
     border-radius: 15px;
@@ -161,8 +162,9 @@ body {
     word-break: break-word;
 }
 
-input[type=text] {
-    width: 100%;
+.tags {
+    position:absolute;
+    width:50%;
     padding: 12px 20px;
     margin: 20px 0;
     box-sizing: border-box;

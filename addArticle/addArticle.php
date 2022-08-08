@@ -75,29 +75,35 @@
                 <div class="user_name"></div>
                 <!-- 這邊還沒接質 -->
             </div>
-            <div><span class="material-icons">info</span></div>
+            
         </div>
         <!-- 文章內容 -->
         <div>
-            <div><textarea class="addArticle_contectTitle" placeholder="標題" name="title"></textarea></div>
+            <div><textarea class="addArticle_contectTitle" placeholder="請輸入文章標題..." name="title"></textarea></div>
             <div>
-                <div contenteditable="true" class="addArticle_content">
+                <div contenteditable="true" class="addArticle_content" placeholder="請輸入文章內容..." name="content" >
                     <br><br><br><br><br><br><br><br><br><br><br>
                 </div>
+                <br><br>
+                <div><input style="position:absolute; width:15%;" placeholder="筆記標籤">
+
             </div>
         </div>
-        <div class="addArticle_function">
-            <!-- 上傳圖片 -->
-            <div class="upload_image">
-                <Button variant="contained" component="label">
-                    上傳圖片
-                    <input hidden accept="image/*" multiple type="file" />
-                </Button>
-            </div>
-            <div class="addArticle_function_btn">
-                <button class="btn" type="submit">暫存</button>
-                <button class="btn" type="submit">上傳</button>
-                <button class="btn" type="submit">取消</button>
+        <br><br><br><br><br>
+        
+        
+            <div class="addArticle_function">
+                <!-- 上傳檔案 -->
+                <div class="upload_file">
+                    <Button variant="contained" component="label">
+                        上傳檔案
+                        <input hidden accept="image/*" multiple type="file" />
+                    </Button>
+                </div>
+                <div class="addArticle_function_btn">
+                    <button class="btn" type="submit">發布</button>
+                    <button class="btn" type="submit">取消</button>
+                </div>
             </div>
         </div>
     </div>

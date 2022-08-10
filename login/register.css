@@ -1,0 +1,21 @@
+body {
+    background-color: rgb(235, 232, 232);
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.userLogin{
+    display: flex;
+    position: relative;
+    height: 300px;
+    width: 300px;
+    border-radius: 3%;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 8%;
+    padding: 15px;
+}
+

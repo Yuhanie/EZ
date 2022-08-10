@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
     <center>
         <!-- <form method="post" enctype="multipart/form-data" action="index2.php?title=<?php //echo $title?>"> -->
         <form method="post">
-            <div><textarea placeholder="請輸入文章標題..." name="title"></textarea></div>
+            <div><textarea id="demo" placeholder="請輸入文章標題..." name="title"></textarea></div>
             <br>
             <input type="submit" value="確認" name="submit" onclick="print(<?php echo $title; ?>)">
             <!-- <input type="button", value="click" onclick = "print(<?php //echo $title; ?>)"> -->
@@ -33,6 +33,8 @@ if(isset($_POST['submit']))
             
 <script>//script可以寫在同一頁的任何地方。
     function print(title){//在javacript的函式寫說要接一個變數，然後以彈跳式式窗alert顯示。
+        title = document.getElementById("demo").value
+        console.log(title)
         alert(title);//以彈跳式式窗alert顯示。
     }
 </script>

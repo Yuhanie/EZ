@@ -5,6 +5,7 @@ html,body{
 #content{
     background-color: white;
     padding: 20px;
+    margin:0 auto;
 }
 
 .first{
@@ -12,11 +13,11 @@ html,body{
 }   
 
 #btn1{
-    padding-top: 10px;
+    display: inline-block
 }
 
 .second{
-    display: inline-block;
+    display: inline-block
 }
 
 #btn2, #btn3, #btn4{

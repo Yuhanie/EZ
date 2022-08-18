@@ -1,8 +1,10 @@
 .container {
   padding: 0 2rem;
+  background-color: #f0f0f0;
 }
 
 .main {
+  position:relative;
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
@@ -113,4 +115,83 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.introduce {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  left:310px;
+  height: 450px;
+  width: 300px;
+  border-radius: 3%;
+  margin: 15px;
+  padding: 15px;
+  background-color: cadetblue;
+}
+
+.logincon {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  right:310px;
+  height: 450px;
+  width: 400px;
+  border-radius: 3%;
+  margin: 15px;
+  padding: 15px;
+  background-color: #ffff;
+}
+
+.enter{
+  display:flex;
+  border-radius:5px;
+  padding:6px;
+  border:solid cadetblue;
+}
+
+.loginbtn{
+  display:flex;
+  border-radius:10px;
+  border: solid 1px cadetblue;;
+  width:70px;
+  padding:3px;
+  font-size:15px;
+  text-align:center;
+  background-color: cadetblue;;
+  color: #ffffff
+  
+}
+
+.post {
+  height:auto;
+  width:200px;
+  margin: 1rem;
+  padding: 1rem;
+  color: white;
+  border: solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.post:hover,
+.post:focus,
+.post:active {
+  color: #aacff7;
+  border-color: #aacff7;
+}
+
+.post h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.post p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.emailpass{
+  color:cadetblue;
 }

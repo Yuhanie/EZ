@@ -40,15 +40,15 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-        <div className={styles.addArticle_function}></div>
+        
           <div className={styles.upload_file}></div>
             <Button variant="contained" component="label">
                         上傳檔案
                   <input hidden accept="image/*" multiple type="file" />
             </Button>
             <div className={styles.addArticle_function_btn}></div>
-              <button className="btn" type="submit">發布</button>
-              <button className="btn" type="submit">取消</button>
+              <button className={styles.post_btn} type="submit">發布</button>
+              <button className={styles.cancel_btn} type="submit">取消</button>
               
     </div>
         

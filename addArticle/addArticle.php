@@ -112,9 +112,3 @@
 
 </html>
 
-background-color: white;
-    border: none;
-    color: white;
-    background-color: #235789;
-    font-size: 16px;
-    border-radius: 3px;

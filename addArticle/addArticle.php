@@ -80,12 +80,13 @@
         <!-- 文章內容 -->
         <div>
             <div><textarea class="addArticle_contectTitle" placeholder="請輸入文章標題..." name="title"></textarea></div>
-            <div>
-                <div contenteditable="true" class="addArticle_content" placeholder="請輸入文章內容..." name="content" >
-                    <br><br><br><br><br><br><br><br><br><br><br>
-                </div>
+                    <br><br><br>
+            
+                <textarea name="Content" style="width:1000px; height:400px;" placeholder="請輸入文章內容..." ></textarea>
+                    <br>
+            
                 <br><br>
-                <div><input style="position:absolute; width:15%;" placeholder="筆記標籤">
+            <div><input style="position:absolute; width:15%;" placeholder="請輸入筆記標籤...">
 
             </div>
         </div>
@@ -110,3 +111,10 @@
 </body>
 
 </html>
+
+background-color: white;
+    border: none;
+    color: white;
+    background-color: #235789;
+    font-size: 16px;
+    border-radius: 3px;

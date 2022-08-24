@@ -51,14 +51,17 @@ const TextList = () => {
 
   const renderText = (text: any, i: number) => {
     return (
+      // <div className={styles.grid}>
       <TableRow>
         <TableCell align="left">{i+1}</TableCell>
         <TableCell align="left">{text.content}</TableCell>
         <TableCell align="right">
       </TableCell>
-    </TableRow>    );
+    </TableRow>    
+    // </div>
+    );
+    
   };
-  
 
 
   return (
@@ -74,7 +77,7 @@ const TextList = () => {
   );
 };
 
-//export default TextList;
+export default TextList;
 
 
 
@@ -148,4 +151,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+//export default Home

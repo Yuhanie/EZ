@@ -104,7 +104,7 @@ const Home: NextPage = () => {
             <h2>爬蟲實作教學</h2>
             <p>Python網路爬蟲就是利用撰寫Python程式碼去對網路資訊進行擷取，例如蒐集匯率的歷史走勢、熱門議題的輿情...等等</p>
             <div className={styles.card2}>
-              <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" />
+              {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
               <p>victoria</p>
               <span className="heart" id="heart"></span>
               <span className="five-star" id="five-star"></span>

@@ -1,7 +1,82 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+
+import React, { useState, useEffect } from "react";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getFirestore, collection, getDocs} from "firebase/firestore";
+import {firebaseConfig} from '../settings/firebaseConfig';
+
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+
+const TextList = () => {
+  const [text, setText] = useState<any[]>([]);
+  // const [open, setOpen] = useState(false);
+
+  useEffect(()=>{
+    async function readData() {
+      const querySnapshot = await getDocs(collection(db, "text"));
+      const temp:any[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        temp.push({content:doc.data().content});
+      });
+
+      console.log(temp);
+
+      setText([...temp]);
+
+    }
+
+    readData();
+
+  },[]);
+
+  // const renderTask = (task: Task, index: number) => {
+  //   return (
+  //     <TaskListItem
+  //       key={task.name}
+  //       index={index}
+  //       name={task.name}
+  //       location={task.location}
+  //     />
+  //   );
+  // };
+
+  //////////////////////////////////////////////////
+
+  const renderText = (text: any, i: number) => {
+    return (
+      <TableRow>
+        <TableCell align="left">{i+1}</TableCell>
+        <TableCell align="left">{text.content}</TableCell>
+        <TableCell align="right">
+      </TableCell>
+    </TableRow>    );
+  };
+  
+
+
+  return (
+    <div className={styles.container}>
+      
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 350 }} aria-label="simple table">
+          <TableBody>{text.map(renderText)}</TableBody>
+        </Table>
+      </TableContainer>
+
+    </div>
+  );
+};
+
+//export default TextList;
+
+
 
 const Home: NextPage = () => {
   return (
@@ -29,8 +104,12 @@ const Home: NextPage = () => {
             <h2>爬蟲實作教學</h2>
             <p>Python網路爬蟲就是利用撰寫Python程式碼去對網路資訊進行擷取，例如蒐集匯率的歷史走勢、熱門議題的輿情...等等</p>
             <div className={styles.card2}>
+              <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" />
               <p>victoria</p>
+              <span className="heart" id="heart"></span>
+              <span className="five-star" id="five-star"></span>
             </div>
+            
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>

@@ -133,7 +133,85 @@
 .card2 p {
   position:absolute;
   top:25px;
-  left:125px;
+  left:20px;
+  color:white;
+}
+
+.heart{
+  position:absolute;
+  top:30px;
+  left:400px;
+  background-color: #8a93a0;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  transform: rotate(-45deg) scale(1);
+}
+
+.heart::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 0;
+  background-color: inherit;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+.heart::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -50%;
+  background-color: inherit;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+
+.five-star{
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  transform: translate(-5%, -50%);
+  left:460px;
+  display: block;
+  border-left: 3.04px solid transparent;
+  border-right: 3.24px solid transparent;
+  border-bottom: 10px solid;
+  color: #8a93a0;
+  cursor: pointer;
+  transform:scale(1.5);
+}
+.five-star:before{
+  content: "";
+  position: absolute;
+  top: 8.65px;
+  left: -8.82px;
+  width: 0;
+  height: 0;
+  color:  #8a93a0;
+  display: block;
+  border-left: 12.5px solid transparent;
+  border-right: 12.5px solid transparent;
+  border-bottom: 9.08px solid ;
+  transform-origin: top center;
+  transform: rotate(36deg);
+}
+.five-star:after{
+  content: "";
+  position: absolute;
+  top: 8.65px;
+  left: -15px;
+  width: 0;
+  height: 0;
+  color:  #8a93a0;
+  display: block;
+  border-left: 12.5px solid transparent;
+  border-right: 12.5px solid transparent;
+  border-bottom: 9.08px solid;
+  transform-origin: top center;
+  transform: rotate(-36deg);
 }
 
 .logo {

@@ -105,7 +105,7 @@ const Home: NextPage = () => {
   },[]);
   const renderText = (text: any, i: number) => {
     return (
-      <a href="https://nextjs.org/docs" className={styles.card}>
+      <div className={styles.card} key={text.title}>
       <h2>{text.title}</h2>
       <p>{text.content}</p>
       <div className={styles.card2}>
@@ -115,7 +115,7 @@ const Home: NextPage = () => {
         <span className="five-star" id="five-star"></span>
       </div>
       
-    </a>
+    </div>
     );
     
   };

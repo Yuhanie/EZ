@@ -13,16 +13,16 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 const TextList = () => {
-  const [text, setText] = useState<any[]>([]);
-  // const [open, setOpen] = useState(false);
 
+  // const [open, setOpen] = useState(false);
+  const [text, setText] = useState<any[]>([]);
   useEffect(()=>{
     async function readData() {
       const querySnapshot = await getDocs(collection(db, "text"));
       const temp:any[] = [];
       
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        console.log(doc.id, doc.data());
         temp.push({content:doc.data().content});
       });
 
@@ -35,6 +35,7 @@ const TextList = () => {
     readData();
 
   },[]);
+
 
   // const renderTask = (task: Task, index: number) => {
   //   return (
@@ -77,7 +78,7 @@ const TextList = () => {
   );
 };
 
-export default TextList;
+//export default TextList;
 
 
 
@@ -112,6 +113,7 @@ const Home: NextPage = () => {
               <span className="heart" id="heart"></span>
               <span className="five-star" id="five-star"></span>
             </div>
+            
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
@@ -150,4 +152,4 @@ const Home: NextPage = () => {
   )
 }
 
-//export default Home
+export default Home

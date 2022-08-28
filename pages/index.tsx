@@ -112,7 +112,6 @@ const Home: NextPage = () => {
               <span className="heart" id="heart"></span>
               <span className="five-star" id="five-star"></span>
             </div>
-            
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>

@@ -9,6 +9,8 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 
+//////////////////////////////////////////////////////////////////////////
+
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 
@@ -53,13 +55,16 @@ const TextList = () => {
   const renderText = (text: any, i: number) => {
     return (
       // <div className={styles.grid}>
+    
+      /////////////////////////////////////////////////////
+
       <TableRow>
         <TableCell align="left">{i+1}</TableCell>
         <TableCell align="left">{text.content}</TableCell>
         <TableCell align="right">
-      </TableCell>
-    </TableRow>    
-    // </div>
+        </TableCell>
+      </TableRow>    
+      // </div>
     );
     
   };
@@ -111,8 +116,8 @@ const Home: NextPage = () => {
       <div className={styles.card2}>
         {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
         <p>victoria</p>
-        <span className="heart" id="heart"></span>
-        <span className="five-star" id="five-star"></span>
+        <span className={styles.heart} id="heart"></span>
+        <span className={styles.fiveStar} id="five-star"></span>
       </div>
       
     </div>
@@ -129,9 +134,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Education Zone
-        </h1>
+        <nav className={styles.navbar}>
+          <div className={styles.form}>
+            <h1 className={styles.title}>
+              Education Zone
+            </h1>
+          </div>
+        </nav>
 
         <div className={styles.grid}>
         {text.map(renderText)}

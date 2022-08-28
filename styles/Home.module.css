@@ -137,8 +137,16 @@
 .card2 p {
   position:absolute;
   top:25px;
-  left:20px;
+  left:80px;
   color:white;
+}
+
+.userPhoto {
+  object-fit:cover;
+  border-radius:50px;
+  bottom:5px;
+  right:410px;
+  position:absolute;
 }
 
 .heart{

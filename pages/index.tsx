@@ -112,7 +112,15 @@ const Home: NextPage = () => {
       <h2>{text.title}</h2>
       <p>{text.content}</p>
       <div className={styles.card2}>
-        {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
+        <Image
+          className={styles.userPhoto}
+          src="/pic/test1.jpeg"
+          alt="user"
+          width={70}
+          height={30}
+          // height="50px"
+          // width="70px"
+        />
         <p>{text.user}</p>
         <span className={styles.heart} id="heart"></span>
         <span className={styles.fiveStar} id="five-star"></span>

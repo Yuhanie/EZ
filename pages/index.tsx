@@ -55,8 +55,6 @@ const TextList = () => {
   const renderText = (text: any, i: number) => {
     return (
       // <div className={styles.grid}>
-    
-      /////////////////////////////////////////////////////
 
       <TableRow>
         <TableCell align="left">{i+1}</TableCell>
@@ -96,7 +94,7 @@ const Home: NextPage = () => {
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({content:doc.data().content, title:doc.data().title});
+        temp.push({content:doc.data().content, title:doc.data().title, user:doc.data().user});
       });
 
       console.log(temp);
@@ -115,7 +113,7 @@ const Home: NextPage = () => {
       <p>{text.content}</p>
       <div className={styles.card2}>
         {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
-        <p>victoria</p>
+        <p>{text.user}</p>
         <span className={styles.heart} id="heart"></span>
         <span className={styles.fiveStar} id="five-star"></span>
       </div>

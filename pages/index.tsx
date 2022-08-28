@@ -13,16 +13,16 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 const TextList = () => {
-  const [text, setText] = useState<any[]>([]);
-  // const [open, setOpen] = useState(false);
 
+  // const [open, setOpen] = useState(false);
+  const [text, setText] = useState<any[]>([]);
   useEffect(()=>{
     async function readData() {
       const querySnapshot = await getDocs(collection(db, "text"));
       const temp:any[] = [];
       
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        console.log(doc.id, doc.data());
         temp.push({content:doc.data().content});
       });
 
@@ -35,6 +35,7 @@ const TextList = () => {
     readData();
 
   },[]);
+
 
   // const renderTask = (task: Task, index: number) => {
   //   return (
@@ -77,11 +78,48 @@ const TextList = () => {
   );
 };
 
-export default TextList;
+//export default TextList;
 
 
 
 const Home: NextPage = () => {
+  const [text, setText] = useState<any[]>([]);
+  useEffect(()=>{
+    async function readData() {
+      const querySnapshot = await getDocs(collection(db, "text"));
+      const temp:any[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, doc.data());
+        temp.push({content:doc.data().content, title:doc.data().title});
+      });
+
+      console.log(temp);
+
+      setText([...temp]);
+
+    }
+
+    readData();
+
+  },[]);
+  const renderText = (text: any, i: number) => {
+    return (
+      <div className={styles.card} key={text.title}>
+      <h2>{text.title}</h2>
+      <p>{text.content}</p>
+      <div className={styles.card2}>
+        {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
+        <p>victoria</p>
+        <span className="heart" id="heart"></span>
+        <span className="five-star" id="five-star"></span>
+      </div>
+      
+    </div>
+    );
+    
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -91,59 +129,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        {/* <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        <h1 className={styles.title}>
+          Education Zone
         </h1>
 
-        <h2>Angel</h2> */}
-
-        {/* <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p> */}
-
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>爬蟲實作教學</h2>
-            <p>Python網路爬蟲就是利用撰寫Python程式碼去對網路資訊進行擷取，例如蒐集匯率的歷史走勢、熱門議題的輿情...等等</p>
-            <div className={styles.card2}>
-              {/* <Image className={'user-pic user-info-pic-posi'} src={myImg} width="160" height="160" alt="" /> */}
-              <p>victoria</p>
-              <span className="heart" id="heart"></span>
-              <span className="five-star" id="five-star"></span>
-            </div>
-            
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>java物件導向筆記</h2>
-            <p>一般來說，討及「物件導向」（object-oriented）總是會提供及：物件、抽象、封裝、繼承、多型等 關於封裝 在解釋封裝概念之前，我們先得來解釋什麼是「...</p>
-            <div className={styles.card2}>
-              <p>EvonnePeng</p>
-            </div>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>title</h2>
-            <p>content</p>
-            <div className={styles.card2}>
-              <p>user</p>
-            </div>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>title</h2>
-            <p>content</p>
-            <div className={styles.card2}>
-              <p>user</p>
-            </div>
-          </a>
+        {text.map(renderText)}
         </div>
 
       </main>
@@ -151,4 +142,4 @@ const Home: NextPage = () => {
   )
 }
 
-//export default Home
+export default Home

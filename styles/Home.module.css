@@ -237,33 +237,43 @@
     width: 100%;
     flex-direction: column;
   }
+  
 }
+
+
+.group{
+  position:absolute;
+  width:800px;
+  height:500px;
+}
+
 
 .introduce {
   display: flex;
-  position: absolute;
+  position: relative;
   flex-direction: column;
-  left:310px;
+  left:30px;
   height: 450px;
-  width: 300px;
+  max-width: 300px;
   border-radius: 3%;
   margin: 15px;
   padding: 15px;
   background-color: cadetblue;
 }
-
 .logincon {
   display: flex;
-  position: absolute;
+  position: relative;
   flex-direction: column;
-  right:310px;
+  left:350px;
+  bottom:465px;
   height: 450px;
-  width: 400px;
+  max-width: 400px;
   border-radius: 3%;
   margin: 15px;
   padding: 15px;
   background-color: #ffff;
 }
+
 
 .enter{
   display:flex;

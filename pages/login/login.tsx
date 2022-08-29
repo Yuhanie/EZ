@@ -3,6 +3,22 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
 import styles from "/styles/Home.module.css";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getFirestore, collection, getDocs} from "firebase/firestore";
+import {firebaseConfig} from '../settings/firebaseConfig';
+
+////////////////////////////////////////////////
+
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+
+const UserList = () => {
+}
+  // const [open, setOpen] = useState(false);
+
+/////////////////////////////////////////////////////////
+
+
 
 const Home: NextPage = () => {
   return (

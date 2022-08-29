@@ -342,8 +342,8 @@
     display: flex;
     border-bottom: -8%;
     border-radius: 15px;
-    height:750px ;
-    width: 1200px;
+    height:780px ;
+    width: 900px;
     margin: 8%;
     padding: 15px;
     flex-direction: column;
@@ -405,9 +405,9 @@
     display: flex;
     border: 1px;
     border-color: #666A86;
-    height: 40px;
+    height: 55px;
     width: 800px;
-    font-size: 22px;
+    font-size: 25px;
     
 }
 
@@ -424,10 +424,10 @@
 .addArticle_content {
     margin: 10px;
     flex: 1 1 0%;
-    line-height: 22px;
-    font-size: 22px;
+    line-height: 50px;
+    font-size: 50px;
     border: none;
-    margin-right: 30px;
+    margin-right: 100px;
     word-break: break-word;
     padding:auto;
     width: 800px;
@@ -441,7 +441,7 @@
     margin: 20px 0;
     display:flex;
     border-radius:5px;
-    padding:6px;
+    padding: 6px;
     border:none;
     top:600px;
     left:50px;
@@ -451,44 +451,54 @@
 .upload_image{
     color: cornflowerblue;
 }
-.post_btn {
-  
-  border-radius:5px;
-  border: solid 1px cadetblue;;
-  width:90px;
-  padding:3px;
-  font-size:15px;
-  text-align: center;
-  text-decoration: none;
-  background-color: cadetblue;;
-  color: #ffffff;
-  bottom:40px;
-}
-
-.cancel_btn {
-
-  border-radius:5px;
-  border: solid 1px cadetblue;;
-  width:90px;
-  padding:3px;
-  font-size:15px;
-  text-align: center;
-  text-decoration: none;
-  background-color: cadetblue;;
-  color: #ffffff;
-  bottom:40px;
-}
-
 
 .upload_btn{
   display:flex;
   border-radius:5px;
   border: solid 1px cadetblue;
   padding:3px;
-  width:90px;
+  width:100px;
   font-size:15px;
   text-align:center;
   background-color: cadetblue;
   color: #ffffff;
-  bottom:40px;
+  display: inline-block;
+  float:left;
+
 }
+
+.post_btn {
+  
+  border-radius:5px;
+  border: solid 1px cadetblue;;
+  width:100px;
+  padding:3px;
+  font-size:15px;
+  text-align: center;
+  text-decoration: none;
+  background-color: cadetblue;;
+  color: #ffffff;
+  right:100px;
+  display: inline-block;
+  float:right;
+
+}
+
+.cancel_btn {
+
+  border-radius:5px;
+  border: solid 1px cadetblue;;
+  width:100px;
+  padding:3px;
+  font-size:15px;
+  text-align: center;
+  text-decoration: none;
+  background-color: cadetblue;;
+  color: #ffffff;
+  right:100px;
+  display: inline-block;
+  float:right;
+
+}
+
+

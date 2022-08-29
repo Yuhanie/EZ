@@ -38,7 +38,7 @@ const Home: NextPage = () => {
           <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea> 
                 <textarea name="Content" style={{ width: "800px", height: "400px" }} placeholder="請輸入文章內容..." ></textarea>
                   <br></br>
-                <input className={styles.enter} style={{width: '20%' }} placeholder="請輸入筆記標籤..." />
+                <input className={styles.enter} style={{width: '20%'}} placeholder="請輸入筆記標籤..." />
           </div>
           </div>
           </div>
@@ -46,22 +46,19 @@ const Home: NextPage = () => {
 
         <div className="container">
           <div className="row">
-            <div className={styles.addArticle_function_btn}>
             <div className="col-sm">
-              <button className={styles.upload_btn} type="submit">上傳檔案</button>
-              <input hidden accept="image/*" multiple type="file" />
-            </div>
-            <div className="col-sm">
-            <button className={styles.post_btn} type="submit">發布</button>
-            </div>
-            <div className="col-sm">
-            <button className={styles.cancel_btn} type="submit">取消</button>
+              <div className={styles.addArticle_function_btn}>
+              
+                <button className={styles.upload_btn} type="submit">上傳檔案</button>
+                <input hidden accept="image/*" multiple type="file" />
+                <button className={styles.post_btn} type="submit">發布</button>
+                <button className={styles.cancel_btn} type="submit">取消</button>
+              </div>
             </div>
           </div>
+            
+            
         </div>
-            
-            
-          </div>
           
 
         </div>

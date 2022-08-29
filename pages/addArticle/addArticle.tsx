@@ -26,29 +26,43 @@ const Home: NextPage = () => {
         <div className={styles.addArticle_container}>
           <div className={styles.addArticle_bar}>
             <div className={styles.user_box}>
-              <div><img className="user_image" src="pic/test1.jpeg" /></div>
-              <div className={styles.user_name}></div>
+              <div><img className={styles.user_image} src="pic/test1.jpeg" />
+                <div className={styles.user_name}>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className={styles.grid}>
-            <div>
-              <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea> </div>
-              <textarea name="Content" style={{ width: "1000px", height: "400px" }} placeholder="請輸入文章內容..." ></textarea>
-              <br></br>
-              <input className={styles.enter} style={{ position: "absolute", width: '15%' }} placeholder="請輸入筆記標籤..." />
-            </div>
+          <div>
+          <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea> 
+                <textarea name="Content" style={{ width: "800px", height: "400px" }} placeholder="請輸入文章內容..." ></textarea>
+                  <br></br>
+                <input className={styles.enter} style={{width: '20%' }} placeholder="請輸入筆記標籤..." />
+          </div>
+          </div>
           </div>
 
 
-          <div className={styles.upload_file}></div>
-          <Button variant="contained" component="label">
-            上傳檔案
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
-          <div className={styles.addArticle_function_btn}></div>
-          <button className={styles.post_btn} type="submit">發布</button>
-          <button className={styles.cancel_btn} type="submit">取消</button>
+        <div className="container">
+          <div className="row">
+            <div className={styles.addArticle_function_btn}>
+            <div className="col-sm">
+              <button className={styles.upload_btn} type="submit">上傳檔案</button>
+              <input hidden accept="image/*" multiple type="file" />
+            </div>
+            <div className="col-sm">
+            <button className={styles.post_btn} type="submit">發布</button>
+            </div>
+            <div className="col-sm">
+            <button className={styles.cancel_btn} type="submit">取消</button>
+            </div>
+          </div>
+        </div>
+            
+            
+          </div>
+          
 
         </div>
 

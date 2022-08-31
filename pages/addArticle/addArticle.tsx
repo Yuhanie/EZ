@@ -51,8 +51,9 @@ const Home: NextPage = () => {
               
                 <button className={styles.upload_btn} type="submit">上傳檔案</button>
                 <input hidden accept="image/*" multiple type="file" />
-                <button className={styles.post_btn} type="submit">發布</button>
-                <button className={styles.cancel_btn} type="submit">取消</button>
+                
+                  <button className={styles.cancel_btn} type="submit">取消</button>
+                  <button className={styles.post_btn} type="submit">發布</button>
               </div>
             </div>
           </div>

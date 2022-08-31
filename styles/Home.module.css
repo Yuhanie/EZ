@@ -141,6 +141,10 @@
   color:white;
 }
 
+/* .card2 Image {
+  font-size: 1.25rem;
+} */
+
 .userPhoto {
   object-fit:cover;
   border-radius:50px;

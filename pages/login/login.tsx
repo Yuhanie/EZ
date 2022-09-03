@@ -6,13 +6,13 @@ import {Button, TextField} from '@mui/material';
 import styles from "/styles/Home.module.css";
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {config} from '../../settings/firebaseConfig';
+import {firebaseConfig} from '../../settings/firebaseConfig';
 
 ////////////////////////////////////////////////
 
 export default function SignIn(props) {
   if (getApps().length===0) {
-    initializeApp(config);
+    initializeApp(firebaseConfig);
   }
   const [account, setAccount] = useState({email:"",password:"", displayName:""});
   const [message, setMessage] = useState("");

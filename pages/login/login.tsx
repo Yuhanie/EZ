@@ -10,13 +10,13 @@ import {firebaseConfig} from '../../settings/firebaseConfig';
 
 ////////////////////////////////////////////////
 
-export default function SignIn(props) {
+export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
   if (getApps().length===0) {
     initializeApp(firebaseConfig);
   }
   const [account, setAccount] = useState({email:"",password:"", displayName:""});
   const [message, setMessage] = useState("");
-  const handleChange = function(e){
+  const handleChange = function(e: { target: { name: any; value: any; }; }){
     setAccount({...account,[e.target.name]:e.target.value})
   }
   const handleSubmit = async function(){

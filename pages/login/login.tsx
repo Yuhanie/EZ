@@ -4,8 +4,6 @@ import Image from 'next/image';
 import React, {useState} from 'react';
 import {Button, TextField} from '@mui/material';
 import styles from "/styles/Home.module.css";
-<<<<<<< Updated upstream
-=======
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {config} from '../settings/firebaseConfig';
@@ -43,7 +41,6 @@ export default function SignIn(props) {
 /////////////////////////////////////////////////////////
 
 
->>>>>>> Stashed changes
 
 const Home: NextPage = () => {
   return (
@@ -55,7 +52,7 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
 
-<<<<<<< Updated upstream
+    
       
       <div className={styles.introduce}>
         <img src="pic/welcome.png" width="300px" />
@@ -64,7 +61,7 @@ const Home: NextPage = () => {
           <a href="https://nextjs.org/docs" className={styles.post}>
             <p>先看看其他文章 &rarr;</p>
           </a>
-=======
+
           </div>
           <form>
           <div className={styles.logincon}>
@@ -79,39 +76,8 @@ const Home: NextPage = () => {
             <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
           </div>
           </form>
->>>>>>> Stashed changes
-        </div>
       </div>
-     
-      <div className={styles.logincon}>
-        <p className={styles.emailpass}>常用信箱：</p>
-          <input className={styles.enter} type="text" name="email" placeholder="請輸入信箱..."/>
-        <p className={styles.emailpass}>密碼：</p>
-          <input className={styles.enter} type="password" name="password" placeholder="請輸入密碼..."/><br/>
-        <input className={styles.loginbtn} type="submit" value="登入" name="submit"/><br/>
-        <a href="">忘記密碼</a><br/>
-        <p>沒有帳號？現在就加入我們吧！</p>
-        <h4><a href="register.php">點此註冊</a></h4>
-      </div>
-      
-      </main>
-<<<<<<< Updated upstream
-   
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-=======
->>>>>>> Stashed changes
+     </main>
     </div>
   )
 }

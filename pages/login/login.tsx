@@ -6,7 +6,7 @@ import {Button, TextField} from '@mui/material';
 import styles from "/styles/Home.module.css";
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {config} from '../settings/firebaseConfig';
+import {config} from '../../settings/firebaseConfig';
 
 ////////////////////////////////////////////////
 

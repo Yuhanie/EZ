@@ -9,6 +9,8 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 
+import { query, orderBy, limit } from "firebase/firestore";
+
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -118,6 +120,10 @@ const Home: NextPage = () => {
           alt="user"
           width={70}
           height={30}
+          layout="intrinsic"
+
+          // priority={true}
+          sizes="(max-width: 60px) 48px,80px"
           // height="50px"
           // width="70px"
         />

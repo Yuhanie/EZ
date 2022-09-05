@@ -1,132 +1,50 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 
 import React, { useState, useEffect } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
+import styles from '../styles/Home.module.css';
+import ArticleListItem from '../components/article/ArticleListItem';
+import { Article } from '../interfaces/entities';
 
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 
-const TextList = () => {
-
-  // const [open, setOpen] = useState(false);
-  const [text, setText] = useState<any[]>([]);
-  useEffect(()=>{
-    async function readData() {
-      const querySnapshot = await getDocs(collection(db, "text"));
-      const temp:any[] = [];
-      
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
-        temp.push({content:doc.data().content});
-      });
-
-      console.log(temp);
-
-      setText([...temp]);
-
-    }
-
-    readData();
-
-  },[]);
-
-
-  // const renderTask = (task: Task, index: number) => {
-  //   return (
-  //     <TaskListItem
-  //       key={task.name}
-  //       index={index}
-  //       name={task.name}
-  //       location={task.location}
-  //     />
-  //   );
-  // };
-
-  //////////////////////////////////////////////////
-
-  const renderText = (text: any, i: number) => {
-    return (
-      // <div className={styles.grid}>
-
-      <TableRow>
-        <TableCell align="left">{i+1}</TableCell>
-        <TableCell align="left">{text.content}</TableCell>
-        <TableCell align="right">
-        </TableCell>
-      </TableRow>    
-      // </div>
-    );
-    
-  };
-
-
-  return (
-    <div className={styles.container}>
-      
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 350 }} aria-label="simple table">
-          <TableBody>{text.map(renderText)}</TableBody>
-        </Table>
-      </TableContainer>
-
-    </div>
-  );
-};
-
-//export default TextList;
-
-
 
 const Home: NextPage = () => {
-  const [text, setText] = useState<any[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   useEffect(()=>{
     async function readData() {
       const querySnapshot = await getDocs(collection(db, "text"));
-      const temp:any[] = [];
+      const temp:Article[] = [];
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({content:doc.data().content, title:doc.data().title, user:doc.data().user});
+        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
       });
 
       console.log(temp);
 
-      setText([...temp]);
+      setArticles([...temp]);
 
     }
 
     readData();
 
   },[]);
-  const renderText = (text: any, i: number) => {
+
+const test = () => {
+  console.log("Hello");
+}
+
+  const renderText = (article: Article, i: number) => {
     return (
-      <div className={styles.card} key={text.title}>
-      <h2>{text.title}</h2>
-      <p>{text.content}</p>
-      <div className={styles.card2}>
-        <Image
-          className={styles.userPhoto}
-          src="/pic/test1.jpeg"
-          alt="user"
-          width={70}
-          height={30}
-          // height="50px"
-          // width="70px"
-        />
-        <p>{text.user}</p>
-        <span className={styles.heart} id="heart"></span>
-        <span className={styles.fiveStar} id="five-star"></span>
-      </div>
-      
-    </div>
+      <ArticleListItem article = {article}></ArticleListItem>
     );
     
   };
@@ -149,10 +67,11 @@ const Home: NextPage = () => {
         </nav>
 
         <div className={styles.grid}>
-        {text.map(renderText)}
+        {articles.map(renderText)}
         </div>
 
       </main>
+
     </div>
   )
 }

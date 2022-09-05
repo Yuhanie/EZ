@@ -146,11 +146,26 @@
 } */
 
 .userPhoto {
-  object-fit:cover;
+  /* object-fit:cover;
   border-radius:50px;
   bottom:5px;
   right:410px;
-  position:absolute;
+  position:absolute; */
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  margin: auto;
+  display: block;
+  width: 0px;
+  height: 0px;
+  min-width: 20% ! important;
+  /* max-width: 100%; */
+  min-height: 80% ! important;
+  /* max-height: 100%; */
+  border-radius: 50px ! important;
+  right: 75% ! important;
 }
 
 .heart{
@@ -467,7 +482,7 @@
   background-color: cadetblue;
   color: #ffffff;
   display: inline-block;
-  float:left;
+  /* float:left; */
 
 }
 
@@ -484,7 +499,7 @@
   color: #ffffff;
   right:100px;
   display: inline-block;
-  float:right;
+  /* float:right; */
 
 }
 
@@ -501,7 +516,7 @@
   color: #ffffff;
   right:100px;
   display: inline-block;
-  float:right;
+  /* float:right; */
 
 }
 

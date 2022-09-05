@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import profilePic from '/public/pic/test1.jpeg'
 
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
@@ -30,7 +31,8 @@ const ArticleListItem: React.FC<Props> = (props) => {
     <h2>{props.article.title}</h2>
     <p onClick={handleOpen}>{props.article.content}</p>
     <div className={styles.card2} >
-      <Image
+    <Image className={styles.userPhoto} src={profilePic} alt="user" />
+      {/* <Image
         className={styles.userPhoto}
         src="/pic/test1.jpeg"
         alt="user"
@@ -38,8 +40,7 @@ const ArticleListItem: React.FC<Props> = (props) => {
         height={30}
         // height="50px"
         // width="70px"
-        
-      />
+      /> */}
       <p>{props.article.user}</p>
       <span className={styles.heart} id="heart"></span>
       <span className={styles.fiveStar} id="five-star"></span>

@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+        temp.push({docId:doc.id, content:doc.data().content.substring(0, 65), title:doc.data().title, user:doc.data().user});
       });
 
       console.log(temp);

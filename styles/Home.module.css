@@ -481,8 +481,10 @@
   text-align:center;
   background-color: cadetblue;
   color: #ffffff;
-  display: inline-block;
-  /* float:left; */
+
+  
+  float:left;
+
 
 }
 
@@ -498,8 +500,10 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
-  /* float:right; */
+  
+  float:right;
+  
+
 
 }
 
@@ -515,8 +519,10 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
-  /* float:right; */
+
+  
+  float:right;
+
 
 }
 

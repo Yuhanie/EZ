@@ -5,7 +5,7 @@ import React from 'react'
 import styles from "/styles/Home.module.css";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
-import {firebaseConfig} from '../settings/firebaseConfig';
+import {firebaseConfig} from '../../settings/firebaseConfig';
 
 ////////////////////////////////////////////////
 

@@ -86,10 +86,6 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
           </div>
         </div>
       </main>
-
-
-
-
     </div>
   )
 }

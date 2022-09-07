@@ -284,6 +284,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
+
   left:300px;
   bottom:395px;
   height: 450px;

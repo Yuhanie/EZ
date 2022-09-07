@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, TextField} from '@mui/material';
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
-import {firebaseConfig} from '../settings/firebaseConfig';
+import {firebaseConfig} from '../../settings/firebaseConfig';
 
 
 export default function SignUp() {

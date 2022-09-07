@@ -29,7 +29,7 @@ const ArticleListItem: React.FC<Props> = (props) => {
   <div className={styles.card} key={props.article.title}>
     
     <h2>{props.article.title}</h2>
-    <p onClick={handleOpen}>{props.article.content}</p>
+    <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{"..."}</p>
     <div className={styles.card2} >
     <Image className={styles.userPhoto} src={profilePic} alt="user" />
       {/* <Image

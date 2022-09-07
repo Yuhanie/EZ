@@ -54,7 +54,7 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
       <main className={styles.main}>
 
     
-      
+      <div className={styles.group}>
       <div className={styles.introduce}>
         <img src="pic/welcome.png" width="300px" />
         
@@ -77,6 +77,7 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
             <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
           </div>
           </form>
+      </div>
       </div>
      </main>
     </div>

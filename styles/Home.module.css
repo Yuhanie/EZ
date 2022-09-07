@@ -269,7 +269,7 @@
 
 
 .introduce {
-  display: flex;
+  
   position: relative;
   flex-direction: column;
   left:30px;
@@ -284,9 +284,8 @@
   display: flex;
   position: relative;
   flex-direction: column;
-
   left:300px;
-  bottom:420px;
+  bottom:395px;
   height: 450px;
   width:500px;
   max-width: 400px;

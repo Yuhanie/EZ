@@ -10,15 +10,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { useRouter } from "next/router";
 import Link from 'next/link';
+import myImage from '../../public/pic/welcome.png';
 
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
-
-
-////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////
-
 
 
 export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
@@ -63,11 +57,12 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
       </Head>
 
       <main className={styles.main}>
-        
+
 
         <div className={styles.group}>
           <div className={styles.introduce}>
-            <img src="pic/welcome.png" width="300px" />
+
+            <Image src={myImage}/>
 
             <div className={styles.grid}>
               <a href="/" className={styles.post}>

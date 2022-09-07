@@ -267,6 +267,7 @@
 }
 
 
+
 .introduce {
   display: flex;
   position: relative;
@@ -283,9 +284,11 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  left:350px;
-  bottom:465px;
+
+  left:300px;
+  bottom:420px;
   height: 450px;
+  width:500px;
   max-width: 400px;
   border-radius: 3%;
   margin: 15px;

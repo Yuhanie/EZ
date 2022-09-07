@@ -462,7 +462,7 @@
   text-align:center;
   background-color: cadetblue;
   color: #ffffff;
-  display: inline-block;
+  
   float:left;
 
 }
@@ -479,7 +479,7 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
+  
   float:right;
   
 
@@ -497,7 +497,7 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
+  
   float:right;
 
 }

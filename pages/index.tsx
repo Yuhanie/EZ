@@ -1,9 +1,56 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+
+import React, { useState, useEffect } from "react";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getFirestore, collection, getDocs} from "firebase/firestore";
+import {firebaseConfig} from '../settings/firebaseConfig';
+import styles from '../styles/Home.module.css';
+import ArticleListItem from '../components/article/ArticleListItem';
+import { Article } from '../interfaces/entities';
+
+import { query, orderBy, limit } from "firebase/firestore";
+
+//////////////////////////////////////////////////////////////////////////
+
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+
 
 const Home: NextPage = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  useEffect(()=>{
+    async function readData() {
+      const querySnapshot = await getDocs(collection(db, "text"));
+      const temp:Article[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, doc.data());
+        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+      });
+
+      console.log(temp);
+
+      setArticles([...temp]);
+
+    }
+
+    readData();
+
+  },[]);
+
+const test = () => {
+  console.log("Hello");
+}
+
+  const renderText = (article: Article, i: number) => {
+    return (
+      <ArticleListItem article = {article}></ArticleListItem>
+    );
+    
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,60 +60,20 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <h2>Angel</h2>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <nav className={styles.navbar}>
+          <div className={styles.form}>
+            <h1 className={styles.title}>
+              Education Zone
+            </h1>
+          </div>
+        </nav>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>爬蟲實作教學 &rarr;</h2>
-            <p>Python網路爬蟲就是利用撰寫Python程式碼去對網路資訊進行擷取，例如蒐集匯率的歷史走勢、熱門議題的輿情...等等</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        {articles.map(renderText)}
         </div>
+
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }

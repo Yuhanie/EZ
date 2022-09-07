@@ -10,7 +10,13 @@ import {firebaseConfig} from '../../settings/firebaseConfig';
 
 ////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////////
+
+
+
 export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
+
   if (getApps().length===0) {
     initializeApp(firebaseConfig);
   }
@@ -38,11 +44,6 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
     props.setStatus("signUp");
   }
 
-/////////////////////////////////////////////////////////
-
-
-
-const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -82,4 +83,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+

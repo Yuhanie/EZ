@@ -141,12 +141,31 @@
   color:white;
 }
 
+/* .card2 Image {
+  font-size: 1.25rem;
+} */
+
 .userPhoto {
-  object-fit:cover;
+  /* object-fit:cover;
   border-radius:50px;
   bottom:5px;
   right:410px;
-  position:absolute;
+  position:absolute; */
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  margin: auto;
+  display: block;
+  width: 0px;
+  height: 0px;
+  min-width: 20% ! important;
+  /* max-width: 100%; */
+  min-height: 80% ! important;
+  /* max-height: 100%; */
+  border-radius: 50px ! important;
+  right: 75% ! important;
 }
 
 .heart{
@@ -365,15 +384,14 @@
 
 .user_box {
     display: flex;
-    height: auto;
+    height: 50px;
     width: auto;
-    margin: 3%;
-    align-items: center;
     justify-content: center;
 }
 
 .user_image {
     display: flex;
+    flex-direction: row;
     height: 50px;
     width: 50px;
     margin-right: 5px;
@@ -384,7 +402,8 @@
 
 .user_name {
     display: flex;
-    height: 40px;
+    flex-direction: row;
+    height: 50px;
     width: 120px;
 }
 
@@ -462,8 +481,10 @@
   text-align:center;
   background-color: cadetblue;
   color: #ffffff;
+
   
   float:left;
+
 
 }
 
@@ -483,6 +504,7 @@
   float:right;
   
 
+
 }
 
 .cancel_btn {
@@ -497,9 +519,60 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
+
   
   float:right;
+
 
 }
 
 
+.article_container{
+  display: flex;
+  position:relative;
+  border-bottom: -8%;
+  border-radius: 15px;
+  height:780px ;
+  width: 900px;
+  margin: 3%;
+  padding: 30px;
+  flex-direction: column;
+  background-color: white;
+}
+
+.article_items_container{
+  display: flex;
+  height: 100px;
+  width: auto;
+  background-color: white;
+  display: flex;
+  margin: 10px;
+  padding: 30px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.article_toolbar {
+  display: flex;
+  background-color: white;
+  height: auto;
+  width: auto;
+  margin: 10px;
+  padding: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
+.article_btn{
+  border-radius:5px;
+  border: solid 1px cadetblue;;
+  width:100px;
+  margin: 5px;
+  padding:3px;
+  font-size:15px;
+  text-align: center;
+  text-decoration: none;
+  background-color: cadetblue;;
+  color: #ffffff;
+  display: inline-block;
+}

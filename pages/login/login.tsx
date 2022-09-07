@@ -63,14 +63,7 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.group}>
-          <div className={styles.introduce}>
-            <img src="pic/welcome.png" width="300px" />
-
-
-            <a href="https://nextjs.org/docs" className={styles.post}>
-              <p>先看看其他文章 &rarr;</p>
-            </a>
+        
 
         <div className={styles.group}>
           <div className={styles.introduce}>

@@ -11,6 +11,7 @@ import ArticleListItem from '../components/article/ArticleListItem';
 import { Article } from '../interfaces/entities';
 
 import { query, orderBy, limit } from "firebase/firestore";
+import Navbar from "../components/Navbar/Navbar";
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +60,10 @@ const test = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <div>
+        <Navbar/>
+      </div>
+
       <main className={styles.main}>
         <nav className={styles.navbar}>
           <div className={styles.form}>
@@ -73,9 +78,9 @@ const test = () => {
         </div>
 
       </main>
-
     </div>
   )
 }
 
 export default Home
+

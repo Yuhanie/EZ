@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 0;
   background-color: #f0f0f0;
 }
 
@@ -267,8 +267,9 @@
 }
 
 
+
 .introduce {
-  display: flex;
+  
   position: relative;
   flex-direction: column;
   left:30px;
@@ -283,9 +284,11 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  left:350px;
-  bottom:465px;
+
+  left:300px;
+  bottom:395px;
   height: 450px;
+  width:500px;
   max-width: 400px;
   border-radius: 3%;
   margin: 15px;
@@ -481,8 +484,10 @@
   text-align:center;
   background-color: cadetblue;
   color: #ffffff;
-  display: inline-block;
-  /* float:left; */
+
+  
+  float:left;
+
 
 }
 
@@ -498,8 +503,10 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
-  /* float:right; */
+  
+  float:right;
+  
+
 
 }
 
@@ -515,8 +522,10 @@
   background-color: cadetblue;;
   color: #ffffff;
   right:100px;
-  display: inline-block;
-  /* float:right; */
+
+  
+  float:right;
+
 
 }
 

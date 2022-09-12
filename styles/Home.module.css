@@ -8,10 +8,13 @@
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .navbar{  
@@ -578,4 +581,23 @@
   background-color: cadetblue;;
   color: #ffffff;
   display: inline-block;
+}
+
+/* X-Small Device */
+.main .navbar{
+  width: 100%;
+}
+
+/* Medium Device */
+@media(min-width: 768px){
+  .main .navbar{
+      width: 50%;
+  }
+}
+
+/* XX-Large Device */
+@media(min-width: 1400px){
+  .main .navbar{
+      width: 25%;
+  }
 }

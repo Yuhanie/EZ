@@ -1,5 +1,6 @@
 import { Article } from "../../interfaces/entities";
-import React from "react";
+// import React from "react";
+import React,{useState} from 'react';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import {
@@ -10,10 +11,6 @@ import {
   Divider,
   Stack,
 } from "@mui/material";
-
-import {useState} from 'react';
-
-
 
 type Props = {
   article:Article,

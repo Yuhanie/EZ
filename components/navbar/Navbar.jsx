@@ -15,9 +15,9 @@ const Navbar = () => {
     <header>
       <nav className={`nav`}>
         <Link href={"/"}>
-          <a>
+          {/* <a> */}
             <h1 className="logo">Education Zone</h1>
-          </a>
+          {/* </a> */}
         </Link>
 
         <div

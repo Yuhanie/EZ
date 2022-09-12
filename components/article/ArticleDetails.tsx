@@ -11,11 +11,28 @@ import {
   Stack,
 } from "@mui/material";
 
+import {useState} from 'react';
+
+
+
 type Props = {
   article:Article,
   open: boolean;
   setOpen(open: boolean): void;
 };
+
+// function Model(){
+//   const [icoStatus, setIcoStatus] = useState(true)
+//   const iconSouCangData = (event, props) => {
+//     setIcoStatus(!icoStatus)
+//   }
+//     return(
+//      <>
+//                <span className={iconSouCang ? "opts-icon icon-soucang2 soucang-color" : "icon-hide"} onClick={(e) => iconSouCangData(e,props)}></span>
+//               <span className={iconSouCang ? "icon-hide" : "opts-icon icon-soucang"} onClick={(e) => iconSouCangData(e,props)}></span>
+//      </>
+//     )}
+
 
 const ArticleDetails: React.FC<Props> = (props) => {
 

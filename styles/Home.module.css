@@ -4,8 +4,8 @@
 }
 
 .main {
-  position:relative;
-  min-height: 100vh;
+  /* position:relative;
+  min-height: 100vh; */
   padding: 4rem 0;
   flex: 1;
   /* display: flex; */
@@ -254,13 +254,13 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
   
-}
+} */
 
 
 .group{

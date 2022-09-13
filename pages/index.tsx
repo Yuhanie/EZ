@@ -12,7 +12,7 @@ import ArticleListItem from '../components/article/ArticleListItem';
 import { Article } from '../interfaces/entities';
 
 import { query, orderBy, limit } from "firebase/firestore";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/navbar/Navbar";
 
 //////////////////////////////////////////////////////////////////////////
 

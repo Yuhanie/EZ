@@ -65,9 +65,9 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
             <Image src={myImage}/>
 
             <div className={styles.grid}>
-              <a href="/" className={styles.post}>
+              <Link href="/" className={styles.post}>
                 <p>先看看其他文章 &rarr;</p>
-              </a>
+              </Link>
 
             </div>
             <form>
@@ -78,7 +78,7 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
                 <input className={styles.enter} type="password" name="password" value={account.password} placeholder="請輸入密碼..." onChange={handleChange} autoComplete="current-password" /><br />
                 {message}
                 <Button className={styles.login_btn} variant="contained" color="primary" onClick={handleSubmit}>登入</Button><br />
-                <a href="">忘記密碼</a><br /><br/>
+                <Link href="">忘記密碼</Link><br/><br/>
                 <p>沒有帳號？現在就加入我們吧！</p><br/>
                 <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
               </div>

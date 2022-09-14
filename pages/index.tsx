@@ -14,6 +14,8 @@ import { Article } from '../interfaces/entities';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
 
+import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
+
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -21,61 +23,13 @@ const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
 
-// const [isLoading, setIsLoading] = useState(false);
-// const ProductListComponent = function (){
-
-//   return (
-//     <List subheader="Product list" aria-label="product list">
-//     {products.map((product, index) => 
-//       <ListItem divider key={index}>
-//         <ListItemText primary={product.desc} secondary={"NT$"+product.price}></ListItemText>
-//       </ListItem>)}
-//     </List>
-//   )
-// }
-
-// return (
-//   <Box sx={{
-//     width: '100vw',
-//     height: '100vh',
-//     backgroundColor: 'background.paper',
-//     color: 'black',
-//     textAlign: 'left'
-//   }}>
-//   <AppMenu/>
-//   {!isLoading ?
-//     <ProductListComponent/>
-//      :
-//     <CircularProgress />
-//   }
-
-//   </Box>
-// );
-
-// useEffect(()=>{
-//   async function readData() {
-//     setIsLoading(true);
-//     const querySnapshot = await getDocs(collection(db, "product"));
-//     const temp = [];
-//     querySnapshot.forEach((doc) => {
-//     // doc.data() is never undefined for query doc snapshots
-//       console.log(doc.id, " => ", doc.data());
-//       temp.push({desc:doc.data().desc, price:doc.data().price});
-//     });
-//     console.log(temp);
-//     setProducts([...temp]);
-//     setIsLoading(false);
-//   }
-//   readData();
-// },[db, open]);
-
-///////////////////////////////////////////////////////////////////////////
-
-
 const Home: NextPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(()=>{
     async function readData() {
+      setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "text"));
       const temp:Article[] = [];
       
@@ -87,7 +41,7 @@ const Home: NextPage = () => {
       console.log(temp);
 
       setArticles([...temp]);
-
+      setIsLoading(false);
     }
 
     readData();
@@ -119,17 +73,21 @@ const test = () => {
       </div>
 
       <main className={styles.main}>
-        <nav className={styles.navbar}>
+        {/* <nav className={styles.navbar}>
           <div className={styles.form}>
             <h1 className={styles.title}>
               Education Zone
             </h1>
           </div>
-        </nav>
+        </nav> */}
 
-        <div className={styles.grid}>
-        {articles.map(renderText)}
-        </div>
+        {!isLoading ?
+            <div className={styles.grid}>
+              {articles.map(renderText)}
+            </div>
+          :<CircularProgress />
+        }
+
 
       </main>
     </div>

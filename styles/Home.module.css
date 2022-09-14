@@ -134,13 +134,13 @@
 
   position:relative;
   top:50px;
-  width:430px;
+  /* width:430px; */
 }
 
 .card2 p {
   position:absolute;
   top:25px;
-  left:80px;
+  /* left:80px; */
   color:white;
 }
 

@@ -264,6 +264,43 @@
   padding: 15px;
   background-color: cadetblue;
 }
+.main_re{
+  padding: 4rem 0;
+  flex: 1;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+.introduce_re{
+  position: relative;
+  left:200px;
+  flex-direction: column;
+  max-width: 300px;
+  border-radius: 3%;
+  margin: 15px;
+  padding: 15px;
+  background-color: cadetblue;
+}
+.logincon_re{
+  display: flex;
+  justify-content: center; 
+  position: relative;
+  flex-direction: column;
+
+  left:550px;
+  bottom:425px;
+  height: 395px;
+  width:500px;
+  max-width: 300px;
+  border-radius: 3%;
+  margin: 15px;
+  padding: 15px;
+  background-color: #ffff;
+}
+
 .logincon {
   display: flex;
   position: relative;

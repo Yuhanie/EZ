@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import styles from "/styles/Home.module.css";
 import Button from 'react-bootstrap/Button';
+import Link from 'next/link'
 
 <link
   rel="stylesheet"
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a
+        <Link
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
-        </a>
+        </Link>
       </footer>
     </div>
   )

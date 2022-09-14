@@ -65,17 +65,17 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
       <main className={styles.main}>
         
 
-        <div className={styles.group}>
+
           <div className={styles.introduce}>
             <img src="pic/welcome.png" width="300px" />
 
             <div className={styles.grid}>
-              <a href="/" className={styles.post}>
+              <Link href="/" className={styles.post}>
                 <p>先看看其他文章 &rarr;</p>
-              </a>
+              </Link>
 
             </div>
-            <form>
+            
               <div className={styles.logincon}>
                 <p className={styles.emailpass}>常用信箱：</p>
                 <input className={styles.enter} type="text" name="email" value={account.email} placeholder="請輸入信箱..." onChange={handleChange} autoComplete="email" />
@@ -87,9 +87,9 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
                 <p>沒有帳號？現在就加入我們吧！</p>
                 <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
               </div>
-            </form>
+            
           </div>
-        </div>
+
       </main>
 
 

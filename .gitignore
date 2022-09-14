@@ -2,6 +2,7 @@
 
 # lock files
 *.lock
+package-lock.json
 
 # dependencies
 /node_modules

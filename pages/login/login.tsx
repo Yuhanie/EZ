@@ -14,12 +14,7 @@ import Link from 'next/link';
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 
-////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////////////
-
-
 
 export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
   const router = useRouter();
@@ -52,7 +47,7 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
   const changeStatus = function () {
     props.setStatus("signUp");
   }
-
+//////////////////////////////////////////////////////
 
   return (
     <div className={styles.container}>

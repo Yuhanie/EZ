@@ -73,13 +73,13 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
             <form>
               <div className={styles.logincon}>
                 <p className={styles.emailpass}>常用信箱：</p>
-                <input className={styles.enter} type="text" name="email" value={account.email} placeholder="請輸入信箱..." onChange={handleChange} autoComplete="email" />
+                <input className={styles.enter} type="text" name="email" value={account.email} placeholder="請輸入信箱..." onChange={handleChange} autoComplete="email" /><br/>
                 <p className={styles.emailpass}>密碼：</p>
                 <input className={styles.enter} type="password" name="password" value={account.password} placeholder="請輸入密碼..." onChange={handleChange} autoComplete="current-password" /><br />
-                {message}<br />
+                {message}
                 <Button className={styles.login_btn} variant="contained" color="primary" onClick={handleSubmit}>登入</Button><br />
-                <a href="">忘記密碼</a><br />
-                <p>沒有帳號？現在就加入我們吧！</p>
+                <a href="">忘記密碼</a><br /><br/>
+                <p>沒有帳號？現在就加入我們吧！</p><br/>
                 <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
               </div>
             </form>

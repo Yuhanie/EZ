@@ -263,11 +263,7 @@
 } */
 
 
-.group{
-  position:absolute;
-  width:800px;
-  height:500px;
-}
+
 
 
 
@@ -275,7 +271,7 @@
   
   position: relative;
   flex-direction: column;
-  left:30px;
+  right:200px;
   height: 450px;
   max-width: 300px;
   border-radius: 3%;

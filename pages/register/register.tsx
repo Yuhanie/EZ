@@ -63,13 +63,13 @@ export default function SignUp() {
        <div className={styles.logincon_re}>
          <form method="post" action="login.php">
          <p className={styles.emailpass}>使用者名稱：</p>
-           <input className={styles.enter} type="text" name="username" placeholder="(日後可更改)"/><br/>
+           <input className={styles.enter} type="text" name="username" placeholder="(日後可更改)"/>
          <p className={styles.emailpass}>常用信箱：</p>
-           <input className={styles.enter} type="text" name="account" placeholder="請輸入信箱"/><br/>
+           <input className={styles.enter} type="text" name="account" placeholder="請輸入信箱"/>
          <p className={styles.emailpass}>密碼：</p>
-           <input className={styles.enter} type="password" name="password" placeholder="請輸入密碼"/><br/>
+           <input className={styles.enter} type="password" name="password" placeholder="請輸入密碼"/>
          <p className={styles.emailpass}>確認密碼：</p>
-           <input className={styles.enter} type="password" name="password_check" placeholder="再次輸入密碼"/><br/>
+           <input className={styles.enter} type="password" name="password_check" placeholder="再次輸入密碼"/>、
 
          <input className={styles.loginbtn} type="submit" value="註冊" name="register_btn"/>
          <p>已經有帳號了嗎？</p>

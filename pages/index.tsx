@@ -9,7 +9,8 @@ import {firebaseConfig} from '../settings/firebaseConfig';
 import styles from '../styles/Home.module.css';
 
 import ArticleListItem from '../components/article/ArticleListItem';
-import { Article } from '../interfaces/entities';
+import TagList from '../components/tag/TagList';
+import { Article,Tag } from '../interfaces/entities';
 
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
@@ -23,39 +24,75 @@ const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
 
-const Home: NextPage = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+// const Home: NextPage = () => {
+//   const [articles, setArticles] = useState<Article[]>([]);
+//   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(()=>{
-    async function readData() {
-      setIsLoading(true);
-      const querySnapshot = await getDocs(collection(db, "text"));
-      const temp:Article[] = [];
+//   useEffect(()=>{
+//     async function readData() {
+//       setIsLoading(true);
+//       // const querySnapshot = await getDocs(collection(db, "text"));
+//       const querySnapshot = await getDocs(collection(db, "tag"));
+//       const temp:Article[] = [];
       
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
-        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
-      });
+//       querySnapshot.forEach((doc) => {
+//         console.log(doc.id, doc.data());
+//         temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+//       });
 
-      console.log(temp);
+//       console.log(temp);
 
-      setArticles([...temp]);
-      setIsLoading(false);
-    }
+//       setArticles([...temp]);
+//       setIsLoading(false);
+//     }
 
-    readData();
+//     readData();
 
-  },[]);
+//   },[]);
+
+  const Home: NextPage = () => {
+    const [tag, setTag] = useState<Tag[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+  
+    useEffect(()=>{
+      async function readData() {
+        setIsLoading(true);
+        // const querySnapshot = await getDocs(collection(db, "text"));
+        const querySnapshot = await getDocs(collection(db, "tag"));
+        // const temp:Article[] = [];
+        const temp:Tag[] = [];
+        
+        // querySnapshot.forEach((doc) => {
+        //   console.log(doc.id, doc.data());
+        //   temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+        // });
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, doc.data());
+          temp.push({name:doc.data().name});
+        });
+  
+        console.log(temp);
+  
+        setTag([...temp]);
+        setIsLoading(false);
+      }
+  
+      readData();
+  
+    },[]);
 
 const test = () => {
   console.log("Hello");
 }
 
-  const renderText = (article: Article, i: number) => {
-    return (
-      <ArticleListItem article = {article}></ArticleListItem>
-    );
+  // const renderText = (article: Article, i: number) => {
+  //   return (
+  //     <ArticleListItem article = {article}></ArticleListItem>
+  //   );
+  const renderTag = (tag: Tag, i: number) => {
+      return (
+        <TagList tag = {tag}></TagList>
+      );
     
   };
 
@@ -81,10 +118,17 @@ const test = () => {
           </div>
         </nav> */}
 
-        {!isLoading ?
+        {/* {!isLoading ?
             <div className={styles.grid}>
               {articles.map(renderText)}
             </div>
+          :<CircularProgress />
+        } */}
+
+        {!isLoading ?
+          <div className={styles.grid}>
+             {tag.map(renderTag)}
+          </div>
           :<CircularProgress />
         }
 

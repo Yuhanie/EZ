@@ -79,7 +79,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 800%;
 }
 
 .card {
@@ -109,6 +109,26 @@
   background:black;
 
   right:1px;
+}
+
+.tag {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  max-width: 200px;
+
+  position:relative;
+  display:flex;
+  background: #7f9559;
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50px;
 }
 
 .card:hover,

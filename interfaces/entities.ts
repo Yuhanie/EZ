@@ -4,3 +4,7 @@ export type Article = {
   user:string;
   docId: string;
 };
+
+export type Tag = {
+  name: string;
+};

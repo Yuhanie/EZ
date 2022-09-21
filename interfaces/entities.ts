@@ -3,6 +3,7 @@ export type Article = {
   content: string;
   user:string;
   docId: string;
+  link: string;
 };
 
 export type Tag = {

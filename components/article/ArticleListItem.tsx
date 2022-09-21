@@ -27,11 +27,13 @@ const ArticleListItem: React.FC<Props> = (props) => {
 
   return (
   <div>
-  <ArticleDetails article={props.article} open={open} setOpen={setOpen}></ArticleDetails>
+  {/* <ArticleDetails article={props.article} open={open} setOpen={setOpen}></ArticleDetails> */}
   <div className={styles.card} key={props.article.title}>
     
-    <h2>{props.article.title}</h2>
-    <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}</p>
+    <h2><a href={props.article.link}>{props.article.title}</a></h2>
+    <a href={props.article.link}>
+      <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}</p>
+    </a>
     <div className={styles.card2} >
     <Image className={styles.userPhoto} src={profilePic} alt="user" />
       {/* <Image

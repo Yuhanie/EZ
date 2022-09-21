@@ -126,7 +126,7 @@ const test = () => {
         } */}
 
         {!isLoading ?
-          <div className={styles.grid}>
+          <div className={styles.grid2}>
              {tag.map(renderTag)}
           </div>
           :<CircularProgress />

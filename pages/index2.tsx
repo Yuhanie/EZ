@@ -120,7 +120,7 @@ const test = () => {
 
         {!isLoading ?
             <div className={styles.grid}>
-              {articles.map(renderText)}
+                {articles.map(renderText)}
             </div>
           :<CircularProgress />
         }

@@ -34,8 +34,4 @@ const upload = ()=>{
     </div>
   );
 }
-
-
-
-
 export default App;

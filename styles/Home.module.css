@@ -625,3 +625,43 @@
       width: 25%;
   }
 }
+
+/**** article classification *****/
+.classification_container{
+  display: flex;
+  flex-direction: row;
+}
+
+.classification_sidebar{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 45%;
+  height: auto;
+  background-color: white;
+  
+}
+.back_btn{
+  display: flex;
+  position: relative;
+  background-color: #ffffff;
+  padding-right: 10px;
+}
+.sidebar_tool{
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+}
+
+.classification_tag{
+  display: flex;
+  position: relative;
+  height: 60px;
+  width: 100%;
+  border-radius: 28px;
+  background-color: #BAC1AA;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+

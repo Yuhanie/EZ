@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import NavItem from "./NavItem";
 
 const MENU_LIST = [
+  { text: "筆記分享區", href: "/" },
   { text: "登入", href: "/login" },
 ];
 const Navbar = () => {

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 // import tagPic from '/public/pic/test1.jpeg'
 
 import { Button, TableCell, TableRow } from "@mui/material";
@@ -29,7 +30,7 @@ const TagList: React.FC<Props> = (props) => {
   
   <div className={styles.tag} key={props.tag.name}>
     
-    <h2>{props.tag.name}</h2>
+    <h2><Link href={`/articleClassification/${props.tag.name}`}>{props.tag.name}</Link></h2>
     {/* <Image className={styles.userPhoto} src={tagPic} alt="user" /> */}
       
 

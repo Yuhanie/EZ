@@ -7,13 +7,14 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
+import Link from 'next/link';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 import TagList from '../../components/tag/TagList';
 import { Article,Tag } from '../../interfaces/entities';
 
 
-import { query, orderBy, limit } from "firebase/firestore";
+import { query, orderBy, limit, where } from "firebase/firestore";
 import Navbar from "../../components/navbar/Navbar";
 
 //material ui
@@ -21,7 +22,9 @@ import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton } f
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
 
-
+type Props = {
+  tag: Tag;
+};
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -30,15 +33,16 @@ const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
 
-const Home: NextPage = () => {
+// const Home: NextPage = () => {
+  const Home: React.FC<Props> = (props) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      const querySnapshot = await getDocs(collection(db, "text"));
-      //   const querySnapshot = await getDocs(collection(db, "tag"));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", props.tag.name)));
+      // const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Article[] = [];
 
       querySnapshot.forEach((doc) => {
@@ -56,11 +60,6 @@ const Home: NextPage = () => {
 
   }, []);
 
-
-
-  const test = () => {
-    console.log("Hello");
-  }
 
   const renderText = (article: Article, i: number) => {
     return (
@@ -85,14 +84,15 @@ const Home: NextPage = () => {
       </Head>
 
 
-      <Navbar />
+      <Navbar/>
 
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
             <button>back</button>
-            <div className={styles.classification_tag}><br />
-              <h3>tag</h3>
+            {/* <div className={styles.classification_tag} key={props.tag.name}><br/> */}
+            <div className={styles.classification_tag}><br/>
+              <h3>{props.tag.name}</h3>
             </div>
           </div>
           <List className={styles.line} aria-label="mailbox folders">

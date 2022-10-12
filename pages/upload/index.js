@@ -7,10 +7,13 @@ import { listAll } from "firebase/storage";
 import {Box, Input} from '@mui/material';
 
 import {ImageList, ImageListItem} from '@mui/material';
+import { initializeApp, getApp, getApps } from "firebase/app";
+import {firebaseConfig} from '../../settings/firebaseConfig';
 
 
 
-export default function initializeApp() {
+export default function ImageUpload() {
+  const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
   const storage = getStorage();
 

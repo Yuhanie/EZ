@@ -10,7 +10,7 @@ import {ImageList, ImageListItem} from '@mui/material';
 
 
 
-export default function ImageUpload() {
+export default function initializeApp() {
 
   const storage = getStorage();
 

@@ -11,8 +11,6 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import {firebaseConfig} from '../../settings/firebaseConfig';
 
 
-import {useState} from 'react';
-
 function App() {
 const [image , setImage] = useState('');
 const upload = ()=>{

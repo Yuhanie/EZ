@@ -24,9 +24,6 @@ import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton } f
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
 
-// type Props = {
-//   tag: Tag;
-// };
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -34,30 +31,25 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
+  const Home = () => {
+    const router = useRouter()
+    const {tag} = router.query
 
-  //const Home: NextPage = () => {
-  //const Home: React.FC<Props> = (props) => {
-  const Post = () => {
-  //   const router = useRouter()
-  //   const {pid} = router.query
-  //     return <p>Post:{pid}</p>
-  // }
-
-  // export default function Page() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
   //console.log(props)
+  
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", Router.tag)));
-      //const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", props.tag)));
-      //const querySnapshot = await getDocs(collection(db, "tag"));
+      console.log("tag:",tag)
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
       const temp: Article[] = [];
 
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
+        console.log(doc.id);
+        console.log(doc.data());
         temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user });
       });
 
@@ -78,13 +70,6 @@ const db = getFirestore();
     );
   };
 
-  const renderTag = (tag: Tag, i: number) => {
-    return (
-      <TagList tag={tag}></TagList>
-    );
-
-  };
-
   return (
     <div className={styles.container}>
       <Head>
@@ -103,7 +88,7 @@ const db = getFirestore();
             <button>back</button>
             {/* <div className={styles.classification_tag} key={props.tag.name}><br/> */}
             <div className={styles.classification_tag}><br/>
-              <h3>{props.tag.name}</h3>
+              <h3>{tag}</h3>
             </div>
           </div>
           <List className={styles.line} aria-label="mailbox folders">

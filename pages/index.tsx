@@ -81,14 +81,10 @@ const db = getFirestore();
   
     },[]);
 
-const test = () => {
-  console.log("Hello");
-}
+// const test = () => {
+//   console.log("Hello");
+// }
 
-  // const renderText = (article: Article, i: number) => {
-  //   return (
-  //     <ArticleListItem article = {article}></ArticleListItem>
-  //   );
   const renderTag = (tag: Tag, i: number) => {
       return (
         <TagList tag = {tag}></TagList>

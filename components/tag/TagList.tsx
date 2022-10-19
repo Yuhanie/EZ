@@ -23,22 +23,13 @@ const TagList: React.FC<Props> = (props) => {
     setOpen(false);
   };
 
-  
 
   return (
   <div>
-  
-  <div className={styles.tag} key={props.tag.name}>
-    
-    <h2><Link href={`/tag/${props.tag.name}`}>{props.tag.name}</Link></h2>
-    {/* <Link href="/login">
-          <h2>{props.tag.name}</h2>
-    </Link> */}
-
-    {/* <Image className={styles.userPhoto} src={tagPic} alt="user" /> */}
-      
-
-  </div>
+    <div className={styles.tag} key={props.tag.name}>
+      <h2><Link href={`/articleClassification/${props.tag.name}`}>{props.tag.name}</Link></h2>
+      {/* <Image className={styles.userPhoto} src={tagPic} alt="user" /> */}
+    </div>
   </div>
   );
 };

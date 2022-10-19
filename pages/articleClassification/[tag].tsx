@@ -50,7 +50,7 @@ const db = getFirestore();
       querySnapshot.forEach((doc) => {
         console.log(doc.id);
         console.log(doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user});
+        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link:});
       });
 
       console.log(temp);

@@ -592,3 +592,10 @@
   color: #ffffff;
   display: inline-block;
 }
+
+.Line_login_btn{
+  margin: 5px;
+  padding: x/2;
+  background-color: #06C755;;
+  color: #ffffff;
+}

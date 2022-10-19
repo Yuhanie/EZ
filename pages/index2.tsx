@@ -32,12 +32,12 @@ const Home: NextPage = () => {
     async function readData() {
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "text"));
-    //   const querySnapshot = await getDocs(collection(db, "tag"));
+      // const querySnapshot = await getDocs(collection(db, "tag"));
       const temp:Article[] = [];
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+        temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user,link:doc.data().link});
       });
 
       console.log(temp);

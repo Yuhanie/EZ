@@ -124,6 +124,7 @@ const db = getFirestore();
         {!isLoading ?
           <div className={styles.grid2}>
              {tag.map(renderTag)}
+             
           </div>
           :<CircularProgress />
         }

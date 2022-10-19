@@ -17,14 +17,16 @@ import { Article,Tag } from '../../interfaces/entities';
 import { query, orderBy, limit, where } from "firebase/firestore";
 import Navbar from "../../components/navbar/Navbar";
 
+import { useRouter } from 'next/router'
+
 //material ui
 import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton } from "@mui/material";
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
 
-type Props = {
-  tag: Tag;
-};
+// type Props = {
+//   tag: Tag;
+// };
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -33,16 +35,25 @@ const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
 
-// const Home: NextPage = () => {
-  const Home: React.FC<Props> = (props) => {
+  //const Home: NextPage = () => {
+  //const Home: React.FC<Props> = (props) => {
+  const Post = () => {
+  //   const router = useRouter()
+  //   const {pid} = router.query
+  //     return <p>Post:{pid}</p>
+  // }
+
+  // export default function Page() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  //console.log(props)
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", props.tag.name)));
-      // const querySnapshot = await getDocs(collection(db, "tag"));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", Router.tag)));
+      //const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "==", props.tag)));
+      //const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Article[] = [];
 
       querySnapshot.forEach((doc) => {
@@ -118,6 +129,5 @@ const db = getFirestore();
     </div>
   )
 }
-
 export default Home
 

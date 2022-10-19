@@ -1,1 +1,1 @@
-export { default } from './articleClassification'
+export { default } from './[tag]'

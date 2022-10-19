@@ -6,72 +6,19 @@ import {ImageList, ImageListItem} from '@mui/material';
 import { initializeApp, getApp, getApps } from "firebase/app";
 import {firebaseConfig} from '../../settings/firebaseConfig';
 
+
 export default function App() {
-
-  const upload = ()=>{
   const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-  const storage = getStorage();
   const [message, setMessage] = useState("");
-  const [images, setImages] = useState([]);
-  const [loaded, setLoaded] = useState(0);
+  const [image, setImage] = useState(''); 
+  const [images , setImages] = useState([]);
+  const [loaded, setLoaded] = useState(0);  
+  const storage = getStorage();
+  const upload = ()=>{
 
-
-  const handleUpload = async function(e){
-    console.log(e.target.files[0]);
-    try{
-      setMessage("");
-      // Create a reference to the image
-      const imageRef = ref(storage,e.target.files[0].name);
-      await uploadBytes(imageRef, e.target.files[0]);
-      console.log('Uploaded a blob or file!');
-      const url = await getDownloadURL(imageRef);
-      console.log(url);
-      setLoaded((currentValue)=>currentValue+1)
-    }
-    catch(error){
-      console.log(error.code);
-      if (error.code === "storage/unauthorized"){
-        setMessage("尚未登入");
-      }
-    }
-  }
-
-  useEffect(()=>{
-    async function readImage() {
-      try {
-        setMessage("waiting...");
-        const listRef = ref(storage, '/images');
-        const result = await listAll(listRef);
-        setImages([]);
-        result.items.forEach(async (image) => {         
-          let url = await getDownloadURL(image);
-          setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
-        });  
-        setMessage("");
-      }
-      catch(error){
-        setMessage(error);
-        console.log(error);
-      }
-    }
-    readImage();
-  },[storage, loaded]);
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  if(image == null)
+  if(images == null)
     return;
-    const maintainsRef = ref(storage, `/images/${image.name}`);
+    const maintainsRef = ref(storage, `/thumbnail/${image.name}`);
     uploadBytes(maintainsRef, image).then((snapshot) => {
 
       alert("success");
@@ -81,14 +28,64 @@ export default function App() {
   // storage.ref(`/images/${image.name}`).put(image)
   // .on("state_changed" , alert("success") , alert);
 }
-  
+
+useEffect(()=>{
+
+  async function readImage() {
+
+    try {
+
+      setMessage("waiting...");
+
+      const listRef = ref(storage, '/thumbnail');
+
+      const result = await listAll(listRef);
+
+      let temp=[];
+      // setImages(()=>[]);
+      result.items.forEach(async (image) => {         
+        let url = await getDownloadURL(image);
+        console.log("url:",url);
+        // setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
+        temp.push({img:url, title:image.name})
+        setImages(()=>[...temp]);
+        // console.log("temp:",temp);
+      });
+      
+      // setImages(()=>[...temp]);
+      setMessage("");
+    }
+    catch(error){
+      setMessage(error);
+      console.log(error);
+    }
+  }
+  readImage();
+
+},[storage, loaded]);
   return (
     <div>
       <center>
-      <input type="file"  onChange={(e)=>{setImage(e.target.files[0])}}/>
+      <Input type="file"  onChange={(e)=>{setImage(e.target.files[0])}}/>
       <button onClick={upload}>Upload</button>
-      </center>
+    </center>
+      <Box>
+
+<br/>{message}
+<ImageList sx={{ width: '100%', height: '100%' }} cols={2} >
+  {images.map((item) => (
+  <ImageListItem key={item.title}>
+    <img
+      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+      alt={item.title}
+      loading="lazy"
+    />
+  </ImageListItem>
+  ))}
+</ImageList>
+</Box>
     </div>
   );
 }
 
+//rowHeight={164}

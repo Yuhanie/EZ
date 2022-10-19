@@ -87,7 +87,7 @@ const test = () => {
 
   const renderText = (article: Article, i: number) => {
     return (
-      <ArticleListItem article = {article}></ArticleListItem>
+      <ArticleListItem key={article.title} article = {article}></ArticleListItem>
     );
 //   const renderTag = (tag: Tag, i: number) => {
 //       return (

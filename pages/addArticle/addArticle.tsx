@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
 import styles from "/styles/Home.module.css";
-import Button from 'react-bootstrap/Button';
 import Link from 'next/link'
+import { Button, TextField } from '@mui/material';
 
 <link
   rel="stylesheet"
@@ -50,11 +50,11 @@ const Home: NextPage = () => {
             <div className="col-sm">
               <div className={styles.addArticle_function_btn}>
               
-                <button className={styles.upload_btn} type="submit">上傳檔案</button>
-                <input hidden accept="image/*" multiple type="file" />
+              <h4><Button variant="contained" color="primary" ><input multiple type="file" /></Button></h4>
+              <Button><input multiple type="file" /></Button>
                 
-                  <button className={styles.cancel_btn} type="submit">取消</button>
-                  <button className={styles.post_btn} type="submit">發布</button>
+                <h4><Button variant="contained" color="primary" >取消</Button></h4>
+                <h4><Button variant="contained" color="primary">發布</Button></h4>
               </div>
             </div>
           </div>

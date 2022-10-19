@@ -7,7 +7,9 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import {firebaseConfig} from '../../settings/firebaseConfig';
 
 
+
 export default function App() {
+
   const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   const [message, setMessage] = useState("");
   const [image, setImage] = useState(''); 

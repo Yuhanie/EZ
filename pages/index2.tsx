@@ -2,8 +2,10 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import React, { useState, useEffect } from "react";
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Box, Input, ImageList, ImageListItem } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
+import { getStorage, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { listAll } from "firebase/storage";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import styles from '../styles/Home.module.css';
@@ -17,16 +19,19 @@ import Navbar from "../components/navbar/Navbar";
 
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 
-//////////////////////////////////////////////////////////////////////////
-
-const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
 
-const Home: NextPage = () => {
+export default function App() {
+  const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  const db = getFirestore();
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState("");
+  const [image, setImage] = useState(''); 
+  const [images , setImages] = useState([]);
+  const [loaded, setLoaded] = useState(0);  
+  const storage = getStorage();
 
   useEffect(()=>{
     async function readData() {
@@ -46,9 +51,47 @@ const Home: NextPage = () => {
       setIsLoading(false);
     }
 
-    readData();
+async function readImage() {
+  try {
+    setMessage("waiting...");
 
+    const listRef = ref(storage, '/thumbnail');
+
+    const result = await listAll(listRef);
+
+    let temp=[];
+    // setImages(()=>[]);
+    result.items.forEach(async (image) => {         
+      let url = await getDownloadURL(image);
+      console.log("url:",url);
+      // setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
+      temp.push({img:url, title:image.name})
+      setImages(()=>[...temp]);
+      // console.log("temp:",temp);
+    });
+    
+    // setImages(()=>[...temp]);
+    setMessage("");
+  }
+  catch(error){
+    setMessage(error);
+    console.log(error);
+  }
+}
+readData();
+readImage();
   },[]);
+
+
+
+
+
+
+
+
+
+
+  
 
 //   const Home: NextPage = () => {
 //     const [tag, setTag] = useState<Tag[]>([]);
@@ -138,5 +181,4 @@ const test = () => {
   )
 }
 
-export default Home
 

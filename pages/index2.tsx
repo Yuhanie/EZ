@@ -59,7 +59,7 @@ async function readImage() {
 
     const result = await listAll(listRef);
 
-    let temp=[];
+    let temp:any[]=[];
     // setImages(()=>[]);
     result.items.forEach(async (image) => {         
       let url = await getDownloadURL(image);
@@ -93,36 +93,36 @@ readImage();
 
   
 
-//   const Home: NextPage = () => {
-//     const [tag, setTag] = useState<Tag[]>([]);
-//     const [isLoading, setIsLoading] = useState<boolean>(false);
+  const Home = () => {
+    const [tag, setTag] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
   
-//     useEffect(()=>{
-//       async function readData() {
-//         setIsLoading(true);
-//         // const querySnapshot = await getDocs(collection(db, "text"));
-//         const querySnapshot = await getDocs(collection(db, "tag"));
-//         // const temp:Article[] = [];
-//         const temp:Tag[] = [];
+    useEffect(()=>{
+      async function readData() {
+        setIsLoading(true);
+        // const querySnapshot = await getDocs(collection(db, "text"));
+        const querySnapshot = await getDocs(collection(db, "tag"));
+        // const temp:Article[] = [];
+        const temp:any[] = [];
         
-//         // querySnapshot.forEach((doc) => {
-//         //   console.log(doc.id, doc.data());
-//         //   temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
-//         // });
-//         querySnapshot.forEach((doc) => {
-//           console.log(doc.id, doc.data());
-//           temp.push({name:doc.data().name});
-//         });
+        // querySnapshot.forEach((doc) => {
+        //   console.log(doc.id, doc.data());
+        //   temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
+        // });
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, doc.data());
+          temp.push({name:doc.data().name});
+        });
   
-//         console.log(temp);
+        console.log(temp);
   
-//         setTag([...temp]);
-//         setIsLoading(false);
-//       }
+        setTag([...temp]);
+        setIsLoading(false);
+      }
   
-//       readData();
+      readData();
   
-//     },[]);
+    },[]);
 
 const test = () => {
   console.log("Hello");
@@ -181,4 +181,4 @@ const test = () => {
   )
 }
 
-
+}

@@ -74,7 +74,8 @@ async function readImage() {
     setMessage("");
   }
   catch(error){
-    setMessage(error);
+    
+    // setMessage(error);
     console.log(error);
   }
 }

@@ -66,16 +66,17 @@ async function readImage() {
       console.log("url:",url);
       // setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
       temp.push({img:url, title:image.name})
-      setImages(()=>[...temp]);
+      //setImages(()=>[...temp]);
       // console.log("temp:",temp);
     });
+  
     
-    // setImages(()=>[...temp]);
+    setImages(()=>[...temp]);
     setMessage("");
   }
   catch(error){
     
-    // setMessage(error);
+    setMessage("error");
     console.log(error);
   }
 }
@@ -116,7 +117,8 @@ readImage();
         });
   
         console.log(temp);
-  
+        
+        
         setTag([...temp]);
         setIsLoading(false);
       }

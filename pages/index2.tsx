@@ -29,6 +29,10 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<any>("");
   const [images , setImages] = useState<any>([]);
+  const [image, setImage] = useState<any>(''); 
+
+
+
   const storage = getStorage();
 
   useEffect(()=>{
@@ -105,8 +109,7 @@ readImage();
         });
   
         console.log(temp);
-        
-        
+
         setTag(()=>[...temp]);
         setIsLoading(false);
       }

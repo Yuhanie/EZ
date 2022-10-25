@@ -85,7 +85,7 @@ const db = getFirestore();
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
-            <button>back</button>
+            <button><Link href="/">back</Link></button>
             {/* <div className={styles.classification_tag} key={props.tag.name}><br/> */}
             <div className={styles.classification_tag}><br/>
               <h3>{tag}</h3>
@@ -93,9 +93,9 @@ const db = getFirestore();
           </div>
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
-            <ListItem button>
+            {/* <ListItem button>
               <ListItemText primary="item1" />
-            </ListItem>
+            </ListItem> */}
             <Divider />
           </List>
         </div>

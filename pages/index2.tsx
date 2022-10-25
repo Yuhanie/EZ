@@ -27,10 +27,8 @@ export default function App() {
   const db = getFirestore();
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState("");
-  const [image, setImage] = useState(''); 
-  const [images , setImages] = useState([]);
-  const [loaded, setLoaded] = useState(0);  
+  const [message, setMessage] = useState<any>("");
+  const [images , setImages] = useState<any>([]);
   const storage = getStorage();
 
   useEffect(()=>{
@@ -47,13 +45,13 @@ export default function App() {
 
       console.log(temp);
 
-      setArticles([...temp]);
+      setArticles(()=>[...temp]);
       setIsLoading(false);
     }
-
-async function readImage() {
-  try {
-    setMessage("waiting...");
+    readData();
+  async function readImage() {
+    try {
+      setMessage("waiting...");
 
     const listRef = ref(storage, '/thumbnail');
 
@@ -76,27 +74,17 @@ async function readImage() {
   }
   catch(error){
     
-    setMessage("error");
+    setMessage(error);
     console.log(error);
   }
 }
-readData();
+
 readImage();
   },[]);
 
 
-
-
-
-
-
-
-
-
-  
-
   const Home = () => {
-    const [tag, setTag] = useState([]);
+    const [tag, setTag] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(false);
   
     useEffect(()=>{
@@ -119,7 +107,7 @@ readImage();
         console.log(temp);
         
         
-        setTag([...temp]);
+        setTag(()=>[...temp]);
         setIsLoading(false);
       }
   

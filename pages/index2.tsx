@@ -54,37 +54,37 @@ export default function App() {
     }
     readData();
     
-  async function readImage() {
-    try {
-      setMessage("waiting...");
+//   async function readImage() {
+//     try {
+//       setMessage("waiting...");
 
-    const listRef = ref(storage, '/thumbnail');
+//     const listRef = ref(storage, '/thumbnail');
 
-    const result = await listAll(listRef);
+//     const result = await listAll(listRef);
 
-    let temp:any[]=[];
-    // setImages(()=>[]);
-    result.items.forEach(async (image) => {         
-      let url = await getDownloadURL(image);
-      console.log("url:",url);
-      // setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
-      temp.push({img:url, title:image.name})
-      //setImages(()=>[...temp]);
-      // console.log("temp:",temp);
-    });
+//     let temp:any[]=[];
+//     // setImages(()=>[]);
+//     result.items.forEach(async (image) => {         
+//       let url = await getDownloadURL(image);
+//       console.log("url:",url);
+//       // setImages((currentImages)=>[...currentImages,{img:url, title:image.name}]);
+//       temp.push({img:url, title:image.name})
+//       //setImages(()=>[...temp]);
+//       // console.log("temp:",temp);
+//     });
   
     
-    setImages(()=>[...temp]);
-    setMessage("");
-  }
-  catch(error){
+//     // setImages(()=>[...temp]);
+//     setMessage("");
+//   }
+//   catch(error){
     
-    setMessage(error);
-    console.log(error);
-  }
-}
+//     setMessage(error);
+//     console.log(error);
+//   }
+// }
 
-readImage();
+// readImage();
   },[]);
 
   const renderText = (article: Article, i: number) => {

@@ -31,7 +31,7 @@ const ArticleListItem: React.FC<Props> = (props) => {
   <div className={styles.card} key={props.article.title}>
     
     <h2><a href={props.article.link}>{props.article.title}</a></h2>
-    <a href={props.article.link}>
+    <a href={props.article.link} target="_blank">
       <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}</p>
     </a>
     <div className={styles.card2} >

@@ -1,6 +1,6 @@
 .container {
   padding: 0;
-  background-color: #f0f0f0;
+  background-color: #fafafa;
 }
 
 .main {
@@ -128,16 +128,17 @@
 
   position:relative;
   display:flex;
-  background: #7f9559;
-  width: 150px;
+  background: #ffffff;
+  width: 200px;
   height: 150px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 50px;
+  box-shadow: 1px 1px 4px rgba(111, 111, 111, 0.7);
+  border-radius: 5px;
 }
+
 
 .card:hover,
 .card:focus,

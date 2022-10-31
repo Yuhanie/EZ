@@ -23,14 +23,18 @@ header{
   position: sticky;
   z-index: 30;
   top: 0;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 nav{
   display: flex;
   padding: 16px;
   justify-content: space-between;
   align-items: center;
-  background-color: darkolivegreen;
+  background-color: rgb(255, 255, 255);
+}
+.nav_logo{
+  height:60px;
+  width:175px;
 }
 .nav__menu-bar{
   display: flex;
@@ -43,6 +47,7 @@ nav{
   height: 4px;
   background-color: white;
   border-radius: 2px;
+  
 }
 .nav__menu-list{
   display: flex;
@@ -55,7 +60,8 @@ nav{
   padding: 24px 16px;
   transition: all 0.2s;
   min-height: calc(100vh - 60px);
-  background-color: darkolivegreen;
+  background-color: rgb(255, 255, 255);
+
 }
 .nav__menu-list.active{
   right: 0;

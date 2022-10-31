@@ -3,9 +3,11 @@ import Image from "next/image";
 import React, { useState } from "react";
 // import Logo from "./Logo";
 import NavItem from "./NavItem";
-
+import ezlogo from '../../public/pic/ezlogo.png';
+import { Button, TextField } from '@mui/material';
 const MENU_LIST = [
   { text: "登入", href: "/login" },
+  { text: "註冊", href: "/register"},
 ];
 const Navbar = () => {
   const [navActive, setNavActive] = useState(null);
@@ -16,8 +18,11 @@ const Navbar = () => {
       <nav className={`nav`}>
         <Link href={"/"}>
           {/* <a> */}
-            <h1 className="logo">Education Zone</h1>
+          <div className={`nav_logo`}>
+            <Image src={ezlogo}/>
+          </div>
           {/* </a> */}
+          
         </Link>
 
         <div
@@ -29,7 +34,7 @@ const Navbar = () => {
           <div></div>
         </div>
 
-        <div className={`${navActive ? "active" : ""} nav__menu-list`}>
+    <Button color="secondary"><div className={`${navActive ? "active" : ""} `}>
           {MENU_LIST.map((menu, idx) => (
             <div
               onClick={() => {
@@ -42,7 +47,7 @@ const Navbar = () => {
             </div>
           ))}
         </div>
-
+</Button>
       </nav>
     </header>
   );

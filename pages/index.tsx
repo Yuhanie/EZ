@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
@@ -14,7 +14,7 @@ import { Article,Tag } from '../interfaces/entities';
 
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
-
+import navpic from '../public/pic/navpic.jpg';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 
 //////////////////////////////////////////////////////////////////////////
@@ -105,6 +105,7 @@ const db = getFirestore();
         <Navbar/>
       </div>
 
+      
       <main className={styles.main}>
         {/* <nav className={styles.navbar}>
           <div className={styles.form}>
@@ -121,6 +122,9 @@ const db = getFirestore();
           :<CircularProgress />
         } */}
 
+
+
+<Image src={navpic}/>
         {!isLoading ?
           <div className={styles.grid2}>
              {tag.map(renderTag)}

@@ -12,7 +12,7 @@ import Link from 'next/link';
 import ArticleListItem from '../../components/article/ArticleListItem';
 import TagList from '../../components/tag/TagList';
 import { Article,Tag } from '../../interfaces/entities';
-
+// import { tags } from '../../interfaces/entities';
 
 import { query, orderBy, limit, where } from "firebase/firestore";
 import Navbar from "../../components/navbar/Navbar";
@@ -50,7 +50,7 @@ const db = getFirestore();
       querySnapshot.forEach((doc) => {
         console.log(doc.id);
         console.log(doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link});
+        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link}); 
       });
 
       console.log(temp);
@@ -90,6 +90,10 @@ const db = getFirestore();
             <div className={styles.classification_tag}><br/>
               <h3>{tag}</h3>
             </div>
+          </div>
+          <br/>
+          <div className={styles.sidebar_tool}>
+              <p>更多熱門主題</p>
           </div>
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />

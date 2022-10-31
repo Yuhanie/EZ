@@ -9,3 +9,7 @@ export type Article = {
 export type Tag = {
   name: string;
 };
+
+// export type tags = {
+//   name: string;
+// };

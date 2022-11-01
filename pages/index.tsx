@@ -17,6 +17,15 @@ import Navbar from "../components/navbar/Navbar";
 import navpic from '../public/pic/navpic.jpg';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 
+import Slider from "react-slick";
+
+const settings = {
+    dots: true,
+    speed: 500,
+    slidesToShow: 1,  // 一次顯示幾張
+    slidesToScroll: 1, // 按下一頁的時候，要跑幾張
+  };
+
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -122,7 +131,13 @@ const db = getFirestore();
           :<CircularProgress />
         } */}
 
+<Slider {...settings}>
+  <div>
+    
+<Image src={navpic}/>
+  </div>
 
+</Slider>
 
 <Image src={navpic}/>
         {!isLoading ?

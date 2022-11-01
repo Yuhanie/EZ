@@ -32,9 +32,10 @@ const Navbar = () => {
           <div></div>
           <div></div>
           <div></div>
-        </div>
+        </div>                                                       
+      
 
-    <Button color="secondary"><div className={`${navActive ? "active" : ""} `}>
+      <div className={`nav__menu-list`}>
           {MENU_LIST.map((menu, idx) => (
             <div
               onClick={() => {
@@ -43,11 +44,16 @@ const Navbar = () => {
               }}
               key={menu.text}
             >
+            <Button variant="contained" color="primary"><span className={`${navActive ? "active" : ""} `}>
               <NavItem active={activeIdx === idx} {...menu} />
+              </span>
+            </Button>
             </div>
+            
           ))}
-        </div>
-</Button>
+      </div>
+        
+
       </nav>
     </header>
   );

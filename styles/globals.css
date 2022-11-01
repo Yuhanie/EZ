@@ -55,7 +55,8 @@ nav{
   position: fixed;
   top: 60px;
   width: 288px;
-  row-gap: 24px;
+  row-gap: 5px;
+  column-gap: 5px;
   right: -288px;
   padding: 24px 16px;
   transition: all 0.2s;
@@ -91,7 +92,7 @@ nav{
     flex-direction: row;
     min-height: fit-content;
     width: fit-content;
-    column-gap: 24px;
+    column-gap: 5px;
     align-items: center;
   }
   .nav__link::before{

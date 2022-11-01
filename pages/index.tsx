@@ -87,7 +87,7 @@ const db = getFirestore();
 
   const renderTag = (tag: Tag, i: number) => {
       return (
-        <TagList tag = {tag}></TagList>
+        <TagList key={tag.name} tag = {tag}></TagList>
       );
     
   };

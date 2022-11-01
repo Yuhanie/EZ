@@ -25,9 +25,9 @@ const TagList: React.FC<Props> = (props) => {
 
 
   return (
-  <div>
+  <div >
     <div className={styles.tag} key={props.tag.name}>
-      <h2><Link href={`/articleClassification/${props.tag.name}`}>{props.tag.name}</Link></h2>
+      <h2><Link href={`/articleClassification/${props.tag.name}`} >{props.tag.name}</Link></h2>
       {/* <Image className={styles.userPhoto} src={tagPic} alt="user" /> */}
     </div>
   </div>

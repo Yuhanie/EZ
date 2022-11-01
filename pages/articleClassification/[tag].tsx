@@ -45,10 +45,12 @@ const db = getFirestore();
       setIsLoading(true);
       console.log("tag:",tag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
+      
       const temp: Article[] = [];
 
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
+        //const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
         console.log(doc.data());
         temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link}); 
       });
@@ -85,6 +87,7 @@ const db = getFirestore();
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
+            {/* <button><Link href="/"><Image className={styles.userPhoto} src={profilePic} alt="user" /></Link></button> */}
             <button><Link href="/">back</Link></button>
             {/* <div className={styles.classification_tag} key={props.tag.name}><br/> */}
             <div className={styles.classification_tag}><br/>

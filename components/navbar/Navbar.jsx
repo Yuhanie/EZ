@@ -7,7 +7,7 @@ import ezlogo from '../../public/pic/ezlogo.png';
 import { Button, TextField } from '@mui/material';
 const MENU_LIST = [
   { text: "登入", href: "/login" },
-  { text: "註冊", href: "/register"},
+  //{ text: "註冊", href: "/register"},
 ];
 const Navbar = () => {
   const [navActive, setNavActive] = useState(null);

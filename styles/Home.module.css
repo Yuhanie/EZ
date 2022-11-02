@@ -17,6 +17,11 @@
   flex-wrap: wrap;
 }
 
+
+.center{
+  align-items:center;
+}
+
 .navbar{  
   background-color:hwb(60 75% 1%);
 }
@@ -110,6 +115,12 @@
   border-radius: 10px;
 }
 
+.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .card2 {
   position:absolute;
   display:flex;
@@ -141,6 +152,19 @@
   justify-content: center;
   box-shadow: 1px 1px 4px rgba(111, 111, 111, 0.7);
   border-radius: 5px;
+}
+
+.tag2{
+  position:absolute;
+  display:flex;
+  width:200px;
+  height:40px;
+  bottom:0px;
+  background:black;
+
+  right:1px;
+
+  border-radius: 0 0 5px 5px;
 }
 
 

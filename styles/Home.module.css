@@ -651,6 +651,12 @@
   margin-left: 10%;
 }
 
+.Line_login_btn{
+  border-radius:5px;
+  background-color: #06C755;;
+  color: #ffffff;
+}
+
 /* X-Small Device */
 .main .navbar{
   width: 100%;

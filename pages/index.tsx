@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
@@ -15,16 +15,17 @@ import { Article,Tag } from '../interfaces/entities';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
 import navpic from '../public/pic/navpic.jpg';
+import yuhan from '../public/pic/yuhan.jpg';
+import snoopy from '../public/pic/snoopy.png';
+import ezlogo from '../public/pic/ezlogo.png';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const settings = {
-    dots: true,
-    speed: 500,
-    slidesToShow: 1,  // 一次顯示幾張
-    slidesToScroll: 1, // 按下一頁的時候，要跑幾張
-  };
+
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -58,6 +59,27 @@ const db = getFirestore();
 //     readData();
 
 //   },[]);
+
+
+
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,  // 一次顯示幾張
+    slidesToScroll: 1, // 按下一頁的時候，要跑幾張
+    centerMode:true,
+    arrow:true,
+  };
+
+
+
+
+
+
+
+
+
 
   const Home: NextPage = () => {
     const [tag, setTag] = useState<Tag[]>([]);
@@ -100,6 +122,7 @@ const db = getFirestore();
       );
     
   };
+  
 
   return (
     <div className={styles.container}>
@@ -113,6 +136,16 @@ const db = getFirestore();
       <div>
         <Navbar/>
       </div>
+   
+<Slider {...settings}>
+    <Image src={navpic}/>
+    
+  <div>
+    <Image src={ezlogo}/>
+  </div>  
+
+
+</Slider>
 
       
       <main className={styles.main}>
@@ -131,19 +164,16 @@ const db = getFirestore();
           :<CircularProgress />
         } */}
 
-<Slider {...settings}>
-  <div>
-    
-<Image src={navpic}/>
-  </div>
 
-</Slider>
 
-<Image src={navpic}/>
+
         {!isLoading ?
           <div className={styles.grid2}>
+            
              {tag.map(renderTag)}
           </div>
+
+          
           :<CircularProgress />
         }
 

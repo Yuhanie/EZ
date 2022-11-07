@@ -49,11 +49,11 @@ const db = getFirestore();
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
       
       const temp: Article[] = [];
-      const temp2: Article[] = [];
+      // const temp2: Article[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
+        // const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
         // querySnapshot2.forEach(async (doc2) => {
         //   console.log(doc2.id);
         //   console.log(doc2.data());

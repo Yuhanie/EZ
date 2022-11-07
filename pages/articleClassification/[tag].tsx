@@ -1,6 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import Image from 'next/image';
+import back from '/public/pic/left arrow.png'
+
 import React, { useState, useEffect } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
@@ -20,10 +23,9 @@ import Navbar from "../../components/navbar/Navbar";
 import { useRouter } from 'next/router'
 
 //material ui
-import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton } from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton, Button } from "@mui/material";
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
-
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -47,10 +49,16 @@ const db = getFirestore();
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
       
       const temp: Article[] = [];
+      const temp2: Article[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        //const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
+        const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
+        // querySnapshot2.forEach(async (doc2) => {
+        //   console.log(doc2.id);
+        //   console.log(doc2.data());
+        //   temp2.push({docId: doc.id,name:doc2.data().name}); 
+        // });
         console.log(doc.data());
         temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link}); 
       });
@@ -87,9 +95,10 @@ const db = getFirestore();
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
-            {/* <button><Link href="/"><Image className={styles.userPhoto} src={profilePic} alt="user" /></Link></button> */}
-            <button><Link href="/">back</Link></button>
-            {/* <div className={styles.classification_tag} key={props.tag.name}><br/> */}
+            <button><Link href="/"><Image className={styles.arrow} src={back} alt="back" /></Link></button>
+            {/* <button><Link href="/">back</Link></button> */}
+            {/* <Button variant="contained"><Link href="/">back</Link></Button> */}
+
             <div className={styles.classification_tag}><br/>
               <h3>{tag}</h3>
             </div>
@@ -100,9 +109,9 @@ const db = getFirestore();
           </div>
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
-            {/* <ListItem button>
-              <ListItemText primary="item1" />
-            </ListItem> */}
+              <ListItem button>
+                <ListItemText primary="分類" />
+              </ListItem>
             <Divider />
           </List>
         </div>

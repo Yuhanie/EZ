@@ -174,7 +174,7 @@
   position:absolute;
   top:25px;
   left:80px;
-  color:white;
+  color:black;
 }
 
 /* .card2 Image {
@@ -645,10 +645,15 @@
   height: 45px;
   width: 70%;
   border-radius: 28px;
-  background-color: #9fa2d3;
+  background-color: #b2b2b9;
   justify-content: center;
   align-items: center;
   margin-left: 10%;
+}
+
+.arrow{
+  min-width: 15% ! important;
+  min-height: 15% ! important;
 }
 
 /* X-Small Device */

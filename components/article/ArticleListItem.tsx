@@ -45,7 +45,7 @@ const ArticleListItem: React.FC<Props> = (props) => {
         // height="50px"
         // width="70px"
       /> */}
-      <p>{props.article.user}</p>
+      <p className={styles.userName}>{props.article.user}</p>
       <span className={styles.heart} id="heart"></span>
       <span className={styles.fiveStar} id="five-star"></span>
     </div>

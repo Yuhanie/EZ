@@ -78,7 +78,7 @@ const settings = {
 //         dots: true
 //       };
 //       return (
-//         <div className={styles.container}>
+//         <div className="container">
 //           <Slider {...settings}>
 //           <div>
 //           <Image src={navpic}/>
@@ -167,12 +167,10 @@ const settings = {
       
    
 <Slider {...settings}>
-    <Image src={navpic}/>
-    
+    <Image src={navpic}/>    
   <div>
     <Image src={ezlogo}/>
   </div>  
-
 
 </Slider>
 

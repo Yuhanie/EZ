@@ -7,7 +7,7 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import styles from '../styles/Home.module.css';
-
+import ReactDOM from "react-dom";
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
 import { Article,Tag } from '../interfaces/entities';
@@ -23,6 +23,7 @@ import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 
 
 
@@ -71,7 +72,28 @@ const settings = {
     centerMode:true,
     arrow:true,
   };
+//   class ReactSlickDemo extends React.Component {
+//     render() {
+//       var settings = {
+//         dots: true
+//       };
+//       return (
+//         <div className={styles.container}>
+//           <Slider {...settings}>
+//           <div>
+//           <Image src={navpic}/>
+//           </div>
+//           <div>
+//             <Image src={ezlogo}/>
+//           </div>  
+//           </Slider>
+//         </div>
 
+// );
+// }
+// }
+
+// ReactDOM.render(<ReactSlickDemo /> ,document.getElementById("container"));
 
 
 
@@ -136,6 +158,13 @@ const settings = {
       <div>
         <Navbar/>
       </div>
+
+      
+
+      
+
+
+      
    
 <Slider {...settings}>
     <Image src={navpic}/>
@@ -149,6 +178,8 @@ const settings = {
 
       
       <main className={styles.main}>
+
+        
         {/* <nav className={styles.navbar}>
           <div className={styles.form}>
             <h1 className={styles.title}>

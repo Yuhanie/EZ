@@ -47,9 +47,9 @@ const db = getFirestore();
       setIsLoading(true);
       console.log("tag:",tag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
-      
+      const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+{tag}+"/分類" )));
+
       const temp: Article[] = [];
-      // const temp2: Article[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
@@ -110,7 +110,8 @@ const db = getFirestore();
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
               <ListItem button>
-                <ListItemText primary="分類" />
+                {/* <ListItemText primary="分類" /> */}
+                <ListItemText/>
               </ListItem>
             <Divider />
           </List>

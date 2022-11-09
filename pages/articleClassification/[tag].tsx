@@ -6,6 +6,7 @@ import back from '/public/pic/left arrow.png'
 
 import React, { useState, useEffect } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
@@ -95,9 +96,13 @@ const db = getFirestore();
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
-            <button><Link href="/"><Image className={styles.arrow} src={back} alt="back" /></Link></button>
+           <Link href="/"><Button><Image className={styles.arrow} src={back} alt="back" /></Button></Link>
             {/* <button><Link href="/">back</Link></button> */}
             {/* <Button variant="contained"><Link href="/">back</Link></Button> */}
+
+            <IconButton aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
 
             <div className={styles.classification_tag}><br/>
               <h3>{tag}</h3>

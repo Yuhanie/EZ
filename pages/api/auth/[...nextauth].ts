@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import LineProvider from "next-auth/providers/line";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+
 export const authOptions: NextAuthOptions = {
   // secret: process.env.SECRET,
   // jwt: {

@@ -6,7 +6,6 @@ import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } fro
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
-import styles from '../styles/Home.module.css';
 import ReactDOM from "react-dom";
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
@@ -20,9 +19,12 @@ import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+// import "../styles/test.css";
+import styles from '../styles/Home.module.css';
 
 
 
@@ -71,29 +73,29 @@ const settings = {
     slidesToScroll: 1, // 按下一頁的時候，要跑幾張
     centerMode:true,
     arrow:true,
+    center:true,
+
   };
-//   class ReactSlickDemo extends React.Component {
-//     render() {
-//       var settings = {
-//         dots: true
-//       };
-//       return (
-//         <div className="container">
-//           <Slider {...settings}>
-//           <div>
-//           <Image src={navpic}/>
-//           </div>
-//           <div>
-//             <Image src={ezlogo}/>
-//           </div>  
-//           </Slider>
-//         </div>
+  class ReactSlickDemo extends React.Component {
+    render() {
 
-// );
-// }
-// }
+      return (
+        <div className="container">
 
-// ReactDOM.render(<ReactSlickDemo /> ,document.getElementById("container"));
+          <Slider {...settings}>
+          <div >
+          <Image src={navpic}/>
+          </div>
+          <div>
+            <Image src={ezlogo}/>
+          </div>  
+          </Slider>
+        </div>
+
+
+);
+}
+}
 
 
 
@@ -158,22 +160,9 @@ const settings = {
       <div>
         <Navbar/>
       </div>
-
-      
-
-      
-
-
-      
-   
-<Slider {...settings}>
-    <Image src={navpic}/>    
-  <div>
-    <Image src={ezlogo}/>
-  </div>  
-
-</Slider>
-
+   <div>
+   <ReactSlickDemo />
+</div>
       
       <main className={styles.main}>
 

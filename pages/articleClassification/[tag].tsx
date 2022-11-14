@@ -108,14 +108,13 @@ const db = getFirestore();
               <h3>{tag}</h3>
             </div>
           </div>
-          <br/>
           <div className={styles.sidebar_tool}>
               <p>更多熱門主題</p>
           </div>
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
               <ListItem button>
-                {/* <ListItemText primary="分類" /> */}
+                <ListItemText primary="分類" />
                 <ListItemText/>
               </ListItem>
             <Divider />
@@ -137,4 +136,3 @@ const db = getFirestore();
   )
 }
 export default Home
-

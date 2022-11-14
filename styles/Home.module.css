@@ -551,9 +551,9 @@
   display: block;
   width: 0px;
   height: 0px;
-  min-width: 20% ! important;
+  min-width: 15% ! important;
   /* max-width: 100%; */
-  min-height: 80% ! important;
+  min-height: 25% ! important;
   /* max-height: 100%; */
   border-radius: 50px ! important;
   right: 75% ! important;
@@ -649,10 +649,6 @@
   }
   
 } */
-
-
-
-
 
 
 .introduce {

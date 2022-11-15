@@ -1013,6 +1013,12 @@
   /* flex: 2 1 auto; */
 }
 
+.Line_login_btn{
+  border-radius:5px;
+  background-color: #06C755;;
+  color: #ffffff;
+}
+
 /* X-Small Device */
 .main .navbar{
   width: 100%;

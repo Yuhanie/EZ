@@ -976,7 +976,8 @@
   width: 20%;
   height: auto;
   background-color: white;
-  
+  justify-content: left;
+  align-items: left;
 }
 .back_btn{
   display: flex;

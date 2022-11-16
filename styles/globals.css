@@ -15,8 +15,8 @@ body {
   outline: none;
   box-sizing: border-box;
   font-family: 'Work Sans', sans-serif;
-  justify-content: center;
-  align-items: center; 
+  justify-content: left;
+  align-items: left; 
 }
 a{
   text-decoration: none;

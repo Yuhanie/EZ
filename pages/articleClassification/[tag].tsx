@@ -100,9 +100,9 @@ const db = getFirestore();
             {/* <button><Link href="/">back</Link></button> */}
             {/* <Button variant="contained"><Link href="/">back</Link></Button> */}
 
-            <IconButton aria-label="delete">
+            {/* <IconButton aria-label="delete">
               <DeleteIcon />
-            </IconButton>
+            </IconButton> */}
 
             <div className={styles.classification_tag}><br/>
               <h3>{tag}</h3>
@@ -114,7 +114,7 @@ const db = getFirestore();
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
               <ListItem button>
-                <ListItemText primary="分類" />
+                {/* <ListItemText primary="分類" /> */}
                 <ListItemText/>
               </ListItem>
             <Divider />

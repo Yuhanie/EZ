@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Carousel from "../components/Carousel";
 import {useState} from 'react';
 import storage from './firebase';
 function App() {
@@ -21,7 +22,9 @@ const upload = ()=>{
   );
 }
 
+export default function App() {
+  return <Carousel />;
+}
 
 
-
-export default App;
+// export default App;

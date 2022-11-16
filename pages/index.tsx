@@ -10,7 +10,7 @@ import ReactDOM from "react-dom";
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
 import { Article,Tag } from '../interfaces/entities';
-
+import styles from '../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
 import navpic from '../public/pic/navpic.jpg';
@@ -24,7 +24,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // import "../styles/test.css";
-import styles from '../styles/Home.module.css';
 
 
 
@@ -65,15 +64,17 @@ const db = getFirestore();
 
 
 
-const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,  // 一次顯示幾張
-    slidesToScroll: 1, // 按下一頁的時候，要跑幾張
-    centerMode:true,
-    arrow:true,
-    center:true,
+
+
+  const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,  // 一次顯示幾張
+      slidesToScroll: 1, // 按下一頁的時候，要跑幾張
+      centerMode:true,
+      arrow:true,
+      center:true,
 
   };
   class ReactSlickDemo extends React.Component {
@@ -81,7 +82,7 @@ const settings = {
 
       return (
         <div className="container">
-
+          
           <Slider {...settings}>
           <div >
           <Image src={navpic}/>
@@ -90,12 +91,14 @@ const settings = {
             <Image src={ezlogo}/>
           </div>  
           </Slider>
-        </div>
+          </div>
+    
 
 
 );
-}
-}
+   }
+ }
+
 
 
 

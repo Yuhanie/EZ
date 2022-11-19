@@ -19,7 +19,6 @@
 }
 
 
-
 /* Arrows */
 .slick-prev,
 .slick-next
@@ -1012,6 +1011,15 @@
   height: 10% ! important;
   width: 10% ! important;
   /* flex: 2 1 auto; */
+  display: block; 
+  max-width: 10%; 
+  /* width: initial;  */
+  /* height: initial;  */
+  background: none; 
+  /* opacity: 1;  */
+  border: 0px; 
+  margin: 0px; 
+  padding: 0px;
 }
 
 .Line_login_btn{

@@ -550,9 +550,9 @@
   display: block;
   width: 0px;
   height: 0px;
-  min-width: 15% ! important;
+  min-width: 16% ! important;
   /* max-width: 100%; */
-  min-height: 25% ! important;
+  min-height: 68% ! important;
   /* max-height: 100%; */
   border-radius: 50px ! important;
   right: 75% ! important;
@@ -739,8 +739,6 @@
   color:cadetblue;
 }
 
-
-
 .addArticle_container {
     position:relative;
     display: flex;
@@ -867,10 +865,7 @@
   background-color: cadetblue;
   color: #ffffff;
 
-  
   float:left;
-
-
 }
 
 .post_btn {
@@ -1002,24 +997,6 @@
   margin-left: 10%;
 
   /* flex: 2 1 auto; */
-}
-
-.arrow{
-  min-width: 15% ! important;
-  min-height: 15% ! important;
-
-  height: 10% ! important;
-  width: 10% ! important;
-  /* flex: 2 1 auto; */
-  display: block; 
-  max-width: 10%; 
-  /* width: initial;  */
-  /* height: initial;  */
-  background: none; 
-  /* opacity: 1;  */
-  border: 0px; 
-  margin: 0px; 
-  padding: 0px;
 }
 
 .Line_login_btn{

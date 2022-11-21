@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import Image from 'next/image';
-import back from '/public/pic/left arrow.png'
 
 import React, { useState, useEffect } from "react";
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
@@ -27,7 +26,7 @@ import { useRouter } from 'next/router'
 import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton, Button } from "@mui/material";
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
-
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -48,13 +47,14 @@ const db = getFirestore();
       setIsLoading(true);
       console.log("tag:",tag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
-      const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+{tag}+"/分類" )));
+      // const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+{tag}+"/分類" )));
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        // const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+doc.id+"/分類" )));
+        // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
         // querySnapshot2.forEach(async (doc2) => {
         //   console.log(doc2.id);
         //   console.log(doc2.data());
@@ -90,15 +90,16 @@ const db = getFirestore();
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
       <Navbar/>
 
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>
-           <Link href="/"><Button><Image className={styles.arrow} src={back} alt="back" /></Button></Link>
-            {/* <button><Link href="/">back</Link></button> */}
-            {/* <Button variant="contained"><Link href="/">back</Link></Button> */}
+           <Link href="/">
+            <IconButton aria-label="ArrowBack">
+                <ArrowBackIosNewIcon/>
+            </IconButton>
+           </Link>
 
             {/* <IconButton aria-label="delete">
               <DeleteIcon />

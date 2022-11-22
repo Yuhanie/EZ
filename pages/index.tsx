@@ -62,6 +62,26 @@ const db = getFirestore();
 
 //   },[]);
 
+// function SampleNextArrow(props) {
+//   const { className, style, onClick } = props;
+//   return (
+//     <div
+//       className={className}
+//       style={{ ...style, display: "block", background: "red" }}
+//       onClick={onClick}
+//     />
+//   );
+// }
+// function SamplePrevArrow(props) {
+//   const { className, style, onClick } = props;
+//   return (
+//     <div
+//       className={className}
+//       style={{ ...style, display: "block", background: "green" }}
+//       onClick={onClick}
+//     />
+//   );
+// }
 
 
 
@@ -74,6 +94,8 @@ const db = getFirestore();
       slidesToScroll: 1, // 按下一頁的時候，要跑幾張
       centerMode:true,
       arrow:true,
+      // nextArrow: <SampleNextArrow />,
+      // prevArrow: <SamplePrevArrow />,
       center:true,
 
   };

@@ -13,3 +13,7 @@ export type Tag = {
 // export type tags = {
 //   name: string;
 // };
+
+export type miniTag = {
+  name: string;
+};

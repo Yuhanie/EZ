@@ -13,6 +13,7 @@ import styles from '/styles/Home.module.css';
 import Link from 'next/link';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
+import MiniTags from '../../components/miniTags/miniTags';
 import TagList from '../../components/tag/TagList';
 import { Article,Tag } from '../../interfaces/entities';
 // import { tags } from '../../interfaces/entities';
@@ -39,6 +40,7 @@ const db = getFirestore();
 
     const [articles, setArticles] = useState<Article[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [tags, setTags] = useState<Tag[]>([]);
 
   //console.log(props)
   
@@ -47,14 +49,16 @@ const db = getFirestore();
       setIsLoading(true);
       console.log("tag:",tag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
-      // const querySnapshot2 = await getDocs(query(collection(db, "/"+tag+"/"+{tag}+"/分類" )));
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
+      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
+      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
+      const temp2: Tag[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
+        console.log("tag2:",tag)
+        // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
         // querySnapshot2.forEach(async (doc2) => {
         //   console.log(doc2.id);
         //   console.log(doc2.data());
@@ -64,9 +68,19 @@ const db = getFirestore();
         temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link}); 
       });
 
+      console.log("tag4:",tag);
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+tag+"/分類")));
+        querySnapshot2.forEach(async (doc2) => {
+          console.log(doc2.id);
+          console.log(doc2.data());
+          temp2.push({name:doc2.data().name}); 
+        });
+
       console.log(temp);
+      console.log("temp2:",temp2);
 
       setArticles([...temp]);
+      setTags([...temp2]);
       setIsLoading(false);
     }
 
@@ -78,6 +92,12 @@ const db = getFirestore();
   const renderText = (article: Article, i: number) => {
     return (
       <ArticleListItem article={article}></ArticleListItem>
+    );
+  };
+  const renderTag = (tag: Tag, i: number) => {
+    console.log("tags3:",tag);
+    return (
+      <MiniTags miniTag={tag}></MiniTags>
     );
   };
 
@@ -115,8 +135,9 @@ const db = getFirestore();
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
               <ListItem button>
-                {/* <ListItemText primary="分類" /> */}
-                <ListItemText/>
+                {/* <ListItemText primary="分類" />
+                <ListItemText/> */}
+                {tags.map(renderTag)}
               </ListItem>
             <Divider />
           </List>

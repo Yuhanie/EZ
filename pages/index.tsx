@@ -13,6 +13,7 @@ import { Article,Tag } from '../interfaces/entities';
 import styles from '../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
+import ReactSlick from "../components/Carousel.js";
 import navpic from '../public/pic/navpic.jpg';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
@@ -23,7 +24,7 @@ import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import "../styles/test.css";
+//import "../styles/test.css";
 
 
 
@@ -103,7 +104,7 @@ const db = getFirestore();
     render() {
 
       return (
-        <div className="container">
+        <div >
           
           <Slider {...settings}>
           <div >
@@ -185,7 +186,7 @@ const db = getFirestore();
       <div>
         <Navbar/>
       </div>
-   <div>
+   <div >
    <ReactSlickDemo />
 </div>
       

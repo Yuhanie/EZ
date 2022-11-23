@@ -23,3 +23,13 @@
     outline: none;
     background: #d51717;
 }
+
+.slick-prev {
+    left: 0px; 
+   
+  }
+  .slick-next {
+    right: 0px;
+    z-index: 1;
+  }
+  

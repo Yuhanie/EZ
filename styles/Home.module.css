@@ -1,14 +1,15 @@
 .container {
   padding: 0;
-  background-color: #fafafa;
+  background-color:skyblue;
+  
 }
 
 .slick-prev {
-  left: 3% !important;
+  left: 0px; 
   z-index: 1;
 }
 .slick-next {
-  right: 3% !important;
+  right: 0px;
   z-index: 1;
 }
 .slick-container {
@@ -90,7 +91,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.slick-prev
+/* .slick-prev
 {
     left: -25px;
 }
@@ -124,7 +125,7 @@
 [dir='rtl'] .slick-next:before
 {
     content: '←';
-}
+} */
 
 /* Dots */
 .slick-dotted.slick-slider
@@ -338,14 +339,18 @@
 .slick-arrow.slick-hidden {
     display: none;
 }
-
+.center{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 .main {
   /* position:relative;
   min-height: 100vh; */
   padding: 4rem 0;
   flex: 1;
   /* display: flex; */
-  flex-direction: column;
+
   justify-content: center;
   align-items: center;
 
@@ -356,6 +361,7 @@
 .slick-prev
 {
     left: 25px;
+    
 }
 .center{
   align-items:center;

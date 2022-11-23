@@ -4,7 +4,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import React, { useState, useEffect } from "react";
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow ,Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Stack, } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -24,7 +29,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { useRouter } from 'next/router'
 
 //material ui
-import { List, ListItem, ListItemText, CircularProgress, Divider, IconButton, Button } from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress, IconButton, Button } from "@mui/material";
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -111,7 +116,7 @@ const db = getFirestore();
       </Head>
 
       <Navbar/>
-
+    
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
           <div className={styles.sidebar_tool}>

@@ -1,12 +1,12 @@
 .container {
   padding: 0;
-  background-color: wh;
+  background-color:skyblue;
   
 }
 
 .slick-prev {
   left: 0px; 
- 
+  z-index: 1;
 }
 .slick-next {
   right: 0px;
@@ -91,7 +91,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.slick-prev
+/* .slick-prev
 {
     left: -25px;
 }
@@ -125,7 +125,7 @@
 [dir='rtl'] .slick-next:before
 {
     content: '←';
-}
+} */
 
 /* Dots */
 .slick-dotted.slick-slider

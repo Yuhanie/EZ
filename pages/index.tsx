@@ -13,7 +13,6 @@ import { Article,Tag } from '../interfaces/entities';
 import styles from '../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
-import ReactSlick from "../components/Carousel.js";
 import navpic from '../public/pic/navpic.jpg';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';

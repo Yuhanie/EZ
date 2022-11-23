@@ -97,7 +97,11 @@ const db = getFirestore();
   const renderTag = (tag: Tag, i: number) => {
     console.log("tags3:",tag);
     return (
-      <MiniTags miniTag={tag}></MiniTags>
+      <div>
+        <ListItem button>
+          <MiniTags miniTag={tag}></MiniTags>
+        </ListItem>
+      </div>
     );
   };
 
@@ -134,11 +138,11 @@ const db = getFirestore();
           </div>
           <List className={styles.line} aria-label="mailbox folders">
             <Divider />
-              <ListItem button>
+              {/* <ListItem button> */}
                 {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
                 {tags.map(renderTag)}
-              </ListItem>
+              {/* </ListItem> */}
             <Divider />
           </List>
         </div>

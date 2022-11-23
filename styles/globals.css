@@ -18,6 +18,15 @@ body {
   justify-content: left;
   align-items: left; 
 }
+
+.slick-prev {
+  left: 0px; 
+ 
+}
+.slick-next {
+  right: 0px;
+  z-index: 1;
+}
 a{
   text-decoration: none;
   color: inherit;

@@ -2,6 +2,9 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from "next/image";
 import React, { useState, useEffect, Component } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
+// import styles from './index.less';
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
@@ -18,11 +21,12 @@ import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
-
+import SwiperCore, { Autoplay } from 'swiper';
+SwiperCore.use([Autoplay]);
 
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 //import "../styles/test.css";
 
 
@@ -83,43 +87,72 @@ const db = getFirestore();
 //   );
 // }
 
+const Demo: React.FC = () => {
+  const partnerLogo: Array<string> = [
+    require('@/public/pic/navpic,jpg'),
+    require('@/public/pic/welcome.png'),
+    require('@/public/pic/ezlogo.png'),
+    // require('@/assets/images/demo/partner-logo-4.png'),
+    // require('@/assets/images/demo/partner-logo-5.png'),
+    // require('@/assets/images/demo/partner-logo-6.png'),
+  ];
+
+  return (
+    <div className={styles.demo}>
+      {/* 增加"autoplay" */}
+      <Swiper spaceBetween={20} slidesPerView={6} loop autoplay>
+        {partnerLogo.map((value, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <img className={styles.item} src={value} />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
+  );
+};
+
+
+// export default Demo;
 
 
 
-  const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,  // 一次顯示幾張
-      slidesToScroll: 1, // 按下一頁的時候，要跑幾張
-      centerMode:true,
-      arrow:true,
-      // nextArrow: <SampleNextArrow />,
-      // prevArrow: <SamplePrevArrow />,
-      center:true,
 
-  };
-  class ReactSlickDemo extends React.Component {
-    render() {
+//   const settings = {
+//       dots: true,
+//       infinite: true,
+//       speed: 500,
+//       slidesToShow: 1,  // 一次顯示幾張
+//       slidesToScroll: 1, // 按下一頁的時候，要跑幾張
+//       centerMode:true,
+//       arrow:true,
+//       // nextArrow: <SampleNextArrow />,
+//       // prevArrow: <SamplePrevArrow />,
+//       center:true,
 
-      return (
-        <div >
+//   };
+//   class ReactSlickDemo extends React.Component {
+//     render() {
+
+//       return (
+//         <div >
           
-          <Slider {...settings}>
-          <div >
-          <Image src={navpic}/>
-          </div>
-          <div>
-            <Image src={ezlogo}/>
-          </div>  
-          </Slider>
-          </div>
+//           <Slider {...settings}>
+//           <div >
+//           <Image src={navpic}/>
+//           </div>
+//           <div>
+//             <Image src={ezlogo}/>
+//           </div>  
+//           </Slider>
+//           </div>
     
 
 
-);
-   }
- }
+// );
+//    }
+//  }
 
 
 
@@ -182,12 +215,12 @@ const db = getFirestore();
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
+      {/* <div>
         <Navbar/>
       </div>
    <div >
    <ReactSlickDemo />
-</div>
+</div> */}
       
       <main className={styles.main}>
 

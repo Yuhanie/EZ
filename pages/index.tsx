@@ -25,9 +25,13 @@ import SwiperCore, { Autoplay } from 'swiper';
 SwiperCore.use([Autoplay]);
 
 import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 //import "../styles/test.css";
+import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { styled, alpha } from '@mui/material/styles'
+import SearchIcon from '@mui/icons-material/Search'
 
 
 
@@ -39,6 +43,79 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
+
+// const Search = styled('div')(({ theme }) => ({
+//   position: 'relative',
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//   '&:hover': {
+//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+//   },
+//   marginRight: theme.spacing(2),
+//   marginLeft: 0,
+//   width: '100%',
+//   [theme.breakpoints.up('sm')]: {
+//     marginLeft: theme.spacing(3),
+//     width: 'auto',
+//   },
+// }));
+
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: '100%',
+//   position: 'absolute',
+//   pointerEvents: 'none',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// }));
+
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: 'inherit',
+//   '& .MuiInputBase-input': {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create('width'),
+//     width: '100%',
+//     [theme.breakpoints.up('md')]: {
+//       width: '20ch',
+//     },
+//   },
+// }));
+
+// const Header = (props) => {
+
+//   return (
+//     <Box color="inherit" sx={{ flexGrow: 1 }}>
+//       <AppBar position="static" sx={{ backgroundColor: "#000" }}>
+//         <Toolbar>
+//           <Typography
+//             variant="h6"
+//             noWrap
+//             component="div"
+//             sx={{ flexGrow: 1 }}
+//           >
+//             {props.title}
+//           </Typography>
+//           <Search>
+//             <SearchIconWrapper>
+//               <SearchIcon />
+//             </SearchIconWrapper>
+//             <StyledInputBase
+//               placeholder="Search…"
+//               inputProps={{ 'aria-label': 'search' }}
+//             />
+//           </Search>
+//           <Box sx={{ flexGrow: 1 }} />
+          
+//         </Toolbar>
+//       </AppBar>
+//     </Box >
+//   )
+// }
+
+// export default Header
 
 // const Home: NextPage = () => {
 //   const [articles, setArticles] = useState<Article[]>([]);
@@ -66,52 +143,33 @@ const db = getFirestore();
 
 //   },[]);
 
-// function SampleNextArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={className}
-//       style={{ ...style, display: "block", background: "red" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
-// function SamplePrevArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={className}
-//       style={{ ...style, display: "block", background: "green" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
 
-const Demo: React.FC = () => {
-  const partnerLogo: Array<string> = [
-    require('@/public/pic/navpic,jpg'),
-    require('@/public/pic/welcome.png'),
-    require('@/public/pic/ezlogo.png'),
-    // require('@/assets/images/demo/partner-logo-4.png'),
-    // require('@/assets/images/demo/partner-logo-5.png'),
-    // require('@/assets/images/demo/partner-logo-6.png'),
-  ];
 
-  return (
-    <div className={styles.demo}>
-      {/* 增加"autoplay" */}
-      <Swiper spaceBetween={20} slidesPerView={6} loop autoplay>
-        {partnerLogo.map((value, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <img className={styles.item} src={value} />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </div>
-  );
-};
+// const Demo: React.FC = () => {
+//   const partnerLogo: Array<string> = [
+//     require('@/public/pic/navpic,jpg'),
+//     require('@/public/pic/welcome.png'),
+//     require('@/public/pic/ezlogo.png'),
+//     // require('@/assets/images/demo/partner-logo-4.png'),
+//     // require('@/assets/images/demo/partner-logo-5.png'),
+//     // require('@/assets/images/demo/partner-logo-6.png'),
+//   ];
+
+//   return (
+//     <div className={styles.demo}>
+//       {/* 增加"autoplay" */}
+//       <Swiper spaceBetween={20} slidesPerView={6} loop autoplay>
+//         {partnerLogo.map((value, index) => {
+//           return (
+//             <SwiperSlide key={index}>
+//               <img className={styles.item} src={value} />
+//             </SwiperSlide>
+//           );
+//         })}
+//       </Swiper>
+//     </div>
+//   );
+// };
 
 
 // export default Demo;
@@ -119,40 +177,40 @@ const Demo: React.FC = () => {
 
 
 
-//   const settings = {
-//       dots: true,
-//       infinite: true,
-//       speed: 500,
-//       slidesToShow: 1,  // 一次顯示幾張
-//       slidesToScroll: 1, // 按下一頁的時候，要跑幾張
-//       centerMode:true,
-//       arrow:true,
-//       // nextArrow: <SampleNextArrow />,
-//       // prevArrow: <SamplePrevArrow />,
-//       center:true,
+  const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,  // 一次顯示幾張
+      slidesToScroll: 1, // 按下一頁的時候，要跑幾張
+      centerMode:true,
+      arrow:true,
+      // nextArrow: <SampleNextArrow />,
+      // prevArrow: <SamplePrevArrow />,
+      center:true,
 
-//   };
-//   class ReactSlickDemo extends React.Component {
-//     render() {
+  };
+  class ReactSlickDemo extends React.Component {
+    render() {
 
-//       return (
-//         <div >
+      return (
+        <div >
           
-//           <Slider {...settings}>
-//           <div >
-//           <Image src={navpic}/>
-//           </div>
-//           <div>
-//             <Image src={ezlogo}/>
-//           </div>  
-//           </Slider>
-//           </div>
+          <Slider {...settings}>
+          <div >
+          <Image src={navpic}/>
+          </div>
+          <div>
+            <Image src={ezlogo}/>
+          </div>  
+          </Slider>
+          </div>
     
 
 
-// );
-//    }
-//  }
+);
+   }
+ }
 
 
 
@@ -215,12 +273,12 @@ const Demo: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <div>
+      <div>
         <Navbar/>
       </div>
    <div >
    <ReactSlickDemo />
-</div> */}
+</div>
       
       <main className={styles.main}>
 
@@ -259,5 +317,5 @@ const Demo: React.FC = () => {
   )
 }
 
-export default Home
+export default Home;
 

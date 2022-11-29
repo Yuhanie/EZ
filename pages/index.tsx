@@ -4,8 +4,11 @@ import Image from "next/image";
 import React, { useState, useEffect, Component } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-// import styles from './index.less';
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import SwiperCore, { Autoplay } from 'swiper';
+SwiperCore.use([Autoplay]);
+
+//import styles from '../index.less';
+
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
@@ -16,14 +19,12 @@ import { Article,Tag } from '../interfaces/entities';
 import styles from '../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
+import SearchBar from "material-ui-search-bar";
 import navpic from '../public/pic/navpic.jpg';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
 import {List,ListItem,ListItemText,CircularProgress} from "@mui/material";
-import SwiperCore, { Autoplay } from 'swiper';
-SwiperCore.use([Autoplay]);
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -31,7 +32,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
-import SearchIcon from '@mui/icons-material/Search'
+import { render } from "react-dom";
+
+// import App from '../src/App.';
+
+// const rootElement = document.getElementById("root");
+// render(<App />, rootElement);
+
+
 
 
 
@@ -43,6 +51,7 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
+
 
 // const Search = styled('div')(({ theme }) => ({
 //   position: 'relative',

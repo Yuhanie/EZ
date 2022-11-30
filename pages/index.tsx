@@ -123,13 +123,6 @@ const db = getFirestore();
 
 
 
-
-
-
-
-
-
-
   const Home: NextPage = () => {
     const [tag, setTag] = useState<Tag[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -212,7 +205,6 @@ const db = getFirestore();
 
         {!isLoading ?
           <div className={styles.grid2}>
-            
              {tag.map(renderTag)}
           </div>
 

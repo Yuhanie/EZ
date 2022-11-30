@@ -1,6 +1,6 @@
 .container {
   padding: 0;
-  background-color:white;
+  background-color:#f8f8f8;
   
 }
 
@@ -90,6 +90,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.demo {
+  position: relative;
+  margin: 100 auto;
+  width: 1200px;
+  min-width: 1200px;
+  justify-content: center;
+}
+  
+.demo .item {
+    margin: 5px 35%;
+    justify-content: center;
+    align-items:center;
+    
+    width: 700px;
+    box-shadow: 3px 6px 8px #dde0e8;
+  }
 
 /* .slick-prev
 {

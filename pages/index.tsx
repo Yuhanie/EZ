@@ -7,12 +7,13 @@ import 'swiper/swiper-bundle.css';
 import SwiperCore, { Autoplay } from 'swiper';
 SwiperCore.use([Autoplay]);
 
-//import styles from '../index.less';
+// import styles from '../index.less';
 
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import ReactDOM from "react-dom";
+
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
 import { Article,Tag } from '../interfaces/entities';
@@ -34,7 +35,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
 import { render } from "react-dom";
 
-// import App from '../src/App.';
+// import App from 'myapp/src/App';
 
 // const rootElement = document.getElementById("root");
 // render(<App />, rootElement);
@@ -154,31 +155,33 @@ const db = getFirestore();
 
 
 
-// const Demo: React.FC = () => {
-//   const partnerLogo: Array<string> = [
-//     require('@/public/pic/navpic,jpg'),
-//     require('@/public/pic/welcome.png'),
-//     require('@/public/pic/ezlogo.png'),
-//     // require('@/assets/images/demo/partner-logo-4.png'),
-//     // require('@/assets/images/demo/partner-logo-5.png'),
-//     // require('@/assets/images/demo/partner-logo-6.png'),
-//   ];
-
-//   return (
-//     <div className={styles.demo}>
-//       {/* 增加"autoplay" */}
-//       <Swiper spaceBetween={20} slidesPerView={6} loop autoplay>
-//         {partnerLogo.map((value, index) => {
-//           return (
-//             <SwiperSlide key={index}>
-//               <img className={styles.item} src={value} />
-//             </SwiperSlide>
-//           );
-//         })}
-//       </Swiper>
-//     </div>
-//   );
-// };
+const Demo: React.FC = () => {
+  const partnerLogo: Array<string> = [
+    'pic/navpic.jpg',
+    'pic/welcome.png',
+    'pic/ezlogo.png',
+    // require('@/public/pic/navpic.jpg'),
+    // require('@/public/pic/welcome.png'),
+    // require('@/public/pic/ezlogo.png'),
+    // require('@/assets/images/demo/partner-logo-4.png'),
+    // require('@/assets/images/demo/partner-logo-5.png'),
+    // require('@/assets/images/demo/partner-logo-6.png'),
+  ];
+  return (
+    <div className={styles.demo}>
+      {/* 增加"autoplay" */}
+      <Swiper spaceBetween={20} slidesPerView={1} loop autoplay>
+        {partnerLogo.map((value, index) => {
+          return (
+            <SwiperSlide key={index} >
+              <img className={styles.item} src={value} />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
+  );
+};
 
 
 // export default Demo;
@@ -286,7 +289,7 @@ const db = getFirestore();
         <Navbar/>
       </div>
    <div >
-   <ReactSlickDemo />
+   <Demo />
 </div>
       
       <main className={styles.main}>

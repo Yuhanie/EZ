@@ -16,7 +16,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
 import Link from 'next/link';
-
+import ArticleDetails from '../../components/article/ArticleDetails';
 import ArticleListItem from '../../components/article/ArticleListItem';
 import MiniTags from '../../components/miniTags/miniTags';
 import TagList from '../../components/tag/TagList';
@@ -37,6 +37,12 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
+
+export async function getServerSideProps() {
+  return {
+      props: {},
+  };
+}
 
 //////////////////////////////////////////////////////////////////////////
   const Home = () => {

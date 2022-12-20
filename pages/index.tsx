@@ -158,7 +158,7 @@ const db = getFirestore();
 const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [
     'pic/navpic.jpg',
-    'pic/welcome.png',
+    'pic/yuhan.jpg',
     'pic/ezlogo.png',
     // require('@/public/pic/navpic.jpg'),
     // require('@/public/pic/welcome.png'),

@@ -22,6 +22,7 @@ import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
 import SearchBar from "material-ui-search-bar";
 import navpic from '../public/pic/navpic.jpg';
+import nav from '../public/pic/nav.png';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
@@ -31,7 +32,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 //import "../styles/test.css";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+//import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
 import { render } from "react-dom";
 
@@ -158,7 +159,7 @@ const db = getFirestore();
 const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [
     'pic/navpic.jpg',
-    'pic/yuhan.jpg',
+    'pic/nav.png',
     'pic/ezlogo.png',
     // require('@/public/pic/navpic.jpg'),
     // require('@/public/pic/welcome.png'),

@@ -4,6 +4,12 @@
   
 }
 
+.Container {
+  padding: 0;
+  background-color:#7cc4f7;
+  
+}
+
 .slick-prev {
   left: 0px; 
   z-index: 1;

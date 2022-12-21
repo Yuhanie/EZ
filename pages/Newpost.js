@@ -1,5 +1,20 @@
+import { useState, useEffect, Component } from "react";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { query, orderBy, limit } from "firebase/firestore";
+import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
+import { styled, alpha } from '@mui/material/styles'
+
+
+
+
+
+import Navbar from "../components/navbar/Navbar";
+import styles from '../styles/Home.module.css';
+import Head from 'next/head';
 import {Container, Header,Form} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ShareIcon from '@mui/icons-material/Share';
 import React from "react";
 //import 'firebase/firestore';
 //import firebase from '../src/firebase.js';
@@ -29,8 +44,13 @@ function Newpost () {
     })
 
     return <Container>
+        <Navbar/>
         <Header>發布筆記</Header>
         <Form>
+        <IconButton/>
+            <ShareIcon/>
+            <AccountBoxIcon/>
+            
             <Form.Input
             type="file"
             />
@@ -39,14 +59,14 @@ function Newpost () {
             onChange={(e) => setTitle(e.target.value)} 
             />
 
-            <Form.TextArea
-             placeholder="請輸入筆記內容" 
+            <Form.TextArea height="500px"
+             placeholder="請選擇筆記內容" 
             value={content} 
             onChange={(e) => setContent(e.target.value)} 
             />
 
             <Form.Dropdown
-             placeholder="請輸入筆記標籤"
+             placeholder="請選擇筆記標籤"
              options={[{
                 text:"課堂筆記",
                 value:"note"

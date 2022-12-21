@@ -25,6 +25,8 @@
     "react-dom": "18.2.0",
     "react-search-box": "^2.3.0",
     "react-slick": "^0.29.0",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4",
     "slick-carousel": "^1.8.1",
     "swiper": "^8.4.5"
   },

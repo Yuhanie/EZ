@@ -1,9 +1,9 @@
 import { useState, useEffect, Component } from "react";
-import { initializeApp, getApp, getApps } from "firebase/app";
+import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
 import { query, orderBy, limit } from "firebase/firestore";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
-
+import firebase from "../database/database";
 
 
 
@@ -19,7 +19,10 @@ import React from "react";
 //import 'firebase/firestore';
 //import firebase from '../src/firebase.js';
 
+import { useHistory } from 'react-router-dom';
+
 function Newpost () {
+    //const history = useHistory();
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
     const [topics, setTopics] = React.useState([]);
@@ -42,6 +45,24 @@ function Newpost () {
             value:topic.name
         }
     })
+
+    function onSubmit(){
+        const documentRef = firebase.firestore().collection("posts").doc();
+        documentRef.set({
+            title,
+            content,
+            topic:topicName,
+            createAt: firebase.firestore.Timestamp.now(),
+            author:{
+                displayName: firebase.auth().currentUser.displayName || "",
+                photoURL: firebase.auth().currentUser.photoURL || "",
+                uid: firebase.auth().currentUser.uid,
+                email: firebase.auth().currentUser.email
+            },
+        }).then(() => {
+            history.push('/');
+        })
+    }
 
     return <Container>
         <Navbar/>

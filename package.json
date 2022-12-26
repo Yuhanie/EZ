@@ -12,9 +12,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@material-ui/core": "^4.12.4",
-
     "@mui/icons-material": "^5.11.0",
-
     "@mui/material": "^5.10.16",
     "bootstrap": "^5.2.0",
     "firebase": "^9.9.2",
@@ -25,6 +23,7 @@
     "react-autocomplete-hint": "^2.0.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "18.2.0",
+    "react-router-dom": "^6.6.1",
     "react-search-box": "^2.3.0",
     "react-slick": "^0.29.0",
     "semantic-ui-css": "^2.5.0",

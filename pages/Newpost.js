@@ -1,9 +1,12 @@
 import { useState, useEffect, Component } from "react";
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, getDocs} from "firebase/firestore";
+import {firebaseConfig} from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
-import firebase from "../database/database";
+
 
 
 
@@ -19,10 +22,10 @@ import React from "react";
 //import 'firebase/firestore';
 //import firebase from '../src/firebase.js';
 
-import { useHistory } from 'react-router-dom';
+import {useRouter} from "next/router"
 
 function Newpost () {
-    //const history = useHistory();
+    const router = useRouter();
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
     const [topics, setTopics] = React.useState([]);
@@ -47,20 +50,23 @@ function Newpost () {
     })
 
     function onSubmit(){
-        const documentRef = firebase.firestore().collection("posts").doc();
+        const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+        const db = getFirestore();
+        const documentRef = db.collection("posts").doc();
+        const auth = getAuth();
         documentRef.set({
             title,
             content,
             topic:topicName,
             createAt: firebase.firestore.Timestamp.now(),
             author:{
-                displayName: firebase.auth().currentUser.displayName || "",
-                photoURL: firebase.auth().currentUser.photoURL || "",
-                uid: firebase.auth().currentUser.uid,
-                email: firebase.auth().currentUser.email
+                displayName: auth.currentUser.displayName || "",
+                photoURL: auth.currentUser.photoURL || "",
+                uid: auth.currentUser.uid,
+                email: auth.currentUser.email
             },
         }).then(() => {
-            history.push('/');
+            router.push('/');
         })
     }
 
@@ -111,7 +117,7 @@ function Newpost () {
             
             ]}
             />
-            <Form.Button>發布</Form.Button>
+            <Form.Button onClick={onSubmit}>發布</Form.Button>
             <Form.Button>取消</Form.Button>
 
            

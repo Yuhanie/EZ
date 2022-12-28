@@ -1,7 +1,7 @@
 import { useState, useEffect, Component } from "react";
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, getDocs} from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc,doc,Timestamp} from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
@@ -49,25 +49,28 @@ function Newpost () {
         }
     })
 
-    function onSubmit(){
+    async function onSubmit(){
         const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         const db = getFirestore();
-        const documentRef = db.collection("posts").doc();
+        
         const auth = getAuth();
-        documentRef.set({
+        console.log(topicName);
+        await addDoc(collection(db, "posts"), {
             title,
             content,
-            topic:topicName,
-            createAt: firebase.firestore.Timestamp.now(),
-            author:{
-                displayName: auth.currentUser.displayName || "",
-                photoURL: auth.currentUser.photoURL || "",
-                uid: auth.currentUser.uid,
-                email: auth.currentUser.email
-            },
-        }).then(() => {
+            topic:topicName
+            // createAt:Timestamp.now(),
+            // author:{
+            //     displayName: auth.currentUser.displayName || "",
+            //     photoURL: auth.currentUser.photoURL || "",
+            //     uid: auth.currentUser.uid,
+            //     email: auth.currentUser.email
+            // },
+          });
+        
+     
             router.push('/');
-        })
+        
     }
 
     return <Container>
@@ -116,6 +119,7 @@ function Newpost () {
              },
             
             ]}
+            onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
             />
             <Form.Button onClick={onSubmit}>發布</Form.Button>
             <Form.Button>取消</Form.Button>

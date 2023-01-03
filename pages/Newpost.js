@@ -2,13 +2,11 @@ import { useState, useEffect, Component } from "react";
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc,doc,Timestamp} from "firebase/firestore";
+import { updateDoc, serverTimestamp } from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
-
-
-
 
 
 import Navbar from "../components/navbar/Navbar";
@@ -21,8 +19,18 @@ import ShareIcon from '@mui/icons-material/Share';
 import React from "react";
 //import 'firebase/firestore';
 //import firebase from '../src/firebase.js';
-
 import {useRouter} from "next/router"
+import NavItem from "../components/navbar/NavItem";
+//import ezlogo from '../../public/pic/ezlogo.png';
+import TextField  from '@mui/material';
+const MENU_LIST = [
+  { text: "登入", href: "/login" },
+  //{ text: "註冊", href: "/register"},
+];
+
+    // const [navActive, setNavActive] = useState(null);
+    // const [activeIdx, setActiveIdx] = useState(-1);
+  
 
 function Newpost () {
     const router = useRouter();
@@ -49,10 +57,19 @@ function Newpost () {
         }
     })
 
+    
+
     async function onSubmit(){
         const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         const db = getFirestore();
         
+        //const docRef = doc(db, 'objects', 'some-id');
+
+        // Update the timestamp field with the value from the server
+        // const updateTimestamp = await updateDoc(docRef, {
+        // timestamp: serverTimestamp()
+        // });
+
         const auth = getAuth();
         console.log(topicName);
         await addDoc(collection(db, "posts"), {
@@ -132,4 +149,5 @@ function Newpost () {
         
     </Container>
 }
+
 export default Newpost;

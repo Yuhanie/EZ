@@ -16,7 +16,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
 import Link from 'next/link';
-import ArticleDetails from '../../components/article/ArticleDetails';
+import ArticleDetails from '../../components/post/ArticleDetails';
 import ArticleListItem from '../../components/article/ArticleListItem';
 import MiniTags from '../../components/miniTags/miniTags';
 import TagList from '../../components/tag/TagList';
@@ -103,8 +103,10 @@ export async function getServerSideProps() {
   const renderText = (article: Article, i: number) => {
     return (
       <ArticleListItem article={article}></ArticleListItem>
+
     );
   };
+
   const renderTag = (tag: Tag, i: number) => {
     console.log("tags3:",tag);
     return (

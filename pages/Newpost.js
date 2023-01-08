@@ -13,7 +13,7 @@ import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import {Container, Header,Form} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+//import 'semantic-ui-css/semantic.min.css';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShareIcon from '@mui/icons-material/Share';
 import React from "react";
@@ -62,20 +62,14 @@ function Newpost () {
     async function onSubmit(){
         const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         const db = getFirestore();
-        
-        //const docRef = doc(db, 'objects', 'some-id');
-
-        // Update the timestamp field with the value from the server
-        // const updateTimestamp = await updateDoc(docRef, {
-        // timestamp: serverTimestamp()
-        // });
 
         const auth = getAuth();
         console.log(topicName);
         await addDoc(collection(db, "posts"), {
             title,
             content,
-            topic:topicName
+            topic:topicName,
+            timestamp: serverTimestamp()
             // createAt:Timestamp.now(),
             // author:{
             //     displayName: auth.currentUser.displayName || "",

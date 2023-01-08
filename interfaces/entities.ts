@@ -7,9 +7,6 @@ export type Article = {
 
 };
 
-
-
-
 export type Tag = {
   name: string;
 };

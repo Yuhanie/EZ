@@ -35,33 +35,33 @@ const Home: NextPage = () => {
           </div>
 
           <div className={styles.grid}>
-          <div>
-          <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea> 
+            <div>
+              <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea>
                 <textarea name="Content" style={{ width: "800px", height: "400px" }} placeholder="請輸入文章內容..." ></textarea>
-                  <br></br>
-                <input className={styles.enter} style={{width: '20%'}} placeholder="請輸入筆記標籤..." />
-          </div>
-          </div>
-          </div>
-
-
-        <div className="container">
-          <div className="row">
-            <div className="col-sm">
-              <div className={styles.addArticle_function_btn}>
-              
-              <h4><Button variant="contained" color="primary" ><input multiple type="file" /></Button></h4>
-              <Button><input multiple type="file" /></Button>
+                <br></br>
+                <input className={styles.enter} style={{ width: '20%' }} placeholder="請輸入筆記標籤..." />
                 
-                <h4><Button variant="contained" color="primary" >取消</Button></h4>
-                <h4><Button variant="contained" color="primary">發布</Button></h4>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-sm">
+                      <div className={styles.addArticle_function_btn}>
+
+                        <h4><Button variant="contained" color="primary" ><input multiple type="file" /></Button></h4>
+                        <Button><input multiple type="file" /></Button>
+
+                        <h4><Button variant="contained" color="primary" >取消</Button></h4>
+                        <h4><Button variant="contained" color="primary">發布</Button></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-            
-            
-        </div>
-          
+
+
+
+
 
         </div>
 

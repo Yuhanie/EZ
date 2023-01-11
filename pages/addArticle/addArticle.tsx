@@ -6,6 +6,8 @@ import styles from "/styles/Home.module.css";
 import Link from 'next/link'
 import { Button, TextField } from '@mui/material';
 
+
+
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -45,7 +47,6 @@ const Home: NextPage = () => {
                   <div className="row">
                     <div className="col-sm">
                       <div className={styles.addArticle_function_btn}>
-
                         <h4><Button variant="contained" color="primary" ><input multiple type="file" /></Button></h4>
                         <Button><input multiple type="file" /></Button>
 

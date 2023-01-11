@@ -13,7 +13,7 @@ import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import {Container, Header,Form} from 'semantic-ui-react';
-//import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShareIcon from '@mui/icons-material/Share';
 import React from "react";
@@ -23,6 +23,12 @@ import {useRouter} from "next/router"
 import NavItem from "../components/navbar/NavItem";
 //import ezlogo from '../../public/pic/ezlogo.png';
 import TextField  from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+
 const MENU_LIST = [
   { text: "登入", href: "/login" },
   //{ text: "註冊", href: "/register"},
@@ -38,6 +44,23 @@ function Newpost () {
     const [content, setContent] = React.useState('');
     const [topics, setTopics] = React.useState([]);
     const [topicName, setTopicName] = React.useState("");
+    const [age, setAge] = React.useState('');
+
+function MultilineTextFields(){
+    return (
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+            </Box>
+    )
+}
+
+
     // React.useState(() =>{
     //     firebase
     //     .firestore
@@ -49,6 +72,12 @@ function Newpost () {
     //     });
     //     setTopics(data);
     // });
+
+    const handleChange = event => {
+        console.log(event.target.value);
+        setSelected(event.target.value);
+      };
+      
 
     const options = topics.map(topic => {
         return {
@@ -91,10 +120,32 @@ function Newpost () {
         <IconButton/>
             <ShareIcon/>
             <AccountBoxIcon/>
-            
-            <Form.Input
-            type="file"
+
+            <Button
+            variant="contained"
+            component="label"
+            >
+            上傳檔案
+            <input
+                type="file"
+                hidden
             />
+            </Button>
+
+            {/* <Form.Input
+            type="file"
+            /> */}
+            
+            {/* <TextField
+          id="standard-multiline-static"
+          label="請輸入筆記標提"
+          multiline
+          rows={4}
+          defaultValue="Default Value"
+          variant="standard"
+        />
+         */}
+
             <Form.Input placeholder="請輸入筆記標題" 
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
@@ -106,7 +157,24 @@ function Newpost () {
             onChange={(e) => setContent(e.target.value)} 
             />
 
-            <Form.Dropdown
+            <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={topicName}
+                label="topic"
+                onChange={handleChange}
+            >
+                <MenuItem value={"note"}>課堂筆記</MenuItem>
+                <MenuItem value={"diary"}>修課心得</MenuItem>
+                <MenuItem value={"project"}>專題相關</MenuItem>
+                <MenuItem value={"company"}>業界資源</MenuItem>
+                <MenuItem value={"other"}>其他</MenuItem>
+            </Select>
+            </FormControl> 
+
+            {/* <Form.Dropdown
              placeholder="請選擇筆記標籤"
              options={[{
                 text:"課堂筆記",
@@ -131,7 +199,7 @@ function Newpost () {
             
             ]}
             onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
-            />
+            /> */}
             <Form.Button onClick={onSubmit}>發布</Form.Button>
             <Form.Button>取消</Form.Button>
 

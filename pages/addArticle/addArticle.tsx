@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import styles from "/styles/Home.module.css";
 import Link from 'next/link'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Container, Autocomplete, Stack, Box } from '@mui/material';
 
 
 
@@ -15,6 +15,7 @@ import { Button, TextField } from '@mui/material';
   crossOrigin="anonymous"
 />
 
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -24,49 +25,35 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <Container sx={{ padding: 5, borderRadius: 4, background: 'white', width: 0.6 }}>
 
-        <div className={styles.addArticle_container}>
-          <div className={styles.addArticle_bar}>
-            <div className={styles.user_box}>
-              <div><img className={styles.user_image} src="pic/test1.jpeg" />
-                <div className={styles.user_name}>
-                </div>
-              </div>
-            </div>
+        <img className={styles.user_image} src="pic/test1.jpeg" />
+
+        <Box sx={{margin: 4, }}>
+          <TextField id="outlined-basic" label="請輸入文章標題" variant="outlined" /><br />
+          <TextField
+            id="outlined-multiline-static"
+            label="請輸入文章內容"
+            multiline
+            fullWidth
+            rows={10}
+            margin="normal"
+            
+          /><br />
+          <Button color="primary" ><input multiple type="file" /></Button>
+
+          <div>
+            <Button variant="contained" >發布</Button>
+            <Button variant="contained">取消</Button>
           </div>
+        </Box>
 
-          <div className={styles.grid}>
-            <div>
-              <div><textarea className={styles.addArticle_contectTitle} placeholder="請輸入文章標題..." name="title"></textarea>
-                <textarea name="Content" style={{ width: "800px", height: "400px" }} placeholder="請輸入文章內容..." ></textarea>
-                <br></br>
-                <input className={styles.enter} style={{ width: '20%' }} placeholder="請輸入筆記標籤..." />
-                
-                <div className="container">
-                  <div className="row">
-                    <div className="col-sm">
-                      <div className={styles.addArticle_function_btn}>
-                        <h4><Button variant="contained" color="primary" ><input multiple type="file" /></Button></h4>
-                        <Button><input multiple type="file" /></Button>
 
-                        <h4><Button variant="contained" color="primary" >取消</Button></h4>
-                        <h4><Button variant="contained" color="primary">發布</Button></h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      </Container>
 
 
 
-
-
-        </div>
-
-      </main>
+      
 
       {/* <footer className={styles.footer}>
         <Link
@@ -82,6 +69,14 @@ const Home: NextPage = () => {
       </footer> */}
     </div>
   )
+
+
+
+
 }
+
+
+
+
 
 export default Home

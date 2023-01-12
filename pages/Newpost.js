@@ -12,8 +12,9 @@ import { styled, alpha } from '@mui/material/styles'
 import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
-import {Container, Header,Form} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Container} from '@mui/material';
+import {Header,Form} from 'semantic-ui-react';
+//import 'semantic-ui-css/semantic.min.css';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShareIcon from '@mui/icons-material/Share';
 import React from "react";
@@ -22,7 +23,8 @@ import React from "react";
 import {useRouter} from "next/router"
 import NavItem from "../components/navbar/NavItem";
 //import ezlogo from '../../public/pic/ezlogo.png';
-import TextField  from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Input from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -38,6 +40,7 @@ const MENU_LIST = [
     // const [activeIdx, setActiveIdx] = useState(-1);
   
 
+    
 function Newpost () {
     const router = useRouter();
     const [title, setTitle] = React.useState('');
@@ -46,19 +49,7 @@ function Newpost () {
     const [topicName, setTopicName] = React.useState("");
     const [age, setAge] = React.useState('');
 
-function MultilineTextFields(){
-    return (
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-            </Box>
-    )
-}
+
 
 
     // React.useState(() =>{
@@ -113,9 +104,32 @@ function MultilineTextFields(){
         
     }
 
+    // function MultilineTextFields() {
+    //     return (
+    //       <Box
+    //         component="form"
+    //         sx={{
+    //           '& .MuiTextField-root': { m: 1, width: '80ch' },
+    //         }}
+    //         noValidate
+    //         autoComplete="off"
+    //       >
+    //         {/* <div>
+    //           <TextField
+    //             id="outlined-multiline-flexible"
+    //             label="Multiline"
+    //             multiline
+    //             maxRows={4}
+    //           />
+    //         </div> */}
+    //         </Box>
+    //         );
+    //         }
+
     return <Container>
         <Navbar/>
         <Header>發布筆記</Header>
+        <TextField/>
         <Form>
         <IconButton/>
             <ShareIcon/>
@@ -135,27 +149,44 @@ function MultilineTextFields(){
             {/* <Form.Input
             type="file"
             /> */}
-            
-            {/* <TextField
-          id="standard-multiline-static"
-          label="請輸入筆記標提"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          variant="standard"
-        />
-         */}
 
-            <Form.Input placeholder="請輸入筆記標題" 
+            <div>
+            <TextField
+                id="outlined-textarea"
+                label="請輸入筆記標題"
+                placeholder="placeholder"
+                multiline
+                value={title}
+            />
+            </div>
+
+            {/* <TextField id="textfield" label="Standard" />
+                <FormControl>
+                <InputLabel htmlFor="form-control">Form Control</InputLabel>
+                <Input id="form-control" />
+            </FormControl> */}
+        
+
+            {/* <Form.Input placeholder="請輸入筆記標題" 
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
+            /> */}
+            
+            <div>
+            <TextField
+                id="outlined-textarea"
+                label="請輸入筆記內容"
+                placeholder="placeholder"
+                multiline
+                value={content}
             />
+            </div>
 
-            <Form.TextArea height="500px"
+            {/* <Form.TextArea height="500px"
              placeholder="請選擇筆記內容" 
             value={content} 
             onChange={(e) => setContent(e.target.value)} 
-            />
+            /> */}
 
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
@@ -172,7 +203,7 @@ function MultilineTextFields(){
                 <MenuItem value={"company"}>業界資源</MenuItem>
                 <MenuItem value={"other"}>其他</MenuItem>
             </Select>
-            </FormControl> 
+            </FormControl>
 
             {/* <Form.Dropdown
              placeholder="請選擇筆記標籤"
@@ -200,8 +231,11 @@ function MultilineTextFields(){
             ]}
             onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
             /> */}
-            <Form.Button onClick={onSubmit}>發布</Form.Button>
-            <Form.Button>取消</Form.Button>
+
+            <Button variant="contained" onClick={onSubmit}>發布</Button><br></br><br></br>
+            <Button variant="contained">取消</Button>
+            {/* <Form.Button onClick={onSubmit}>發布</Form.Button>
+            <Form.Button>取消</Form.Button> */}
 
            
         </Form>

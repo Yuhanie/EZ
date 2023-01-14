@@ -5,15 +5,11 @@ import { getFirestore, collection, addDoc, setDoc,doc,Timestamp} from "firebase/
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
-import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
+import {Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
-
-
 import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
-import { Container} from '@mui/material';
-import {Header,Form} from 'semantic-ui-react';
 //import 'semantic-ui-css/semantic.min.css';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShareIcon from '@mui/icons-material/Share';
@@ -64,10 +60,10 @@ function Newpost () {
     //     setTopics(data);
     // });
 
-    const handleChange = event => {
-        console.log(event.target.value);
-        setSelected(event.target.value);
-      };
+    // const handleChange = event => {
+    //     console.log(event.target.value);
+    //     setSelected(event.target.value);
+    //   };
       
 
     const options = topics.map(topic => {
@@ -128,9 +124,8 @@ function Newpost () {
 
     return <Container>
         <Navbar/>
-        <Header>發布筆記</Header>
-        <TextField/>
-        <Form>
+        <h3>發布筆記</h3>
+
         <IconButton/>
             <ShareIcon/>
             <AccountBoxIcon/>
@@ -154,9 +149,9 @@ function Newpost () {
             <TextField
                 id="outlined-textarea"
                 label="請輸入筆記標題"
-                placeholder="placeholder"
+                placeholder="今天的主題是..."
                 multiline
-                value={title}
+                onChange={(e) => setTitle(e.target.value)} 
             />
             </div>
 
@@ -175,10 +170,10 @@ function Newpost () {
             <div>
             <TextField
                 id="outlined-textarea"
-                label="請輸入筆記內容"
-                placeholder="placeholder"
+                label="請輸入內容"
+                placeholder="我想分享..."
                 multiline
-                value={content}
+                onChange={(e) => setContent(e.target.value)} 
             />
             </div>
 
@@ -193,16 +188,24 @@ function Newpost () {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={topicName}
-                label="topic"
-                onChange={handleChange}
+                // value={topicName}
+                // label="topic"
+                onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
             >
-                <MenuItem value={"note"}>課堂筆記</MenuItem>
-                <MenuItem value={"diary"}>修課心得</MenuItem>
-                <MenuItem value={"project"}>專題相關</MenuItem>
-                <MenuItem value={"company"}>業界資源</MenuItem>
-                <MenuItem value={"other"}>其他</MenuItem>
+                <MenuItem value="note">課堂筆記</MenuItem>
+                <MenuItem value="diary">修課心得</MenuItem>
+                <MenuItem value="project">專題相關</MenuItem>
+                <MenuItem value="company">業界資源</MenuItem>
+                <MenuItem value="other">其他</MenuItem>
             </Select>
+{/* <InputLabel id="label">Age</InputLabel>
+<Select labelId="label" id="select" value="20">
+  <MenuItem value="20">Ten</MenuItem>
+  <MenuItem value="10">Twenty</MenuItem>
+</Select> */}
+
+
+
             </FormControl>
 
             {/* <Form.Dropdown
@@ -238,7 +241,7 @@ function Newpost () {
             <Form.Button>取消</Form.Button> */}
 
            
-        </Form>
+
 
         
 

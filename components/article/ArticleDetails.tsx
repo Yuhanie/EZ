@@ -6,7 +6,7 @@ import warning from '../../public/pic/warning.jpg';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import { doc, getDoc } from "firebase/firestore";
-
+// import { db } from "firebase/firestore";
 
 import {
   Dialog,

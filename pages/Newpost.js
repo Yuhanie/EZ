@@ -1,7 +1,7 @@
 import { useState, useEffect, Component } from "react";
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc, setDoc,doc,Timestamp} from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc,doc,Timestamp,getDoc} from "firebase/firestore";
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
@@ -124,7 +124,7 @@ function Newpost () {
 
     return <Container>
         <Navbar/>
-        <h3>發布筆記</h3>
+        <h3>發布筆記</h3><br/>
 
         <IconButton/>
             <ShareIcon/>
@@ -190,7 +190,8 @@ function Newpost () {
                 id="demo-simple-select"
                 // value={topicName}
                 // label="topic"
-                onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
+                onChange={(e, data) => {setTopicName(data.value); 
+                console.log("t:",data)}} 
             >
                 <MenuItem value="note">課堂筆記</MenuItem>
                 <MenuItem value="diary">修課心得</MenuItem>

@@ -1,10 +1,12 @@
 import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import warning from '../../public/pic/warning.jpg';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
+import { doc, getDoc } from "firebase/firestore";
+
 
 import {
   Dialog,
@@ -17,6 +19,34 @@ import {
   Grid, 
   Paper
 } from "@mui/material";
+
+
+
+// const docRef = doc(db, "English", "1");
+// const docSnap = await getDoc(docRef);
+
+// if (docSnap.exists()) {
+//   console.log("Document data:", docSnap.data());
+// } else {
+//   // doc.data() will be undefined in this case
+//   console.log("No such document!");
+// }
+
+
+// useEffect(() => {
+//   async function fetchData() {
+//     const querySnapshot = await getDoc(collection(db, "English"));
+//     const temp: any[] = [];
+//     querySnapshot.forEach((doc) => {
+//       temp.push(doc.data());
+//       console.log(`${doc.id} => ${doc.data().question}`);
+//     });
+//     setExams(() => [...temp]);
+//   }
+//   fetchData();
+//   // eslint-disable-next-line
+// }, []);
+
 
 type Props = {
   article:Article,

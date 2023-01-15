@@ -190,8 +190,8 @@ function Newpost () {
                 id="demo-simple-select"
                 // value={topicName}
                 // label="topic"
-                onChange={(e, data) => {setTopicName(data.value); 
-                console.log("t:",data)}} 
+                onChange={(e) => {setTopicName(e.target.value); 
+                console.log("t:")}} 
             >
                 <MenuItem value="note">課堂筆記</MenuItem>
                 <MenuItem value="diary">修課心得</MenuItem>

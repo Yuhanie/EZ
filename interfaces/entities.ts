@@ -7,6 +7,12 @@ export type Article = {
 
 };
 
+export type Comment = {
+  user: string;
+  content: string;
+};
+
+
 export type Tag = {
   name: string;
 };

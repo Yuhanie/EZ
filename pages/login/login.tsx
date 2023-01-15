@@ -37,7 +37,6 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
         router.push('/')
       }
 
-
     }
     catch (error) {
       setMessage("" + error);
@@ -46,6 +45,18 @@ export default function SignIn(props: { setStatus: (arg0: string) => void; }) {
   const changeStatus = function () {
     props.setStatus("signUp");
   }
+
+  // useEffect(() => {
+  //   const unsub = onAuthStateChanged(auth, (user)=>{
+  //     setCurrentUser(user);
+  //     console.log(user);
+  //   });
+
+  //   return () => {
+  //     unsub();
+  //   }
+  // }, []);
+
 
 
   return (

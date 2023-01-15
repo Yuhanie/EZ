@@ -1,8 +1,48 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import React from 'react'
 import styles from "/styles/Home.module.css";
+import React, { useState } from 'react';
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseConfig } from '../../settings/firebaseConfig';
+import { getApps, getApp, initializeApp } from "firebase/app";
+
+// const auth = getAuth();
+// if (getApps().length === 0) {
+//   initializeApp(firebaseConfig);
+// }
+// const [account, setAccount] = useState({ email: "", password: "", displayName: "" });
+// const [message, setMessage] = useState("");
+// const handleChange = function (e: { target: { name: any; value: any; }; }) {
+//   setAccount({ ...account, [e.target.name]: e.target.value })
+// }
+// const handleSubmit = async function () {
+// try {
+//   const res = await createUserWithEmailAndPassword(
+//     auth,
+//     account.email,
+//     account.password
+//   );
+//   setMessage("帳號已產生");
+//   console.log({ res });
+// } catch (error) {
+//   let message = "";
+//   switch (error.code) {
+//     case "auth/email-already-in-use":
+//       message = "電子信箱已註冊";
+//       break;
+//     case "auth/weak-password":
+//       message = "密碼強度不足";
+//       break;
+//     case "auth/invalid-email":
+//       message = "電子郵件格式錯誤";
+//       break;
+//     default:
+//       message = "系統錯誤:" + error.code;
+//   }
+//   setMessage(message);
+// }}
 
 const Home: NextPage = () => {
   return (

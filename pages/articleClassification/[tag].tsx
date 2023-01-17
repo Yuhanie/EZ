@@ -58,7 +58,7 @@ export async function getServerSideProps() {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      console.log("tag:",tag)
+      //console.log("tag:",tag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
@@ -68,7 +68,7 @@ export async function getServerSideProps() {
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        console.log("tag2:",tag)
+        //console.log("tag2:",tag)
         // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
         // querySnapshot2.forEach(async (doc2) => {
         //   console.log(doc2.id);
@@ -79,7 +79,7 @@ export async function getServerSideProps() {
         temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link}); 
       });
 
-      console.log("tag4:",tag);
+      //console.log("tag4:",tag);
       const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+tag+"/分類")));
         querySnapshot2.forEach(async (doc2) => {
           console.log(doc2.id);
@@ -108,7 +108,7 @@ export async function getServerSideProps() {
   };
 
   const renderTag = (tag: Tag, i: number) => {
-    console.log("tags3:",tag);
+    //console.log("tags3:",tag);
     return (
       <div>
         <ListItem button>

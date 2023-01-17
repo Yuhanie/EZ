@@ -43,11 +43,11 @@ const ArticleDetails: React.FC<Props> = (props) => {
   return (
     <div className={styles.container}>
         <Dialog open={props.open} onClose={handleClose}>
-          <DialogTitle>{props.article.title}</DialogTitle>
+          <DialogTitle><a href={props.article.link}>{props.article.title}</a></DialogTitle>
 
           <DialogContent>
             <Stack spacing={2}>
-            {props.article.content}
+            {props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}
             </Stack>
           </DialogContent>
           

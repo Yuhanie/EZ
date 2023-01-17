@@ -73,7 +73,7 @@ const Home: NextPage = () => {
 
       <Container sx={{ padding: 5, borderRadius: 4, background: 'white', width: 0.6 }}>
 
-        <img className={styles.user_image} src="pic/test1.jpeg" />
+        <Image alt="使用者照片" className={styles.user_image} src="pic/test1.jpeg" />
 
         <Box sx={{ margin: 4, }}>
           <TextField id="outlined-basic" label="請輸入文章標題" variant="outlined" /><br />

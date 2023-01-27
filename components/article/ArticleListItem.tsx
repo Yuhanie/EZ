@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
-
+import { firebaseConfig } from '../../settings/firebaseConfig';
+import { getApp,getApps, initializeApp } from "firebase/app";
+import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import ArticleDetails from "./ArticleDetails";
 import { Article } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
+//import Heart from '@mui/icons-material/Heart';
+import Heart from '@mui/icons-material/Favorite';
+
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
 
 type Props = {
   article: Article;
@@ -24,7 +31,12 @@ const ArticleListItem:
     setOpen(false);
   };
 
-  
+async function heart(){
+  // await addDoc(collection(db, "posts"), {
+  // firebase.firestore().collection('text')  
+
+  // });
+}  
 
   return (
   <div>
@@ -47,12 +59,13 @@ const ArticleListItem:
         // width="70px"
       /> */}
       <p className={styles.userName}>{props.article.user}</p>
-      <span className={styles.heart} id="heart"></span>
+    
+      
       <span className={styles.fiveStar} id="five-star"></span>
     </div>
-      
-
+    <div className={styles.Heart}><Heart onClick={heart}/></div>
   </div>
+  
   </div>
   );
 };

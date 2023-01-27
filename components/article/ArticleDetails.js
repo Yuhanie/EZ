@@ -86,13 +86,13 @@ useEffect(() => {
 
       
       
-      <div style={{ padding: 14 }} className="App">
+      <div key={comment.content} style={{ padding: 14 }} className="App">
       <Paper style={{ padding: "40px 20px" }}>
       <Grid container wrap="nowrap" spacing={2}>
       <Grid item>
          <Avatar alt="Remy Sharp" />
           </Grid>
-         <Grid key={comment.content} justifyContent="left" item xs zeroMinWidth>
+         <Grid  justifyContent="left" item xs zeroMinWidth>
          <h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
          <p style={{ textAlign: "left" }}>
           {comment.content}

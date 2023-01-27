@@ -92,17 +92,18 @@ useEffect(() => {
       <Grid item>
          <Avatar alt="Remy Sharp" />
           </Grid>
-         <Grid justifyContent="left" item xs zeroMinWidth>
-         <div key={comment.content}><h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
+         <Grid key={comment.content} justifyContent="left" item xs zeroMinWidth>
+         <h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
          <p style={{ textAlign: "left" }}>
           {comment.content}
+          </p>
          <p style={{ textAlign: "left", color: "gray" }}>
          {/* posted 1 minute ago */}
           </p>
-         </p>
+         
         
          
-         </div>
+         
 
         
       </Grid>
@@ -134,7 +135,7 @@ return(
            {props.article.content}
             </Stack>
             <div style={{ padding: 14 }} className="App">
-            <h2><Image src={warning}/>版本疑慮</h2>
+            <h2><Image alt="版本疑慮" src={warning}/>版本疑慮</h2>
       
            <div className={styles.yu}>這篇文章已經不符合現在的版本或者無法使用</div><br/>
             {comments.map(renderComment)}

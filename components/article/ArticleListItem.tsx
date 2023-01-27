@@ -2,7 +2,7 @@ import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp,getApps, initializeApp } from "firebase/app";
-import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore";
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
@@ -31,11 +31,10 @@ const ArticleListItem:
     setOpen(false);
   };
 
-async function heart(){
-  // await addDoc(collection(db, "posts"), {
-  // firebase.firestore().collection('text')  
-
-  // });
+function heart(){
+  const ref = doc(db, "text", props.article.docId);
+  updateDoc(ref,{count: increment(1)});
+  
 }  
 
   return (

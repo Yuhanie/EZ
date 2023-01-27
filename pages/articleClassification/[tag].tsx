@@ -45,7 +45,7 @@ export async function getServerSideProps() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-  const Home = () => {
+  const Article = () => {
     const router = useRouter()
     const {tag} = router.query
 
@@ -102,7 +102,7 @@ export async function getServerSideProps() {
 
   const renderText = (article: Article, i: number) => {
     return (
-      <ArticleListItem article={article}></ArticleListItem>
+      <ArticleListItem key={article.docId} article={article}></ArticleListItem>
 
     );
   };
@@ -111,7 +111,7 @@ export async function getServerSideProps() {
     //console.log("tags3:",tag);
     return (
       <div>
-        <ListItem button>
+        <ListItem key={tag.name} button>
           <MiniTags miniTag={tag}></MiniTags>
         </ListItem>
       </div>
@@ -150,13 +150,13 @@ export async function getServerSideProps() {
               <p>更多熱門主題</p>
           </div>
           <List className={styles.line} aria-label="mailbox folders">
-            <Divider />
+            <Divider key="xx"/>
               {/* <ListItem button> */}
                 {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
                 {tags.map(renderTag)}
               {/* </ListItem> */}
-            <Divider />
+            <Divider key="xxx"/>
           </List>
         </div>
         <div>
@@ -174,4 +174,4 @@ export async function getServerSideProps() {
     </div>
   )
 }
-export default Home
+export default Article

@@ -1087,3 +1087,19 @@
 .Heart:active {
   color: #f30000;
 }
+
+.view{
+  color:grey;
+  font-size: 14px;
+  position:relative;
+  left:480px;
+  bottom:28px;
+}
+
+.views{
+  color:grey;
+  font-size: 14px;
+  position:relative;
+  left:30px;
+  bottom:30px;
+}

@@ -7,6 +7,7 @@ import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
+import VI from '@mui/icons-material/Visibility';
 
 import {
   Dialog,
@@ -126,16 +127,28 @@ useEffect(() => {
 return(
   <div className={styles.container}>
     <Dialog open={props.open} onClose={handleClose}>
-    <DialogTitle>{props.article.title}  {props.article.count}</DialogTitle>
+    <DialogTitle>{props.article.title}
     
+      <Stack spacing={1} className={styles.view}>
+      <VI/>
+      <div className={styles.views}>{props.article.count}</div>
+           
+           
+            </Stack>
+    
+    
+    </DialogTitle>
+  
     
     
     <DialogContent>
+    
       
       <Stack spacing={2}>
            {props.article.content}
            
             </Stack>
+            
             <div style={{ padding: 14 }} className="App">
             <h2><Image alt="版本疑慮" src={warning}/>版本疑慮</h2>
       

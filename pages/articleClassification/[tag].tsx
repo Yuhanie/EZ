@@ -96,7 +96,8 @@ export async function getServerSideProps() {
     }
 
     readData();
-
+    //加tag會有問題，先diable警告
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

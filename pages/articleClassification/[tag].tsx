@@ -96,7 +96,8 @@ export async function getServerSideProps() {
     }
 
     readData();
-
+    //加tag會有問題，先diable警告
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -110,11 +111,7 @@ export async function getServerSideProps() {
   const renderTag = (tag: Tag, i: number) => {
     //console.log("tags3:",tag);
     return (
-      <div>
-        <ListItem key={tag.name} button>
-          <MiniTags miniTag={tag}></MiniTags>
-        </ListItem>
-      </div>
+      <MiniTags key = {tag.name} miniTag={tag}></MiniTags>
     );
   };
 

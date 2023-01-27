@@ -1,3 +1,4 @@
+import { ListItem } from "@mui/material";
 import { useState } from "react";
 import { miniTag } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
@@ -18,7 +19,7 @@ const MiniTags: React.FC<Props> = (props) => {
 //   };
 
   return (
- <div>{props.miniTag.name}</div>
+  <ListItem>{props.miniTag.name}</ListItem>
   );
 };
 export default MiniTags;

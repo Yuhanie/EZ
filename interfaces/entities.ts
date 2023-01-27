@@ -4,7 +4,7 @@ export type Article = {
   user:string;
   docId: string;
   link: string;
-
+  count: number;
 };
 
 export type Comment = {

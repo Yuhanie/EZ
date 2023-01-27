@@ -126,13 +126,15 @@ useEffect(() => {
 return(
   <div className={styles.container}>
     <Dialog open={props.open} onClose={handleClose}>
-    <DialogTitle>{props.article.title}</DialogTitle>
+    <DialogTitle>{props.article.title}  {props.article.count}</DialogTitle>
+    
     
     
     <DialogContent>
       
       <Stack spacing={2}>
            {props.article.content}
+           
             </Stack>
             <div style={{ padding: 14 }} className="App">
             <h2><Image alt="版本疑慮" src={warning}/>版本疑慮</h2>

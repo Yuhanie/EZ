@@ -25,21 +25,24 @@ const ArticleListItem:
 
   const handleOpen = () => {
     setOpen(true);
+    const ref = doc(db, "text", props.article.docId);
+    updateDoc(ref,{count: increment(1)});
+  
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-function heart(){
-  const ref = doc(db, "text", props.article.docId);
-  updateDoc(ref,{count: increment(1)});
+// function heart(){
+//   const ref = doc(db, "text", props.article.docId);
+//   updateDoc(ref,{count: increment(1)});
   
-}  
+// }  
 
   return (
   <div>
-  <ArticleDetails article={props.article} open={open} setOpen={setOpen}></ArticleDetails>
+  <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
   <div className={styles.card} key={props.article.title}>
     
     <h2><a href={props.article.link}>{props.article.title}</a></h2>
@@ -62,7 +65,7 @@ function heart(){
       
       <span className={styles.fiveStar} id="five-star"></span>
     </div>
-    <div className={styles.Heart}><Heart onClick={heart}/></div>
+   <div className={styles.Heart} > <Heart  /*onClick={heart}*//></div> 
   </div>
   
   </div>

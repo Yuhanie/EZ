@@ -281,6 +281,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
+      
       {/* <div >
         <Demo />
       </div> */}

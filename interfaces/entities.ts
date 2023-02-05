@@ -7,6 +7,14 @@ export type Article = {
   count: number;
 };
 
+export type Question = {
+  title: string;
+  content: string;
+  user:string;
+  docId: string;
+  count: number;
+};
+
 export type Comment = {
   user: string;
   content: string;

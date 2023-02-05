@@ -1091,15 +1091,23 @@
 .view{
   color:grey;
   font-size: 14px;
-  position:relative;
-  left:480px;
-  bottom:28px;
+  position:absolute;
+  left:490px;
+  bottom:385px;
 }
 
 .views{
   color:grey;
   font-size: 14px;
-  position:relative;
+  position:absolute;
   left:30px;
-  bottom:30px;
+  bottom:7px;
+}
+
+.users{
+  color:grey;
+  font-size: 14px;
+  position:relative;
+  left:25px;
+  bottom:10px;
 }

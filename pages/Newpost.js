@@ -41,8 +41,8 @@ function Newpost () {
     const router = useRouter();
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
-    const [topics, setTopics] = React.useState([]);
-    const [topicName, setTopicName] = React.useState("");
+    const [tags, setTags] = React.useState([]);
+    const [tagName, setTagName] = React.useState("");
     const [age, setAge] = React.useState('');
 
 
@@ -66,10 +66,10 @@ function Newpost () {
     //   };
       
 
-    const options = topics.map(topic => {
+    const options = tags.map(tag => {
         return {
-            text:topic.name,
-            value:topic.name
+            text:tag.name,
+            value:tag.name
         }
     })
 
@@ -80,11 +80,21 @@ function Newpost () {
         const db = getFirestore();
 
         const auth = getAuth();
-        console.log(topicName);
-        await addDoc(collection(db, "posts"), {
+        console.log(tagName);
+        //生成comment的集合不雞道怎麼寫
+        // await addDoc(collection(db, "text",
+        // props.article.docId,"comment"))
+        await addDoc(collection(db, "text"), {
             title,
             content,
-            topic:topicName,
+            //然後要怎麼把tags變成陣列型態
+            tags:tagName,
+            //還有這些無法加入生成欄位，看來是需要給一個值嗎？
+             count:1,
+            // link,
+            //user欄位要帶入登入的資料8
+            //user, 
+            
             timestamp: serverTimestamp()
             // createAt:Timestamp.now(),
             // author:{
@@ -190,14 +200,14 @@ function Newpost () {
                 id="demo-simple-select"
                 // value={topicName}
                 // label="topic"
-                onChange={(e) => {setTopicName(e.target.value); 
+                onChange={(e) => {setTagName(e.target.value); 
                 console.log("t:")}} 
             >
-                <MenuItem value="note">課堂筆記</MenuItem>
-                <MenuItem value="diary">修課心得</MenuItem>
-                <MenuItem value="project">專題相關</MenuItem>
-                <MenuItem value="company">業界資源</MenuItem>
-                <MenuItem value="other">其他</MenuItem>
+                <MenuItem value="課堂筆記">課堂筆記</MenuItem>
+                <MenuItem value="修課心得">修課心得</MenuItem>
+                <MenuItem value="專題相關">專題相關</MenuItem>
+                <MenuItem value="業界資源">業界資源</MenuItem>
+                <MenuItem value="其他">其他</MenuItem>
             </Select>
 {/* <InputLabel id="label">Age</InputLabel>
 <Select labelId="label" id="select" value="20">

@@ -282,9 +282,9 @@ const Home: NextPage = () => {
       </Head>
       <Navbar />
       
-      {/* <div >
+      <div >
         <Demo />
-      </div> */}
+      </div>
 
       <main className={styles.main}>
 

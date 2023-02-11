@@ -48,24 +48,25 @@ const Navbar = () => {
         </div>
       </Box>
       <Box>
-          <div className={`nav__menu-list`}>
-            {MENU_LIST.map((menu, idx) => (
-              <div
-                onClick={() => {
-                  setActiveIdx(idx);
-                  setNavActive(false);
-                }}
-                key={menu.text}
-              >
-                <Button variant="contained" color="primary"><span className={`${navActive ? "active" : ""} `}>
+        <div className={`nav__menu-list`}>
+          {MENU_LIST.map((menu, idx) => (
+            <div
+              onClick={() => {
+                setActiveIdx(idx);
+                setNavActive(false);
+              }}
+              key={menu.text}
+            >
+              <Button variant="contained" color="primary">
+                <span className={`${navActive ? "active" : ""} `}>
                   <NavItem active={activeIdx === idx} {...menu} />
                 </span>
-                </Button>
-              </div>
-            ))}
+              </Button>
+            </div>
+          ))}
 
-            <MenuIcon />
-          </div>
+          <MenuIcon />
+        </div>
       </Box>
 
 

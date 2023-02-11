@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import ezlogo from '../../public/pic/ezlogo.png';
 import PropTypes from 'prop-types';
@@ -19,6 +19,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import NavItem from "./NavItem";
+
 
 //色調
 const lightTheme = createTheme({
@@ -60,11 +62,18 @@ ElevationScroll.propTypes = {
 
 //appbar排版
 const pages = ['筆記分享區', '問答區'];
-const settings = ['我的角色', '登出', '登入(之後會刪掉)'];
+const settings = [
+  { text: '我的角色', href: "/profile" },
+  { text: '登出', href: "/" },
+  { text: '登入(之後會刪掉)', href: "/login" },
+];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [navActive, setNavActive] = useState(null);
+  const [activeIdx, setActiveIdx] = useState(-1);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -206,9 +215,20 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                {settings.map((setting, idx) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => {
+                      handleCloseUserMenu;
+                      setActiveIdx(idx);
+                      setNavActive(false);
+                    }}
+                  >
+                    <Typography textAlign="center">
+                      <span className={`${navActive ? "active" : ""} `}>
+                        <NavItem active={activeIdx === idx} {...setting} />
+                      </span>
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>

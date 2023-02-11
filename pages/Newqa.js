@@ -37,13 +37,13 @@ const MENU_LIST = [
   
 
     
-function Newpost () {
+function Newqa () {
     const router = useRouter();
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
     const [tags, setTags] = React.useState([]);
     const [tagName, setTagName] = React.useState("");
-    const [age, setAge] = React.useState('');
+    
 
 
 
@@ -81,20 +81,20 @@ function Newpost () {
 
         const auth = getAuth();
         console.log(tagName);
-        
+        //生成comment的集合不雞道怎麼寫
         // await addDoc(collection(db, "text",
         // props.article.docId,"comment"))
-        await addDoc(collection(db, "text"), {
+        await addDoc(collection(db, "question"), {
             title,
             content,
-            
-            tags:[tagName],
+            //然後要怎麼把tags變成陣列型態
+            tags:tagName,
             //還有這些無法加入生成欄位，看來是需要給一個值嗎？
              count:1,
             // link,
             //user欄位要帶入登入的資料8
             //user, 
-            link:"",
+            
             timestamp: serverTimestamp()
             // createAt:Timestamp.now(),
             // author:{
@@ -134,22 +134,13 @@ function Newpost () {
 
     return <Container>
         <Navbar/>
-        <h3>發布筆記</h3><br/>
+        {/* <h3>發布筆記</h3><br/> */}
 
         <IconButton/>
             <ShareIcon/>
             <AccountBoxIcon/>
 
-            <Button
-            variant="contained"
-            component="label"
-            >
-            上傳檔案
-            <input
-                type="file"
-                hidden
-            />
-            </Button>
+            
 
             {/* <Form.Input
             type="file"
@@ -158,8 +149,8 @@ function Newpost () {
             <div>
             <TextField
                 id="outlined-textarea"
-                label="請輸入筆記標題"
-                placeholder="今天的主題是..."
+                label="請輸入提問標題"
+                placeholder="今天的問題是..."
                 multiline
                 onChange={(e) => setTitle(e.target.value)} 
             />
@@ -180,8 +171,7 @@ function Newpost () {
             <div>
             <TextField
                 id="outlined-textarea"
-                label="請輸入內容"
-                placeholder="我想分享..."
+                label="請輸入問題內容"
                 multiline
                 onChange={(e) => setContent(e.target.value)} 
             />
@@ -194,7 +184,7 @@ function Newpost () {
             /> */}
 
             <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
+            <InputLabel id="demo-simple-select-label">請選擇問題標籤</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -260,4 +250,4 @@ function Newpost () {
     </Container>
 }
 
-export default Newpost;
+export default Newqa;

@@ -52,7 +52,7 @@ export default function profile() {
 
       <Navbar />
       <div>
-        <Container sx={{ bgcolor: '#fafafa' }} >
+        <Container >
           <br />
           <Card>
 

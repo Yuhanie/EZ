@@ -1,8 +1,6 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-
-
+import Container from '@mui/material/Container';
 import Navbar from '../../components/navbar/Navbar';
 import Head from 'next/head';
 import Card from '@mui/material/Card';
@@ -11,13 +9,35 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { spacing } from '@material-ui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import EditIcon from '@material-ui/icons/Edit';
+import { Avatar } from '@mui/material';
+import { bgcolor } from '@mui/system';
+import { createTheme } from '@material-ui/core/styles';
+import Divider from '@mui/material/Divider';
 
 
-
-
+//chip的style
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
+}));
 
 
 export default function profile() {
+  const theme = createTheme({
+    spacing: 4,
+  });
+
+
 
   return (
     <div>
@@ -31,34 +51,76 @@ export default function profile() {
 
 
       <Navbar />
-      <br />
-      <Container fixed>
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+      <div>
+        <Container sx={{ bgcolor: '#fafafa' }} >
+          <br />
+          <Card>
 
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                name
-              </Typography>
-              
-              <Typography variant="body2" color="text.secondary">
-                資訊
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
-            </CardActions>
+          <Box sx={{ bgcolor: '#ffffff' }}>
+          {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
+              <Box p={1.5}>
+                <Typography fontSize={20}>個人資料</Typography>
+              </Box>
+
+              <Divider />
+
+              <Box display="flex" p={2} justifyContent={'space-between'}>
+
+                <Box width={0.3} bgcolor={'#ffffff'}>
+                  <Box>
+                    <Box display="flex">
+                      <Box pr={3}>
+                        <Avatar
+                          sx={{
+                            width: 70,
+                            height: 70,
+                          }}
+                        >
+                          H
+                        </Avatar>
+                      </Box>
+                      <Box>
+                        <Typography pt={0.8} fontSize={25} >user</Typography>
+                        <Typography fontSize={12}>@userid</Typography>
+                      </Box>
+                    </Box>
+                    <Box m={1}>
+                      聯絡資訊
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box width={0.4} bgcolor={'#fafafa'}>
+                  <Card>
+                    {/* <Card sx={{ minWidth: 275 }}> */}
+                    <CardContent>
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        擅長領域：
+                      </Typography>
+                      <Chip label="tag 1" component="a" href="#chip" clickable />
+                      <Chip label="tag 2" component="a" href="#chip" clickable />
+                      <Chip label="tag 3" component="a" href="#chip" clickable />
+                    </CardContent>
+                  </Card>
+                </Box>
+
+                <Box display="flex">
+                  <EditIcon
+                    style={{
+                      fontSize: 30,
+                      color: "#7A82E7",
+
+                    }}
+                  />
+                </Box>
+
+              </Box>
+            </Box>
           </Card>
-        </Box>
-      </Container>
+        </Container>
+      </div>
 
-    </div>
+    </div >
 
 
 

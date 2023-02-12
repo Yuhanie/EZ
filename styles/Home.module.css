@@ -993,7 +993,7 @@
   display: inline-block;
 }
 
-/**** article classification *****/
+/********************** article classification **************/
 .classification_container{
   display: flex;
   flex-direction: row;
@@ -1110,4 +1110,9 @@
   position:relative;
   left:25px;
   bottom:10px;
+}
+
+/********** profile **********/
+.bg{
+  background-color: #fafafa;
 }

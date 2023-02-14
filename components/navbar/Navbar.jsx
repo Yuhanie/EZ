@@ -21,7 +21,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NavItem from "./NavItem";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 
 //色調
@@ -67,10 +67,11 @@ ElevationScroll.propTypes = {
 const pages = ['筆記分享區', '問答區'];
 const settings = [
   { text: '我的角色', href: "/profile" },
-  { text: '登出', href: "/" },
+  { text: '登出', href: "/logout" },
   { text: '登入(之後會刪掉)', href: "/login" },
 ];
-<AddCircleIcon></AddCircleIcon>
+
+
 
 
 function ResponsiveAppBar() {
@@ -197,7 +198,7 @@ function ResponsiveAppBar() {
                 </Button>
               ))}
             </Box>
-
+            
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -220,6 +221,7 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                
                 {settings.map((setting, idx) => (
                   <MenuItem
                     key={setting}
@@ -238,6 +240,7 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
+            
           </Toolbar>
         </Container>
       </AppBar >

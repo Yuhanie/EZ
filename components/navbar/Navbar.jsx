@@ -41,10 +41,10 @@ const lightTheme = createTheme({
 });
 
 
-//把appbar固定在最上方
+//把appbar固定在最上方(未完成)
 function ElevationScroll(props) {
   const { children, window } = props;
-  
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -64,7 +64,11 @@ ElevationScroll.propTypes = {
 
 
 //appbar排版
-const pages = ['筆記分享區', '問答區'];
+const pages = [
+  // '筆記分享區', '問答區',
+  { text: '筆記分享區', href: "/" },
+  { text: '問答區', href: "/QA" }
+];
 const settings = [
   { text: '我的角色', href: "/profile" },
   { text: '登出', href: "/logout" },
@@ -157,9 +161,20 @@ function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {pages.map((page,idx) => (
+                  <MenuItem
+                    key={page}
+                    onClick={() => {
+                      handleCloseUserMenu;
+                      setActiveIdx(idx);
+                      setNavActive(false);
+                    }}
+                  >
+                    <Typography textAlign="center">
+                      <span className={`${navActive ? "active" : ""} `}>
+                        <NavItem active={activeIdx === idx} {...page} />
+                      </span>
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -189,17 +204,25 @@ function ResponsiveAppBar() {
                 src={ezlogo} />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+              {pages.map((page,idx) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => {
+                    handleCloseUserMenu;
+                    setActiveIdx(idx);
+                    setNavActive(false);
+                  }}
                   sx={{ my: 2, color: 'black', display: 'block' }}
                 >
-                  {page}
+                   <Typography textAlign="center">
+                      <span className={`${navActive ? "active" : ""} `}>
+                        <NavItem active={activeIdx === idx} {...page} />
+                      </span>
+                    </Typography>
                 </Button>
               ))}
             </Box>
-            
+
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -222,7 +245,7 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                
+
                 {settings.map((setting, idx) => (
                   <MenuItem
                     key={setting}
@@ -241,7 +264,7 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
-            
+
           </Toolbar>
         </Container>
       </AppBar >

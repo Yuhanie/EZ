@@ -3,6 +3,7 @@ import Image from 'next/image';
 import ezlogo from '../../public/pic/ezlogo.png';
 import PropTypes from 'prop-types';
 
+
 //mui的各種import
 import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
@@ -20,6 +21,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NavItem from "./NavItem";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 //色調
@@ -42,6 +44,7 @@ const lightTheme = createTheme({
 //把appbar固定在最上方(未完成)
 function ElevationScroll(props) {
   const { children, window } = props;
+  
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -67,6 +70,8 @@ const settings = [
   { text: '登出', href: "/" },
   { text: '登入(之後會刪掉)', href: "/login" },
 ];
+<AddCircleIcon></AddCircleIcon>
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

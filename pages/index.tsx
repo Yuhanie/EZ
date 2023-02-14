@@ -4,9 +4,15 @@ import Image from "next/image";
 import React, { useState, useEffect, Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import 'swiper/css';
+import {SwiperOptions } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import SwiperCore, { Autoplay } from 'swiper';
 SwiperCore.use([Autoplay]);
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 // import styles from '../index.less';
 import Navbar3 from "../components/navbar/Navbar3";
@@ -38,6 +44,7 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from 
 //import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
 import { render } from "react-dom";
+import { green } from '@mui/material/colors';
 
 // import App from 'myapp/src/App';
 
@@ -56,6 +63,14 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
 const db = getFirestore();
 
 //////////////////////////////////////////////////////////////////////////
+
+
+// const swiperParams: SwiperOptions = {
+//   slidesPerView: 3,
+//   spaceBetween: 50,
+// };
+
+// // const swiper = new Swiper('.swiper', swiperParams);
 
 
 // const Search = styled('div')(({ theme }) => ({
@@ -164,12 +179,7 @@ const Demo: React.FC = () => {
     'pic/navpic.jpg',
     'pic/nav.png',
     'pic/ezlogo.png',
-    // require('@/public/pic/navpic.jpg'),
-    // require('@/public/pic/welcome.png'),
-    // require('@/public/pic/ezlogo.png'),
-    // require('@/assets/images/demo/partner-logo-4.png'),
-    // require('@/assets/images/demo/partner-logo-5.png'),
-    // require('@/assets/images/demo/partner-logo-6.png'),
+
   ];
   return (
     <div className={styles.demo}>
@@ -186,6 +196,8 @@ const Demo: React.FC = () => {
     </div>
   );
 };
+
+
 
 
 // export default Demo;
@@ -222,9 +234,8 @@ class ReactSlickDemo extends React.Component {
         </Slider>
       </div>
 
-
-
     );
+    
   }
 }
 
@@ -234,6 +245,26 @@ const Home: NextPage = () => {
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // return (
+  //   <Swiper
+  //     // install Swiper modules
+  //     modules={[Navigation, Pagination, Scrollbar, A11y]}
+  //     spaceBetween={50}
+  //     slidesPerView={3}
+  //     navigation
+  //     pagination={{ clickable: true }}
+  //     scrollbar={{ draggable: true }}
+  //     onSwiper={(swiper) => console.log(swiper)}
+  //     onSlideChange={() => console.log('slide change')}
+  //   >
+  //     <SwiperSlide>Slide 1</SwiperSlide>
+  //     <SwiperSlide>Slide 2</SwiperSlide>
+  //     <SwiperSlide>Slide 3</SwiperSlide>
+  //     <SwiperSlide>Slide 4</SwiperSlide>
+  //     ...
+  //   </Swiper>
+  // );
 
   useEffect(() => {
     async function readData() {

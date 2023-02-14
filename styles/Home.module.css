@@ -507,19 +507,19 @@
   padding: 1.5rem;
   text-align: left;
   color: inherit;
-  max-width: 200px;
+  max-width: 100px;
 
   position:relative;
   display:flex;
   background: #ffffff;
-  width: 200px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 1px 1px 4px rgba(111, 111, 111, 0.7);
-  border-radius: 5px;
+  border-radius: 200px;
 }
 
 .tag2{
@@ -1115,4 +1115,16 @@
 /********** profile **********/
 .bg{
   background-color: #fafafa;
+}
+
+.text_cs{
+  position:relative;
+  left:380px;
+  top:50px;
+}
+
+.tag_text{
+  position:relative;
+  text-align: center;
+  
 }

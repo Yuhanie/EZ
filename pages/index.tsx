@@ -231,6 +231,7 @@ class ReactSlickDemo extends React.Component {
 
 const Home: NextPage = () => {
   const [tag, setTag] = useState<Tag[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -285,7 +286,7 @@ const Home: NextPage = () => {
       <div >
         <Demo />
       </div>
-
+      {/* <h3 className={styles.text_cs}>熱門標籤</h3> */}
       <main className={styles.main}>
 
 
@@ -315,9 +316,10 @@ const Home: NextPage = () => {
 
           : <CircularProgress />
         }
-
+      
 
       </main>
+      
     </div>
   )
 }

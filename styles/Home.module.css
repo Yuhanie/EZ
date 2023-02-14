@@ -448,19 +448,23 @@
 }
 
 .grid {
+  position:relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800%;
+  top:60px;
 }
 
 .grid2 {
+  position:relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 60%;
+  left:100px;
 }
 
 .card {
@@ -1119,12 +1123,17 @@
 
 .text_cs{
   position:relative;
-  left:380px;
-  top:50px;
+  right:700px;
+  top:120px;
 }
 
 .tag_text{
   position:relative;
   text-align: center;
   
+}
+
+.post_cs{
+  position:relative;
+
 }

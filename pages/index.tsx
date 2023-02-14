@@ -13,7 +13,7 @@ SwiperCore.use([Autoplay]);
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
+import {useRouter} from "next/router"
 // import styles from '../index.less';
 import Navbar3 from "../components/navbar/Navbar3";
 
@@ -45,6 +45,8 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase } from 
 import { styled, alpha } from '@mui/material/styles'
 import { render } from "react-dom";
 import { green } from '@mui/material/colors';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
 
 // import App from 'myapp/src/App';
 
@@ -242,10 +244,11 @@ class ReactSlickDemo extends React.Component {
 
 
 const Home: NextPage = () => {
+  const [currentUser, setCurrentUser] = useState<User>();
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const router = useRouter();
   // return (
   //   <Swiper
   //     // install Swiper modules
@@ -269,33 +272,87 @@ const Home: NextPage = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      // const querySnapshot = await getDocs(collection(db, "text"));
       const querySnapshot = await getDocs(collection(db, "tag"));
-      // const temp:Article[] = [];
       const temp: Tag[] = [];
 
-      // querySnapshot.forEach((doc) => {
-      //   console.log(doc.id, doc.data());
-      //   temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
-      // });
+      
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name });
+        
       });
-
+      setTag([...temp]);
+      const textCollection = collection(db, "text");
+      const queryText = query(textCollection, orderBy("count","desc"),limit(3));
+      const querySnapshotArticle = await getDocs(queryText);
+      //const querySnapshotArticle  = await getDocs(collection(db, "text"));
+      const tempArticle:Article[] = [];
+      querySnapshotArticle.forEach((doc) => {
+        console.log(doc.id, doc.data());
+        tempArticle.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user, link:doc.data().link, count:doc.data().count});
+      });
+      setArticles([...tempArticle]);
       console.log(temp);
 
-      setTag([...temp]);
+      const auth = getAuth();
+      const unsub = onAuthStateChanged(auth, (user)=>{
+        if (user){setCurrentUser(user);
+        }
+        // else{
+        // setCurrentUser()}
+        console.log(user);
+      });
+  
+      
+
+
+      
       setIsLoading(false);
+
+      return () => {
+        unsub();
+      }
     }
 
     readData();
+
 
   }, []);
 
   // const test = () => {
   //   console.log("Hello");
   // }
+
+  // const changeStatus = function (props) {
+  //   props.setStatus("signUp");
+  // }
+  const changeStatus = function () {
+    
+    if (currentUser){
+      router.push('/Newpost');
+    }
+    else{
+      alert("要登入才能新增筆記ㄛ!")
+      router.push('/login');
+
+    }
+  }
+
+  
+    // const logout = async function () {
+    //   const auth = getAuth();
+    //   await signOut(auth);
+    //   alert("已登出");
+    // };
+  
+
+
+  const renderText = (article: Article, i: number) => {
+    return (
+      <ArticleListItem key={article.docId} article={article}></ArticleListItem>
+    );
+
+  };
 
   const renderTag = (tag: Tag, i: number) => {
     return (
@@ -348,7 +405,16 @@ const Home: NextPage = () => {
 
           : <CircularProgress />
         }
-      
+              <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3>
+              
+              
+              {!isLoading ?
+            <div className={styles.grid}>
+              {articles.map(renderText)}
+            </div>
+          :<CircularProgress />
+        }
+              
 
       </main>
       

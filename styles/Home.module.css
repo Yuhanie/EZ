@@ -1091,17 +1091,17 @@
 .view{
   color:grey;
   font-size: 14px;
-  position:absolute;
-  left:490px;
-  bottom:385px;
+  position:relative;
+  left:460px;
+  bottom:25px;
 }
 
 .views{
   color:grey;
   font-size: 14px;
-  position:absolute;
+  position:relative;
   left:30px;
-  bottom:7px;
+  bottom:30px;
 }
 
 .users{

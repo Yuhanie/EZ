@@ -46,7 +46,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-
+import Chip from '@mui/material/Chip';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 
 
@@ -158,6 +160,33 @@ const Article = () => {
       <div>
         <Box sx={{ overflow: 'auto' }}>
           <Toolbar />
+          <Box display="flex" pt={3.5} pb={2}>
+            <IconButton
+              href="/"
+            >
+              <ArrowBackIosNewIcon />
+            </IconButton>
+
+            <Chip
+              icon={<BookmarksIcon sx={{ fontSize: 20 }} />}
+              sx={{
+                bgcolor: "#CACDF5",
+                fontSize: 18,
+                fontWeight: "bold",
+                p: 2.5,
+                width: 180,
+
+              }}
+              label={tag}
+            />
+          </Box>
+          <Box display="flex" p={1}>
+            < LocalFireDepartmentIcon color="error"/>
+            <Typography>
+              更多熱門主題
+            </Typography>
+          </Box>
+          <Divider />
 
           <List className={styles.line} aria-label="mailbox folders">
             {/* <ListItem button> */}
@@ -167,7 +196,7 @@ const Article = () => {
             {/* </ListItem> */}
           </List>
         </Box>
-      </div>
+      </div >
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -189,7 +218,9 @@ const Article = () => {
           <Button
             variant="contained"
             size="medium"
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            color="primary"
+            sx={{ mr: 2, display: { sm: 'none',} }}
+            
           >
             {tag}
           </Button>
@@ -265,15 +296,15 @@ const Article = () => {
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
         >
-            
-              {!isLoading ?
-                <div className={styles.grid}>
-                  {articles.map(renderText)}
-                </div>
-                : <CircularProgress />
-              }
 
-            
+          {!isLoading ?
+            <div className={styles.grid}>
+              {articles.map(renderText)}
+            </div>
+            : <CircularProgress />
+          }
+
+
         </Box>
 
       </div>

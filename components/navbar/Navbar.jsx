@@ -41,7 +41,7 @@ const lightTheme = createTheme({
 });
 
 
-//把appbar固定在最上方(未完成)
+//把appbar固定在最上方
 function ElevationScroll(props) {
   const { children, window } = props;
   
@@ -101,7 +101,8 @@ function ResponsiveAppBar() {
   return (
     <ThemeProvider theme={lightTheme}>
       < AppBar
-        position="static"
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters >

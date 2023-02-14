@@ -4,12 +4,14 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import React, { useState, useEffect } from "react";
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow ,Dialog,
+import {
+  Fab, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
-  Stack, } from "@mui/material";
+  Stack,
+} from "@mui/material";
 //import DeleteIcon from '@mui/icons-material/Delete';
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -20,7 +22,7 @@ import ArticleDetails from '../../components/post/ArticleDetails';
 import ArticleListItem from '../../components/article/ArticleListItem';
 import MiniTags from '../../components/miniTags/miniTags';
 import TagList from '../../components/tag/TagList';
-import { Article,Tag } from '../../interfaces/entities';
+import { Article, Tag } from '../../interfaces/entities';
 // import { tags } from '../../interfaces/entities';
 
 import { query, orderBy, limit, where } from "firebase/firestore";
@@ -34,6 +36,23 @@ import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { title } from 'process';
+import AppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Drawer from '@mui/material/Drawer';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -41,21 +60,21 @@ const db = getFirestore();
 
 export async function getServerSideProps() {
   return {
-      props: {},
+    props: {},
   };
 }
 
 //////////////////////////////////////////////////////////////////////////
-  const Article = () => {
-    const router = useRouter()
-    const {tag} = router.query
+const Article = () => {
+  const router = useRouter()
+  const { tag } = router.query
 
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [tags, setTags] = useState<Tag[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   //console.log(props)
-  
+
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
@@ -77,19 +96,19 @@ export async function getServerSideProps() {
         //   temp2.push({docId: doc.id,name:doc2.data().name}); 
         // });
         console.log(doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,link: doc.data().link, count: doc.data().count}); 
+        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count });
       });
 
       //console.log("tag4:",tag);
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+tag+"/分類")));
-        querySnapshot2.forEach(async (doc2) => {
-          console.log(doc2.id);
-          console.log(doc2.data());
-          temp2.push({name:doc2.data().name}); 
-        });
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      querySnapshot2.forEach(async (doc2) => {
+        console.log(doc2.id);
+        console.log(doc2.data());
+        temp2.push({ name: doc2.data().name });
+      });
 
       console.log(temp);
-      console.log("temp2:",temp2);
+      console.log("temp2:", temp2);
 
       setArticles([...temp]);
       setTags([...temp2]);
@@ -112,9 +131,118 @@ export async function getServerSideProps() {
   const renderTag = (tag: Tag, i: number) => {
     //console.log("tags3:",tag);
     return (
-      <MiniTags key = {tag.name} miniTag={tag}></MiniTags>
+      <MiniTags key={tag.name} miniTag={tag}></MiniTags>
     );
   };
+
+  ////////////////////////////////////////////////////////////sidebar
+  const drawerWidth = 240;
+
+  interface Props {
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window?: () => Window;
+  }
+
+  const ResponsiveDrawer = (props: Props) => {
+    const { window } = props;
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    };
+
+    const drawer = (
+      <div>
+        <Box sx={{ overflow: 'auto' }}>
+          <Toolbar />
+
+          <List className={styles.line} aria-label="mailbox folders">
+            {/* <ListItem button> */}
+            {/* <ListItemText primary="分類" />
+                <ListItemText/> */}
+            {tags.map(renderTag)}
+            {/* </ListItem> */}
+          </List>
+        </Box>
+      </div>
+    );
+
+    const container = window !== undefined ? () => window().document.body : undefined;
+
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ p: 2, mt: 8 }}>
+          <IconButton
+            aria-label="ArrowBack"
+            color="inherit"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+            href="/"
+          >
+            <ArrowBackIosNewIcon />
+          </IconButton>
+
+          <Button
+            variant="contained"
+            size="medium"
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            {tag}
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            更多熱門主題
+          </Button>
+        </Box>
+
+        <Box
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders"
+        >
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+
+      </Box>
+
+    );
+
+  }
+
 
   return (
     <div className={styles.container}>
@@ -125,49 +253,29 @@ export async function getServerSideProps() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar/>
-    
+      <Navbar />
+      <ResponsiveDrawer />
+
+
       <div className={styles.classification_container}>
         <div className={styles.classification_sidebar}>
-          <div className={styles.sidebar_tool}>
-           <Link href="/">
-            <IconButton aria-label="ArrowBack">
-                <ArrowBackIosNewIcon/>
-            </IconButton>
-           </Link>
 
-            {/* <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton> */}
-
-            <div className={styles.classification_tag}><br/>
-              <h3>{tag}</h3>
-            </div>
-          </div>
-          <div className={styles.sidebar_tool}>
-              <p>更多熱門主題</p>
-          </div>
-          <List className={styles.line} aria-label="mailbox folders">
-            <Divider key="xx"/>
-              {/* <ListItem button> */}
-                {/* <ListItemText primary="分類" />
-                <ListItemText/> */}
-                {tags.map(renderTag)}
-              {/* </ListItem> */}
-            <Divider key="xxx"/>
-          </List>
         </div>
-        <div>
-          <main className={styles.main}>
-            {!isLoading ?
-              <div className={styles.grid}>
-                {articles.map(renderText)}
-              </div>
-              : <CircularProgress />
-            }
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
+        >
+            
+              {!isLoading ?
+                <div className={styles.grid}>
+                  {articles.map(renderText)}
+                </div>
+                : <CircularProgress />
+              }
 
-          </main>
-        </div>
+            
+        </Box>
+
       </div>
     </div>
   )

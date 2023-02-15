@@ -3,6 +3,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import type { NextPage } from 'next';
 import {useRouter} from "next/router"
 import { firebaseConfig } from 'settings/firebaseConfig';
+import {Button} from "@mui/material";
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const Logout: NextPage = () => {
@@ -14,8 +15,8 @@ const Logout: NextPage = () => {
         //window.alert("已登出");
         router.push('/');
       };
-      logout()
-    return(<div></div>)
+      
+    return(<div><Button onClick={logout}>登出</Button></div>)
 }
 
 

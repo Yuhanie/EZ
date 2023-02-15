@@ -127,7 +127,7 @@ useEffect(() => {
 return(
   <div className={styles.container}>
     <Dialog open={props.open} onClose={handleClose}>
-    <DialogTitle>{props.article.title}
+    <DialogTitle><a href={props.article.link}>{props.article.title}</a>
     
       <Stack spacing={1} className={styles.view}>
       <VI/>
@@ -145,7 +145,8 @@ return(
     
       
       <Stack spacing={2}>
-           {props.article.content}
+           {/* {props.article.content} */}
+           <a href={props.article.link}>{props.article.content.substring(0, 165)}{props.article.content.length>165?"...":""}</a>
            
             </Stack>
             

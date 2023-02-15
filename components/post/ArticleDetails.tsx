@@ -47,7 +47,7 @@ const ArticleDetails: React.FC<Props> = (props) => {
 
           <DialogContent>
             <Stack spacing={2}>
-            {props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}
+            <a href={props.article.link}>{props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}</a>
             </Stack>
           </DialogContent>
           

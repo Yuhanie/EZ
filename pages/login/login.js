@@ -91,7 +91,7 @@ export default function SignIn(props) {
                 <Button className={styles.login_btn} variant="contained" color="primary" onClick={handleSubmit}>登入</Button><br />
                 <Link href="">忘記密碼</Link><br/><br/>
                 <p>沒有帳號？現在就加入我們吧！</p><br/>
-                <h4><Button variant="contained" color="secondary" onClick={changeStatus}>我要註冊</Button></h4>
+                <h4><Link href="/register/register">點此註冊</Link></h4>
               </div>
             </form>
           </div>

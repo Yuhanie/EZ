@@ -97,7 +97,7 @@ const Home = () => {
         {message}
         <input className={styles.loginbtn} type="button" onClick={haddleOnClick} value="註冊" name="register_btn"/>
         <p>已經有帳號了嗎？</p>
-        <h4><a href="login.tsx">點此登入</a></h4>
+        <h4><Link href="/login/login">點此登入</Link></h4>
       </div>
             </form>
           </div>

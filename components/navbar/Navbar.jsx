@@ -22,6 +22,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NavItem from "./NavItem";
 
+//登出功能
+import { getApp, getApps, initializeApp } from 'firebase/app';
+import { getAuth, signOut } from 'firebase/auth';
+import { useRouter } from "next/router"
+import { firebaseConfig } from 'settings/firebaseConfig';
 
 
 //色調
@@ -67,13 +72,30 @@ ElevationScroll.propTypes = {
 const pages = [
   // '筆記分享區', '問答區',
   { text: '筆記分享區', href: "/" },
-  { text: '問答區', href: "/QA" }
+  { text: '問答區', href: "" }
 ];
 const settings = [
   { text: '我的角色', href: "/profile" },
-  { text: '登出', href: "/logout" },
+  { text: '登出', href: "../logout" },
   { text: '登入(之後會刪掉)', href: "/login" },
 ];
+
+
+//登出功能
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const Logout = () => {
+  const router = useRouter();
+  const logout = async function () {
+    const auth = getAuth();
+    await signOut(auth);
+    if (typeof window !== "undefined") { alert("已登出") }
+    //window.alert("已登出");
+    router.push('/');
+  };
+
+  return (<div><Button onClick={logout}>登出</Button></div>)
+}
+
 
 
 
@@ -161,7 +183,7 @@ function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page,idx) => (
+                {pages.map((page, idx) => (
                   <MenuItem
                     key={page}
                     onClick={() => {
@@ -203,8 +225,15 @@ function ResponsiveAppBar() {
                 height={40}
                 src={ezlogo} />
             </Typography>
+
+            {/* 登入前 */}
+            <Box>
+              <Button variant="text">登入</Button>
+            </Box>
+
+            {/* 登入後 */}
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page,idx) => (
+              {pages.map((page, idx) => (
                 <Button
                   key={page}
                   onClick={() => {
@@ -214,11 +243,11 @@ function ResponsiveAppBar() {
                   }}
                   sx={{ my: 2, color: 'black', display: 'block' }}
                 >
-                   <Typography textAlign="center">
-                      <span className={`${navActive ? "active" : ""} `}>
-                        <NavItem active={activeIdx === idx} {...page} />
-                      </span>
-                    </Typography>
+                  <Typography textAlign="center">
+                    <span className={`${navActive ? "active" : ""} `}>
+                      <NavItem active={activeIdx === idx} {...page} />
+                    </span>
+                  </Typography>
                 </Button>
               ))}
             </Box>

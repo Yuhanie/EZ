@@ -17,6 +17,8 @@ import { Avatar } from '@mui/material';
 import { bgcolor } from '@mui/system';
 import { createTheme } from '@material-ui/core/styles';
 import Divider from '@mui/material/Divider';
+import Toolbar from '@mui/material/Toolbar';
+import Stack from '@mui/material/Stack';
 
 
 //chip的style
@@ -53,18 +55,19 @@ export default function profile() {
       <Navbar />
       <div>
         <Container >
+          <Toolbar />
           <br />
           <Card>
 
-          <Box sx={{ bgcolor: '#ffffff' }}>
-          {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
+            <Box sx={{ bgcolor: '#ffffff' }}>
+              {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
               <Box p={1.5}>
                 <Typography fontSize={20}>個人資料</Typography>
               </Box>
 
               <Divider />
 
-              <Box display="flex" p={2} justifyContent={'space-between'}>
+              <Box display="flex" p={2} justifyContent={'space-between'} flexDirection='row'>
 
                 <Box width={0.3} bgcolor={'#ffffff'}>
                   <Box>
@@ -90,16 +93,18 @@ export default function profile() {
                   </Box>
                 </Box>
 
-                <Box width={0.4} bgcolor={'#fafafa'}>
+                <Box width={0.4} bgcolor={'#fafafa'} >
                   <Card>
                     {/* <Card sx={{ minWidth: 275 }}> */}
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         擅長領域：
                       </Typography>
-                      <Chip label="tag 1" component="a" href="#chip" clickable />
-                      <Chip label="tag 2" component="a" href="#chip" clickable />
-                      <Chip label="tag 3" component="a" href="#chip" clickable />
+                      <Stack direction="row" spacing={1}>
+                        <Chip label="tag 1" component="a" href="#chip" clickable />
+                        <Chip label="tag 2" component="a" href="#chip" clickable />
+                        <Chip label="tag 3" component="a" href="#chip" clickable />
+                      </Stack>
                     </CardContent>
                   </Card>
                 </Box>

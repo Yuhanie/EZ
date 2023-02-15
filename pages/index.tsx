@@ -331,7 +331,8 @@ const Home: NextPage = () => {
       router.push('/Newpost');
     }
     else{
-      window.alert("要登入才能新增筆記ㄛ!");
+      if (typeof window !== "undefined") { alert("要登入才能新增筆記ㄛ!")}
+      //window.alert("要登入才能新增筆記ㄛ!");
 
       // <Alert action={
       //   <Button >

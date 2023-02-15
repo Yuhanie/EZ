@@ -10,7 +10,7 @@ const Logout: NextPage = () => {
     const logout = async function () {
         const auth = getAuth();
         await signOut(auth);
-        alert("已登出");
+        window.alert("已登出");
         router.push('/');
       };
       logout()

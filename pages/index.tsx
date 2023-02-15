@@ -17,7 +17,6 @@ import {useRouter} from "next/router"
 // import styles from '../index.less';
 import Navbar3 from "../components/navbar/Navbar3";
 
-
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
@@ -35,7 +34,7 @@ import nav from '../public/pic/nav.png';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
-import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress, Alert } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -332,7 +331,14 @@ const Home: NextPage = () => {
       router.push('/Newpost');
     }
     else{
-      alert("要登入才能新增筆記ㄛ!")
+      alert("要登入才能新增筆記ㄛ!");
+
+      // <Alert action={
+      //   <Button >
+      //     UNDO
+      //   </Button>
+      // }>要登入才能新增筆記ㄛ! </Alert>
+
       router.push('/login');
 
     }

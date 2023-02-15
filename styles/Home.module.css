@@ -1133,7 +1133,10 @@
   
 }
 
-.post_cs{
+.slick_demo{
   position:relative;
+  right:160px;
+
+  align-items: center;
 
 }

@@ -34,7 +34,7 @@ import nav from '../public/pic/nav.png';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
-import { List, ListItem, ListItemText, CircularProgress, Alert } from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress} from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -378,12 +378,13 @@ const Home: NextPage = () => {
       </Head>
       <Navbar />
       
-      <div >
-        <Demo />
-      </div>
+      
       {/* <h3 className={styles.text_cs}>熱門標籤</h3> */}
       <main className={styles.main}>
-
+        
+     <div className={styles.slick_demo}>
+        <Demo />
+   </div>
 
         {/* <nav className={styles.navbar}>
           <div className={styles.form}>

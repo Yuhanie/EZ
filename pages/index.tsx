@@ -381,7 +381,7 @@ const Home: NextPage = () => {
       
       {/* <h3 className={styles.text_cs}>熱門標籤</h3> */}
       <main className={styles.main}>
-        
+
      <div className={styles.slick_demo}>
         <Demo />
    </div>

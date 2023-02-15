@@ -1,36 +1,65 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { getApps, getApp, initializeApp } from "firebase/app";
-import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import styles from "/styles/Home.module.css";
 import {firebaseConfig} from '../../settings/firebaseConfig';
+import myImage from '../../public/pic/welcome.png';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-export default function SignUp() {
-  if (getApps().length===0) {
-    initializeApp(firebaseConfig);
-  }
-  const [account, setAccount] = useState({email:"",password:"", displayName:""});
+
+
+
+
+if (getApps().length === 0) {
+  initializeApp(firebaseConfig);
+}
+const Home = () => {
+  const [account, setAccount] = useState({ email: "", password: "", displayName: "" });
   const [message, setMessage] = useState("");
-  const handleChange = function(e){
-    setAccount({...account,[e.target.name]:e.target.value})
+  const auth = getAuth();  
+  const handleChange = function (e) {
+    setAccount({ ...account, [e.target.name]: e.target.value })
   }
-  const handleSubmit = async function(){
-    try {
-      const auth = getAuth();
-      const res = await createUserWithEmailAndPassword(auth, account.email, account.password);
-      if (res) {
-        await updateProfile(auth.currentUser,{displayName: account.displayName});
-      }
-      setMessage("");
+  async function haddleOnClick(){
+  const res = await createUserWithEmailAndPassword(auth, account.email, account.password);
+  updateProfile(auth.currentUser, {
+    displayName: "Jane Q. User", photoURL: "https://example.com/jane-q-user/profile.jpg"
+  }).then(() => {
+    // Profile updated!
+    // ...
+  }).catch((error) => {
+    // An error occurred
+    // ...
+  });
 
+  try {
+    const res = await createUserWithEmailAndPassword(
+      auth,
+      account.email,
+      account.password
+    );
+    setMessage("帳號已產生");
+    console.log({ res });
+  } catch (error) {
+    let message = "";
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        message = "電子信箱已註冊";
+        break;
+      case "auth/weak-password":
+        message = "密碼強度不足";
+        break;
+      case "auth/invalid-email":
+        message = "電子郵件格式錯誤";
+        break;
+      default:
+        message = "系統錯誤:" + error.code;
     }
-    catch(error){
-      setMessage(""+error);
-    }
+    setMessage(message);
   }
-
-  
+}
 
   return (
     <div className={styles.container}>
@@ -42,32 +71,37 @@ export default function SignUp() {
       <main className={styles.main}>
 
       
-      <div className={styles.introduce}>
-        <img src="pic/welcome.png" width="300px" />
-        
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.post}>
-            <p>先看看其他文章 &rarr;</p>
-          </a>
-        </div>
-      </div>
-     
-      <div className={styles.logincon}>
-        <form method="post" action="login.php">
+  
+
+      <div className={styles.group}>
+          <div className={styles.introduce}>
+
+            <Image src={myImage}/>
+
+            <div className={styles.grid}>
+              <Link href="/" className={styles.post}>
+                <p>先看看其他文章 &rarr;</p>
+              </Link>
+
+            </div>
+            <form>
+            <div className={styles.logincon}>
         <p className={styles.emailpass}>使用者名稱：</p>
           <input className={styles.enter} type="text" name="username" placeholder="(日後可更改)"/>
         <p className={styles.emailpass}>常用信箱：</p>
-          <input className={styles.enter} type="text" name="account" placeholder="請輸入信箱"/>
+          <input className={styles.enter} type="text" name="email" value={account.email} onChange={handleChange} placeholder="請輸入信箱"/>
         <p className={styles.emailpass}>密碼：</p>
-          <input className={styles.enter} type="password" name="password" placeholder="請輸入密碼"/>
+          <input className={styles.enter} type="password" name="password" value={account.password} onChange={handleChange} placeholder="請輸入密碼"/>
         <p className={styles.emailpass}>確認密碼：</p>
           <input className={styles.enter} type="password" name="password_check" placeholder="再次輸入密碼"/>
-
-        <input className={styles.loginbtn} type="submit" value="註冊" name="register_btn"/>
+        {message}
+        <input className={styles.loginbtn} type="button" onClick={haddleOnClick} value="註冊" name="register_btn"/>
         <p>已經有帳號了嗎？</p>
         <h4><a href="login.tsx">點此登入</a></h4>
-        </form>
       </div>
+            </form>
+          </div>
+        </div>
       
       </main>
    
@@ -87,3 +121,6 @@ export default function SignUp() {
     </div>
   )
 }
+export default Home;
+
+

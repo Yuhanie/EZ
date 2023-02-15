@@ -326,12 +326,12 @@ const Home: NextPage = () => {
   //   props.setStatus("signUp");
   // }
   const changeStatus = function () {
-    
+    if (typeof window !== "undefined") { 
     if (currentUser){
       router.push('/Newpost');
     }
     else{
-      if (typeof window !== "undefined") { alert("要登入才能新增筆記ㄛ!")}
+      
       //window.alert("要登入才能新增筆記ㄛ!");
 
       // <Alert action={
@@ -341,6 +341,9 @@ const Home: NextPage = () => {
       // }>要登入才能新增筆記ㄛ! </Alert>
 
       router.push('/login');
+
+    }
+    
 
     }
   }

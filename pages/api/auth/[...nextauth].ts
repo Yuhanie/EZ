@@ -63,9 +63,9 @@ export const authOptions: NextAuthOptions = {
          token.idToken = account.id_token //取得Bearer Token
          
       }
-      if (token.email==="benwu@im.fju.edu.tw"){
-        token.userRole = "user"
-      }
+      // if (token.email==="benwu@im.fju.edu.tw"){
+      //   token.userRole = "user"
+      // }
       //token.userRole = "admin"
       return token
     },

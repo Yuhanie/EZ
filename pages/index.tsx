@@ -6,14 +6,14 @@ import { Routes, Route, Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import 'swiper/css';
-import {SwiperOptions } from 'swiper';
+import { SwiperOptions } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import SwiperCore, { Autoplay } from 'swiper';
 SwiperCore.use([Autoplay]);
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
 // import styles from '../index.less';
 import Navbar3 from "../components/navbar/Navbar3";
 
@@ -34,7 +34,7 @@ import nav from '../public/pic/nav.png';
 import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
-import { List, ListItem, ListItemText, CircularProgress} from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -177,9 +177,9 @@ const db = getFirestore();
 
 const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [
-    'pic/navpic.jpg',
-    'pic/nav.png',
-    'pic/ezlogo.png',
+    '/pic/navpic.jpg',
+    '/pic/nav.png',
+    '/pic/ezlogo.png',
 
   ];
   return (
@@ -187,9 +187,10 @@ const Demo: React.FC = () => {
       {/* 增加"autoplay" */}
       <Swiper spaceBetween={20} slidesPerView={1} loop autoplay>
         {partnerLogo.map((value, index) => {
+          console.log("value:", value);
           return (
-            <SwiperSlide key={index} >
-              <img className={styles.item} src={value} />
+            <SwiperSlide key={value}>
+              <img alt={value} className={styles.item} src={value} />
             </SwiperSlide>
           );
         })}
@@ -227,16 +228,16 @@ class ReactSlickDemo extends React.Component {
 
         <Slider {...settings}>
           <div >
-            <Image src={navpic} />
+            <Image alt="navpic" src={navpic} />
           </div>
           <div>
-            <Image src={ezlogo} />
+            <Image alt="exlogo" src={ezlogo} />
           </div>
         </Slider>
       </div>
 
     );
-    
+
   }
 }
 
@@ -274,38 +275,39 @@ const Home: NextPage = () => {
       const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Tag[] = [];
 
-      
+
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name });
-        
+
       });
       setTag([...temp]);
       const textCollection = collection(db, "text");
-      const queryText = query(textCollection, orderBy("count","desc"),limit(3));
+      const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
       const querySnapshotArticle = await getDocs(queryText);
       //const querySnapshotArticle  = await getDocs(collection(db, "text"));
-      const tempArticle:Article[] = [];
+      const tempArticle: Article[] = [];
       querySnapshotArticle.forEach((doc) => {
         console.log(doc.id, doc.data());
-        tempArticle.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user, link:doc.data().link, count:doc.data().count});
+        tempArticle.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count });
       });
       setArticles([...tempArticle]);
       console.log(temp);
 
       const auth = getAuth();
-      const unsub = onAuthStateChanged(auth, (user)=>{
-        if (user){setCurrentUser(user);
+      const unsub = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setCurrentUser(user);
         }
         // else{
         // setCurrentUser()}
         console.log(user);
       });
-  
-      
 
 
-      
+
+
+
       setIsLoading(false);
 
       return () => {
@@ -326,35 +328,35 @@ const Home: NextPage = () => {
   //   props.setStatus("signUp");
   // }
   const changeStatus = function () {
-    if (typeof window !== "undefined") { 
-    if (currentUser){
-      router.push('/Newpost');
-    }
-    else{
-      
-      //window.alert("要登入才能新增筆記ㄛ!");
+    if (typeof window !== "undefined") {
+      if (currentUser) {
+        router.push('/Newpost');
+      }
+      else {
 
-      // <Alert action={
-      //   <Button >
-      //     UNDO
-      //   </Button>
-      // }>要登入才能新增筆記ㄛ! </Alert>
+        //window.alert("要登入才能新增筆記ㄛ!");
 
-      router.push('/login');
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
 
-    }
-    
+        router.push('/login');
+
+      }
+
 
     }
   }
 
-  
-    // const logout = async function () {
-    //   const auth = getAuth();
-    //   await signOut(auth);
-    //   alert("已登出");
-    // };
-  
+
+  // const logout = async function () {
+  //   const auth = getAuth();
+  //   await signOut(auth);
+  //   alert("已登出");
+  // };
+
 
 
   const renderText = (article: Article, i: number) => {
@@ -381,14 +383,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      
-      
+
+
       {/* <h3 className={styles.text_cs}>熱門標籤</h3> */}
       <main className={styles.main}>
 
-     <div className={styles.slick_demo}>
-        <Demo />
-   </div>
+        <div className={styles.slick_demo}>
+          <Demo />
+        </div>
 
         {/* <nav className={styles.navbar}>
           <div className={styles.form}>
@@ -416,19 +418,19 @@ const Home: NextPage = () => {
 
           : <CircularProgress />
         }
-              <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3>
-              
-              
-              {!isLoading ?
-            <div className={styles.grid}>
-              {articles.map(renderText)}
-            </div>
-          :<CircularProgress />
+        <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3>
+
+
+        {!isLoading ?
+          <div className={styles.grid}>
+            {articles.map(renderText)}
+          </div>
+          : <CircularProgress />
         }
-              
+
 
       </main>
-      
+
     </div>
   )
 }

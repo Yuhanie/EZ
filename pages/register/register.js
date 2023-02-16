@@ -135,7 +135,7 @@ const Home = () => {
               />
               <p>已經有帳號了嗎？</p>
               <h4>
-                <a href="login.tsx">點此登入</a>
+                <Link href="/login">點此登入</Link>
               </h4>
             </div>
             {/* </form> */}

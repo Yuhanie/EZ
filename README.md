@@ -2,7 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+記得要新增.env.local，內容是:
+REACT_APP_FIREBASE_API_KEY=XXXX
+
+接下來啟動伺服器:
 
 ```bash
 npm run dev
@@ -11,11 +14,14 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-記得要新增.env.local，內容是:
-REACT_APP_FIREBASE_API_KEY=XXXX
+會看到讀取.env.local
+C:\Users\USER\2022\project\EZ>yarn dev
+yarn run v1.22.15
+$ next dev
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+info - Loaded env from C:\Users\USER\2022\project\EZ\.env.local
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 

@@ -17,7 +17,7 @@ import myImage from "../../public/pic/welcome.png";
 
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 
-export default function SignIn(props) {
+export default function SignIn() {
   const router = useRouter();
   if (getApps().length === 0) {
     initializeApp(firebaseConfig);
@@ -56,17 +56,21 @@ export default function SignIn(props) {
     //props.setStatus("signUp");
   };
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setAccount(user);
-      console.log(user);
-    });
+  // useEffect(() => {
+  //   const auth = getAuth();
+  //   const unsub = onAuthStateChanged(auth, (user) => {
+  //     console.log("user:", user);
+  //     if (user) {
+  //       //remove user.password since there is no passwortd in user
+  //       setAccount({ ...account, email: user.email });
+  //     }
+  //   });
 
-    return () => {
-      unsub();
-    };
-  }, []);
+  //   return () => {
+  //     unsub();
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className={styles.container}>

@@ -176,7 +176,7 @@ function ResponsiveAppBar() {
               >
                 {pages.map((page, idx) => (
                   <MenuItem
-                    key={page}
+                    key={page.text}
                     onClick={() => {
                       handleCloseUserMenu;
                       setActiveIdx(idx);
@@ -222,7 +222,7 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page, idx) => (
                 <Button
-                  key={page}
+                  key={page.text}
                   onClick={() => {
                     handleCloseUserMenu;
                     setActiveIdx(idx);
@@ -263,7 +263,7 @@ function ResponsiveAppBar() {
               >
                 {settings.map((setting, idx) => (
                   <MenuItem
-                    key={setting}
+                    key={setting.text}
                     onClick={() => {
                       handleCloseUserMenu;
                       setActiveIdx(idx);

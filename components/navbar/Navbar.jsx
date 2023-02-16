@@ -142,7 +142,7 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              <Image width={150} height={60} src={ezlogo} />
+              <Image alt="ezlogo" width={150} height={60} src={ezlogo} />
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -210,7 +210,7 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              <Image width={100} height={40} src={ezlogo} />
+              <Image alt="exlogo" width={100} height={40} src={ezlogo} />
             </Typography>
 
             {/* 登入前 */}

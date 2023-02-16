@@ -464,7 +464,7 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 60%;
-  left:100px;
+  left:250px;
 }
 
 .card {
@@ -1123,8 +1123,8 @@
 
 .text_cs{
   position:relative;
-  right:700px;
-  top:120px;
+  left:130px;
+  top:50px;
 }
 
 .tag_text{
@@ -1138,5 +1138,10 @@
   right:160px;
 
   align-items: center;
+
+}
+
+.group{
+  position:relative;
 
 }

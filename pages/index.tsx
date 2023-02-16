@@ -329,6 +329,7 @@ const Home: NextPage = () => {
   // }
   const changeStatus = function () {
     if (typeof window !== "undefined") {
+      alert("要登入才能新增筆記ㄛ!")
       if (currentUser) {
         router.push('/Newpost');
       }

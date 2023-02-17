@@ -156,6 +156,7 @@ function Newpost () {
             <div>
             <FormControl fullWidth>
             <TextField
+                InputProps={{ sx: { height: 250 } }}
                 id="outlined-textarea"
                 label="請輸入內容"
                 placeholder="我想分享..."
@@ -207,8 +208,8 @@ function Newpost () {
 
           
 
-            <Button variant="contained" onClick={onSubmit}>發布</Button><br></br><br></br>
-            <Button variant="contained">取消</Button>
+            <Button variant="contained" sx={{ padding: 1, margin: 5 , left: 920 , top: -9}} onClick={onSubmit}>發布</Button><br></br><br></br>
+            <Button variant="contained" sx={{ padding: 1, margin: 4.5 , left: 1020 , top: -145}}>取消</Button>
     
 </div>
            </div>

@@ -45,7 +45,8 @@ const ArticleListItem:
   <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
   <div className={styles.card} key={props.article.title}>
     
-    <h2><a href={props.article.link}>{props.article.title}</a></h2>
+    {/* <h2><a href={props.article.link}>{props.article.title}</a></h2> */}
+    <h2><a onClick={handleOpen}>{props.article.title}</a></h2>
     {/* <a href={props.article.link} target="_blank" rel="noreferrer"> */}
       <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{props.article.content.length>65?"...":""}</p>
     {/* </a> */}
@@ -63,7 +64,7 @@ const ArticleListItem:
       <p className={styles.userName}>{props.article.user}</p>
     
       
-      <span className={styles.fiveStar} id="five-star"></span>
+      {/* <span className={styles.fiveStar} id="five-star"></span> */}
     </div>
    <div className={styles.Heart} > <Heart  /*onClick={heart}*//></div> 
   </div>

@@ -1145,3 +1145,32 @@
   position:relative;
 
 }
+
+.post_container{
+  margin: 1rem;
+  padding: 1.5rem;
+  
+  color:#000000;
+  /* max-width: 900px; */
+
+  position:relative;
+
+  background: #ffffff;
+  width: 1200px;
+  height: 700px;
+  top:100px;
+  left:100px;
+
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 4px rgba(111, 111, 111, 0.7);
+  border-radius: 20px;
+}
+
+.post_title{
+ position:relative;
+}
+
+.post_content{
+ position:relative;
+}

@@ -43,6 +43,7 @@ function Newpost () {
     const [content, setContent] = React.useState('');
     const [tags, setTags] = React.useState([]);
     const [tagName, setTagName] = React.useState("");
+    const [link, setLink] = React.useState('');
     const [age, setAge] = React.useState('');
 
 
@@ -94,7 +95,7 @@ function Newpost () {
             // link,
             //user欄位要帶入登入的資料8
             //user, 
-            link:"",
+            link,
             timestamp: serverTimestamp()
             // createAt:Timestamp.now(),
             // author:{
@@ -132,66 +133,51 @@ function Newpost () {
     //         );
     //         }
 
-    return <Container>
+    return (
+    <div className={styles.post_container}>
+        <div>
         <Navbar/>
-        <h3>發布筆記</h3><br/>
 
-        <IconButton/>
-            <ShareIcon/>
-            <AccountBoxIcon/>
-
-            <Button
-            variant="contained"
-            component="label"
-            >
-            上傳檔案
-            <input
-                type="file"
-                hidden
-            />
-            </Button>
-
-            {/* <Form.Input
-            type="file"
-            /> */}
-
+        
+        <h3 className>發布筆記</h3><br/>
+      
             <div>
+            <FormControl fullWidth>
             <TextField
                 id="outlined-textarea"
                 label="請輸入筆記標題"
                 placeholder="今天的主題是..."
                 multiline
                 onChange={(e) => setTitle(e.target.value)} 
-            />
-            </div>
+            /></FormControl>
+            </div><br/>
 
-            {/* <TextField id="textfield" label="Standard" />
-                <FormControl>
-                <InputLabel htmlFor="form-control">Form Control</InputLabel>
-                <Input id="form-control" />
-            </FormControl> */}
-        
-
-            {/* <Form.Input placeholder="請輸入筆記標題" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)} 
-            /> */}
-            
+           
             <div>
+            <FormControl fullWidth>
             <TextField
                 id="outlined-textarea"
                 label="請輸入內容"
                 placeholder="我想分享..."
                 multiline
                 onChange={(e) => setContent(e.target.value)} 
-            />
-            </div>
+            /></FormControl>
+            </div><br/>
 
-            {/* <Form.TextArea height="500px"
-             placeholder="請選擇筆記內容" 
-            value={content} 
-            onChange={(e) => setContent(e.target.value)} 
-            /> */}
+           
+            <div>
+            <FormControl fullWidth>
+            <TextField
+                
+                id="outlined-textarea"
+                label="您想分享的連結"
+                placeholder="https..."
+                multiline
+                onChange={(e) => setLink(e.target.value)} 
+                
+            />
+            </FormControl>
+            </div ><br/>
 
             <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
@@ -208,7 +194,7 @@ function Newpost () {
                 <MenuItem value="專題相關">專題相關</MenuItem>
                 <MenuItem value="業界資源">業界資源</MenuItem>
                 <MenuItem value="其他">其他</MenuItem>
-            </Select>
+            </Select><br/>
 {/* <InputLabel id="label">Age</InputLabel>
 <Select labelId="label" id="select" value="20">
   <MenuItem value="20">Ten</MenuItem>
@@ -219,45 +205,19 @@ function Newpost () {
 
             </FormControl>
 
-            {/* <Form.Dropdown
-             placeholder="請選擇筆記標籤"
-             options={[{
-                text:"課堂筆記",
-                value:"note"
-             },
-             {
-                text:"修課心得",
-                value:"diary"
-             },
-             {
-                text:"專題相關",
-                value:"project"
-             },
-             {
-                text:"業界資源",
-                value:"company"
-             },
-             {
-                text:"其他",
-                value:"other"
-             },
-            
-            ]}
-            onChange={(e, data) => {setTopicName(data.value); console.log("t:",data)}} 
-            /> */}
+          
 
             <Button variant="contained" onClick={onSubmit}>發布</Button><br></br><br></br>
             <Button variant="contained">取消</Button>
-            {/* <Form.Button onClick={onSubmit}>發布</Form.Button>
-            <Form.Button>取消</Form.Button> */}
+    
+</div>
+           </div>
 
-           
-
-
-        
 
         
-    </Container>
+
+        
+    )
 }
 
 export default Newpost;

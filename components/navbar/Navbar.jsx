@@ -245,7 +245,7 @@ function ResponsiveAppBar() {
 
             {/* 登入前 */}
             <Box sx={{ pr: 2 }}>
-              <Button variant="contained" color="secondary" onClick={changeStatus} >
+              <Button variant="contained" color="secondary" >
                 登入
               </Button>
             </Box>

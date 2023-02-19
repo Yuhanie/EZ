@@ -69,7 +69,7 @@ ElevationScroll.propTypes = {
 const pages = [
   // '筆記分享區', '問答區',
   { text: "筆記分享區", href: "/" },
-  { text: "問答區", href: "" },
+  // { text: "問答區", href: "" },
 ];
 const settings = [
   { text: "我的角色", href: "/profile" },
@@ -183,6 +183,11 @@ function ResponsiveAppBar() {
                     </Typography>
                   </MenuItem>
                 ))}
+                <MenuItem>
+                    <Typography>
+                      問答區
+                    </Typography>
+                </MenuItem>
               </Menu>
             </Box>
 
@@ -224,6 +229,15 @@ function ResponsiveAppBar() {
                   </Typography>
                 </Button>
               ))}
+
+              <Tooltip title="開發中">
+                <Button sx={{ my: 2, color: "black", display: "block" }}>
+                <Typography>
+                  問答區
+                </Typography>
+                </Button>
+              </Tooltip>
+
             </Box>
 
             {/* 登入前 */}

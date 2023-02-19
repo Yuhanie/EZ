@@ -72,7 +72,7 @@ const pages = [
   // { text: "問答區", href: "" },
 ];
 const settings = [
-  { text: "我的角色", href: "/profile" },
+  // { text: "我的角色", href: "/profile" },
   // { text: "登出", href: "../logout" },
 ];
 
@@ -110,6 +110,9 @@ function ResponsiveAppBar() {
     }
     router.push("/");
   };
+
+  //login
+  
 
   return (
     <ThemeProvider theme={lightTheme}>
@@ -184,9 +187,9 @@ function ResponsiveAppBar() {
                   </MenuItem>
                 ))}
                 <MenuItem>
-                    <Typography>
-                      問答區
-                    </Typography>
+                  <Typography>
+                    問答區
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -230,11 +233,11 @@ function ResponsiveAppBar() {
                 </Button>
               ))}
 
-              <Tooltip title="開發中">
+              <Tooltip title="即將登場！">
                 <Button sx={{ my: 2, color: "black", display: "block" }}>
-                <Typography>
-                  問答區
-                </Typography>
+                  <Typography>
+                    問答區
+                  </Typography>
                 </Button>
               </Tooltip>
 
@@ -242,7 +245,7 @@ function ResponsiveAppBar() {
 
             {/* 登入前 */}
             <Box sx={{ pr: 2 }}>
-              <Button variant="contained" color="secondary" href="/login" >
+              <Button variant="contained" color="secondary" onClick={changeStatus} >
                 登入
               </Button>
             </Box>

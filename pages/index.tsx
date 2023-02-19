@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { useRouter } from "next/router"
 // import styles from '../index.less';
-import Navbar3 from "../components/navbar/Navbar3";
+// import Navbar3 from "../components/navbar/Navbar3";
 
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -278,7 +278,7 @@ const Home: NextPage = () => {
 
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({ name: doc.data().name });
+        temp.push({ name: doc.data().name, pic: doc.data().pic });
 
       });
       setTag([...temp]);

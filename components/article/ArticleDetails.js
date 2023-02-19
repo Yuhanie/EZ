@@ -144,16 +144,18 @@ return(
     <DialogContent>
     
       
-      <Stack spacing={2}>
+      <Stack spacing={1}>
            {/* {props.article.content} */}
-           <a href={props.article.link}>{props.article.content.substring(0, 165)}{props.article.content.length>165?"...":""}</a>
-           
+           <div className={styles.card3}>
+            <a href={props.article.link}>{props.article.content.substring(0, 165)}{props.article.content.length>165?"...":""}</a>
+           </div>
+
             </Stack>
             
             <div style={{ padding: 14 }} className="App">
             <h2><Image alt="版本疑慮" src={warning}/>{props.article.content.length>165?"版本疑慮":""}</h2>
       
-           <div className={styles.yu}>{props.article.content.length>165?"這篇文章已經不符合現在的版本或者無法使用":""}</div><br/>
+           <div className={styles.yu}>{props.article.content.length>165?"這篇文章已經不符合現在的版本或者無法使用":""}</div>
             {comments.map(renderComment)}
 
             </div>

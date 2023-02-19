@@ -506,6 +506,17 @@
   border-radius: 0 0 10px 10px;
 }
 
+.card3 {
+  margin: 1rem;
+  padding: 1.5rem;
+  
+  position:relative;
+  display:flex;
+  background: rgb(236, 236, 236);
+
+  border-radius: 10px;
+}
+
 .tag {
   margin: 1rem;
   padding: 1.5rem;
@@ -541,6 +552,13 @@
 .card:hover,
 .card:focus,
 .card:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card3:hover,
+.card3:focus,
+.card3:active {
   color: #0070f3;
   border-color: #0070f3;
 }

@@ -27,6 +27,8 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { firebaseConfig } from "settings/firebaseConfig";
 
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
 //色調
 const lightTheme = createTheme({
   palette: {
@@ -71,31 +73,11 @@ const pages = [
 ];
 const settings = [
   { text: "我的角色", href: "/profile" },
-  { text: "登出", href: "../logout" },
-  { text: "登入(之後會刪掉)", href: "/login" },
+  // { text: "登出", href: "../logout" },
 ];
 
-//登出功能
-const firebaseApp =
-  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-const Logout = () => {
-  const router = useRouter();
-  const logout = async function () {
-    const auth = getAuth();
-    await signOut(auth);
-    if (typeof window !== "undefined") {
-      alert("已登出");
-    }
-    //window.alert("已登出");
-    router.push("/");
-  };
 
-  return (
-    <div>
-      <Button onClick={logout}>登出</Button>
-    </div>
-  );
-};
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -116,6 +98,17 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  //logout
+  const router = useRouter();
+  const logout = async function () {
+    const auth = getAuth();
+    await signOut(auth);
+    if (typeof window !== "undefined") {
+      alert("已登出");
+    }
+    router.push("/");
   };
 
   return (
@@ -213,12 +206,6 @@ function ResponsiveAppBar() {
               <Image alt="exlogo" width={100} height={40} src={ezlogo} />
             </Typography>
 
-            {/* 登入前 */}
-            <Box>
-              <Button variant="text">登入</Button>
-            </Box>
-
-            {/* 登入後 */}
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page, idx) => (
                 <Button
@@ -239,8 +226,16 @@ function ResponsiveAppBar() {
               ))}
             </Box>
 
+            {/* 登入前 */}
+            <Box sx={{ pr: 2 }}>
+              <Button variant="contained" color="secondary" href="/login" >
+                登入
+              </Button>
+            </Box>
+
+            {/* 登入後 */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="查看更多">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="avatar" />
                 </IconButton>
@@ -276,13 +271,19 @@ function ResponsiveAppBar() {
                       </span>
                     </Typography>
                   </MenuItem>
+
                 ))}
+                <MenuItem>
+                  <Typography onClick={logout}>
+                    登出
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 export default ResponsiveAppBar;

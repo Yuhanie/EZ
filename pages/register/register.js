@@ -5,7 +5,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
-} from "firebase/auth";
+} from "firebase/auth"; 
 import styles from "/styles/Home.module.css";
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import myImage from "../../public/pic/welcome.png";

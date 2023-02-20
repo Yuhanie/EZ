@@ -124,8 +124,8 @@ export default function SignIn() {
                 登入
               </Button>
               <br />
-              <Link href="">忘記密碼</Link>
-              <br />
+              {/* <Link href="">忘記密碼</Link>
+              <br /> */}
               <br />
               <p>沒有帳號？現在就加入我們吧！</p>
               <br />

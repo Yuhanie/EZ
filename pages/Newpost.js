@@ -123,6 +123,7 @@ function Newpost () {
           });
         
             alert('上傳成功！')
+            
             router.push('/');
         
     }

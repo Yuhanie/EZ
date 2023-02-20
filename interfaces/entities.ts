@@ -23,7 +23,7 @@ export type Comment = {
 
 export type Tag = {
   name: string;
-  pic: string;
+  // pic: string;
 };
 
 // export type tags = {

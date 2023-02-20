@@ -1,6 +1,6 @@
 import { useState, useEffect, Component } from "react";
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc,doc,Timestamp,getDoc} from "firebase/firestore";
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import {firebaseConfig} from '../settings/firebaseConfig';
@@ -35,7 +35,10 @@ const MENU_LIST = [
     // const [navActive, setNavActive] = useState(null);
     // const [activeIdx, setActiveIdx] = useState(-1);
   
+    const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+    const db = getFirestore();
 
+    const auth = getAuth();
     
 function Newpost () {
     const router = useRouter();
@@ -45,9 +48,22 @@ function Newpost () {
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
     const [age, setAge] = React.useState('');
+    const [user, setUser] = useState();
 
 
 
+
+
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (user)=>{
+          setUser(user);
+          console.log(user);
+        });
+    
+        return () => {
+          unsub();
+        }
+      }, []);
 
     // React.useState(() =>{
     //     firebase
@@ -77,19 +93,19 @@ function Newpost () {
     
 
     async function onSubmit(){
-        const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-        const db = getFirestore();
 
-        const auth = getAuth();
-        console.log(tagName);
-        
+        // console.log(tagName);
+        // alert(user.uid)
+        // alert(user.email)        
         // await addDoc(collection(db, "text",
         // props.article.docId,"comment"))
         await addDoc(collection(db, "text"), {
             title,
             content,
-            
+            userid: user.uid,
+            email: user.email,
             tags:[tagName],
+            user:user.displayName,
             //還有這些無法加入生成欄位，看來是需要給一個值嗎？
              count:1,
             // link,
@@ -142,6 +158,7 @@ function Newpost () {
         <h3 className>發布筆記</h3><br/>
       
             <div>
+                {user&&user.displayName}
             <FormControl fullWidth>
             <TextField
                 id="outlined-textarea"

@@ -22,8 +22,8 @@ export type Comment = {
 
 
 export type Tag = {
-  name: string;
-  pic: string;
+  name: any;
+  pic: any;
 };
 
 // export type tags = {

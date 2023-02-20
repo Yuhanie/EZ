@@ -106,7 +106,7 @@ const Article = () => {
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());
-        temp2.push({ name: doc2.data().name });
+        temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
       });
 
       console.log(temp);

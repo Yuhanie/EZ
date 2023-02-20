@@ -52,6 +52,11 @@ const Home = () => {
         account.email,
         account.password
       );
+      if (res) {
+
+        await updateProfile(auth.currentUser,{displayName: account.displayName});
+
+      }
       setMessage("帳號已產生");
       console.log({ res });
     } catch (error) {
@@ -97,7 +102,9 @@ const Home = () => {
               <input
                 className={styles.enter}
                 type="text"
-                name="username"
+                name="displayName"
+                value={account.displayName}
+                onChange={handleChange}
                 placeholder="(日後可更改)"
               />
               <p className={styles.emailpass}>常用信箱：</p>
@@ -118,13 +125,13 @@ const Home = () => {
                 onChange={handleChange}
                 placeholder="請輸入密碼"
               />
-              <p className={styles.emailpass}>確認密碼：</p>
+              {/* <p className={styles.emailpass}>確認密碼：</p>
               <input
                 className={styles.enter}
                 type="password"
                 name="password_check"
                 placeholder="再次輸入密碼"
-              />
+              /> */}
               {message}
               <input
                 className={styles.loginbtn}

@@ -74,7 +74,7 @@ const pages = [
   // { text: "問答區", href: "" },
 ];
 const settings = [
-  // { text: "我的角色", href: "/profile" },
+   { text: "我的角色", href: "/profile" },
   // { text: "登出", href: "../logout" },
 ];
 

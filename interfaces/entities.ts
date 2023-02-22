@@ -14,6 +14,7 @@ export type Question = {
   user:string;
   docId: string;
   count: number;
+  heart: string[];
 };
 
 export type Comment = {

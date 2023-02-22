@@ -20,14 +20,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import NavItem from "./NavItem";
+import { useEffect } from "react";
 
 //登出功能
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, onAuthStateChanged, } from "firebase/auth";
 import { useRouter } from "next/router";
-import { firebaseConfig } from "settings/firebaseConfig";
+import { firebaseConfig, } from "settings/firebaseConfig";
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const auth = getAuth();
 
 //色調
 const lightTheme = createTheme({
@@ -79,11 +81,17 @@ const settings = [
 
 
 
+
+
+
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [navActive, setNavActive] = useState(null);
   const [activeIdx, setActiveIdx] = useState(-1);
+  const [currentUser, setCurrentUser] = useState();
+  const [logged, setLogged] = useState(false);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -107,12 +115,89 @@ function ResponsiveAppBar() {
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
+      setLogged(false);
     }
     router.push("/");
   };
 
-  //login
-  
+  //確認是否logged
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLogged(true);
+      console.log(user);
+    });
+
+    return () => {
+      unsub();
+    }
+  }, []);
+
+  //登入按鈕
+  const LoginBtn = () => {
+    return (
+      <Box sx={{ pr: 2 }}>
+        <Button variant="contained" color="secondary" href="/login">
+          登入
+        </Button>
+      </Box>
+    )
+  }
+
+  //人頭
+  const Other = () => {
+    return (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="查看更多">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="avatar" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: "51px" }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting, idx) => (
+            <MenuItem
+              key={setting.text}
+              onClick={() => {
+                handleCloseUserMenu;
+                setActiveIdx(idx);
+                setNavActive(false);
+              }}
+            >
+              <Typography textAlign="center">
+                <span className={`${navActive ? "active" : ""} `}>
+                  <NavItem active={activeIdx === idx} {...setting} />
+                </span>
+              </Typography>
+            </MenuItem>
+
+          ))}
+          <MenuItem>
+            <Typography onClick={logout}>
+              登出
+            </Typography>
+          </MenuItem>
+        </Menu>
+      </Box>
+    )
+  }
+
+
+
 
   return (
     <ThemeProvider theme={lightTheme}>
@@ -243,60 +328,13 @@ function ResponsiveAppBar() {
 
             </Box>
 
-            {/* 登入前 */}
-            <Box sx={{ pr: 2 }}>
-              <Button variant="contained" color="secondary" href="/login" >
-                登入
-              </Button>
-            </Box>
-
-            {/* 登入後 */}
+            {/* 登入前後後 */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="查看更多">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="avatar" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting, idx) => (
-                  <MenuItem
-                    key={setting.text}
-                    onClick={() => {
-                      handleCloseUserMenu;
-                      setActiveIdx(idx);
-                      setNavActive(false);
-                    }}
-                  >
-                    <Typography textAlign="center">
-                      <span className={`${navActive ? "active" : ""} `}>
-                        <NavItem active={activeIdx === idx} {...setting} />
-                      </span>
-                    </Typography>
-                  </MenuItem>
+              {logged ? <Other /> : <LoginBtn />}
 
-                ))}
-                <MenuItem>
-                  <Typography onClick={logout}>
-                    登出
-                  </Typography>
-                </MenuItem>
-              </Menu>
             </Box>
+
+
           </Toolbar>
         </Container>
       </AppBar>

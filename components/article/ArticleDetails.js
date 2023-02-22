@@ -153,11 +153,11 @@ return(
             </Stack>
             
             <div style={{ padding: 14 }} className="App">
-            {props.article.content.length>165&&
+            {props.article.content.length>180&&
             <h2><Image alt="版本疑慮" src={warning}/>版本疑慮</h2>}
       
-           <div className={styles.yu}>{props.article.content.length>165?"這篇文章已經不符合現在的版本或者無法使用":""}</div>
-            {comments.map(renderComment)}
+           <div className={styles.yu}>{props.article.content.length>180?"這篇文章已經不符合現在的版本或者無法使用":""}</div>
+            {/* {comments.map(renderComment)} */}
 
             </div>
             

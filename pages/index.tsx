@@ -220,26 +220,26 @@ const settings = {
   center: true,
 
 };
-class ReactSlickDemo extends React.Component {
-  render() {
+// class ReactSlickDemo extends React.Component {
+//   render() {
 
-    return (
-      <div >
+//     return (
+//       <div >
 
-        <Slider {...settings}>
-          <div >
-            <Image alt="navpic" src={navpic} />
-          </div>
-          <div>
-            <Image alt="exlogo" src={ezlogo} />
-          </div>
-        </Slider>
-      </div>
+//         <Slider {...settings}>
+//           <div >
+//             <Image alt="navpic" src={navpic} />
+//           </div>
+//           <div>
+//             <Image alt="exlogo" src={ezlogo} />
+//           </div>
+//         </Slider>
+//       </div>
 
-    );
+//     );
 
-  }
-}
+//   }
+// }
 
 
 

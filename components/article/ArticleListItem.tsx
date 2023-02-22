@@ -2,18 +2,22 @@ import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp,getApps, initializeApp } from "firebase/app";
-import { collection, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore";
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect,  useState } from "react";
 import ArticleDetails from "./ArticleDetails";
 import { Article } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 //import Heart from '@mui/icons-material/Heart';
 import Heart from '@mui/icons-material/Favorite';
+import router from 'next/router';
+import { useRouter } from "next/router"
+import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
+const auth = getAuth();
 
 type Props = {
   article: Article;
@@ -22,6 +26,9 @@ type Props = {
 const ArticleListItem:
  React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User>();
+  
+  
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,9 +41,60 @@ const ArticleListItem:
     setOpen(false);
   };
 
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user)=>{
+      if (user) {
+        setCurrentUser(user);
+      }
+      console.log(user);
+    });
+
+    return () => {
+      unsub();
+    }
+  }, []);
+
+  
+
+  const heart = function () {
+    if (typeof window !== "undefined") {
+      
+      if (currentUser) {
+
+        
+
+        
+        const ref = doc(db, "text", props.article.docId);
+        updateDoc(ref, {
+          heart: arrayUnion(currentUser.uid)
+      });
+      }
+      else {
+        alert("要登入才能按讚ㄛ!")
+        //window.alert("要登入才能新增筆記ㄛ!");
+
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
+
+        router.push('/login');
+
+      }
+
+
+    }
+  }
+
+
+
+
+
+
 // function heart(){
 //   const ref = doc(db, "text", props.article.docId);
-//   updateDoc(ref,{count: increment(1)});
+//   updateDoc(ref,{heart: increment(1)});
   
 // }  
 
@@ -66,10 +124,14 @@ const ArticleListItem:
       
       {/* <span className={styles.fiveStar} id="five-star"></span> */}
     </div>
-   <div className={styles.Heart} > <Heart  /*onClick={heart}*//></div> 
+   <div className={styles.Heart} > <Heart  onClick={heart}/></div> 
   </div>
   
   </div>
   );
 };
 export default ArticleListItem;
+function setUser(user: import("@firebase/auth").User | null) {
+  throw new Error('Function not implemented.');
+}
+

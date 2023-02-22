@@ -146,8 +146,9 @@ function ResponsiveAppBar() {
 
   //人頭
   const Other = () => {
+
     return (
-      <Box sx={{ flexGrow: 0 }}>
+      <Box>
         <Tooltip title="查看更多">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar alt="avatar" />
@@ -158,7 +159,7 @@ function ResponsiveAppBar() {
           id="menu-appbar"
           anchorEl={anchorElUser}
           anchorOrigin={{
-            vertical: "top",
+            vertical: "buttom",
             horizontal: "right",
           }}
           keepMounted
@@ -191,6 +192,7 @@ function ResponsiveAppBar() {
               登出
             </Typography>
           </MenuItem>
+
         </Menu>
       </Box>
     )
@@ -330,8 +332,7 @@ function ResponsiveAppBar() {
 
             {/* 登入前後後 */}
             <Box sx={{ flexGrow: 0 }}>
-              {logged ? <Other /> : <LoginBtn />}
-
+              {logged ? Other() : <LoginBtn />}
             </Box>
 
 

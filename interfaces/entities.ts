@@ -5,6 +5,7 @@ export type Article = {
   docId: string;
   link: string;
   count: number;
+  heart: string[];
 };
 
 export type Question = {

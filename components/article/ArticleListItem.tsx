@@ -124,7 +124,7 @@ const ArticleListItem:
       
       {/* <span className={styles.fiveStar} id="five-star"></span> */}
     </div>
-   <div className={styles.Heart} > <Heart  onClick={heart}/></div> 
+   <div className={styles.Heart} > {props.article.heart?props.article.heart.length:0}<Heart  onClick={heart}/></div> 
   </div>
   
   </div>

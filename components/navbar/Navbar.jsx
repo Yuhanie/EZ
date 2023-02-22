@@ -74,7 +74,7 @@ const pages = [
   // { text: "問答區", href: "" },
 ];
 const settings = [
-   { text: "我的角色", href: "/profile" },
+  //  { text: "我的角色", href: "/profile" },
   // { text: "登出", href: "../logout" },
 ];
 
@@ -159,7 +159,7 @@ function ResponsiveAppBar() {
           id="menu-appbar"
           anchorEl={anchorElUser}
           anchorOrigin={{
-            vertical: "buttom",
+            vertical: "top",
             horizontal: "right",
           }}
           keepMounted

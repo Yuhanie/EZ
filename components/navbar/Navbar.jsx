@@ -115,7 +115,7 @@ function ResponsiveAppBar() {
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
-      setLogged(true);
+      setLogged(false);
     }
     router.push("/");
   };
@@ -124,7 +124,7 @@ function ResponsiveAppBar() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setLogged(false);
+      setLogged(true);
       console.log(user);
     });
 
@@ -332,7 +332,7 @@ function ResponsiveAppBar() {
 
             {/* 登入前後後 */}
             <Box sx={{ flexGrow: 0 }}>
-              {logged ? <LoginBtn /> : Other()}
+              {logged ? Other() : <LoginBtn />}
             </Box>
 
 

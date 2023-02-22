@@ -289,7 +289,7 @@ const Home: NextPage = () => {
       const tempArticle: Article[] = [];
       querySnapshotArticle.forEach((doc) => {
         console.log(doc.id, doc.data());
-        tempArticle.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count });
+        tempArticle.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart});
       });
       setArticles([...tempArticle]);
       console.log(temp);

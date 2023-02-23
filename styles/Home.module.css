@@ -1099,7 +1099,7 @@
     position: relative;
     display: block;
     bottom: 85px;
-    left: 220px;
+    left: 210px;
     cursor: pointer;
 }
 
@@ -1122,8 +1122,8 @@
 
   position: relative;
   display: block;
-  top: 92%;
-  right: 8%;
+  bottom: 115px;
+  left: 255px;
   cursor: pointer;
 }
 
@@ -1228,8 +1228,8 @@ color: #d300f3;
   
     position: relative;
     display: block;
-    top: 92%;
-    
+    bottom: 60px;
+    left:240px;
     cursor: pointer;
 }
 

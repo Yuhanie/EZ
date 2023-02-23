@@ -11,9 +11,11 @@ import { Article } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 //import Heart from '@mui/icons-material/Heart';
 import Heart from '@mui/icons-material/Favorite';
+import Bookmark from '@mui/icons-material/Bookmark';
 import router from 'next/router';
 import { useRouter } from "next/router"
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
+
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
@@ -124,9 +126,12 @@ const ArticleListItem:
       
       {/* <span className={styles.fiveStar} id="five-star"></span> */}
     </div>
-   <div className={styles.Heart} > {props.article.heart?props.article.heart.length:0}<Heart  onClick={heart}/></div> 
-  </div>
+     </div>
   
+    <div className={styles.like}>{props.article.heart?props.article.heart.length:0}</div>
+   <div className={styles.Heart} > <Heart  onClick={heart}/></div> 
+   <div className={styles.Bookmark} > <Bookmark/></div> 
+ 
   </div>
   );
 };

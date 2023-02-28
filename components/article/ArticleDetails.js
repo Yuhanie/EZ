@@ -2,12 +2,16 @@ import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
 import React,{useEffect, useState} from 'react';
+import router from 'next/router';
+import {useRouter} from "next/router"
 import warning from '../../public/pic/warning.jpg';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
-import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { collection, addDoc, Doc, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 import {
   Dialog,
@@ -35,7 +39,7 @@ import { getApp,getApps, initializeApp } from "firebase/app";
 // }
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
-
+const auth = getAuth();
 
 
 
@@ -54,8 +58,15 @@ const db = getFirestore();
 
 
 const ArticleDetails= (props) => {
-  const [comments,setComments]=useState([])
+  const [comments,setComments]=useState([]);
+  const [content, setContent] = useState('');
+  const [user, setUser] = useState();
 useEffect(() => {
+
+
+
+
+
   async function fetchData() {
     const querySnapshot = await getDocs(collection(db, "text",
     props.article.docId,"comment"));
@@ -77,9 +88,55 @@ useEffect(() => {
   fetchData();
   // eslint-disable-next-line
 }, []);
+
+
+  // const unsub = onAuthStateChanged(auth, (user)=>{
+  //   setUser(user);
+  //   console.log(user);
+  // });
+
+  // return () => {
+  //   unsub();
+  // }
+
+
+
+
   const handleClose = () => {
     props.setOpen(false);
   };
+
+  async function onSubmit(){
+    
+    // console.log(tagName);
+    // alert(user.uid)
+    // alert(user.email)        
+    // await addDoc(collection(db, "text",
+    // props.article.docId,"comment"))
+    await addDoc(collection(db, "text",
+      props.article.docId,"comment"), {
+  
+        content,
+        // userid: user.uid,
+  
+        // user:user.displayName,
+  
+        //user, 
+  
+        // createAt:Timestamp.now(),
+        // author:{
+        //     displayName: auth.currentUser.displayName || "",
+        //     photoURL: auth.currentUser.photoURL || "",
+        //     uid: auth.currentUser.uid,
+        //     email: auth.currentUser.email
+        // },
+      });
+    
+  
+        router.push('/');
+    
+  }
+
 
   const renderComment = (comment, i) => {
     return (
@@ -148,10 +205,14 @@ return(
             <h2><Image alt="版本疑慮" src={warning}/>版本疑慮</h2>}
       
            <div className={styles.yu}>{props.article.content.length>180?"這篇文章已經不符合現在的版本或者無法使用":""}</div>
-            {/* {comments.map(renderComment)} */}
+            {comments.map(renderComment)}
 
             </div>
-            
+        <OutlinedInput onChange={(e) => setContent(e.target.value)} />
+        <Button variant="contained" endIcon={<SendIcon />}>
+
+</Button>
+
       </DialogContent>
 
 

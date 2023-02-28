@@ -12,6 +12,7 @@ import { collection, addDoc, Doc, getDocs, getFirestore } from "firebase/firesto
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import SendIcon from '@mui/icons-material/Send';
 
 import {
   Dialog,
@@ -86,18 +87,23 @@ useEffect(() => {
     setComments(() => [...temp]);
   }
   fetchData();
+
+
+   const unsub = onAuthStateChanged(auth, (user)=>{
+      setUser(user);
+      console.log(user);
+    });
+  
+    return () => {
+      unsub();
+    }
+
+
   // eslint-disable-next-line
 }, []);
 
 
-  // const unsub = onAuthStateChanged(auth, (user)=>{
-  //   setUser(user);
-  //   console.log(user);
-  // });
-
-  // return () => {
-  //   unsub();
-  // }
+  
 
 
 
@@ -108,18 +114,28 @@ useEffect(() => {
 
   async function onSubmit(){
     
-    // console.log(tagName);
-    // alert(user.uid)
-    // alert(user.email)        
-    // await addDoc(collection(db, "text",
-    // props.article.docId,"comment"))
-    await addDoc(collection(db, "text",
+    if (typeof window !== "undefined") {
+
+      if (!user) {
+        alert("要登入才能新增留言ㄛ!")
+        //window.alert("要登入才能新增筆記ㄛ!");
+
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
+
+        router.push('/login');
+      }
+      else {
+        await addDoc(collection(db, "text",
       props.article.docId,"comment"), {
   
         content,
-        // userid: user.uid,
+        userid: user.uid,
   
-        // user:user.displayName,
+        user:user.displayName,
   
         //user, 
   
@@ -134,8 +150,36 @@ useEffect(() => {
     
   
         router.push('/');
+
+      }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    // console.log(tagName);
+    // alert(user.uid)
+    // alert(user.email)        
+    // await addDoc(collection(db, "text",
+    // props.article.docId,"comment"))
+    
     
   }
+
+
+
+
+
+
+
+
 
 
   const renderComment = (comment, i) => {
@@ -208,10 +252,10 @@ return(
             {comments.map(renderComment)}
 
             </div>
-        <OutlinedInput onChange={(e) => setContent(e.target.value)} />
-        <Button variant="contained" endIcon={<SendIcon />}>
-
-</Button>
+            {user&&user.displayName}
+        <OutlinedInput onChange={(e) => setContent(e.target.value)} onClick={onSubmit}/>
+        <Button variant="contained"  endIcon={<SendIcon />} onClick={onSubmit}>
+        </Button>
 
       </DialogContent>
 

@@ -14,19 +14,19 @@ import {
 } from "@mui/material";
 //import DeleteIcon from '@mui/icons-material/Delete';
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { firebaseConfig } from '../../settings/firebaseConfig';
+import { getFirestore, collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { firebaseConfig } from '../../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
 import Link from 'next/link';
-import ArticleDetails from '../../components/post/ArticleDetails';
-import ArticleListItem from '../../components/article/ArticleListItem';
-import MiniTags from '../../components/miniTags/miniTags';
-import TagList from '../../components/tag/TagList';
-import { Article, Tag } from '../../interfaces/entities';
+import ArticleDetails from '../../../components/post/ArticleDetails';
+import ArticleListItem from '../../../components/article/ArticleListItem';
+import MiniTags from '../../../components/miniTags/miniTags';
+import TagList from '../../../components/tag/TagList';
+import { Article, Tag, miniTag } from '../../../interfaces/entities';
 // import { tags } from '../../interfaces/entities';
 
 import { query, orderBy, limit, where } from "firebase/firestore";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../../components/navbar/Navbar";
 
 import { useRouter } from 'next/router'
 
@@ -50,11 +50,6 @@ import Chip from '@mui/material/Chip';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -69,24 +64,27 @@ export async function getServerSideProps() {
 //////////////////////////////////////////////////////////////////////////
 const Article = () => {
   const router = useRouter()
-  const { tag } = router.query
+//   const { tag } = router.query
+  const { tag, minitag } = router.query
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [tags, setTags] = useState<Tag[]>([]);
+//   const [tags, setTags] = useState<Tag[]>([]);
+  const [miniTags, setminiTags] = useState<miniTag[]>([]);
 
   //console.log(props)
 
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      //console.log("tag:",tag)
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
+      console.log("minitag:",minitag)
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag)));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
-      const temp2: Tag[] = [];
+    //   const temp2: Tag[] = [];
+      const temp3: miniTag[] = [];
 
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
@@ -102,18 +100,22 @@ const Article = () => {
       });
 
       //console.log("tag4:",tag);
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
-      querySnapshot2.forEach(async (doc2) => {
-        console.log(doc2.id);
-        console.log(doc2.data());
-        temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
-      });
+      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類/" + miniTag)));
+      const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
+      const docSnap = await getDoc(docRef);
+      // querySnapshot2(async (doc2) => {
+      //   console.log(doc2.id);
+      //   console.log(doc2.data());
+      //   temp3.push({ name: doc2.data().name});
+      // });
 
-      console.log(temp);
-      console.log("temp2:", temp2);
+      
+
+      //console.log(temp);
+      //console.log("temp2:", temp2);
 
       setArticles([...temp]);
-      setTags([...temp2]);
+      setminiTags([...temp3]);
       setIsLoading(false);
     }
 
@@ -136,6 +138,7 @@ const Article = () => {
       <MiniTags key={tag.name} miniTag={tag}></MiniTags>
     );
   };
+  
 
   ////////////////////////////////////////////////////////////sidebar
   const drawerWidth = 240;
@@ -167,7 +170,7 @@ const Article = () => {
               <ArrowBackIosNewIcon />
             </IconButton>
 
-            <Chip
+            {/* <Chip
               icon={<BookmarksIcon sx={{ fontSize: 20 }} />}
               sx={{
                 bgcolor: "#CACDF5",
@@ -178,7 +181,7 @@ const Article = () => {
 
               }}
               label={tag}
-            />
+            /> */}
           </Box>
           <Box display="flex" p={1}>
             < LocalFireDepartmentIcon color="error"/>
@@ -192,7 +195,7 @@ const Article = () => {
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {tags.map(renderTag)}
+            {/* {tags.map(renderTag)} */}
             {/* </ListItem> */}
           </List>
         </Box>
@@ -222,7 +225,7 @@ const Article = () => {
             sx={{ mr: 2, display: { sm: 'none',} }}
             
           >
-            {tag}
+            {minitag}
           </Button>
           <Button
             variant="contained"

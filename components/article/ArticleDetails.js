@@ -112,17 +112,8 @@ useEffect(() => {
 
       </Paper>
       </div>
-     
-      
-
     );
   };
-
-
-
-
-
-
 
 return(
   <div className={styles.container}>

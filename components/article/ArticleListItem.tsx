@@ -2,7 +2,7 @@ import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp,getApps, initializeApp } from "firebase/app";
-import { arrayUnion, collection, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc,getDoc, arrayRemove } from "firebase/firestore";
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useEffect,  useState } from "react";
@@ -58,19 +58,44 @@ const ArticleListItem:
 
   
 
-  const heart = function () {
+  const heart =  async function () {
     if (typeof window !== "undefined") {
       
       if (currentUser) {
 
         
-
+        const ref = (doc(db, "text", props.article.docId, "heart",currentUser.uid));
+        const docSnap = await getDoc(ref);
         
-        const ref = doc(db, "text", props.article.docId);
+        if ((docSnap.exists())) {
+          if (docSnap.data().heart.contained(currentUser.uid))
+          alert('added')
+          updateDoc(ref, {
+            heart: arrayUnion(currentUser.uid)
+        });
+      } 
+      else {
+        alert('remove')
         updateDoc(ref, {
-          heart: arrayUnion(currentUser.uid)
+          heart: arrayRemove(currentUser.uid)
       });
       }
+
+
+
+      //   if(currentUser!=currentUser){
+      //   const ref = doc(db, "text", props.article.docId);
+        
+      //   updateDoc(ref, {
+      //     heart: arrayUnion(currentUser.uid)
+      // });
+      // }
+      // else{
+        
+      //   deleteDoc(doc(db, "text", props.article.docId, "heart", currentUser.uid));
+        
+      // }
+    }
       else {
         alert("要登入才能按讚ㄛ!")
         //window.alert("要登入才能新增筆記ㄛ!");

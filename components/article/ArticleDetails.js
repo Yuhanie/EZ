@@ -8,7 +8,7 @@ import warning from '../../public/pic/warning.jpg';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, Doc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, addDoc, Doc, getDocs, getFirestore, query, orderBy, limit } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -71,6 +71,8 @@ useEffect(() => {
   async function fetchData() {
     const querySnapshot = await getDocs(collection(db, "text",
     props.article.docId,"comment"));
+    const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
+      const querySnapshotArticle = await getDocs(queryText);
 
     // const temp1= [user];
     // const temp2= [content];
@@ -136,7 +138,7 @@ useEffect(() => {
         userid: user.uid,
   
         user:user.displayName,
-  
+        timestamp: serverTimestamp()
         //user, 
   
         // createAt:Timestamp.now(),

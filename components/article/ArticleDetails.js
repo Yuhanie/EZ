@@ -149,7 +149,7 @@ useEffect(() => {
       });
     
   
-        router.push('/');
+        
 
       }
 

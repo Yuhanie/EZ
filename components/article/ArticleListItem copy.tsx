@@ -25,7 +25,6 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
-import { CardActionArea } from '@mui/material';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -123,47 +122,68 @@ const ArticleListItem:
     return (
       <div>
         <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
-        <Card
-          sx={{
-            maxWidth: 345,
-            m: 2,
-            borderRadius: 3,
-            bgcolor: 'background.paper',
-            boxShadow: 1,
-          }}
-        >
-          <CardActionArea sx={{ p: 1 }}>
-            <CardContent onClick={handleOpen}>
-              <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
-                {props.article.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
-                {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <Box display="flex">
+        <a onClick={handleOpen}>
+          <div className={styles.card} key={props.article.title}>
+
+            {/* <h2><a href={props.article.link}>{props.article.title}</a></h2> */}
+            <h2><a onClick={handleOpen}>{props.article.title}</a></h2>
+            {/* <a href={props.article.link} target="_blank" rel="noreferrer"> */}
+            <p onClick={handleOpen}>{props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}</p>
+            {/* </a> */}
+            <div className={styles.card2} >
+              <Image className={styles.userPhoto} src={profilePic} alt="user" />
+              {/* <Image
+                className={styles.userPhoto}
+                src="/pic/test1.jpeg"
+                alt="user"
+                width={70}
+                height={30}
+              // height="50px"
+              // width="70px"
+              /> */}
+              <p className={styles.userName}>{props.article.user}</p>
+
+
+              {/* <span className={styles.fiveStar} id="five-star"></span> */}
+            </div>
+          </div>
+        </a>
+
+        {/* <div className={styles.like}>{props.article.heart ? props.article.heart.length : 0}</div>
+        <div className={styles.Heart} > <Heart onClick={heart} /></div>
+        <div className={styles.Bookmark} > <Bookmark /></div> */}
+
+
+
+        <Card sx={{ maxWidth: 345, m: 2, }}>
+          <CardContent onClick={handleOpen}>
+            <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
+              {props.article.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
+              {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
+            </Typography>
+          </CardContent>
+          <CardActions>
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe"></Avatar>
               }
               title={props.article.user}
-              // subheader="September 14, 2016"
-              item xs={8}
+            // subheader="September 14, 2016"
             />
-            <CardActions>
-              <IconButton aria-label="heart" size="large"  className={styles.Heart}>
-                <Heart onClick={heart} />
-              </IconButton>
-              <Typography variant="body2" color="text.secondary">
-                {props.article.heart ? props.article.heart.length : 0}
-              </Typography>
-              <IconButton aria-label="heart" size="large" className={styles.Bookmark}>
-                <Bookmark />
-              </IconButton>
 
-            </CardActions>
-          </Box>
+            <IconButton aria-label="heart" size="large">
+              <Heart onClick={heart} />
+            </IconButton>
+            <Typography variant="body2" color="text.secondary">
+              {props.article.heart ? props.article.heart.length : 0}
+            </Typography>
+            <IconButton aria-label="heart" size="large">
+              <Bookmark />
+            </IconButton>
+
+          </CardActions>
         </Card>
 
       </div>

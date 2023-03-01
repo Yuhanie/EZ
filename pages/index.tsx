@@ -428,27 +428,19 @@ const Home: NextPage = () => {
             <Typography variant='h6' pr={2}>文章排行榜</Typography>
             <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
           </Box>
-
           <Box>
             {!isLoading ?
-            <div className={styles.grid}>
-              {articles.map(renderText)}
-            </div>
-            : <CircularProgress />
-          }
-            
-
+              <div className={styles.grid}>
+                {articles.map(renderText)}
+              </div>
+              : <CircularProgress />
+            }
           </Box>
 
         </Box>
 
       </Container>
 
-
-      
-        
-
-      
 
     </div>
   )

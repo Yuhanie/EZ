@@ -7,22 +7,14 @@ import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
-import {
-  collection,
-  addDoc,
-  Doc,
-  getDocs,
-  getFirestore,
-} from "firebase/firestore";
-import { firebaseConfig } from "../../settings/firebaseConfig";
-import VI from "@mui/icons-material/Visibility";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import SendIcon from "@mui/icons-material/Send";
+
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { collection, addDoc, Doc, getDocs, getFirestore, query, orderBy, limit } from "firebase/firestore";
+import { firebaseConfig } from '../../settings/firebaseConfig';
+import VI from '@mui/icons-material/Visibility';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import SendIcon from '@mui/icons-material/Send';
+
 
 import {
   Dialog,
@@ -67,6 +59,7 @@ const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
+
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -84,6 +77,7 @@ const ArticleDetails = (props) => {
         temp.push(doc.data());
         console.log(`${doc.id} => ${doc.data().content}`);
       });
+
 
       // setComments(() => [temp1, temp2]);
       setComments(() => [...temp]);
@@ -118,11 +112,13 @@ const ArticleDetails = (props) => {
         //   </Button>
         // }>要登入才能新增筆記ㄛ! </Alert>
 
+
         router.push("/login");
       } else {
         await addDoc(collection(db, "text", props.article.docId, "comment"), {
           content,
           userid: user.uid,
+          timestamp: serverTimestamp(),
 
           user: user.displayName,
 

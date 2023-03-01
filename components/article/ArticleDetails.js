@@ -71,8 +71,7 @@ useEffect(() => {
   async function fetchData() {
     const querySnapshot = await getDocs(collection(db, "text",
     props.article.docId,"comment"));
-    const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
-      const querySnapshotArticle = await getDocs(queryText);
+    
 
     // const temp1= [user];
     // const temp2= [content];

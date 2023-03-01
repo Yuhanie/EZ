@@ -404,7 +404,7 @@ const Home: NextPage = () => {
         >
           {!isLoading ?
             <Tabs
-              value={value}
+              //value={value}
               onChange={handleChange}
               variant="scrollable"
               scrollButtons

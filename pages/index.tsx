@@ -46,6 +46,7 @@ import { render } from "react-dom";
 import { green } from '@mui/material/colors';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
+import Footer from '@/components/footer/Footer';
 
 // import App from 'myapp/src/App';
 
@@ -443,6 +444,11 @@ const Home: NextPage = () => {
         </Box>
 
       </Container>
+
+      {/* <Footer /> */}
+
+
+
 
 
     </div>

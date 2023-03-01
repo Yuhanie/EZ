@@ -59,43 +59,30 @@ const ArticleListItem:
   
 
   const heart =  async function () {
-    if (typeof window !== "undefined") {
-      
-      if (currentUser) {
-
-        
-        const ref = (doc(db, "text", props.article.docId, "heart",currentUser.uid));
+    if (typeof window !== "undefined") {    
+      if (currentUser) {  
+        const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         
         if ((docSnap.exists())) {
-          if (docSnap.data().heart.contained(currentUser.uid))
-          alert('added')
-          updateDoc(ref, {
-            heart: arrayUnion(currentUser.uid)
-        });
-      } 
-      else {
-        alert('remove')
-        updateDoc(ref, {
-          heart: arrayRemove(currentUser.uid)
-      });
+          if (docSnap.data().heart.includes(currentUser.uid)){
+            alert('remove')
+            updateDoc(ref, {
+              heart: arrayRemove(currentUser.uid)
+            });
+          } else {
+            alert('added')
+            updateDoc(ref, {
+              heart: arrayUnion(currentUser.uid)
+          });
+  
+
       }
-
-
-
-      //   if(currentUser!=currentUser){
-      //   const ref = doc(db, "text", props.article.docId);
-        
-      //   updateDoc(ref, {
-      //     heart: arrayUnion(currentUser.uid)
-      // });
-      // }
-      // else{
-        
-      //   deleteDoc(doc(db, "text", props.article.docId, "heart", currentUser.uid));
-        
-      // }
     }
+
+
+    }
+  }
       else {
         alert("要登入才能按讚ㄛ!")
         //window.alert("要登入才能新增筆記ㄛ!");
@@ -108,10 +95,7 @@ const ArticleListItem:
 
         router.push('/login');
 
-      }
-
-
-    }
+      }    
   }
 
 

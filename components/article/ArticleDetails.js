@@ -134,7 +134,7 @@ const ArticleDetails = (props) => {
           //     email: auth.currentUser.email
           // },
         });
-        setContent("...");
+        setContent("");
         setEdited(edited + 1);
 
         //router.push('/');
@@ -159,7 +159,7 @@ const ArticleDetails = (props) => {
             <Grid justifyContent="left" item xs zeroMinWidth>
               <h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
               <p style={{ textAlign: "left" }}>{comment.content}</p>
-              {/* <p style={{ textAlign: "left" }}>{comment.timestamp}</p> */}
+              <p style={{ textAlign: "left" }}>{comment.timestamp.toDate().toLocaleString()}</p>
               <p style={{ textAlign: "left", color: "gray" }}>
                 {/* posted 1 minute ago */}
               </p>
@@ -210,6 +210,7 @@ const ArticleDetails = (props) => {
           </div>
           {user && user.displayName}
           <OutlinedInput
+          value={content}
             onChange={(e) => setContent(e.target.value)}
             // onClick={onSubmit}
           />

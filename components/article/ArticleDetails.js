@@ -9,7 +9,7 @@ import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, Doc, getDocs, getFirestore, query, orderBy, limit } from "firebase/firestore";
+import { collection, addDoc, Doc, getDocs, getFirestore, query, orderBy, limit,updateDoc, serverTimestamp } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -59,19 +59,21 @@ const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
+  const [timestamp, setTimestamp] = useState([]);
 
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
-      const querySnapshot = await getDocs(
-        collection(db, "text", props.article.docId, "comment")
-      );
+      const querySnapshot = 
+        collection(db, "text", props.article.docId, "comment");
+      const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
+      const querySnapshotArticle = await getDocs(queryText);
 
       // const temp1= [user];
       // const temp2= [content];
       const temp = [];
 
-      querySnapshot.forEach((doc) => {
+      querySnapshotArticle.forEach((doc) => {
         // temp1.push(doc.data());
         // temp2.push(doc.data());
         temp.push(doc.data());
@@ -157,6 +159,7 @@ const ArticleDetails = (props) => {
             <Grid justifyContent="left" item xs zeroMinWidth>
               <h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
               <p style={{ textAlign: "left" }}>{comment.content}</p>
+              {/* <p style={{ textAlign: "left" }}>{comment.timestamp}</p> */}
               <p style={{ textAlign: "left", color: "gray" }}>
                 {/* posted 1 minute ago */}
               </p>

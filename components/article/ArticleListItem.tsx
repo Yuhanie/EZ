@@ -103,6 +103,7 @@ const ArticleListItem:
   return (
   <div>
   <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
+  <a onClick={handleOpen}>
   <div className={styles.card} key={props.article.title}>
     
     {/* <h2><a href={props.article.link}>{props.article.title}</a></h2> */}
@@ -126,7 +127,7 @@ const ArticleListItem:
       
       {/* <span className={styles.fiveStar} id="five-star"></span> */}
     </div>
-     </div>
+     </div></a>
   
     <div className={styles.like}>{props.article.heart?props.article.heart.length:0}</div>
    <div className={styles.Heart} > <Heart  onClick={heart}/></div> 

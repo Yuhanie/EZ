@@ -78,7 +78,7 @@ const Article = () => {
     async function readData() {
       setIsLoading(true);
       console.log("minitag:",minitag)
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag)));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 

@@ -50,7 +50,8 @@ import Chip from '@mui/material/Chip';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
-
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 
 
@@ -83,7 +84,7 @@ const Article = () => {
     async function readData() {
       setIsLoading(true);
       //console.log("tag:",tag)
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("tags", "array-contains", tag)));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("tag", "==", tag)));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
@@ -110,7 +111,29 @@ const Article = () => {
         console.log(doc2.id);
         console.log(doc2.data());
         temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+        
       });
+
+
+      // <Box
+      //     display="flex"
+      //     justifyContent="center"
+      //   >
+      //     {!isLoading ?
+      //       <Tabs
+      //         //value={value}
+      //         onChange={handleChange}
+      //         variant="scrollable"
+      //         scrollButtons
+      //         allowScrollButtonsMobile
+      //         aria-label="scrollable force tabs example"
+      //       >
+      //         {minitag.map(renderTag)}
+
+      //       </Tabs>
+      //       : <CircularProgress />
+      //     }
+      //   </Box>
 
       // const querySnapshot3 = await getDocs(query(collection(db, "/tag/" + tag + "/分類/" + miniTag)));
       // querySnapshot3.forEach(async (doc3) => {

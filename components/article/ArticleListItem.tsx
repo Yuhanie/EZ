@@ -40,8 +40,9 @@ const ArticleListItem:
   React.FC<Props> = (props) => {
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<User>();
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(props.article.heart.length);
     const [timestamp, setTimestamp] = useState([]);
+    const [liked, setLiked] =useState(false);
 
 
 
@@ -55,20 +56,41 @@ const ArticleListItem:
     const handleClose = () => {
       setOpen(false);
     };
-
+    const setHeart=async(user:User) =>{
+      const ref = doc(db, "text", props.article.docId);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()){ 
+        setCount(docSnap.data().heart.length)  
+        if (user){
+          if (docSnap.data().heart.includes(user.uid)) {
+            setLiked(true)
+            console.log('liked')
+          }
+          else{
+            
+            setLiked(false)
+            console.log('unliked')
+  
+          }
+        }       
+        
+      }
+    }       
     useEffect(() => {
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
+          console.log('currentUser',user)
           setCurrentUser(user);
+          setHeart(user)
         }
-        console.log(user);
+        //console.log(user);
       });
 
       return () => {
         unsub();
       }
       
-    }, []);
+    }, [liked]);
 
 
 
@@ -80,16 +102,20 @@ const ArticleListItem:
 
           if ((docSnap.exists())) {
             if (docSnap.data().heart.includes(currentUser.uid)) {
-              alert('remove')
+              //  alert('remove')
               updateDoc(ref, {
                 heart: arrayRemove(currentUser.uid)
               });
+              setLiked(false)
+              setCount(count-1)
             } else {
-              alert('added')
+              //  alert('added')
               updateDoc(ref, {
                 heart: arrayUnion(currentUser.uid)
+                
               });
-              
+              setLiked(true)
+              setCount(count+1)
 
 
             }
@@ -159,15 +185,16 @@ const ArticleListItem:
               }
               title={props.article.user}
               // subheader="September 14, 2016"
-              item xs={8}
+              //item 
+              xs={8}
             />
             <CardActions>
-            {/* {props.article.timestamp.toDate().toLocaleString()} */}
-              <IconButton aria-label="heart" size="large"  className={currentUser?styles.Like:styles.Unlike} >
-                <Heart onClick={heart} />
+            {props.article.timestamp&&props.article.timestamp.toDate().toLocaleString()}
+              <IconButton aria-label="heart" size="large" onClick={heart} className={liked?styles.Like:styles.Unlike} >
+                <Heart  />
               </IconButton>
               <Typography variant="body2" color="text.secondary">
-                {props.article.heart ? props.article.heart.length : 0}
+                {props.article.heart ? count : 0}
               </Typography>
               <IconButton aria-label="heart" size="large" className={styles.Bookmark}>
                 <Bookmark />

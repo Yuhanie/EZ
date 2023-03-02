@@ -76,7 +76,7 @@ const ArticleDetails = (props) => {
         // temp1.push(doc.data());
         // temp2.push(doc.data());
         temp.push(doc.data());
-        console.log(`${doc.id} => ${doc.data().content}`);
+        //console.log(`${doc.id} => ${doc.data().content}`);
       });
 
 
@@ -87,7 +87,7 @@ const ArticleDetails = (props) => {
 
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      console.log(user);
+      console.log('user',user);
     });
 
     return () => {

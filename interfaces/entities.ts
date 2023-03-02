@@ -8,6 +8,7 @@ export type Article = {
   link: string;
   count: number;
   heart: string[];
+  timestamp: Timestamp;
 };
 
 export type Question = {

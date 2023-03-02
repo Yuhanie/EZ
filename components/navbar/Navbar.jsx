@@ -124,7 +124,12 @@ function ResponsiveAppBar() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setLogged(false);
+      if (user){
+        setLogged(false)
+      }
+      else{
+        setLogged(true)
+      }
       console.log(user);
     });
 

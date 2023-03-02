@@ -1121,11 +1121,7 @@
 }
 
 
-.Like:hover,
-.Like:focus,
-.Like:active {
-  color:#f30000;
-}
+
 
 /* .Bookmark {
 
@@ -1162,12 +1158,6 @@
 }
 
 
-.Unlike:hover,
-.Unlike:focus,
-.Unlike:active {
-  
-  color: grey;
-}
 
 
 

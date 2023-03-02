@@ -40,6 +40,8 @@ const ArticleListItem:
   React.FC<Props> = (props) => {
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<User>();
+    const [count, setCount] = useState(0);
+    const [timestamp, setTimestamp] = useState([]);
 
 
 
@@ -65,6 +67,7 @@ const ArticleListItem:
       return () => {
         unsub();
       }
+      
     }, []);
 
 
@@ -86,6 +89,7 @@ const ArticleListItem:
               updateDoc(ref, {
                 heart: arrayUnion(currentUser.uid)
               });
+              
 
 
             }
@@ -107,9 +111,15 @@ const ArticleListItem:
         router.push('/login');
 
       }
+
+
+
+
+      
     }
 
 
+    
 
 
 
@@ -152,7 +162,8 @@ const ArticleListItem:
               item xs={8}
             />
             <CardActions>
-              <IconButton aria-label="heart" size="large"  className={styles.Heart}>
+            {/* {props.article.timestamp.toDate().toLocaleString()} */}
+              <IconButton aria-label="heart" size="large"  className={currentUser?styles.Like:styles.Unlike} >
                 <Heart onClick={heart} />
               </IconButton>
               <Typography variant="body2" color="text.secondary">

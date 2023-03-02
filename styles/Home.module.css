@@ -1103,7 +1103,7 @@
   font-size: 15px;
 }
 
-.Heart {
+.Like {
 
 
   /* color: inherit; */
@@ -1121,9 +1121,9 @@
 }
 
 
-.Heart:hover,
-.Heart:focus,
-.Heart:active {
+.Like:hover,
+.Like:focus,
+.Like:active {
   color: #f30000;
 }
 
@@ -1142,6 +1142,39 @@
   left: 255px;
   cursor: pointer;
 } */
+
+.Unlike {
+
+
+  /* color: inherit; */
+  /*text-decoration: none;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;*/
+
+
+  /* position: relative;
+  display: block;
+  bottom: 75px;
+  left: 200px;
+  cursor: pointer; */
+}
+
+
+.Unlike:hover,
+.Unlike:focus,
+.Unlike:active {
+  color: #fffb00;
+}
+
+
+
+
+
+
+
+
+
 
 
 .Bookmark:hover,

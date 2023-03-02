@@ -28,7 +28,6 @@ import {
   Paper,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
-
 // const docRef = doc(db, "English", "1");
 // const docSnap = await getDoc(docRef);
 
@@ -59,7 +58,7 @@ const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
-  const [timestamp, setTimestamp] = useState([]);
+  
 
   const [edited, setEdited] = useState(0);
   useEffect(() => {
@@ -212,12 +211,16 @@ const ArticleDetails = (props) => {
           <OutlinedInput
           value={content}
             onChange={(e) => setContent(e.target.value)}
+            sx={{ padding: 1, margin: 5 , left: -20 , top: -1 , borderRadius: 12 , width: 340 , height: 35}}
+            placeholder='我要留言...'
             // onClick={onSubmit}
           />
           <Button
+            size="small"
             variant="contained"
             endIcon={<SendIcon />}
             onClick={onSubmit}
+            sx={{ padding: 0, margin: 1 ,right: -425 ,  top: -84 , borderRadius: 5 , width: 2 , height: 35}}
           ></Button>
         </DialogContent>
 

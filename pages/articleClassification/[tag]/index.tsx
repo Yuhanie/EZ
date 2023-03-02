@@ -91,7 +91,6 @@ const Article = () => {
       const temp: Article[] = [];
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
-
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
         //console.log("tag2:",tag)

@@ -102,14 +102,14 @@ const ArticleListItem:
 
           if ((docSnap.exists())) {
             if (docSnap.data().heart.includes(currentUser.uid)) {
-              //  alert('remove')
+               alert('remove')
               updateDoc(ref, {
                 heart: arrayRemove(currentUser.uid)
               });
               setLiked(false)
               setCount(count-1)
             } else {
-              //  alert('added')
+                alert('added')
               updateDoc(ref, {
                 heart: arrayUnion(currentUser.uid)
                 

@@ -28,7 +28,7 @@ const TagList: React.FC<Props> = (props) => {
   <div >
     <div className={styles.tag} key={props.tag.name}>
     
-      <h2><Link href={`/articleClassification/${props.tag.name}`} ><Image width="80%" height="80%" src={"/pic/"+props.tag.pic} alt="user" /></Link></h2>
+      <Link  passHref href={`/articleClassification/${props.tag.name}`} ><><Image width="80%" height="80%" src={"/pic/"+props.tag.pic} alt="user" /></></Link>
       
       {/* <div className={styles.tag2}>
         

@@ -44,7 +44,7 @@ export default function App() {
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart});
+        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart ,timestamp: doc.data().timestamp});
       });
 
       console.log(temp);

@@ -190,7 +190,7 @@ const Demo: React.FC = () => {
       {/* 增加"autoplay" */}
       <Swiper spaceBetween={20} slidesPerView={1} loop autoplay>
         {partnerLogo.map((value, index) => {
-          console.log("value:", value);
+          //console.log("value:", value);
           return (
             <SwiperSlide key={value}>
               <img alt={value} className={styles.item} src={value} />
@@ -280,7 +280,7 @@ const Home: NextPage = () => {
 
 
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
+        //console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name, pic: doc.data().pic });
 
       });
@@ -291,13 +291,13 @@ const Home: NextPage = () => {
       //const querySnapshotArticle  = await getDocs(collection(db, "text"));
       const tempArticle: Article[] = [];
       querySnapshotArticle.forEach((doc) => {
-        console.log(doc.id, doc.data());
+        //console.log(doc.id, doc.data());
         tempArticle.push({
-          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart
+          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp
    });
       });
       setArticles([...tempArticle]);
-      console.log(temp);
+      //console.log(temp);
 
       const auth = getAuth();
       const unsub = onAuthStateChanged(auth, (user) => {

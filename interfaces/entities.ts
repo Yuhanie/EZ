@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Article = {
   title: string;
   content: string;
@@ -6,6 +8,7 @@ export type Article = {
   link: string;
   count: number;
   heart: string[];
+  timestamp: Timestamp;
 };
 
 export type Question = {

@@ -18,7 +18,7 @@ export type Question = {
   docId: string;
   count: number;
   heart: string[];
-  timestamp: Timestamp
+  //timestamp: Timestamp
 };
 
 export type Comment = {

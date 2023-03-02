@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Article = {
   title: string;
   content: string;
@@ -15,6 +17,7 @@ export type Question = {
   docId: string;
   count: number;
   heart: string[];
+  timestamp: Timestamp
 };
 
 export type Comment = {

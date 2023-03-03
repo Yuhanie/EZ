@@ -40,7 +40,7 @@ const ArticleListItem:
   React.FC<Props> = (props) => {
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<User>();
-    const [count, setCount] = useState(props.article.heart.length);
+    const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
     const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
 
@@ -60,9 +60,9 @@ const ArticleListItem:
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
-        setCount(docSnap.data().heart.length)
+        setCount(props.article.heart ? props.article.heart.length : 0)
         if (user) {
-          if (docSnap.data().heart.includes(user.uid)) {
+          if (props.article.heart && docSnap.data().heart.includes(user.uid)) {
             setLiked(true)
             console.log(props.article.title + 'liked')
           }

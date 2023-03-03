@@ -191,7 +191,7 @@ const ArticleListItem:
             />
             <CardActions>
               {props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
-              <IconButton aria-label="heart" size="large" onClick={heart} className={liked ? styles.Like : styles.Unlike} >
+              <IconButton aria-label="heart" size="large" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                 <Heart />
               </IconButton>
               <Typography variant="body2" color="text.secondary">

@@ -42,7 +42,7 @@ const ArticleListItem:
     const [currentUser, setCurrentUser] = useState<User>();
     const [count, setCount] = useState(props.article.heart.length);
     const [timestamp, setTimestamp] = useState([]);
-    const [liked, setLiked] =useState(false);
+    const [liked, setLiked] = useState(false);
 
 
 
@@ -56,30 +56,30 @@ const ArticleListItem:
     const handleClose = () => {
       setOpen(false);
     };
-    const setHeart=async(user:User) =>{
+    const setHeart = async (user: User) => {
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
-      if (docSnap.exists()){ 
-        setCount(docSnap.data().heart.length)  
-        if (user){
+      if (docSnap.exists()) {
+        setCount(docSnap.data().heart.length)
+        if (user) {
           if (docSnap.data().heart.includes(user.uid)) {
             setLiked(true)
-            console.log('liked')
+            console.log(props.article.title + 'liked')
           }
-          else{
-            
+          else {
+
             setLiked(false)
-            console.log('unliked')
-  
+            console.log(props.article.title + 'unliked')
+
           }
-        }       
-        
+        }
+
       }
-    }       
+    }
     useEffect(() => {
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log('currentUser',user)
+          console.log('currentUser', user)
           setCurrentUser(user);
           setHeart(user)
         }
@@ -89,7 +89,8 @@ const ArticleListItem:
       return () => {
         unsub();
       }
-      
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [liked]);
 
 
@@ -102,20 +103,20 @@ const ArticleListItem:
 
           if ((docSnap.exists())) {
             if (docSnap.data().heart.includes(currentUser.uid)) {
-               alert('remove')
+              alert('remove')
               updateDoc(ref, {
                 heart: arrayRemove(currentUser.uid)
               });
               setLiked(false)
-              setCount(count-1)
+              setCount(count - 1)
             } else {
-                alert('added')
+              alert('added')
               updateDoc(ref, {
                 heart: arrayUnion(currentUser.uid)
-                
+
               });
               setLiked(true)
-              setCount(count+1)
+              setCount(count + 1)
 
 
             }
@@ -141,11 +142,11 @@ const ArticleListItem:
 
 
 
-      
+
     }
 
 
-    
+
 
 
 
@@ -189,9 +190,9 @@ const ArticleListItem:
               xs={8}
             />
             <CardActions>
-            {props.article.timestamp&&props.article.timestamp.toDate().toLocaleString()}
-              <IconButton aria-label="heart" size="large" onClick={heart} className={liked?styles.Like:styles.Unlike} >
-                <Heart  />
+              {props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+              <IconButton aria-label="heart" size="large" onClick={heart} className={liked ? styles.Like : styles.Unlike} >
+                <Heart />
               </IconButton>
               <Typography variant="body2" color="text.secondary">
                 {props.article.heart ? count : 0}

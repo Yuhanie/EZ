@@ -17,7 +17,7 @@ const MiniTags: React.FC<Props> = (props) => {
 //   const handleClose = () => {
 //     setOpen(false);
 //   };
-
+ 
   return (
   <ListItem>{props.miniTag.name}</ListItem>
   );

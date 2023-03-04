@@ -21,6 +21,7 @@ import Link from 'next/link';
 import ArticleDetails from '../../../components/post/ArticleDetails';
 import ArticleListItem from '../../../components/article/ArticleListItem';
 import MiniTags from '../../../components/miniTags/miniTags';
+import MiniTagList from '../../../components/miniTags/miniTagList';
 import TagList from '../../../components/tag/TagList';
 import { Article, Tag, miniTag } from '../../../interfaces/entities';
 // import { tags } from '../../interfaces/entities';
@@ -162,10 +163,13 @@ const Article = () => {
     );
   };
 
-  const renderTag = (tag: Tag, i: number) => {
+  const renderTag = (minitag: miniTag, i: number) => {
     //console.log("tags3:",tag);
     return (
-      <MiniTags key={tag.name} miniTag={tag}></MiniTags>
+      <div>
+      {!Array.isArray(tag)&&tag&&
+      <MiniTagList key={minitag.name} tag={tag} minitag={minitag}></MiniTagList>}
+      </div>
     );
   };
   

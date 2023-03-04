@@ -5,14 +5,15 @@ import Link from 'next/link';
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
-import { Tag } from '../../interfaces/entities';
+import { miniTag, Tag } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 
 type Props = {
-  tag: Tag;
+  minitag: miniTag;
+  tag: string;
 };
 
-const TagList: React.FC<Props> = (props) => {
+const MiniTagList: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -26,11 +27,8 @@ const TagList: React.FC<Props> = (props) => {
 
   return (
   <div >
-    <div className={styles.tag} key={props.tag.name}>
-      <Link passHref href={`/articleClassification/${props.tag.name}`} ><Image width="80%" height="80%" src={"/pic/"+props.tag.pic} alt="tags" /></Link>  
-    </div>
-    <h4 className={styles.tag_text}><Link href={`/articleClassification/${props.tag.name}`} >{props.tag.name}</Link></h4>
+    <h4 className={styles.tag_text}><Link href={`/articleClassification/${props.tag}/${props.minitag.name}`} >{props.minitag.name}</Link></h4>
   </div>
   );
-}; 
-export default TagList;
+};
+export default MiniTagList;

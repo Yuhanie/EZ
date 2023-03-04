@@ -8,6 +8,6 @@ const Post = () => {
   //console.log("query",router.query);
 
   return <p>Tag: {tag}</p>
-}
+} 
 
 export default Post

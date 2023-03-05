@@ -185,12 +185,12 @@ const ArticleListItem:
                 <Avatar aria-label="recipe"></Avatar>
               }
               title={props.article.user}
-              // subheader="September 14, 2016"
+              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
               //item 
               xs={8}
             />
             <CardActions>
-              {props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+              
               <IconButton aria-label="heart" size="large" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                 <Heart />
               </IconButton>

@@ -104,7 +104,7 @@ function Newpost () {
             content,
             userid: user.uid,
             email: user.email,
-            tags:[tagName],
+            tag:tagName,
             user:user.displayName,
             //還有這些無法加入生成欄位，看來是需要給一個值嗎？
              count:1,

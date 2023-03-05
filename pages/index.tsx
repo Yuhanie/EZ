@@ -22,6 +22,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
+import {  createTheme} from "@mui/material/styles";
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
 import { Article, Tag } from '../interfaces/entities';
@@ -174,7 +175,21 @@ const db = getFirestore();
 
 //   },[]);
 
-
+//色調
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#ffffff",
+    },
+    secondary: {
+      main: "#7A82E7",
+    },
+    text: {
+      secondary: "#E2655E",
+    },
+  },
+});
 
 const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [

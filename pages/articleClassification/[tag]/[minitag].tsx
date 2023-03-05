@@ -65,12 +65,12 @@ export async function getServerSideProps() {
 //////////////////////////////////////////////////////////////////////////
 const Article = () => {
   const router = useRouter()
-//   const { tag } = router.query
+  //   const { tag } = router.query
   const { tag, minitag } = router.query
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-//   const [tags, setTags] = useState<Tag[]>([]);
+  //   const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
 
   //console.log(props)
@@ -78,13 +78,13 @@ const Article = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      console.log("minitag:",minitag)
+      console.log("minitag:", minitag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
-    //   const temp2: Tag[] = [];
+      //   const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
 
       querySnapshot.forEach(async (doc) => {
@@ -97,7 +97,7 @@ const Article = () => {
         //   temp2.push({docId: doc.id,name:doc2.data().name}); 
         // });
         console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp});
+        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       });
 
       //console.log("tag4:",tag);
@@ -110,7 +110,7 @@ const Article = () => {
       //   temp3.push({ name: doc2.data().name});
       // });
 
-      
+
 
       //console.log(temp);
       //console.log("temp2:", temp2);
@@ -140,7 +140,7 @@ const Article = () => {
   //     <MiniTagList key={tag.name} tag={tag} minitag={minitag}></MiniTagList>
   //   );
   // };
-  
+
 
   ////////////////////////////////////////////////////////////sidebar
   const drawerWidth = 240;
@@ -186,7 +186,7 @@ const Article = () => {
             /> */}
           </Box>
           <Box display="flex" p={1}>
-            < LocalFireDepartmentIcon color="error"/>
+            < LocalFireDepartmentIcon color="error" />
             <Typography>
               更多熱門主題
             </Typography>
@@ -224,8 +224,8 @@ const Article = () => {
             variant="contained"
             size="medium"
             color="primary"
-            sx={{ mr: 2, display: { sm: 'none',} }}
-            
+            sx={{ mr: 2, display: { sm: 'none', } }}
+
           >
             {minitag}
           </Button>

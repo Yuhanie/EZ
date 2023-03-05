@@ -26,6 +26,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
+import ListSubheader from '@mui/material/ListSubheader';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -162,14 +163,17 @@ const ArticleListItem:
         <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
         <Card
           sx={{
-            maxWidth: 345,
-            m: 2,
+            // maxWidth: 345,
+            width:340,
+            height:235,
+            m:2,
+            spacing:2,
             borderRadius: 3,
             bgcolor: 'background.paper',
             boxShadow: 1,
           }}
         >
-          <CardActionArea sx={{ p: 1 }}>
+          <CardActionArea sx={{ p: 1,height:170 }}>
             <CardContent onClick={handleOpen}>
               <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
                 {props.article.title}
@@ -189,15 +193,17 @@ const ArticleListItem:
               //item 
               xs={8}
             />
+          
+            
+           
             <CardActions>
-              
-              <IconButton aria-label="heart" size="large" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
+              <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                 <Heart />
               </IconButton>
               <Typography variant="body2" color="text.secondary">
                 {props.article.heart ? count : 0}
               </Typography>
-              <IconButton aria-label="heart" size="large" className={styles.Bookmark}>
+              <IconButton aria-label="heart" size="medium" className={styles.Bookmark}>
                 <Bookmark />
               </IconButton>
 

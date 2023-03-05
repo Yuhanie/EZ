@@ -3,7 +3,8 @@ import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
-import { Button, TableCell, TableRow } from "@mui/material";
+import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import ArticleDetails from "./ArticleDetails";
@@ -43,7 +44,18 @@ const ArticleListItem:
     const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
     const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
-
+    const [deleted, setDeleted] = useState(0);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    
+    // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    // const open = Boolean(anchorEl);
+    // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    //   setAnchorEl(event.currentTarget);
+    // };
+    // const handleClose = () => {
+    //   setAnchorEl(null);
+    // };
+    
 
 
     const handleOpen = () => {
@@ -91,9 +103,56 @@ const ArticleListItem:
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [liked]);
+    }, [liked, deleted]);
 
 
+    const deleteData = async function(){
+      if (typeof window !== "undefined") {
+        if (currentUser) {
+          const ref = doc(db, "text", props.article.docId);
+          const docSnap = await getDoc(ref);
+            if ((docSnap.exists())) {
+              if (docSnap.data().userid==(currentUser.uid)) {
+                
+                try{
+  
+                setIsLoading(true);
+  
+                await deleteDoc(doc(db, "text", props.article.docId));
+  
+                //console.log("deleted");
+  
+                setDeleted(deleted+1);
+  
+                setIsLoading(false);
+                alert('刪除成功')
+                }
+  
+                catch (error){
+  
+                console.log(error);
+  
+                }
+                
+              }
+              else{
+                alert('不是你的文章ㄚ')
+              }
+            }
+          }
+        }
+              
+          else{
+                alert('請登入')
+              }
+  
+    }
+
+
+    
+
+  
+  
 
     const heart = async function () {
       if (typeof window !== "undefined") {
@@ -145,8 +204,26 @@ const ArticleListItem:
 
     }
 
+    const Update = () => {
+      return(
+        <div>
+          <MenuItem onClick={handleClose}>修改</MenuItem>
+          <MenuItem onClick={deleteData}>刪除</MenuItem>
+        </div> 
+      )
 
+    };
 
+    const Report = () => {
+      return(
+        <div>
+          <MenuItem onClick={handleClose}>檢舉</MenuItem>
+        </div> 
+      
+      )
+
+    };
+    
 
 
 
@@ -173,6 +250,10 @@ const ArticleListItem:
             <CardContent onClick={handleOpen}>
               <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
                 {props.article.title}
+            {/* <MenuItem>
+              
+            </MenuItem> */}
+
               </Typography>
               <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
@@ -200,9 +281,32 @@ const ArticleListItem:
               <IconButton aria-label="heart" size="large" className={styles.Bookmark}>
                 <Bookmark />
               </IconButton>
-
             </CardActions>
+           
           </Box>
+
+        <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        // anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        
+        {currentUser ? Update() : Report()}
+      </Menu>
+
+
+
         </Card>
 
       </div>
@@ -212,4 +316,3 @@ export default ArticleListItem;
 function setUser(user: import("@firebase/auth").User | null) {
   throw new Error('Function not implemented.');
 }
-

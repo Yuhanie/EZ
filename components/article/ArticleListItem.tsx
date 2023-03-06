@@ -292,7 +292,10 @@ const ArticleListItem:
           </Box>
 
         <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton>
-      <Menu
+
+
+
+      {/* <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
         // anchorEl={anchorEl}
@@ -309,7 +312,8 @@ const ArticleListItem:
       >
         
         {currentUser ? Update() : Report()}
-      </Menu>
+      </Menu> */}
+
 
 
 

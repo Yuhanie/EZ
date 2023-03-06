@@ -7,15 +7,15 @@ import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
-
+import IconButton from '@mui/material/IconButton';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, Doc, getDocs, getFirestore, query, orderBy, limit,updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, Doc, doc, getDocs, getDoc, getFirestore, query, orderBy, limit,updateDoc, serverTimestamp, arrayRemove, arrayUnion } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import SendIcon from '@mui/icons-material/Send';
-
-
+import Heart from '@mui/icons-material/Favorite';
+import Typography from '@mui/material/Typography';
 import {
   Dialog,
   DialogActions,
@@ -54,10 +54,13 @@ const auth = getAuth();
 //      </>
 //     )}
 
+
 const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
   
 
   const [edited, setEdited] = useState(0);
@@ -67,6 +70,18 @@ const ArticleDetails = (props) => {
         collection(db, "text", props.article.docId, "comment");
       const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
       const querySnapshotArticle = await getDocs(queryText);
+
+
+      // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
+      // querySnapshot2.forEach(async (doc2) => {
+      //   console.log(doc2.id);
+      //   console.log(doc2.data());
+      //   temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+        
+      // });
+
+
+
 
       // const temp1= [user];
       // const temp2= [content];
@@ -95,7 +110,7 @@ const ArticleDetails = (props) => {
     };
 
     // eslint-disable-next-line
-  }, [edited]);
+  }, [edited, liked]);
 
   const handleClose = () => {
     props.setOpen(false);
@@ -147,6 +162,51 @@ const ArticleDetails = (props) => {
     // props.article.docId,"comment"))
   }
 
+
+  const heart = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(collection(db, "text", props.article.docId, "comment", comments.docId));
+        const docSnap = await getDoc(ref);
+
+        if ((docSnap.exists())) {
+          if (docSnap.data().heart.includes(user.uid)) {
+            alert('remove')
+            updateDoc(ref, {
+              heart: arrayRemove(user.uid)
+            });
+            setLiked(false)
+            setCount(count - 1)
+          } else {
+            alert('added')
+            updateDoc(ref, {
+              heart: arrayUnion(user.uid)
+
+            });
+            setLiked(true)
+            setCount(count + 1)
+
+          }
+        }
+      }
+    }
+    else {
+      alert("要登入才能按讚ㄛ!")
+      //window.alert("要登入才能新增筆記ㄛ!");
+
+      // <Alert action={
+      //   <Button >
+      //     UNDO
+      //   </Button>
+      // }>要登入才能新增筆記ㄛ! </Alert>
+
+      router.push('/login');
+    }
+  }
+
+
+
+
   const renderComment = (comment, i) => {
     return (
       <div key={comment.content} style={{ padding: 14 }} className="App">
@@ -156,12 +216,19 @@ const ArticleDetails = (props) => {
               <Avatar alt="Remy Sharp" />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth>
-              <h4 style={{ margin: 0, textAlign: "left" }}>{comment.user}</h4>
-              <p style={{ textAlign: "left" }}>{comment.content}</p>
-              <p style={{ textAlign: "left" }}>{comment.timestamp.toDate().toLocaleString()}</p>
-              <p style={{ textAlign: "left", color: "gray" }}>
-                {/* posted 1 minute ago */}
-              </p>
+              <p style={{ margin: 0, textAlign: "left" }}>{comment.user}</p><br/>
+              <h4 style={{ textAlign: "left" }}>{comment.content}</h4>
+              <p style={{ textAlign: "left" , color:"grey"}}>{comment.timestamp.toDate().toLocaleString()}</p>
+{/* 
+              <IconButton style={{ textAlign: "left", left: 300, bottom: 80}} aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
+                <Heart />
+              </IconButton>
+              <p style={{position: "relative", bottom: 110, left: 340}} variant="body2" color="text.secondary">
+                {props.article.heart ? count : 0}
+              </p> */}
+
+              
+               
             </Grid>
           </Grid>
         </Paper>

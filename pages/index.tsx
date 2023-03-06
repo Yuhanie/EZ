@@ -266,6 +266,7 @@ const Home: NextPage = () => {
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [updated, setUpdated] = useState(0);
   const router = useRouter();
   // return (
   //   <Swiper
@@ -286,7 +287,9 @@ const Home: NextPage = () => {
   //     ...
   //   </Swiper>
   // );
-
+  const updateUpdated = ()=>{
+    setUpdated((currentValue)=>currentValue+1)
+  }
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
@@ -308,7 +311,7 @@ const Home: NextPage = () => {
       querySnapshotArticle.forEach((doc) => {
         //console.log(doc.id, doc.data());
         tempArticle.push({
-          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp
+          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp
    });
       });
       setArticles([...tempArticle]);
@@ -382,7 +385,7 @@ const Home: NextPage = () => {
 
   const renderText = (article: Article, i: number) => {
     return (
-      <ArticleListItem key={article.docId} article={article}></ArticleListItem>
+      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
     );
 
   };

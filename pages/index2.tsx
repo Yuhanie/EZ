@@ -30,6 +30,7 @@ export default function App() {
   const [message, setMessage] = useState<any>("");
   const [images , setImages] = useState<any>([]);
   const [image, setImage] = useState<any>(''); 
+  const [updated, setUpdated] = useState(0);
 
 
 
@@ -44,7 +45,7 @@ export default function App() {
       
       querySnapshot.forEach((doc) => {
         console.log(doc.id, doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart ,timestamp: doc.data().timestamp});
+        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart ,timestamp: doc.data().timestamp});
       });
 
       console.log(temp);
@@ -86,10 +87,13 @@ export default function App() {
 
 // readImage();
   },[]);
+  const updateUpdated = ()=>{
+    setUpdated((currentValue)=>currentValue+1)
+  }
 
   const renderText = (article: Article, i: number) => {
     return (
-      <ArticleListItem key={article.title} article = {article}></ArticleListItem>
+      <ArticleListItem key={article.title} article = {article} update={updateUpdated}></ArticleListItem>
     );
   //   const renderTag = (tag: Tag, i: number) => {
   //       return (

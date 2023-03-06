@@ -9,6 +9,7 @@ export type Article = {
   count: number;
   heart: string[];
   timestamp: Timestamp;
+  userid: string;
 };
 
 export type Question = {
@@ -24,6 +25,7 @@ export type Question = {
 export type Comment = {
   user: string;
   content: string;
+  id:string;
 };
 
 

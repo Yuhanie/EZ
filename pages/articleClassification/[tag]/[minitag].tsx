@@ -72,6 +72,7 @@ const Article = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
+  const [updated, setUpdated] = useState(0);
 
   //console.log(props)
 
@@ -97,7 +98,7 @@ const Article = () => {
         //   temp2.push({docId: doc.id,name:doc2.data().name}); 
         // });
         console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
+        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       });
 
       //console.log("tag4:",tag);
@@ -125,10 +126,13 @@ const Article = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const updateUpdated = ()=>{
+    setUpdated((currentValue)=>currentValue+1)
+  }
 
   const renderText = (article: Article, i: number) => {
     return (
-      <ArticleListItem key={article.docId} article={article}></ArticleListItem>
+      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
 
     );
   };

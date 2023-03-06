@@ -36,6 +36,7 @@ const auth = getAuth();
 
 type Props = {
   article: Article;
+  update:Function;
 };
 
 const ArticleListItem:
@@ -45,7 +46,6 @@ const ArticleListItem:
     const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
     const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
-    const [deleted, setDeleted] = useState(0);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
     // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -104,50 +104,9 @@ const ArticleListItem:
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [liked, deleted]);
+    }, [liked]);
 
 
-    const deleteData = async function(){
-      if (typeof window !== "undefined") {
-        if (currentUser) {
-          const ref = doc(db, "text", props.article.docId);
-          const docSnap = await getDoc(ref);
-            if ((docSnap.exists())) {
-              if (docSnap.data().userid==(currentUser.uid)) {
-                
-                try{
-  
-                setIsLoading(true);
-  
-                await deleteDoc(doc(db, "text", props.article.docId));
-  
-                //console.log("deleted");
-  
-                setDeleted(deleted+1);
-  
-                setIsLoading(false);
-                alert('刪除成功')
-                }
-  
-                catch (error){
-  
-                console.log(error);
-  
-                }
-                
-              }
-              else{
-                alert('不是你的文章ㄚ')
-              }
-            }
-          }
-        }
-              
-          else{
-                alert('請登入')
-              }
-  
-    }
 
 
     
@@ -205,25 +164,7 @@ const ArticleListItem:
 
     }
 
-    const Update = () => {
-      return(
-        <div>
-          <MenuItem onClick={handleClose}>修改</MenuItem>
-          <MenuItem onClick={deleteData}>刪除</MenuItem>
-        </div> 
-      )
 
-    };
-
-    const Report = () => {
-      return(
-        <div>
-          <MenuItem onClick={handleClose}>檢舉</MenuItem>
-        </div> 
-      
-      )
-
-    };
     
 
 
@@ -237,7 +178,7 @@ const ArticleListItem:
 
     return (
       <div>
-        <ArticleDetails article={props.article} open={open} setOpen={setOpen} ></ArticleDetails>
+        <ArticleDetails article={props.article} open={open} setOpen={setOpen} update={props.update} ></ArticleDetails>
         <Card
           sx={{
             // maxWidth: 345,
@@ -291,30 +232,11 @@ const ArticleListItem:
            
           </Box>
 
-        <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton>
+        {/* <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton> */}
 
 
 
-      {/* <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        // anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-      >
-        
-        {currentUser ? Update() : Report()}
-      </Menu> */}
-
-
+      
 
 
         </Card>

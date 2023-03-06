@@ -9,7 +9,7 @@ import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, Doc, doc, getDocs, getDoc, getFirestore, query, orderBy, limit,updateDoc, serverTimestamp, arrayRemove, arrayUnion } from "firebase/firestore";
+import { collection, addDoc, Doc, doc, getDocs,deleteDoc, getDoc, getFirestore, query, orderBy, limit,updateDoc, serverTimestamp, arrayRemove, arrayUnion } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -61,8 +61,8 @@ const ArticleDetails = (props) => {
   const [user, setUser] = useState();
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
-  
-
+  const [deleted, setDeleted] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -79,7 +79,7 @@ const ArticleDetails = (props) => {
       //   temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
         
       // });
-
+   
 
 
 
@@ -88,10 +88,8 @@ const ArticleDetails = (props) => {
       const temp = [];
 
       querySnapshotArticle.forEach((doc) => {
-        // temp1.push(doc.data());
-        // temp2.push(doc.data());
-        temp.push(doc.data());
-        //console.log(`${doc.id} => ${doc.data().content}`);
+        let data = {...doc.data(), id:doc.id};
+        temp.push(data);
       });
 
 
@@ -99,6 +97,8 @@ const ArticleDetails = (props) => {
       setComments(() => [...temp]);
     }
     fetchData();
+    console.log('user:', user);
+    console.log('article:', props.article)
 
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -110,7 +110,7 @@ const ArticleDetails = (props) => {
     };
 
     // eslint-disable-next-line
-  }, [edited, liked]);
+  }, [edited, liked, deleted]);
 
   const handleClose = () => {
     props.setOpen(false);
@@ -166,7 +166,9 @@ const ArticleDetails = (props) => {
   const heart = async function () {
     if (typeof window !== "undefined") {
       if (user) {
-        const ref = doc(collection(db, "text", props.article.docId, "comment", comments.docId));
+        
+        
+        const ref = doc(collection(db, "text", props.article.docId, "comment", comments.id));
         const docSnap = await getDoc(ref);
 
         if ((docSnap.exists())) {
@@ -204,6 +206,74 @@ const ArticleDetails = (props) => {
     }
   }
 
+  const deleteData = async function(){
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+          if ((docSnap.exists())) {
+            if (docSnap.data().userid==(user.uid)) {
+              
+              try{
+
+              setIsLoading(true);
+
+              await deleteDoc(doc(db, "text", props.article.docId));
+
+              //console.log("deleted");
+
+              setDeleted(deleted+1);
+
+              setIsLoading(false);
+              alert('刪除成功')
+              props.update();
+              }
+              catch (error){
+              console.log(error);
+              }
+            }
+            else{
+              alert('不是你的文章ㄚ')
+            }
+          }
+        }
+      } 
+        else{
+              alert('請登入')
+            }
+  }
+
+
+
+
+
+
+
+  const Update = () => {
+    return(
+      <div>
+        <Button color="secondary" variant="contained" onClick={handleClose}>
+          修改
+        </Button>
+        <Button color="secondary" variant="contained" onClick={deleteData}>
+          刪除
+        </Button>
+      </div> 
+    )
+
+  };
+
+  const Report = () => {
+    return(
+      <div>
+        <Button color="secondary" variant="contained" onClick={handleClose}>
+          檢舉
+        </Button>
+      </div> 
+    
+    )
+
+  };
 
 
 
@@ -218,14 +288,15 @@ const ArticleDetails = (props) => {
             <Grid justifyContent="left" item xs zeroMinWidth>
               <p style={{ margin: 0, textAlign: "left" }}>{comment.user}</p><br/>
               <h4 style={{ textAlign: "left" }}>{comment.content}</h4>
-              <p style={{ textAlign: "left" , color:"grey"}}>{comment.timestamp.toDate().toLocaleString()}</p>
-{/* 
+              <p style={{ textAlign: "left" , color:"grey"}}>{comment.timestamp&&comment.timestamp.toDate().toLocaleString()}</p>
+
+
               <IconButton style={{ textAlign: "left", left: 300, bottom: 80}} aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                 <Heart />
               </IconButton>
               <p style={{position: "relative", bottom: 110, left: 340}} variant="body2" color="text.secondary">
                 {props.article.heart ? count : 0}
-              </p> */}
+              </p>
 
               
                
@@ -292,23 +363,23 @@ const ArticleDetails = (props) => {
         </DialogContent>
 
         <DialogActions>
-          <Button color="secondary" variant="contained" onClick={handleClose}>
-            愛心
-          </Button>
-          <Button color="secondary" variant="contained" onClick={handleClose}>
-            儲存
-          </Button>
-          <Button color="secondary" variant="contained" onClick={handleClose}>
-            分享
-          </Button>
-
-          <Button color="primary" variant="contained" onClick={handleClose}>
+          
+        {user && user.uid === props.article.userid && Update()} 
+        {/* {user.uid}/{props.article.userid} */}
+        {/* {props.article.userid} */}
+        {user && Report()}
+          {/* <Button color="primary" variant="contained" onClick={handleClose}>
             關閉
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
     </div>
   );
+
+
+
+
+
   // return (
 
   //   <div className={styles.container}>

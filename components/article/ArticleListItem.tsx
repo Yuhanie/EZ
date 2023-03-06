@@ -119,7 +119,6 @@ const ArticleListItem:
         if (currentUser) {
           const ref = doc(db, "text", props.article.docId);
           const docSnap = await getDoc(ref);
-
           if ((docSnap.exists())) {
             if (docSnap.data().heart.includes(currentUser.uid)) {
               alert('remove')
@@ -137,8 +136,8 @@ const ArticleListItem:
               setLiked(true)
               setCount(count + 1)
 
-
-            }
+ 
+          }
           }
 
 

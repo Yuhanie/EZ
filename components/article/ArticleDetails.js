@@ -170,7 +170,6 @@ const ArticleDetails = (props) => {
         
         const ref = doc(collection(db, "text", props.article.docId, "comment", comments.id));
         const docSnap = await getDoc(ref);
-
         if ((docSnap.exists())) {
           if (docSnap.data().heart.includes(user.uid)) {
             alert('remove')

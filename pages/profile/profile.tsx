@@ -1,4 +1,10 @@
 import * as React from 'react';
+//firebase
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { firebaseConfig } from '../../settings/firebaseConfig';
+//mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Navbar from '../../components/navbar/Navbar';
@@ -6,7 +12,6 @@ import Head from 'next/head';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { spacing } from '@material-ui/system';
@@ -14,11 +19,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import EditIcon from '@material-ui/icons/Edit';
 import { Avatar } from '@mui/material';
-import { bgcolor } from '@mui/system';
 import { createTheme } from '@material-ui/core/styles';
 import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
+import SvgIcon from '@mui/material/SvgIcon';
+import { useState } from 'react';
+
+
+
+
+//firebase
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+const auth = getAuth();
 
 
 //chip的style
@@ -34,10 +50,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 export default function profile() {
   const theme = createTheme({
     spacing: 4,
   });
+  
 
 
 
@@ -61,63 +80,78 @@ export default function profile() {
 
             <Box sx={{ bgcolor: '#ffffff' }}>
               {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
-              <Box p={1.5}>
+              <Box display="flex" flexDirection="row" justifyContent="space-between" p={1.5}>
                 <Typography fontSize={20}>個人資料</Typography>
+                <Box>
+                  <IconButton aria-label="edit" size="small">
+                    <EditIcon
+                      style={{
+                        color: "#7A82E7",
+                      }}
+                      href=""
+                    />
+                  </IconButton>
+
+                </Box>
               </Box>
+
 
               <Divider />
 
-              <Box display="flex" p={2} justifyContent={'space-between'} flexDirection='row'>
-
-                <Box width={0.3} bgcolor={'#ffffff'}>
-                  <Box>
+              <Box display="flex" p={2} flexWrap="wrap">
+                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
+                  <Box display="flex" flexDirection="column" sx={{ p: 2, width: 300 }} bgcolor={'#fafafa'} >
                     <Box display="flex">
-                      <Box pr={3}>
+                      <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
                         <Avatar
                           sx={{
                             width: 70,
                             height: 70,
                           }}
                         >
-                          H
                         </Avatar>
+                        <Chip label="學習者" />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >user</Typography>
                         <Typography fontSize={12}>@userid</Typography>
+                        {/* <Stack direction="row" spacing={1}>
+                          <IconButton aria-label="linkin" color="secondary">
+                            <SvgIcon>
+                              <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
+                            </SvgIcon>
+
+                          </IconButton>
+                          <IconButton aria-label="ig" color="success">
+                            <SvgIcon>
+                              <path fill="url(#b)" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6.5A2.503 2.503 0 0 1 5.5 8c0-1.379 1.122-2.5 2.5-2.5s2.5 1.121 2.5 2.5c0 1.378-1.122 2.5-2.5 2.5z"/>
+                            </SvgIcon>
+
+                          </IconButton>
+                        </Stack> */}
+
                       </Box>
                     </Box>
-                    <Box m={1}>
-                      聯絡資訊
-                    </Box>
+
                   </Box>
-                </Box>
 
-                <Box width={0.4} bgcolor={'#fafafa'} >
-                  <Card>
-                    {/* <Card sx={{ minWidth: 275 }}> */}
-                    <CardContent>
-                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        擅長領域：
-                      </Typography>
-                      <Stack direction="row" spacing={1}>
-                        <Chip label="tag 1" component="a" href="#chip" clickable />
-                        <Chip label="tag 2" component="a" href="#chip" clickable />
-                        <Chip label="tag 3" component="a" href="#chip" clickable />
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Box>
 
-                <Box display="flex">
-                  <EditIcon
-                    style={{
-                      fontSize: 30,
-                      color: "#7A82E7",
-
-                    }}
-                  />
-                </Box>
+                  <Grid >
+                    <Card sx={{ m: 2, width: 300 }}>
+                      {/* <Card sx={{ minWidth: 275 }}> */}
+                      <CardContent>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                          擅長領域
+                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          <Chip label="tag 1" component="a" href="#chip" clickable />
+                          <Chip label="tag 2" component="a" href="#chip" clickable />
+                          <Chip label="tag 3" component="a" href="#chip" clickable />
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
 
               </Box>
             </Box>

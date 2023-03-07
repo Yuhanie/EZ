@@ -26,6 +26,7 @@ export type Comment = {
   user: string;
   content: string;
   id:string;
+  // heart:string[];
 };
 
 

@@ -142,7 +142,7 @@ const ArticleListItem:
 
 
         }
-      }
+      
       else {
         alert("要登入才能按讚ㄛ!")
         //window.alert("要登入才能新增筆記ㄛ!");
@@ -159,7 +159,7 @@ const ArticleListItem:
 
 
 
-
+      }
 
     }
 

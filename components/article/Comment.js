@@ -16,7 +16,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import SendIcon from '@mui/icons-material/Send';
 import Heart from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
-import Comment from "./Comment";
 import {
   Dialog,
   DialogActions,
@@ -38,8 +37,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 //   // doc.data() will be undefined in this case
 //   console.log("No such document!");
 // }
-const firebaseApp =
-  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 const auth = getAuth();
 
@@ -56,12 +54,12 @@ const auth = getAuth();
 //     )}
 
 
-const ArticleDetails = (props) => {
+const Comment = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
   const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
+//   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
@@ -113,9 +111,9 @@ const ArticleDetails = (props) => {
     // eslint-disable-next-line
   }, [edited, liked, deleted]);
 
-  const handleClose = () => {
-    props.setOpen(false);
-  };
+//   const handleClose = () => {
+//     props.setOpen(false);
+//   };
 
   async function onSubmit() {
     if (typeof window !== "undefined") {
@@ -164,116 +162,116 @@ const ArticleDetails = (props) => {
   }
 
 
-  const heart = async function () {
-    if (typeof window !== "undefined") {
-      if (user) {
+//   const heart = async function () {
+//     if (typeof window !== "undefined") {
+//       if (user) {
         
         
-        const ref = doc(collection(db, "text", props.article.docId, "comment", comments.id));
-        const docSnap = await getDoc(ref);
-        if ((docSnap.exists())) {
-          if (docSnap.data().heart.includes(user.uid)) {
-            alert('remove')
-            updateDoc(ref, {
-              heart: arrayRemove(user.uid)
-            });
-            setLiked(false)
-            setCount(count - 1)
-          } else {
-            alert('added')
-            updateDoc(ref, {
-              heart: arrayUnion(user.uid)
+//         const ref = doc(collection(db, "text", props.article.docId, "comment", comments.id));
+//         const docSnap = await getDoc(ref);
+//         if ((docSnap.exists())) {
+//           if (docSnap.data().heart.includes(user.uid)) {
+//             alert('remove')
+//             updateDoc(ref, {
+//               heart: arrayRemove(user.uid)
+//             });
+//             setLiked(false)
+//             setCount(count - 1)
+//           } else {
+//             alert('added')
+//             updateDoc(ref, {
+//               heart: arrayUnion(user.uid)
 
-            });
-            setLiked(true)
-            setCount(count + 1)
+//             });
+//             setLiked(true)
+//             setCount(count + 1)
 
-          }
-        }
-      }
-    }
-    else {
-      alert("要登入才能按讚ㄛ!")
-      //window.alert("要登入才能新增筆記ㄛ!");
+//           }
+//         }
+//       }
+//     }
+//     else {
+//       alert("要登入才能按讚ㄛ!")
+//       //window.alert("要登入才能新增筆記ㄛ!");
 
-      // <Alert action={
-      //   <Button >
-      //     UNDO
-      //   </Button>
-      // }>要登入才能新增筆記ㄛ! </Alert>
+//       // <Alert action={
+//       //   <Button >
+//       //     UNDO
+//       //   </Button>
+//       // }>要登入才能新增筆記ㄛ! </Alert>
 
-      router.push('/login');
-    }
-  }
+//       router.push('/login');
+//     }
+//   }
 
-  const deleteData = async function(){
-    if (typeof window !== "undefined") {
-      if (user) {
-        const ref = doc(db, "text", props.article.docId);
-        const docSnap = await getDoc(ref);
-          if ((docSnap.exists())) {
-            if (docSnap.data().userid==(user.uid)) {
+//   const deleteData = async function(){
+//     if (typeof window !== "undefined") {
+//       if (user) {
+//         const ref = doc(db, "text", props.article.docId);
+//         const docSnap = await getDoc(ref);
+//           if ((docSnap.exists())) {
+//             if (docSnap.data().userid==(user.uid)) {
               
-              try{
+//               try{
 
-              setIsLoading(true);
+//               setIsLoading(true);
 
-              await deleteDoc(doc(db, "text", props.article.docId));
+//               await deleteDoc(doc(db, "text", props.article.docId));
 
-              //console.log("deleted");
+//               //console.log("deleted");
 
-              setDeleted(deleted+1);
+//               setDeleted(deleted+1);
 
-              setIsLoading(false);
-              alert('刪除成功')
-              props.update();
-              }
-              catch (error){
-              console.log(error);
-              }
-            }
-            else{
-              alert('不是你的文章ㄚ')
-            }
-          }
-        }
-      } 
-        else{
-              alert('請登入')
-            }
-  }
-
-
+//               setIsLoading(false);
+//               alert('刪除成功')
+//               props.update();
+//               }
+//               catch (error){
+//               console.log(error);
+//               }
+//             }
+//             else{
+//               alert('不是你的文章ㄚ')
+//             }
+//           }
+//         }
+//       } 
+//         else{
+//               alert('請登入')
+//             }
+//   }
 
 
 
 
 
-  const Update = () => {
-    return(
-      <div>
-        <Button color="secondary" variant="contained" onClick={handleClose}>
-          修改
-        </Button>
-        <Button color="secondary" variant="contained" onClick={deleteData}>
-          刪除
-        </Button>
-      </div> 
-    )
 
-  };
 
-  const Report = () => {
-    return(
-      <div>
-        <Button color="secondary" variant="contained" onClick={handleClose}>
-          檢舉
-        </Button>
-      </div> 
+//   const Update = () => {
+//     return(
+//       <div>
+//         <Button color="secondary" variant="contained" onClick={handleClose}>
+//           修改
+//         </Button>
+//         <Button color="secondary" variant="contained" onClick={deleteData}>
+//           刪除
+//         </Button>
+//       </div> 
+//     )
+
+//   };
+
+//   const Report = () => {
+//     return(
+//       <div>
+//         <Button color="secondary" variant="contained" onClick={handleClose}>
+//           檢舉
+//         </Button>
+//       </div> 
     
-    )
+//     )
 
-  };
+//   };
 
 
 
@@ -309,20 +307,20 @@ const ArticleDetails = (props) => {
 
   return (
     <div className={styles.container}>
-      <Dialog open={props.open} onClose={handleClose}>
-        <DialogTitle>
+      {/* <Dialog open={props.open} onClose={handleClose}> */}
+        {/* <DialogTitle>
           <a href={props.article.link}>{props.article.title}</a>
 
           <Stack spacing={1} className={styles.view}>
             <VI />
             <div className={styles.views}>{props.article.count}</div>
           </Stack>
-        </DialogTitle>
+        </DialogTitle> */}
 
-        <DialogContent>
-          <Stack spacing={1}>
+        {/* <DialogContent> */}
+          {/* <Stack spacing={1}> */}
             {/* {props.article.content} */}
-            <div className={styles.card3}>
+            {/* <div className={styles.card3}>
               <a href={props.article.link}>
                 {props.article.content.substring(0, 165)}
                 {props.article.content.length > 165 ? "..." : ""}
@@ -342,10 +340,10 @@ const ArticleDetails = (props) => {
               {props.article.content.length > 180
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
-            </div>
-            <Comment/>
-          </div>
-          {/* {user && user.displayName}
+            </div> */}
+            {comments.map(renderComment)}
+          {/* </div> */}
+          {user && user.displayName}
           <OutlinedInput
           value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -359,20 +357,20 @@ const ArticleDetails = (props) => {
             endIcon={<SendIcon />}
             onClick={onSubmit}
             sx={{ padding: 0, margin: 1 ,right: -425 ,  top: -84 , borderRadius: 5 , width: 2 , height: 35}}
-          ></Button> */}
-        </DialogContent>
+          ></Button>
+        {/* </DialogContent> */}
 
-        <DialogActions>
+        {/* <DialogActions> */}
           
-        {user && user.uid === props.article.userid && Update()} 
+        {/* {user && user.uid === props.article.userid && Update()}  */}
         {/* {user.uid}/{props.article.userid} */}
         {/* {props.article.userid} */}
-        {user && Report()}
+        {/* {user && Report()} */}
           {/* <Button color="primary" variant="contained" onClick={handleClose}>
             關閉
           </Button> */}
-        </DialogActions>
-      </Dialog>
+        {/* </DialogActions> */}
+      {/* </Dialog> */}
     </div>
   );
 
@@ -437,4 +435,4 @@ const ArticleDetails = (props) => {
   // );
 };
 
-export default ArticleDetails;
+export default Comment;

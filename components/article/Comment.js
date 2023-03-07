@@ -79,12 +79,14 @@ const Comment = (props) => {
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
   const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
   //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
+      console.log("article", props.article);
       const querySnapshot = collection(
         db,
         "text",
@@ -178,7 +180,7 @@ const Comment = (props) => {
     // await addDoc(collection(db, "text",
     // props.article.docId,"comment"))
   }
-
+  const heart = function () {};
   //   const heart = async function () {
   //     if (typeof window !== "undefined") {
   //       if (user) {

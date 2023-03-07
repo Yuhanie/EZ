@@ -354,7 +354,7 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
-            <Comment />
+            <Comment article={props.article} />
           </div>
           {/* {user && user.displayName}
           <OutlinedInput

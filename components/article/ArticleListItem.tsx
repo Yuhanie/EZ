@@ -2,7 +2,7 @@ import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove,addDoc } from "firebase/firestore";
 import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Timestamp } from "firebase/firestore";
@@ -47,7 +47,7 @@ const ArticleListItem:
     const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
+    const [bookMarked, setBookMarked] = useState(false);
     // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     // const open = Boolean(anchorEl);
     // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -104,11 +104,47 @@ const ArticleListItem:
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [liked]);
+    }, [liked, bookMarked]);
 
 
 
+    const bookmark = async function(){
+      if (typeof window !== "undefined") {
+        if (currentUser) {
+          const ref = doc(db, "text", props.article.docId);
+          const docSnap = await getDoc(ref);
+          if ((docSnap.exists())) {
+            if (docSnap.data().bookmark.includes(currentUser.uid)) {
+              alert('remove')
+              updateDoc(ref, {
+                bookmark: arrayRemove(props.article.docId)
+              });
+              setBookMarked(false)
+              setCount(count - 1)
+            } else {
+              alert('added')
+              updateDoc(ref, {
+                bookmark: arrayUnion(props.article.docId)
+              });
+              setBookMarked(true)
+              setCount(count + 1)
+          }
+          }
+        }
+      else {
+        alert("要登入才能收藏ㄛ!")
+        //window.alert("要登入才能新增筆記ㄛ!");
 
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
+
+        router.push('/login');
+      }
+      }
+    }
     
 
   
@@ -144,7 +180,7 @@ const ArticleListItem:
         }
       
       else {
-        alert("要登入才能按讚ㄛ!")
+        alert("要登入才能收藏ㄛ!")
         //window.alert("要登入才能新增筆記ㄛ!");
 
         // <Alert action={
@@ -224,7 +260,7 @@ const ArticleListItem:
               <Typography variant="body2" color="text.secondary">
                 {props.article.heart ? count : 0}
               </Typography>
-              <IconButton aria-label="heart" size="medium" className={styles.Bookmark}>
+              <IconButton aria-label="heart" size="medium" className={styles.Bookmark} onClick={bookmark} >
                 <Bookmark />
               </IconButton>
             </CardActions>

@@ -199,7 +199,7 @@ function Newpost () {
             </FormControl>
             </div ><br/>
 
-            <FormControl fullWidth>
+            <FormControl sx={{width:250}}>
             <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
@@ -227,8 +227,8 @@ function Newpost () {
 
           
 
-            <Button variant="contained" sx={{ padding: 1, margin: 5 , left: 920 , top: -9}} onClick={onSubmit}>發布</Button><br></br><br></br>
-            <Button variant="contained" sx={{ padding: 1, margin: 4.5 , left: 1020 , top: -145}}>取消</Button>
+            <Button variant="contained" sx={{ padding: 1, margin: 5 , left: 680 , top: 40}} onClick={onSubmit}>發布</Button><br></br><br></br>
+            <Button variant="contained" sx={{ padding: 1, margin: 4.5 , left: 1020 , top: -95}}>取消</Button>
     
 </div>
            </div>

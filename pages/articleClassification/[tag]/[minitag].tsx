@@ -70,7 +70,7 @@ const Article = () => {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  //   const [tags, setTags] = useState<Tag[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
   const [updated, setUpdated] = useState(0);
 
@@ -79,42 +79,38 @@ const Article = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      console.log("minitag:", minitag)
+      // console.log("minitag:", minitag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
+      // const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag), orderBy("order")));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
-      //   const temp2: Tag[] = [];
+      const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
-
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
-        //console.log("tag2:",tag)
-        // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
-        // querySnapshot2.forEach(async (doc2) => {
-        //   console.log(doc2.id);
-        //   console.log(doc2.data());
-        //   temp2.push({docId: doc.id,name:doc2.data().name}); 
-        // });
         console.log(doc.data());
         temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       });
 
-      //console.log("tag4:",tag);
-      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類/" + miniTag)));
-      const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
-      const docSnap = await getDoc(docRef);
-      // querySnapshot2(async (doc2) => {
-      //   console.log(doc2.id);
-      //   console.log(doc2.data());
-      //   temp3.push({ name: doc2.data().name});
+      // const querySnapshot2 = await getDocs(query(collection(db, "text"), where("tag", "==", tag)));
+      // querySnapshot2.forEach(async (doc) => {
+      //   console.log(doc.id);
+      //   console.log(doc.data());
+      //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       // });
 
+      const querySnapshot3 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      querySnapshot3.forEach(async (doc2) => {
+        console.log(doc2.id);
+        console.log(doc2.data());
+        temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+        
+      });
 
-
-      //console.log(temp);
-      //console.log("temp2:", temp2);
+      const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
+      const docSnap = await getDoc(docRef);
 
       setArticles([...temp]);
       setminiTags([...temp3]);
@@ -144,6 +140,16 @@ const Article = () => {
   //     <MiniTagList key={tag.name} tag={tag} minitag={minitag}></MiniTagList>
   //   );
   // };
+
+  const renderTag = (minitag: miniTag, i: number) => {
+    //console.log("tags3:",tag);
+    return (
+      <div>
+      {!Array.isArray(tag)&&tag&&
+      <MiniTagList key={minitag.name} tag={tag} minitag={minitag}></MiniTagList>}
+      </div>
+    );
+  };
 
 
   ////////////////////////////////////////////////////////////sidebar
@@ -176,7 +182,7 @@ const Article = () => {
               <ArrowBackIosNewIcon />
             </IconButton>
 
-            {/* <Chip
+            <Chip
               icon={<BookmarksIcon sx={{ fontSize: 20 }} />}
               sx={{
                 bgcolor: "#CACDF5",
@@ -187,7 +193,7 @@ const Article = () => {
 
               }}
               label={tag}
-            /> */}
+            />
           </Box>
           <Box display="flex" p={1}>
             < LocalFireDepartmentIcon color="error" />
@@ -201,7 +207,7 @@ const Article = () => {
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {/* {tags.map(renderTag)} */}
+            {tags.map(renderTag)}
             {/* </ListItem> */}
           </List>
         </Box>
@@ -231,7 +237,6 @@ const Article = () => {
             sx={{ mr: 2, display: { sm: 'none', } }}
 
           >
-            {minitag}
           </Button>
           <Button
             variant="contained"

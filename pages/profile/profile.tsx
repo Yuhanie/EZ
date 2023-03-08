@@ -1,7 +1,7 @@
 import * as React from 'react';
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 //mui
@@ -25,8 +25,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
-import SvgIcon from '@mui/material/SvgIcon';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 
@@ -49,14 +59,75 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//edit_chip_select
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'cpp',
+  'Java',
+  'react',
+];
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 
 
-export default function profile() {
-  const theme = createTheme({
-    spacing: 4,
+const Profile = () => {
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const [tags, setTags] = React.useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof tags>) => {
+    const {
+      target: { value },
+    } = event;
+    setTags(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log('currentUser', user)
+        setCurrentUser(user);
+      }
+    });
+
+    return () => {
+      unsub();
+    }
+
   });
-  
+
+
 
 
 
@@ -88,9 +159,78 @@ export default function profile() {
                       style={{
                         color: "#7A82E7",
                       }}
-                      href=""
+                      onClick={handleClickOpen}
                     />
                   </IconButton>
+                  <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>編輯個人檔案</DialogTitle>
+                    <DialogContent>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+
+                        }}
+                      >
+                        <Box display="flex" alignItems="center">
+                          <Typography sx={{ minWidth: 50 }}>姓名</Typography>
+                          <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                          />
+                        </Box>
+
+                        <Box display="flex" alignItems="center" >
+                          <Typography sx={{ minWidth: 50 }}>角色</Typography>
+                          <Chip label="學習者" />
+
+
+                        </Box>
+
+                        <Box display="flex" alignItems="center">
+                          <Typography sx={{ minWidth: 100 }}>擅長領域</Typography>
+                          <FormControl sx={{ m: 1, width: 300 }}>
+                            <Select
+                              labelId="demo-multiple-chip-label"
+                              id="demo-multiple-chip"
+                              multiple
+                              value={tags}
+                              onChange={handleChange}
+                              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                              renderValue={(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                  {selected.map((value) => (
+                                    <Chip key={value} label={value} />
+                                  ))}
+                                </Box>
+                              )}
+                              MenuProps={MenuProps}
+                            >
+                              {names.map((name) => (
+                                <MenuItem
+                                  key={name}
+                                  value={name}
+                                  style={getStyles(name, tags, theme)}
+                                >
+                                  {name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+
+                      </Box>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose}>取消</Button>
+                      <Button onClick={handleClose}>確認</Button>
+                    </DialogActions>
+                  </Dialog>
 
                 </Box>
               </Box>
@@ -113,8 +253,8 @@ export default function profile() {
                         <Chip label="學習者" />
                       </Box>
                       <Box>
-                        <Typography pt={0.8} fontSize={25} >user</Typography>
-                        <Typography fontSize={12}>@userid</Typography>
+                        <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>
+                        <Typography fontSize={12}>{currentUser ? currentUser.email : "not logged in"}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>
@@ -144,9 +284,9 @@ export default function profile() {
                           擅長領域
                         </Typography>
                         <Stack direction="row" spacing={1}>
-                          <Chip label="tag 1" component="a" href="#chip" clickable />
-                          <Chip label="tag 2" component="a" href="#chip" clickable />
-                          <Chip label="tag 3" component="a" href="#chip" clickable />
+                          <Chip label="tag 1" component="a" href="#chip" />
+                          <Chip label="tag 2" component="a" href="#chip" />
+                          <Chip label="tag 3" component="a" href="#chip" />
                         </Stack>
                       </CardContent>
                     </Card>
@@ -167,3 +307,5 @@ export default function profile() {
 
   );
 }
+
+export default Profile;

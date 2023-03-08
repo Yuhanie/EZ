@@ -112,6 +112,7 @@ const ArticleDetails = (props) => {
       querySnapshotArticle.forEach((doc) => {
         let data = { ...doc.data(), id: doc.id };
         temp.push(data);
+        console.log("data:", data)
       });
 
       // setComments(() => [temp1, temp2]);
@@ -186,7 +187,7 @@ const ArticleDetails = (props) => {
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(
-          collection(db, "text", props.article.docId, "comment", comments.id)
+          (db, "text", props.article.docId, "comment",id)
         );
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
@@ -278,42 +279,14 @@ const ArticleDetails = (props) => {
 
   const renderComment = (comment, i) => {
     return (
+      <div>
+      {comment &&
       <div key={comment.content} style={{ padding: 14 }} className="App">
-        <Paper style={{ padding: "40px 20px" }}>
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar alt="Remy Sharp" />
-            </Grid>
-            <Grid justifyContent="left" item xs zeroMinWidth>
-              <p style={{ margin: 0, textAlign: "left" }}>{comment.user}</p>
-              <br />
-              <h4 style={{ textAlign: "left" }}>{comment.content}</h4>
-              <p style={{ textAlign: "left", color: "grey" }}>
-                {comment.timestamp &&
-                  comment.timestamp.toDate().toLocaleString()}
-              </p>
-
-              <IconButton
-                style={{ textAlign: "left", left: 300, bottom: 80 }}
-                aria-label="heart"
-                size="medium"
-                onClick={heart}
-                sx={
-                  liked ? { color: "error.main" } : { color: "text.disabled" }
-                }
-              >
-                <Heart />
-              </IconButton>
-              <Typography
-                style={{ position: "relative", bottom: 110, left: 340 }}
-                variant="body2"
-                color="text.secondary"
-              >
-                {props.article.heart ? count : 0}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Paper>
+        
+        <Comment article={props.article} comment={comment}/>
+  
+      </div>
+  }
       </div>
     );
   };
@@ -354,9 +327,10 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
-            <Comment article={props.article} />
+            {comments.map((comment)=>renderComment(comment))}
+            {/* <Comment article={props.article} /> */}
           </div>
-          {/* {user && user.displayName}
+          {user && user.displayName}
           <OutlinedInput
           value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -370,7 +344,7 @@ const ArticleDetails = (props) => {
             endIcon={<SendIcon />}
             onClick={onSubmit}
             sx={{ padding: 0, margin: 1 ,right: -425 ,  top: -84 , borderRadius: 5 , width: 2 , height: 35}}
-          ></Button> */}
+          ></Button>
         </DialogContent>
 
         <DialogActions>

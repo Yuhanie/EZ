@@ -107,6 +107,7 @@ function Newpost () {
             tag:tagName,
             user:user.displayName,
             heart:[],
+            bookmark:[],
             //還有這些無法加入生成欄位，看來是需要給一個值嗎？
             count:1,
             // link,

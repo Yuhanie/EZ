@@ -75,9 +75,10 @@ const auth = getAuth();
 //     )}
 
 const Comment = (props) => {
-  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState();
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
+  const [currentuser, setCurrentUser] =useState();
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
@@ -86,15 +87,9 @@ const Comment = (props) => {
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
-      console.log("article", props.article);
-      const querySnapshot = collection(
-        db,
-        "text",
-        props.article.docId,
-        "comment"
-      );
-      const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
-      const querySnapshotArticle = await getDocs(queryText);
+      console.log("comment:", props.comment);
+      
+
 
       // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
       // querySnapshot2.forEach(async (doc2) => {
@@ -106,22 +101,22 @@ const Comment = (props) => {
 
       // const temp1= [user];
       // const temp2= [content];
-      const temp = [];
+      // const temp = [];
 
-      querySnapshotArticle.forEach((doc) => {
-        let data = { ...doc.data(), id: doc.id };
-        temp.push(data);
-      });
+      // querySnapshotArticle.forEach((doc) => {
+      //   let data = { ...doc.data(), id: doc.id };
+      //   temp.push(data);
+      // });
 
       // setComments(() => [temp1, temp2]);
-      setComments(() => [...temp]);
+      //setComment(() => {{...props.comment}});
     }
     fetchData();
-    console.log("user:", user);
-    console.log("article:", props.article);
+    
 
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      // setHeart(user);
       console.log("user", user);
     });
 
@@ -154,9 +149,9 @@ const Comment = (props) => {
           content,
           userid: user.uid,
           timestamp: serverTimestamp(),
-
+          
           user: user.displayName,
-
+          heart:[],
           //user,
 
           // createAt:Timestamp.now(),
@@ -180,47 +175,90 @@ const Comment = (props) => {
     // await addDoc(collection(db, "text",
     // props.article.docId,"comment"))
   }
-  const heart = function () {};
-  //   const heart = async function () {
-  //     if (typeof window !== "undefined") {
-  //       if (user) {
+  //const heart = function () {};
 
-  //         const ref = doc(collection(db, "text", props.article.docId, "comment", comments.id));
-  //         const docSnap = await getDoc(ref);
-  //         if ((docSnap.exists())) {
-  //           if (docSnap.data().heart.includes(user.uid)) {
-  //             alert('remove')
-  //             updateDoc(ref, {
-  //               heart: arrayRemove(user.uid)
-  //             });
-  //             setLiked(false)
-  //             setCount(count - 1)
-  //           } else {
-  //             alert('added')
-  //             updateDoc(ref, {
-  //               heart: arrayUnion(user.uid)
+  const setHeart = async (user,id) => {
+    const ref = doc(db, "text", props.article.docId, "comment",id);
+    const docSnap = await getDoc(ref);
+    if (docSnap.exists()) {
+      setCount(comment.heart ? comment.heart.length : 0)
+      if (user) {
+        if (comments.heart && docSnap.data().heart.includes(user.uid)) {
+          setLiked(true)
+          console.log(comment.id + 'liked')
+        }
+        else {
 
-  //             });
-  //             setLiked(true)
-  //             setCount(count + 1)
+          setLiked(false)
+          console.log(comment.id + 'unliked')
 
-  //           }
-  //         }
-  //       }
+        }
+      }
+
+    }
+  }
+  // useEffect(() => {
+  //   const unsub = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log('currentUser', user)
+  //       setCurrentUser(user);
+  //       setHeart(user)
   //     }
-  //     else {
-  //       alert("要登入才能按讚ㄛ!")
-  //       //window.alert("要登入才能新增筆記ㄛ!");
+  //     //console.log(user);
+  //   });
 
-  //       // <Alert action={
-  //       //   <Button >
-  //       //     UNDO
-  //       //   </Button>
-  //       // }>要登入才能新增筆記ㄛ! </Alert>
-
-  //       router.push('/login');
-  //     }
+  //   return () => {
+  //     unsub();
   //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [liked]);
+
+
+
+
+    const heart = async function (id) {
+      if (typeof window !== "undefined") {
+        if (user) {
+
+          const ref = doc(db, "text", props.article.docId, "comment", id);
+          const docSnap = await getDoc(ref);
+          if ((docSnap.exists())) {
+            // console.log(docSnap.data())
+            if (docSnap.data().heart.includes(user.uid)) {
+              alert('remove')
+              updateDoc(ref, {
+                heart: arrayRemove(user.uid)
+              });
+              setLiked(false)
+              setCount(count - 1)
+            } else {
+              alert('added')
+              updateDoc(ref, {
+                heart: arrayUnion(user.uid)
+
+              });
+              setLiked(true)
+              setCount(count + 1)
+
+            }
+          }
+        }
+      }
+      else {
+        alert("要登入才能按讚ㄛ!")
+        //window.alert("要登入才能新增筆記ㄛ!");
+
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
+
+        router.push('/login');
+      }
+    }
+
 
   //   const deleteData = async function(){
   //     if (typeof window !== "undefined") {
@@ -306,7 +344,7 @@ const Comment = (props) => {
                 style={{ textAlign: "left", left: 300, bottom: 80 }}
                 aria-label="heart"
                 size="medium"
-                onClick={heart}
+                onClick={()=>heart(comment.id)}
                 sx={
                   liked ? { color: "error.main" } : { color: "text.disabled" }
                 }
@@ -318,7 +356,7 @@ const Comment = (props) => {
                 variant="body2"
                 color="text.secondary"
               >
-                {props.article.heart ? count : 0}
+                {comment.heart ? count : 0}
               </Typography>
             </Grid>
           </Grid>
@@ -363,10 +401,10 @@ const Comment = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div> */}
-      {comments.map(renderComment)}
+      {renderComment(props.comment)}
       {/* </div> */}
-      {user && user.displayName}
-      <OutlinedInput
+      {/* {user && user.displayName} */}
+      {/* <OutlinedInput
         value={content}
         onChange={(e) => setContent(e.target.value)}
         sx={{
@@ -395,7 +433,7 @@ const Comment = (props) => {
           width: 2,
           height: 35,
         }}
-      ></Button>
+      ></Button> */}
       {/* </DialogContent> */}
 
       {/* <DialogActions> */}

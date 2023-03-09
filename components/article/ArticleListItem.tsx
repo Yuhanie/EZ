@@ -44,6 +44,7 @@ const ArticleListItem:
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<User>();
     const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
+    const [bookCount, setBookCount] = useState(props.article.bookmark ? props.article.bookmark.length : 0);
     const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const ArticleListItem:
     const handleOpen = () => {
       setOpen(true);
       const ref = doc(db, "text", props.article.docId);
-      updateDoc(ref, { count: increment(1) });
+      updateDoc(ref, { count: increment(1), bookCount: increment(1) });
 
     };
 
@@ -89,12 +90,37 @@ const ArticleListItem:
 
       }
     }
+
+    const setBookmark = async (user: User) => {
+      const ref = doc(db, "text", props.article.docId);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()) {
+        setBookCount(props.article.bookmark ? props.article.bookmark.length : 0)
+        if (user) {
+          if (props.article.bookmark && docSnap.data().bookmark.includes(user.uid)) {
+            setBookMarked(true)
+            console.log(props.article.title + 'bookmarked')
+          }
+          else {
+
+            setBookMarked(false)
+            console.log(props.article.title + 'bookmarked')
+
+          }
+        }
+
+      }
+    }
+
+
+    
     useEffect(() => {
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log('currentUser', user)
           setCurrentUser(user);
-          setHeart(user)
+          setHeart(user);
+          setBookmark(user);
         }
         //console.log(user);
       });
@@ -117,17 +143,17 @@ const ArticleListItem:
             if (docSnap.data().bookmark.includes(currentUser.uid)) {
               alert('remove')
               updateDoc(ref, {
-                bookmark: arrayRemove(props.article.docId)
+                bookmark: arrayRemove(currentUser.uid)
               });
               setBookMarked(false)
-              setCount(count - 1)
+              setBookCount(bookCount - 1)
             } else {
               alert('added')
               updateDoc(ref, {
-                bookmark: arrayUnion(props.article.docId)
+                bookmark: arrayUnion(currentUser.uid)
               });
               setBookMarked(true)
-              setCount(count + 1)
+              setBookCount(bookCount + 1)
           }
           }
         }
@@ -260,9 +286,12 @@ const ArticleListItem:
               <Typography variant="body2" color="text.secondary">
                 {props.article.heart ? count : 0}
               </Typography>
-              <IconButton aria-label="heart" size="medium" className={styles.Bookmark} onClick={bookmark} >
+              <IconButton aria-label="heart" size="medium"  onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
                 <Bookmark />
               </IconButton>
+              <Typography variant="body2" color="text.secondary">
+                {props.article.bookmark ? count : 0}
+              </Typography>
             </CardActions>
            
           </Box>

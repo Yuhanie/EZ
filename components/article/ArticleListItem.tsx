@@ -2,7 +2,7 @@ import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove,addDoc } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc } from "firebase/firestore";
 import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Timestamp } from "firebase/firestore";
@@ -36,7 +36,7 @@ const auth = getAuth();
 
 type Props = {
   article: Article;
-  update:Function;
+  update: Function;
 };
 
 const ArticleListItem:
@@ -57,7 +57,7 @@ const ArticleListItem:
     // const handleClose = () => {
     //   setAnchorEl(null);
     // };
-    
+
 
 
     const handleOpen = () => {
@@ -74,7 +74,6 @@ const ArticleListItem:
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
-        setCount(props.article.heart ? props.article.heart.length : 0)
         if (user) {
           if (props.article.heart && docSnap.data().heart.includes(user.uid)) {
             setLiked(true)
@@ -95,7 +94,6 @@ const ArticleListItem:
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
-        setBookCount(props.article.bookmark ? props.article.bookmark.length : 0)
         if (user) {
           if (props.article.bookmark && docSnap.data().bookmark.includes(user.uid)) {
             setBookMarked(true)
@@ -113,7 +111,7 @@ const ArticleListItem:
     }
 
 
-    
+
     useEffect(() => {
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -134,7 +132,7 @@ const ArticleListItem:
 
 
 
-    const bookmark = async function(){
+    const bookmark = async function () {
       if (typeof window !== "undefined") {
         if (currentUser) {
           const ref = doc(db, "text", props.article.docId);
@@ -154,27 +152,27 @@ const ArticleListItem:
               });
               setBookMarked(true)
               setBookCount(bookCount + 1)
-          }
+            }
           }
         }
-      else {
-        alert("要登入才能收藏ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
+        else {
+          alert("要登入才能收藏ㄛ!")
+          //window.alert("要登入才能新增筆記ㄛ!");
 
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
+          // <Alert action={
+          //   <Button >
+          //     UNDO
+          //   </Button>
+          // }>要登入才能新增筆記ㄛ! </Alert>
 
-        router.push('/login');
-      }
+          router.push('/login');
+        }
       }
     }
-    
 
-  
-  
+
+
+
 
     const heart = async function () {
       if (typeof window !== "undefined") {
@@ -198,26 +196,26 @@ const ArticleListItem:
               setLiked(true)
               setCount(count + 1)
 
- 
-          }
+
+            }
           }
 
 
         }
-      
-      else {
-        alert("要登入才能收藏ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
 
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
+        else {
+          alert("要登入才能收藏ㄛ!")
+          //window.alert("要登入才能新增筆記ㄛ!");
 
-        router.push('/login');
+          // <Alert action={
+          //   <Button >
+          //     UNDO
+          //   </Button>
+          // }>要登入才能新增筆記ㄛ! </Alert>
 
-      }
+          router.push('/login');
+
+        }
 
 
 
@@ -226,7 +224,7 @@ const ArticleListItem:
     }
 
 
-    
+
 
 
 
@@ -243,20 +241,20 @@ const ArticleListItem:
         <Card
           sx={{
             // maxWidth: 345,
-            width:340,
-            height:235,
-            m:2,
-            spacing:2,
+            width: 340,
+            height: 235,
+            m: 2,
+            spacing: 2,
             borderRadius: 3,
             bgcolor: 'background.paper',
             boxShadow: 1,
           }}
         >
-          <CardActionArea sx={{ p: 1,height:170 }}>
+          <CardActionArea sx={{ p: 1, height: 170 }}>
             <CardContent onClick={handleOpen}>
               <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
                 {props.article.title}
-            {/* <MenuItem>
+                {/* <MenuItem>
               
             </MenuItem> */}
 
@@ -276,31 +274,31 @@ const ArticleListItem:
               //item 
               xs={8}
             />
-          
-            
-           
+
+
+
             <CardActions>
               <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                 <Heart />
               </IconButton>
               <Typography variant="body2" color="text.secondary">
-                {props.article.heart ? count : 0}
+                {count}
               </Typography>
-              <IconButton aria-label="heart" size="medium"  onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
+              <IconButton aria-label="heart" size="medium" onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
                 <Bookmark />
               </IconButton>
               <Typography variant="body2" color="text.secondary">
-                {props.article.bookmark ? count : 0}
+                {bookCount}
               </Typography>
             </CardActions>
-           
+
           </Box>
 
-        {/* <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton> */}
+          {/* <IconButton onClick={handleOpen}><MoreVertIcon sx={{}}/></IconButton> */}
 
 
 
-      
+
 
 
         </Card>

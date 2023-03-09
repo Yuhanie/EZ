@@ -50,7 +50,7 @@ export default function Footer() {
                 <Grid sx={{ width: 130 }}>
                   {itemData.map((item) => (
                     <ImageListItem key={item.img}>
-                      <Image alt="logo"
+                      <img
                         src={`${item.img}?w=100&fit=crop&auto=format`}
                       />
                     </ImageListItem>

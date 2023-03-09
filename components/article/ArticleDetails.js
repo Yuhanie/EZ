@@ -85,6 +85,7 @@ const ArticleDetails = (props) => {
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
+      console.log("docId:",props.article);
       const querySnapshot = collection(
         db,
         "text",
@@ -276,11 +277,11 @@ const ArticleDetails = (props) => {
 
   const renderComment = (comment, i) => {
     return (
-      <div>
+      <div key={comment.content}>
       {comment &&
-      <div key={comment.content} style={{ padding: 14 }} className="App">
+      <div  style={{ padding: 14 }} className="App">
         
-        <Comment article={props.article} comment={comment}/>
+        <Comment  article={props.article} comment={comment}/>
   
       </div>
   }

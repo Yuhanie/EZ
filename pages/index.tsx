@@ -25,7 +25,7 @@ import ReactDOM from "react-dom";
 import {  createTheme} from "@mui/material/styles";
 import ArticleListItem from '../components/article/ArticleListItem';
 import TagList from '../components/tag/TagList';
-import { Article, Tag } from '../interfaces/entities';
+import { Article, Newtext, Tag } from '../interfaces/entities';
 import styles from '../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../components/navbar/Navbar";
@@ -266,6 +266,7 @@ const Home: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [newTexts, setNewTexts] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
   const router = useRouter();
@@ -292,12 +293,24 @@ const Home: NextPage = () => {
     setUpdated((currentValue)=>currentValue+1)
   }
   useEffect(() => {
+
     async function readData() {
+
+
+      setIsLoading(true);
+      const examCollection = collection(db, "text");
+      const queryExam = query(examCollection, orderBy("timestamp", "desc"), limit(3));
+      const querySnapnewtext = await getDocs(queryExam);
+      const temp2: any[] = [];
+      querySnapnewtext.forEach((doc) => {
+        temp2.push(doc.data());
+        // console.log(`${doc.id} => ${doc.data().question}`);
+      });
+      setNewTexts([...temp2]);
+
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Tag[] = [];
-
-
       querySnapshot.forEach((doc) => {
         //console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name, pic: doc.data().pic });
@@ -306,16 +319,29 @@ const Home: NextPage = () => {
       setTag([...temp]);
       const textCollection = collection(db, "text");
       const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
+      //const queryNewText =query(textCollection, orderBy("timestamp", "desc"), limit(3)); 
       const querySnapshotArticle = await getDocs(queryText);
       //const querySnapshotArticle  = await getDocs(collection(db, "text"));
       const tempArticle: Article[] = [];
+      const tempNewtext: Newtext[] = [];
       querySnapshotArticle.forEach((doc) => {
         //console.log(doc.id, doc.data());
         tempArticle.push({
-          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp
+          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark
    });
       });
       setArticles([...tempArticle]);
+    
+
+
+      
+    
+
+
+
+
+    
+
       //console.log(temp);
 
       const auth = getAuth();
@@ -332,6 +358,14 @@ const Home: NextPage = () => {
 
 
 
+
+
+
+
+
+
+
+
       setIsLoading(false);
 
       return () => {
@@ -343,6 +377,8 @@ const Home: NextPage = () => {
 
 
   }, []);
+
+      
 
   // const test = () => {
   //   console.log("Hello");
@@ -387,6 +423,13 @@ const Home: NextPage = () => {
   const renderText = (article: Article, i: number) => {
     return (
       <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
+    );
+
+  };
+
+  const renderNewText = (newTexts: Newtext, i: number) => {
+    return (
+      <ArticleListItem key={newTexts.docId} article={newTexts} update={updateUpdated}></ArticleListItem>
     );
 
   };
@@ -462,6 +505,31 @@ const Home: NextPage = () => {
             }
           </Box>
 
+
+          <Box
+            display="flex"
+            pl="10%"
+            pt={4}
+          >
+            <Typography variant='h6' pr={2}>最新文章</Typography>
+            {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            {!isLoading ?
+              <div className={styles.grid}>
+                {/* {newTexts.map(renderNewText)} */}
+              </div>
+              : <CircularProgress />
+            }
+          </Box>
+          
+          
+        
+
+
         </Box>
 
       </Container>
@@ -474,7 +542,7 @@ const Home: NextPage = () => {
 
     </div>
   )
-}
 
+}
 export default Home;
 

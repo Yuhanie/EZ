@@ -8,9 +8,24 @@ export type Article = {
   link: string;
   count: number;
   heart: string[];
+  bookmark:string[];
   timestamp: Timestamp;
   userid: string;
 };
+
+export type Newtext = {
+  title: string;
+  content: string;
+  user:string;
+  docId: string;
+  link: string;
+  count: number;
+  heart: string[];
+  bookmark:string[];
+  timestamp: Timestamp;
+  userid: string;
+};
+
 
 export type Question = {
   title: string;
@@ -19,6 +34,7 @@ export type Question = {
   docId: string;
   count: number;
   heart: string[];
+  bookmark: string[];
   //timestamp: Timestamp
 };
 

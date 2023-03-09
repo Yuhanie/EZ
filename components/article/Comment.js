@@ -75,15 +75,15 @@ const auth = getAuth();
 //     )}
 
 const Comment = (props) => {
-  const [comment, setComment] = useState();
-  const [content, setContent] = useState("");
+  // const [comment, setComment] = useState();
+  // const [content, setContent] = useState("");
   const [user, setUser] = useState();
-  const [currentuser, setCurrentUser] =useState();
+  // const [currentuser, setCurrentUser] =useState();
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
   const [deleted, setDeleted] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -131,72 +131,72 @@ const Comment = (props) => {
   //     props.setOpen(false);
   //   };
 
-  async function onSubmit() {
-    if (typeof window !== "undefined") {
-      if (!user) {
-        alert("要登入才能新增留言ㄛ!");
-        //window.alert("要登入才能新增筆記ㄛ!");
+  // async function onSubmit() {
+  //   if (typeof window !== "undefined") {
+  //     if (!user) {
+  //       alert("要登入才能新增留言ㄛ!");
+  //       //window.alert("要登入才能新增筆記ㄛ!");
 
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
+  //       // <Alert action={
+  //       //   <Button >
+  //       //     UNDO
+  //       //   </Button>
+  //       // }>要登入才能新增筆記ㄛ! </Alert>
 
-        router.push("/login");
-      } else {
-        await addDoc(collection(db, "text", props.article.docId, "comment"), {
-          content,
-          userid: user.uid,
-          timestamp: serverTimestamp(),
+  //       router.push("/login");
+  //     } else {
+  //       await addDoc(collection(db, "text", props.article.docId, "comment"), {
+  //         content,
+  //         userid: user.uid,
+  //         timestamp: serverTimestamp(),
           
-          user: user.displayName,
-          heart:[],
-          //user,
+  //         user: user.displayName,
+  //         heart:[],
+  //         //user,
 
-          // createAt:Timestamp.now(),
-          // author:{
-          //     displayName: auth.currentUser.displayName || "",
-          //     photoURL: auth.currentUser.photoURL || "",
-          //     uid: auth.currentUser.uid,
-          //     email: auth.currentUser.email
-          // },
-        });
-        setContent("");
-        setEdited(edited + 1);
+  //         // createAt:Timestamp.now(),
+  //         // author:{
+  //         //     displayName: auth.currentUser.displayName || "",
+  //         //     photoURL: auth.currentUser.photoURL || "",
+  //         //     uid: auth.currentUser.uid,
+  //         //     email: auth.currentUser.email
+  //         // },
+  //       });
+  //       setContent("");
+  //       setEdited(edited + 1);
 
-        //router.push('/');
-      }
-    }
+  //       //router.push('/');
+  //     }
+  //   }
 
-    // console.log(tagName);
-    // alert(user.uid)
-    // alert(user.email)
-    // await addDoc(collection(db, "text",
-    // props.article.docId,"comment"))
-  }
-  //const heart = function () {};
+  //   // console.log(tagName);
+  //   // alert(user.uid)
+  //   // alert(user.email)
+  //   // await addDoc(collection(db, "text",
+  //   // props.article.docId,"comment"))
+  // }
+  // //const heart = function () {};
 
-  const setHeart = async (user,id) => {
-    const ref = doc(db, "text", props.article.docId, "comment",id);
-    const docSnap = await getDoc(ref);
-    if (docSnap.exists()) {
-      setCount(comment.heart ? comment.heart.length : 0)
-      if (user) {
-        if (comments.heart && docSnap.data().heart.includes(user.uid)) {
-          setLiked(true)
-          console.log(comment.id + 'liked')
-        }
-        else {
+  // const setHeart = async (user,id) => {
+  //   const ref = doc(db, "text", props.article.docId, "comment",id);
+  //   const docSnap = await getDoc(ref);
+  //   if (docSnap.exists()) {
+  //     setCount(comment.heart ? comment.heart.length : 0)
+  //     if (user) {
+  //       if (comments.heart && docSnap.data().heart.includes(user.uid)) {
+  //         setLiked(true)
+  //         console.log(comment.id + 'liked')
+  //       }
+  //       else {
 
-          setLiked(false)
-          console.log(comment.id + 'unliked')
+  //         setLiked(false)
+  //         console.log(comment.id + 'unliked')
 
-        }
-      }
+  //       }
+  //     }
 
-    }
-  }
+  //   }
+  // }
   // useEffect(() => {
   //   const unsub = onAuthStateChanged(auth, (user) => {
   //     if (user) {
@@ -226,14 +226,14 @@ const Comment = (props) => {
           if ((docSnap.exists())) {
             // console.log(docSnap.data())
             if (docSnap.data().heart.includes(user.uid)) {
-              alert('remove')
+              // alert('remove')
               updateDoc(ref, {
                 heart: arrayRemove(user.uid)
               });
               setLiked(false)
               setCount(count - 1)
             } else {
-              alert('added')
+              // alert('added')
               updateDoc(ref, {
                 heart: arrayUnion(user.uid)
 

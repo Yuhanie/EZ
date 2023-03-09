@@ -80,9 +80,6 @@ const ArticleDetails = (props) => {
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
   const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(
-    props.article.heart ? props.article.heart.length : 0
-  );
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
@@ -156,7 +153,7 @@ const ArticleDetails = (props) => {
           content,
           userid: user.uid,
           timestamp: serverTimestamp(),
-
+          heart:[],
           user: user.displayName,
 
           //user,
@@ -183,44 +180,44 @@ const ArticleDetails = (props) => {
     // props.article.docId,"comment"))
   }
 
-  const heart = async function () {
-    if (typeof window !== "undefined") {
-      if (user) {
-        const ref = doc(
-          (db, "text", props.article.docId, "comment",id)
-        );
-        const docSnap = await getDoc(ref);
-        if (docSnap.exists()) {
-          if (docSnap.data().heart.includes(user.uid)) {
-            alert("remove");
-            updateDoc(ref, {
-              heart: arrayRemove(user.uid),
-            });
-            setLiked(false);
-            setCount(count - 1);
-          } else {
-            alert("added");
-            updateDoc(ref, {
-              heart: arrayUnion(user.uid),
-            });
-            setLiked(true);
-            setCount(count + 1);
-          }
-        }
-      }
-    } else {
-      alert("要登入才能按讚ㄛ!");
-      //window.alert("要登入才能新增筆記ㄛ!");
+  // const heart = async function () {
+  //   if (typeof window !== "undefined") {
+  //     if (user) {
+  //       const ref = doc(
+  //         (db, "text", props.article.docId, "comment",id)
+  //       );
+  //       const docSnap = await getDoc(ref);
+  //       if (docSnap.exists()) {
+  //         if (docSnap.data().heart.includes(user.uid)) {
+  //           alert("remove");
+  //           updateDoc(ref, {
+  //             heart: arrayRemove(user.uid),
+  //           });
+  //           setLiked(false);
+  //           setCount(count - 1);
+  //         } else {
+  //           alert("added");
+  //           updateDoc(ref, {
+  //             heart: arrayUnion(user.uid),
+  //           });
+  //           setLiked(true);
+  //           setCount(count + 1);
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     alert("要登入才能按讚ㄛ!");
+  //     //window.alert("要登入才能新增筆記ㄛ!");
 
-      // <Alert action={
-      //   <Button >
-      //     UNDO
-      //   </Button>
-      // }>要登入才能新增筆記ㄛ! </Alert>
+  //     // <Alert action={
+  //     //   <Button >
+  //     //     UNDO
+  //     //   </Button>
+  //     // }>要登入才能新增筆記ㄛ! </Alert>
 
-      router.push("/login");
-    }
-  };
+  //     router.push("/login");
+  //   }
+  // };
 
   const deleteData = async function () {
     if (typeof window !== "undefined") {
@@ -359,62 +356,6 @@ const ArticleDetails = (props) => {
       </Dialog>
     </div>
   );
-
-  // return (
-
-  //   <div className={styles.container}>
-  //       <Dialog open={props.open} onClose={handleClose}>
-  //         <DialogTitle>{props.article.title}</DialogTitle>
-
-  //         <DialogContent>
-  //           <Stack spacing={2}>
-  //           {props.article.content}
-  //           </Stack>
-
-  //           <div style={{ padding: 14 }} className="App">
-
-  //     <h2><Image src={warning}/>版本疑慮</h2>
-
-  //     <div className={styles.yu}>這篇文章已經不符合現在的版本或者無法使用</div><br/>
-  //     <Paper style={{ padding: "40px 20px" }}>
-  //       <Grid container wrap="nowrap" spacing={2}>
-  //         <Grid item>
-  //           <Avatar alt="Remy Sharp" />
-  //         </Grid>
-  //         <Grid justifyContent="left" item xs zeroMinWidth>
-  //           <h4 style={{ margin: 0, textAlign: "left" }}>aaa</h4>
-  //           <p style={{ textAlign: "left" }}>
-
-  //           </p>
-  //           <p style={{ textAlign: "left", color: "gray" }}>
-  //             posted 1 minute ago
-  //           </p>
-  //         </Grid>
-  //       </Grid>
-  //       <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-  //       </Paper>
-  //       </div>
-
-  //         </DialogContent>
-  //         <DialogActions>
-  //           <Button color="secondary" variant="contained" onClick={handleClose}>
-  //             愛心
-  //           </Button>
-  //           <Button color="secondary" variant="contained" onClick={handleClose}>
-  //             儲存
-  //           </Button>
-  //           <Button color="secondary" variant="contained" onClick={handleClose}>
-  //             分享
-  //           </Button>
-
-  //           <Button color="primary" variant="contained" onClick={handleClose}>
-  //             關閉
-  //           </Button>
-
-  //         </DialogActions>
-  //       </Dialog>
-  //   </div>
-  // );
 };
 
 export default ArticleDetails;

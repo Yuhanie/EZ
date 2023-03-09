@@ -266,7 +266,7 @@ const Home: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [newTexts, setNewTexts] = useState<any>();
+  const [newTexts, setNewTexts] = useState<any[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
   const router = useRouter();
@@ -301,10 +301,11 @@ const Home: NextPage = () => {
       const examCollection = collection(db, "text");
       const queryExam = query(examCollection, orderBy("timestamp", "desc"), limit(3));
       const querySnapnewtext = await getDocs(queryExam);
-      const temp2: any[] = [];
+      const temp2: Article[] = [];
       querySnapnewtext.forEach((doc) => {
-        temp2.push(doc.data());
-        // console.log(`${doc.id} => ${doc.data().question}`);
+        temp2.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark});
+
+        console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
       setNewTexts([...temp2]);
 
@@ -323,7 +324,7 @@ const Home: NextPage = () => {
       const querySnapshotArticle = await getDocs(queryText);
       //const querySnapshotArticle  = await getDocs(collection(db, "text"));
       const tempArticle: Article[] = [];
-      const tempNewtext: Newtext[] = [];
+      // const tempNewtext: Newtext[] = [];
       querySnapshotArticle.forEach((doc) => {
         //console.log(doc.id, doc.data());
         tempArticle.push({
@@ -427,7 +428,7 @@ const Home: NextPage = () => {
 
   };
 
-  const renderNewText = (newTexts: Newtext, i: number) => {
+  const renderNewText = (newTexts: Article, i: number) => {
     return (
       <ArticleListItem key={newTexts.docId} article={newTexts} update={updateUpdated}></ArticleListItem>
     );
@@ -518,9 +519,9 @@ const Home: NextPage = () => {
             display="flex"
             justifyContent="center"
           >
-            {!isLoading ?
+            {!isLoading ? 
               <div className={styles.grid}>
-                {/* {newTexts.map(renderNewText)} */}
+                {newTexts&&newTexts.map(renderNewText)}
               </div>
               : <CircularProgress />
             }

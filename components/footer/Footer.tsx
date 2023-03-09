@@ -43,14 +43,14 @@ export default function Footer() {
           <Grid container maxWidth="80%" display="flex" flexWrap="wrap">
             <Grid item xs={4} minWidth={300}>
               <Box display="flex" sx={{ height: 150 }}>
-                <Grid xs={7}>
+                <Grid item xs={7}>
                   <Typography variant="h6" sx={{ p: 1, textAlign: "left" }}>官方帳號</Typography>
                   <Typography variant="button" display="block" gutterBottom sx={{ p: 1, textAlign: "left", href: "https://lin.ee/qh8TtVP" }}>加入我們！<br />讓學習變得更easy</Typography>
                 </Grid>
                 <Grid sx={{ width: 130 }}>
                   {itemData.map((item) => (
                     <ImageListItem key={item.img}>
-                      <img
+                      <Image alt="logo"
                         src={`${item.img}?w=100&fit=crop&auto=format`}
                       />
                     </ImageListItem>
@@ -63,10 +63,10 @@ export default function Footer() {
               <Box sx={{ height: 140 }}>
                 <Typography variant="h6" sx={{ p: 1, textAlign: "left" }}>聯絡我們</Typography>
                 <Box display="flex" m={1} >
-                  <MailOutlineIcon sx={{mr:2}} />
-                  <Typography>educatineZone@gmail.com</Typography> 
+                  <MailOutlineIcon sx={{ mr: 2 }} />
+                  <Typography>educatineZone@gmail.com</Typography>
                 </Box>
-                <Typography variant="body2" sx={{m:1}}>多利用Line官方帳號提問更便利！</Typography>
+                <Typography variant="body2" sx={{ m: 1 }}>多利用Line官方帳號提問更便利！</Typography>
               </Box>
             </Grid>
             <Grid item xs={4} minWidth={350}>
@@ -78,7 +78,7 @@ export default function Footer() {
                   height={170}
                   objectFit="none"
                   objectPosition="top"
-                   />
+                />
               </Box>
             </Grid>
           </Grid>

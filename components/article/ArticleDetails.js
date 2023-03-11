@@ -281,7 +281,7 @@ const ArticleDetails = (props) => {
       {comment &&
       <div  style={{ padding: 14 }} className="App">
         
-        <Comment  article={props.article} comment={comment}/>
+        <Comment edited={edited} setEdited={setEdited} article={props.article} comment={comment}/>
   
       </div>
   }

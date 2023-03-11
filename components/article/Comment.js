@@ -235,7 +235,8 @@ const Comment = (props) => {
 
               setIsLoading(false);
               alert("刪除成功");
-              setEdited(edited + 1);
+              props.setEdited(props.edited + 1);
+              
               
             } catch (error) {
               console.log(error);
@@ -298,7 +299,7 @@ const Comment = (props) => {
     }
 
 
-    const commentDelete = () => {
+    const commentDelete = (comment) => {
       return(
         <>
           <IconButton
@@ -355,7 +356,7 @@ const Comment = (props) => {
               >
                 {comment.heart ? count : 0}
               </Typography>
-              {user && user.uid === props.article.userid ? commentDelete():usual()}
+              {user && user.uid === comment.userid ? commentDelete(comment):usual()}
               
             </Grid>
           </Grid>

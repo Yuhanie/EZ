@@ -47,7 +47,6 @@ function Newpost () {
     const [tags, setTags] = React.useState([]);
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
-    const [age, setAge] = React.useState('');
     const [user, setUser] = useState();
 
 
@@ -91,6 +90,46 @@ function Newpost () {
     })
 
     
+
+
+    const update = async function(){
+        const db = getFirestore();
+        try{
+          if (action === "新增"){
+            const docRef = await addDoc(collection(db, "text"),{
+                title,
+                content,
+                userid: user.uid,
+                email: user.email,
+                tag:tagName,
+                user:user.displayName,
+                heart:[],
+                bookmark:[],
+                count:1,
+                link,
+                timestamp: serverTimestamp()
+              });
+            console.log(docRef.id);
+          }
+          else {
+            await setDoc(doc(db,"text",props.article.id),{
+                title,
+                content,
+                tag:tagName,
+                link,
+            });
+          }
+        }
+        catch(e){
+          console.log(e);
+        }
+        props.close();
+      }
+
+
+
+
+
 
     async function onSubmit(){
 

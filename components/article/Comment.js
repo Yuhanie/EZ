@@ -298,68 +298,27 @@ const Comment = (props) => {
     }
 
 
-  //   const deleteData = async function(){
-  //     if (typeof window !== "undefined") {
-  //       if (user) {
-  //         const ref = doc(db, "text", props.article.docId);
-  //         const docSnap = await getDoc(ref);
-  //           if ((docSnap.exists())) {
-  //             if (docSnap.data().userid==(user.uid)) {
+    const commentDelete = () => {
+      return(
+        <>
+          <IconButton
+                style={{ textAlign: "left", left: 300, bottom: 80 }}
+                aria-label="heart"
+                size="medium"
+                onClick={()=>deleteComment(comment.id)}
+              >
+                <RestoreFromTrashIcon />
+              </IconButton>
+        </>
+      )
 
-  //               try{
-
-  //               setIsLoading(true);
-
-  //               await deleteDoc(doc(db, "text", props.article.docId));
-
-  //               //console.log("deleted");
-
-  //               setDeleted(deleted+1);
-
-  //               setIsLoading(false);
-  //               alert('刪除成功')
-  //               props.update();
-  //               }
-  //               catch (error){
-  //               console.log(error);
-  //               }
-  //             }
-  //             else{
-  //               alert('不是你的文章ㄚ')
-  //             }
-  //           }
-  //         }
-  //       }
-  //         else{
-  //               alert('請登入')
-  //             }
-  //   }
-
-  //   const Update = () => {
-  //     return(
-  //       <div>
-  //         <Button color="secondary" variant="contained" onClick={handleClose}>
-  //           修改
-  //         </Button>
-  //         <Button color="secondary" variant="contained" onClick={deleteData}>
-  //           刪除
-  //         </Button>
-  //       </div>
-  //     )
-
-  //   };
-
-  //   const Report = () => {
-  //     return(
-  //       <div>
-  //         <Button color="secondary" variant="contained" onClick={handleClose}>
-  //           檢舉
-  //         </Button>
-  //       </div>
-
-  //     )
-
-  //   };
+    };
+    const usual = () => {
+      return(
+        <>
+        </>
+      )
+    };
 
   const renderComment = (comment, i) => {
     return (
@@ -396,15 +355,8 @@ const Comment = (props) => {
               >
                 {comment.heart ? count : 0}
               </Typography>
-
-              <IconButton
-                style={{ textAlign: "left", left: 300, bottom: 80 }}
-                aria-label="heart"
-                size="medium"
-                onClick={()=>deleteComment(comment.id)}
-              >
-                <RestoreFromTrashIcon />
-              </IconButton>
+              {user && user.uid === props.article.userid ? commentDelete():usual()}
+              
             </Grid>
           </Grid>
         </Paper>

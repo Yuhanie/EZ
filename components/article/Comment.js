@@ -8,6 +8,7 @@ import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -83,7 +84,7 @@ const Comment = (props) => {
   const [count, setCount] = useState(0);
   //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
   const [deleted, setDeleted] = useState(0);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -213,6 +214,43 @@ const Comment = (props) => {
 
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [liked]);
+
+
+
+  const deleteComment = async function (id) {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId, "comment", id);;
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (docSnap.data().userid == user.uid) {
+            try {
+              setIsLoading(true);
+
+              await deleteDoc(doc(db, "text", props.article.docId, "comment", id));
+
+              //console.log("deleted");
+
+              setDeleted(deleted + 1);
+
+              setIsLoading(false);
+              alert("刪除成功");
+              setEdited(edited + 1);
+              
+            } catch (error) {
+              console.log(error);
+            }
+            
+          } else {
+            alert("不是你的留言ㄚ");
+          }
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
 
 
 
@@ -358,6 +396,15 @@ const Comment = (props) => {
               >
                 {comment.heart ? count : 0}
               </Typography>
+
+              <IconButton
+                style={{ textAlign: "left", left: 300, bottom: 80 }}
+                aria-label="heart"
+                size="medium"
+                onClick={()=>deleteComment(comment.id)}
+              >
+                <RestoreFromTrashIcon />
+              </IconButton>
             </Grid>
           </Grid>
         </Paper>

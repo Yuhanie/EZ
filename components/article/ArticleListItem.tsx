@@ -4,6 +4,8 @@ import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc } from "firebase/firestore";
 import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import WarningIcon from '@mui/icons-material/Warning';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -257,7 +259,7 @@ const ArticleListItem:
                 {/* <MenuItem>
               
             </MenuItem> */}
-
+                
               </Typography>
               <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}

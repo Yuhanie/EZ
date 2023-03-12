@@ -11,6 +11,7 @@ export type Article = {
   bookmark:string[];
   timestamp: Timestamp;
   userid: string;
+  outdateCount: string[];
 };
 
 export type Newtext = {

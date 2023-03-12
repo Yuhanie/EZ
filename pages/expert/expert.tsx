@@ -19,16 +19,16 @@ import { useRouter } from "next/router"
 
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { firebaseConfig } from '../settings/firebaseConfig';
+import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
 import {  createTheme} from "@mui/material/styles";
-import ArticleListItem from '../components/article/ArticleListItem';
-import TagList from '../components/tag/TagList';
-import { Article, Newtext, Tag } from '../interfaces/entities';
-import styles from '../styles/Home.module.css';
+import ArticleListItem from '../../components/article/ArticleListItem';
+import TagList from '../../components/tag/TagList';
+import { Article, Newtext, Tag } from '../../interfaces/entities';
+import styles from '../../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../../components/navbar/Navbar";
 import SearchBar from "material-ui-search-bar";
 import navpic from '../public/pic/navpic.jpg';
 import nav from '../public/pic/nav.png';
@@ -36,6 +36,8 @@ import yuhan from '../public/pic/yuhan.jpg';
 import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
 import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import WarningIcon from '@mui/icons-material/Warning';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -49,133 +51,15 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import Footer from '@/components/footer/Footer';
 
-// import App from 'myapp/src/App';
-
-// const rootElement = document.getElementById("root");
-// render(<App />, rootElement);
 
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-
-
-//////////////////////////////////////////////////////////////////////////
-
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 
-//////////////////////////////////////////////////////////////////////////
 
-
-// const swiperParams: SwiperOptions = {
-//   slidesPerView: 3,
-//   spaceBetween: 50,
-// };
-
-// // const swiper = new Swiper('.swiper', swiperParams);
-
-
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: theme.spacing(2),
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(3),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('md')]: {
-//       width: '20ch',
-//     },
-//   },
-// }));
-
-// const Header = (props) => {
-
-//   return (
-//     <Box color="inherit" sx={{ flexGrow: 1 }}>
-//       <AppBar position="static" sx={{ backgroundColor: "#000" }}>
-//         <Toolbar>
-//           <Typography
-//             variant="h6"
-//             noWrap
-//             component="div"
-//             sx={{ flexGrow: 1 }}
-//           >
-//             {props.title}
-//           </Typography>
-//           <Search>
-//             <SearchIconWrapper>
-//               <SearchIcon />
-//             </SearchIconWrapper>
-//             <StyledInputBase
-//               placeholder="Search…"
-//               inputProps={{ 'aria-label': 'search' }}
-//             />
-//           </Search>
-//           <Box sx={{ flexGrow: 1 }} />
-
-//         </Toolbar>
-//       </AppBar>
-//     </Box >
-//   )
-// }
-
-// export default Header
-
-// const Home: NextPage = () => {
-//   const [articles, setArticles] = useState<Article[]>([]);
-//   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-//   useEffect(()=>{
-//     async function readData() {
-//       setIsLoading(true);
-//       // const querySnapshot = await getDocs(collection(db, "text"));
-//       const querySnapshot = await getDocs(collection(db, "tag"));
-//       const temp:Article[] = [];
-
-//       querySnapshot.forEach((doc) => {
-//         console.log(doc.id, doc.data());
-//         temp.push({docId:doc.id, content:doc.data().content, title:doc.data().title, user:doc.data().user});
-//       });
-
-//       console.log(temp);
-
-//       setArticles([...temp]);
-//       setIsLoading(false);
-//     }
-
-//     readData();
-
-//   },[]);
-
-//色調
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -218,14 +102,6 @@ const Demo: React.FC = () => {
   );
 };
 
-
-
-
-// export default Demo;
-
-
-
-
 const settings = {
   dots: true,
   infinite: true,
@@ -239,26 +115,6 @@ const settings = {
   center: true,
 
 };
-// class ReactSlickDemo extends React.Component {
-//   render() {
-
-//     return (
-//       <div >
-
-//         <Slider {...settings}>
-//           <div >
-//             <Image alt="navpic" src={navpic} />
-//           </div>
-//           <div>
-//             <Image alt="exlogo" src={ezlogo} />
-//           </div>
-//         </Slider>
-//       </div>
-
-//     );
-
-//   }
-// }
 
 
 
@@ -270,25 +126,7 @@ const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
   const router = useRouter();
-  // return (
-  //   <Swiper
-  //     // install Swiper modules
-  //     modules={[Navigation, Pagination, Scrollbar, A11y]}
-  //     spaceBetween={50}
-  //     slidesPerView={3}
-  //     navigation
-  //     pagination={{ clickable: true }}
-  //     scrollbar={{ draggable: true }}
-  //     onSwiper={(swiper) => console.log(swiper)}
-  //     onSlideChange={() => console.log('slide change')}
-  //   >
-  //     <SwiperSlide>Slide 1</SwiperSlide>
-  //     <SwiperSlide>Slide 2</SwiperSlide>
-  //     <SwiperSlide>Slide 3</SwiperSlide>
-  //     <SwiperSlide>Slide 4</SwiperSlide>
-  //     ...
-  //   </Swiper>
-  // );
+  
   const updateUpdated = ()=>{
     setUpdated((currentValue)=>currentValue+1)
   }
@@ -313,59 +151,29 @@ const Home: NextPage = () => {
       const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Tag[] = [];
       querySnapshot.forEach((doc) => {
-        //console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name, pic: doc.data().pic });
 
       });
       setTag([...temp]);
       const textCollection = collection(db, "text");
       const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
-      //const queryNewText =query(textCollection, orderBy("timestamp", "desc"), limit(3)); 
       const querySnapshotArticle = await getDocs(queryText);
-      //const querySnapshotArticle  = await getDocs(collection(db, "text"));
       const tempArticle: Article[] = [];
-      // const tempNewtext: Newtext[] = [];
       querySnapshotArticle.forEach((doc) => {
-        //console.log(doc.id, doc.data());
         tempArticle.push({
           docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount
    });
       });
       setArticles([...tempArticle]);
-    
-
-
-      
-    
-
-
-
-
-    
-
-      //console.log(temp);
 
       const auth = getAuth();
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
           setCurrentUser(user);
         }
-        // else{
-        // setCurrentUser()}
+
         console.log(user);
       });
-
-
-
-
-
-
-
-
-
-
-
-
 
       setIsLoading(false);
 
@@ -379,15 +187,6 @@ const Home: NextPage = () => {
 
   }, []);
 
-      
-
-  // const test = () => {
-  //   console.log("Hello");
-  // }
-
-  // const changeStatus = function (props) {
-  //   props.setStatus("signUp");
-  // }
   const changeStatus = function () {
     if (typeof window !== "undefined") {
 
@@ -396,14 +195,6 @@ const Home: NextPage = () => {
       }
       else {
         alert("要登入才能新增筆記ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
         router.push('/login');
 
       }
@@ -411,14 +202,6 @@ const Home: NextPage = () => {
 
     }
   }
-
-
-  // const logout = async function () {
-  //   const auth = getAuth();
-  //   await signOut(auth);
-  //   alert("已登出");
-  // };
-
 
 
   const renderText = (article: Article, i: number) => {
@@ -460,9 +243,9 @@ const Home: NextPage = () => {
       <Navbar />
       <Toolbar />
       <Container>
-        <Box>
+        {/* <Box>
           <Demo />
-        </Box>
+        </Box> */}
 
         <Box
           display="flex"
@@ -491,7 +274,11 @@ const Home: NextPage = () => {
             pl="10%"
             pt={4}
           >
-            <Typography variant='h6' pr={2}>文章排行榜</Typography>
+            <NotificationImportantIcon
+            sx={{color: 'Gold', left:200}}
+            
+            />
+            <Typography variant='h6' pr={2}>待處理</Typography>
             <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
           </Box>
           <Box
@@ -512,7 +299,10 @@ const Home: NextPage = () => {
             pl="10%"
             pt={4}
           >
-            <Typography variant='h6' pr={2}>最新文章</Typography>
+            <WarningIcon
+            sx={{color: 'Crimson'}}
+            />
+            <Typography variant='h6' pr={2}>過時</Typography>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box

@@ -8,6 +8,7 @@ import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -81,10 +82,21 @@ const ArticleDetails = (props) => {
   const [user, setUser] = useState();
   const [liked, setLiked] = useState(false);
   const [deleted, setDeleted] = useState(0);
+  const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   useEffect(() => {
     async function fetchData() {
+      // const querySnapProfile = collection(
+      //   db,
+      //   "profile",
+      //   props.article.docId,
+      // );
+      // const queryProfile = query(querySnapProfile, orderBy("timestamp", "asc"));
+      // const querySnapshotProfile = await getDocs(queryProfile);
+      // const tempProfile = [];
+
+
       console.log("docId:",props.article);
       const querySnapshot = collection(
         db,
@@ -135,6 +147,66 @@ const ArticleDetails = (props) => {
   const handleClose = () => {
     props.setOpen(false);
   };
+
+
+
+
+
+
+  const outdateCount = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if ((docSnap.exists())) {
+          // console.log(docSnap.data())
+          if (docSnap.data().outdateCount.includes(user.uid)) {
+            // alert('remove')
+            updateDoc(ref, {
+              outdateCount: arrayRemove(user.uid)
+            });
+            // setLiked(false)
+            setCount(count)
+            // if((props.article.outdateCount.length)==0){
+            //   updateDoc(ref, {
+            //     outdate: "solved"
+            //   });
+            // }
+          } else {
+            // alert('added')
+            updateDoc(ref, {
+              outdateCount: arrayUnion(user.uid)
+
+            });
+            setLiked(true)
+            setCount(count + 1)
+            if ((docSnap.data().outdate)=="stale"){
+              updateDoc(ref, {
+                outdate: "stale"
+              });
+            }
+            else{
+              updateDoc(ref, {
+                outdate: "pending"
+            });
+            }
+          }
+        }
+      }
+    }
+    else {
+      alert("要登入才能按讚ㄛ!")
+      router.push('/login');
+    }
+  }
+
+
+
+
+
+
+
+
 
   async function onSubmit() {
     if (typeof window !== "undefined") {
@@ -252,6 +324,27 @@ const ArticleDetails = (props) => {
     }
   };
 
+
+  const expert = () => {
+    return(
+      <>
+       <InputLabel id="demo-simple-select-label">過時與否</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={topicName}
+                // label="topic"
+                // onChange={(e) => {setTagName(e.target.value); 
+                // console.log("t:")}} 
+            >
+                <MenuItem value="stale">過時或無法使用</MenuItem>
+                <MenuItem value="solved">沒問題</MenuItem>
+            </Select><br/>
+      </>
+    );
+  };
+
+
   const Update = () => {
     return (
       <div>
@@ -325,6 +418,26 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
+            <IconButton
+                style={{ textAlign: "left", left: 300, bottom: 80 }}
+                aria-label="heart"
+                size="medium"
+                onClick={()=>outdateCount()}
+                sx={
+                  liked && { color: "orange" } 
+                }
+              >
+            <LiveHelpIcon/>
+            </IconButton>
+
+            <Typography
+                style={{ position: "relative", bottom: 110, left: 340 }}
+                variant="body2"
+                color="text.secondary"
+              >
+                {outdateCount ? count : 0}
+              </Typography>
+
             {comments.map((comment)=>renderComment(comment))}
             {/* <Comment article={props.article} /> */}
           </div>
@@ -350,6 +463,7 @@ const ArticleDetails = (props) => {
           {/* {user.uid}/{props.article.userid} */}
           {/* {props.article.userid} */}
           {user && Report()}
+          {}
           {/* <Button color="primary" variant="contained" onClick={handleClose}>
             關閉
           </Button> */}

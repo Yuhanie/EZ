@@ -107,6 +107,8 @@ function Newpost () {
                 bookmark:[],
                 count:1,
                 link,
+                outdate:"solved",
+                outdateCount:[],
                 timestamp: serverTimestamp()
               });
             console.log(docRef.id);
@@ -254,13 +256,6 @@ function Newpost () {
                 <MenuItem value="業界資源">業界資源</MenuItem>
                 <MenuItem value="其他">其他</MenuItem>
             </Select><br/>
-{/* <InputLabel id="label">Age</InputLabel>
-<Select labelId="label" id="select" value="20">
-  <MenuItem value="20">Ten</MenuItem>
-  <MenuItem value="10">Twenty</MenuItem>
-</Select> */}
-
-
 
             </FormControl>
 

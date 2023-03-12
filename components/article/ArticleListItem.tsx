@@ -30,6 +30,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
 import ListSubheader from '@mui/material/ListSubheader';
+import Grid from '@mui/material/Grid';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -259,14 +260,15 @@ const ArticleListItem:
                 {/* <MenuItem>
               
             </MenuItem> */}
-                
+
               </Typography>
               <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
               </Typography>
             </CardContent>
           </CardActionArea>
-          <Box display="flex">
+          <Box display="flex" justifyContent="space-between">
+
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe"></Avatar>
@@ -274,25 +276,27 @@ const ArticleListItem:
               title={props.article.user}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
               //item 
-              xs={8}
+              sx={{ p: 1.5 }}
             />
+            <Box display="flex" sx={{pr:2}}>
+              <CardActions sx={{ p: 0 }}>
+                <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
+                  <Heart />
+                </IconButton>
+                <Typography variant="body2" color="text.secondary">
+                  {count}
+                </Typography>
 
-
-
-            <CardActions>
-              <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
-                <Heart />
-              </IconButton>
-              <Typography variant="body2" color="text.secondary">
-                {count}
-              </Typography>
-              <IconButton aria-label="heart" size="medium" onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
-                <Bookmark />
-              </IconButton>
-              <Typography variant="body2" color="text.secondary">
-                {bookCount}
-              </Typography>
-            </CardActions>
+              </CardActions>
+              <CardActions sx={{ p: 0}}>
+                <IconButton aria-label="bookmark" size="medium" onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
+                  <Bookmark />
+                </IconButton>
+                <Typography variant="body2" color="text.secondary">
+                  {bookCount}
+                </Typography>
+              </CardActions>
+            </Box>
 
           </Box>
 

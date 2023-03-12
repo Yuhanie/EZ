@@ -37,9 +37,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-
-
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import SchoolIcon from '@mui/icons-material/School';
+import FaceIcon from '@mui/icons-material/Face';
+import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -91,6 +98,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 const Profile = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(true);
   const theme = useTheme();
   const [tags, setTags] = React.useState<string[]>([]);
 
@@ -109,6 +117,10 @@ const Profile = () => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = () => {
+    setOpenDrawer(!openDrawer);
   };
 
 
@@ -153,6 +165,7 @@ const Profile = () => {
               {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
               <Box display="flex" flexDirection="row" justifyContent="space-between" p={1.5}>
                 <Typography fontSize={20}>個人資料</Typography>
+
                 <Box>
                   <IconButton aria-label="edit" size="small">
                     <EditIcon
@@ -173,23 +186,19 @@ const Profile = () => {
                         }}
                       >
                         <Box display="flex" alignItems="center">
-                          <Typography sx={{ minWidth: 50 }}>姓名</Typography>
-                          <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                            variant="standard"
-                          />
-                        </Box>
+                          <Typography sx={{ minWidth: 100 }}>使用者名稱</Typography>
+                          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                            <OutlinedInput
+                              aria-describedby="outlined-weight-helper-text"
+                              inputProps={{
+                                'aria-label': 'weight',
+                              }}
+                              required
+                              id="outlined-required"
+                              defaultValue={currentUser?.displayName}
+                            />
 
-                        <Box display="flex" alignItems="center" >
-                          <Typography sx={{ minWidth: 50 }}>角色</Typography>
-                          <Chip label="學習者" />
-
-
+                          </FormControl>
                         </Box>
 
                         <Box display="flex" alignItems="center">
@@ -201,7 +210,7 @@ const Profile = () => {
                               multiple
                               value={tags}
                               onChange={handleChange}
-                              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                              input={<OutlinedInput id="select-multiple-chip"/>}
                               renderValue={(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                   {selected.map((value) => (
@@ -223,6 +232,46 @@ const Profile = () => {
                             </Select>
                           </FormControl>
                         </Box>
+
+                        <Box display="flex" alignItems="center" sx={{ m: 0.2 }}>
+                          <Typography sx={{ minWidth: 50 }}>角色</Typography>
+                          <Chip label="學習者" />
+                          <Button variant="contained" color="secondary" size='small' sx={{ m: 1 }}>升級</Button>
+                        </Box>
+
+                        <ListItemButton onClick={handleClick}>
+                          <ListItemIcon>
+                            <HelpOutlineOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="角色說明" />
+                          {openDrawer ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={openDrawer} timeout="auto" unmountOnExit>
+                          <List component="div" disablePadding>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <ListItemIcon>
+                                <LocalLibraryRoundedIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="學習者" />
+                            </ListItemButton>
+                          </List>
+                          <List component="div" disablePadding>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <ListItemIcon>
+                                <SchoolIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="專家" />
+                            </ListItemButton>
+                          </List>
+                          <List component="div" disablePadding>
+                            <ListItemButton sx={{ pl: 4 }}>
+                              <ListItemIcon>
+                                <FaceIcon />
+                              </ListItemIcon>
+                              <ListItemText primary="業界" />
+                            </ListItemButton>
+                          </List>
+                        </Collapse>
 
                       </Box>
                     </DialogContent>
@@ -247,6 +296,7 @@ const Profile = () => {
                           sx={{
                             width: 70,
                             height: 70,
+                            mb: 1,
                           }}
                         >
                         </Avatar>

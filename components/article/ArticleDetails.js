@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import WarningIcon from '@mui/icons-material/Warning';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -90,11 +91,18 @@ const ArticleDetails = (props) => {
   const [count, setCount] = useState(props.article.outdateCount?props.article.outdateCount.length:0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
+  const [character, setCharacter]=useState("");
 
   useEffect(() => {
-  const unsub = onAuthStateChanged(auth, (user) => {
+  const unsub = onAuthStateChanged(auth, async (user) => {
     setUser(user);
-    
+    if(user) {
+      const ref = doc(db, "profile", user.uid);
+      const docSnap = await getDoc(ref);
+      if ((docSnap.exists()&&docSnap.data().character==="expert")) {
+      setCharacter("expert")
+      }
+    }
     if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
       setOutdated(true)
       console.log(props.article.title+'outdated');
@@ -371,6 +379,16 @@ const ArticleDetails = (props) => {
     );
   };
 
+  const outdateIcon = () => {
+    return (
+      <div>
+        {props.article.outdate==="stale"&&<WarningIcon sx={{color:"Crimson"}}/>}
+        {props.article.outdate==="pending"&&<NotificationImportantIcon sx={{color:"Gold"}}/>}
+        {props.article.outdate==="solved"&&
+        <CheckCircleIcon sx={{color:"Green"}}/>}
+      </div>
+    );
+  };
 
   const Update = () => {
     return (
@@ -388,16 +406,6 @@ const ArticleDetails = (props) => {
   const Report = () => {
     return (
       <div>
-        {props.article.outdate==="stale"&&<Button color="secondary" variant="contained" onClick={handleClose}>
-          Red
-        </Button>}
-        {props.article.outdate==="pending"&&<Button color="secondary" variant="contained" onClick={handleClose}>
-          Yellow
-        </Button>}
-        {props.article.outdate==="solved"&&
-        <Button color="secondary" variant="contained" onClick={handleClose}>
-          Green
-        </Button>}
         <Button color="secondary" variant="contained" onClick={handleClose}>
           檢舉
         </Button>
@@ -423,6 +431,7 @@ const ArticleDetails = (props) => {
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle>
+        {outdateIcon()}
           <a href={props.article.link}>{props.article.title}</a>
 
           <Stack spacing={1} className={styles.view}>
@@ -441,6 +450,7 @@ const ArticleDetails = (props) => {
               </a>
             </div>
           </Stack>
+          {character==="expert"&&expert()}
 
           <div style={{ padding: 14 }} className="App">
             {props.article.outdate ==='stale' && (
@@ -455,6 +465,7 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
+            
             <IconButton
                 style={{  }}
                 aria-label="heart"

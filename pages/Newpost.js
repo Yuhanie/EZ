@@ -41,7 +41,9 @@ const MENU_LIST = [
     const auth = getAuth();
     
 function Newpost () {
+
     const router = useRouter();
+    const {articleId} = router.query;
     const [title, setTitle] = React.useState('');
     const [content, setContent] = React.useState('');
     const [tags, setTags] = React.useState([]);
@@ -50,10 +52,36 @@ function Newpost () {
     const [user, setUser] = useState();
 
 
-
-
-
     useEffect(() => {
+
+      async function readData() {
+        if (articleId){
+          const ref = doc(db, "text", articleId);
+          const docSnapshot = await getDoc(ref);
+          if (docSnapshot.exists()) {
+            console.log("doc",docSnapshot.data())
+          setTitle(docSnapshot.data().title)
+          setContent(docSnapshot.data().content)
+          setLink(docSnapshot.data().link)
+          setTagName(docSnapshot.data().tagName)
+          }
+        }
+  
+      }
+    readData();  
+    }
+      ,[])
+
+
+  
+    useEffect( () => {
+    //   if (articleId){
+    //   const ref = doc(db, "text", articleId);
+    //   const docSnapshot = await getDoc(ref);
+    //   if (docSnapshot.exists()) {
+    //   setTitle(docSnapshot.data().title)
+    //   }
+    // }
         const unsub = onAuthStateChanged(auth, (user)=>{
           setUser(user);
           console.log(user);
@@ -207,8 +235,9 @@ function Newpost () {
             <TextField
                 id="outlined-textarea"
                 label="請輸入筆記標題"
-                placeholder="今天的主題是..."
+                placeholder={title?"":"今天的主題是..."}
                 multiline
+                value={title}
                 onChange={(e) => setTitle(e.target.value)} 
             /></FormControl>
             </div><br/>
@@ -220,8 +249,9 @@ function Newpost () {
                 InputProps={{ sx: { height: 250 } }}
                 id="outlined-textarea"
                 label="請輸入內容"
-                placeholder="我想分享..."
+                placeholder={content?"":"我想分享..."}
                 multiline
+                value={content}
                 onChange={(e) => setContent(e.target.value)} 
             /></FormControl>
             </div><br/>
@@ -233,8 +263,9 @@ function Newpost () {
                 
                 id="outlined-textarea"
                 label="您想分享的連結"
-                placeholder="https..."
+                placeholder={link?"":"https..."}
                 multiline
+                value={link}
                 onChange={(e) => setLink(e.target.value)} 
                 
             />

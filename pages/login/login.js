@@ -8,12 +8,14 @@ import { getApps, getApp, initializeApp } from "firebase/app";
 import {
   getAuth,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import myImage from "../../public/pic/welcome.png";
+
 
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 
@@ -51,6 +53,40 @@ export default function SignIn() {
       setMessage("" + error);
     }
   };
+  const handleForgetPwd = () => {
+    //const email = form.getFieldValue('email')
+    const auth = getAuth();
+    if (account.email) {
+      sendPasswordResetEmail(auth,account.email)
+        .then(function () {
+          // message.info('密碼重設信件已寄出，請依照信中連結進行重設。')
+          alert('密碼重設信件已寄出，請依照信中連結進行重設。')
+          // console.log("密碼重設信件已寄出，請依照信中連結進行重設。")
+        })
+        .catch(function (error) {
+          let errorMsg = ''
+          switch (error.code) {
+            case 'auth/invalid-email':
+              errorMsg = '電子信箱格式錯誤'
+              break
+            case 'auth/user-not-found':
+              errorMsg = '此用戶不存在'
+              break
+            default:
+              errorMsg = error.code + ':' + error.message
+          }
+          // message.error('忘記密碼: ' + errorMsg)
+          alert('忘記密碼: ' + errorMsg)
+          // console.log('忘記密碼: ' + errorMsg)
+
+        })
+    } else {
+      // message.warn('請輸入電子信箱')
+      alert('請輸入電子信箱')
+      // console.log('請輸入電子信箱')
+    }
+  }
+
   const changeStatus = function () {
     router.push("/register");
     //props.setStatus("signUp");
@@ -124,8 +160,8 @@ export default function SignIn() {
                 登入
               </Button>
               <br />
-              {/* <Link href="">忘記密碼</Link>
-              <br /> */}
+              <Button onClick={handleForgetPwd}>忘記密碼</Button>
+              <br />
               <br />
               <p>沒有帳號？現在就加入我們吧！</p>
               <br />

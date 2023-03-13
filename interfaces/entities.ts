@@ -12,6 +12,7 @@ export type Article = {
   timestamp: Timestamp;
   userid: string;
   outdateCount: string[];
+  outdate: string;
 };
 
 export type Newtext = {

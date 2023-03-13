@@ -12,6 +12,8 @@ import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -83,11 +85,34 @@ const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
-  const [liked, setLiked] = useState(false);
+  const [outdated, setOutdated] = useState(false);
   const [deleted, setDeleted] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(props.article.outdateCount?props.article.outdateCount.length:0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
+
+  useEffect(() => {
+  const unsub = onAuthStateChanged(auth, (user) => {
+    setUser(user);
+    
+    if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
+      setOutdated(true)
+      console.log(props.article.title+'outdated');
+    }
+    else {
+      setOutdated(false)
+      console.log('article:',props.article);
+      console.log('outdateCount:',props.article.outdateCount);
+    }
+
+    console.log("user", user);
+  });
+
+  return () => {
+    unsub();
+  };
+}
+,[]);
   useEffect(() => {
     async function fetchData() {
       // const querySnapProfile = collection(
@@ -135,17 +160,10 @@ const ArticleDetails = (props) => {
     console.log("user:", user);
     console.log("article:", props.article);
 
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      console.log("user", user);
-    });
 
-    return () => {
-      unsub();
-    };
 
     // eslint-disable-next-line
-  }, [edited, liked, deleted]);
+  }, [edited, outdated, deleted]);
 
   const handleClose = () => {
     props.setOpen(false);
@@ -165,10 +183,15 @@ const ArticleDetails = (props) => {
           // console.log(docSnap.data())
           if (docSnap.data().outdateCount.includes(user.uid)) {
             // alert('remove')
+            if ((docSnap.data().outdate)=="pending" && docSnap.data().outdateCount.length === 1){
+              updateDoc(ref, {
+                outdate: "solved"
+              });
+            }
             updateDoc(ref, {
               outdateCount: arrayRemove(user.uid)
             });
-            setLiked(false)
+            setOutdated(false)
             setCount(count - 1)
             // if((props.article.outdateCount.length)==0){
             //   updateDoc(ref, {
@@ -181,7 +204,7 @@ const ArticleDetails = (props) => {
               outdateCount: arrayUnion(user.uid)
 
             });
-            setLiked(true)
+            setOutdated(true)
             setCount(count + 1)
             if ((docSnap.data().outdate)=="stale"){
               updateDoc(ref, {
@@ -194,6 +217,7 @@ const ArticleDetails = (props) => {
             });
             }
           }
+          props.update();
         }
       }
     }
@@ -364,6 +388,16 @@ const ArticleDetails = (props) => {
   const Report = () => {
     return (
       <div>
+        {props.article.outdate==="stale"&&<Button color="secondary" variant="contained" onClick={handleClose}>
+          Red
+        </Button>}
+        {props.article.outdate==="pending"&&<Button color="secondary" variant="contained" onClick={handleClose}>
+          Yellow
+        </Button>}
+        {props.article.outdate==="solved"&&
+        <Button color="secondary" variant="contained" onClick={handleClose}>
+          Green
+        </Button>}
         <Button color="secondary" variant="contained" onClick={handleClose}>
           檢舉
         </Button>
@@ -409,7 +443,7 @@ const ArticleDetails = (props) => {
           </Stack>
 
           <div style={{ padding: 14 }} className="App">
-            {props.article.content.length > 180 && (
+            {props.article.outdate ==='stale' && (
               <h2>
                 <Image alt="版本疑慮" src={warning} />
                 版本疑慮
@@ -417,18 +451,18 @@ const ArticleDetails = (props) => {
             )}
 
             <div className={styles.yu}>
-              {props.article.content.length > 180
+              {props.article.outdate ==='stale'
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
             <IconButton
-                style={{ textAlign: "left", left: 300, bottom: 80 }}
+                style={{  }}
                 aria-label="heart"
                 size="medium"
                 onClick={()=>outdateCount()}
-                sx={
-                  liked && { color: "orange" } 
-                }
+                sx={{textAlign: "left", left: 300, bottom: 80,
+                  color: outdated?"orange":"grey" 
+                }}
               >
             <LiveHelpIcon/>
             </IconButton>

@@ -168,8 +168,8 @@ const ArticleDetails = (props) => {
             updateDoc(ref, {
               outdateCount: arrayRemove(user.uid)
             });
-            // setLiked(false)
-            setCount(count)
+            setLiked(false)
+            setCount(count - 1)
             // if((props.article.outdateCount.length)==0){
             //   updateDoc(ref, {
             //     outdate: "solved"

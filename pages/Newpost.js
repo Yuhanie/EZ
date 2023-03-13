@@ -151,6 +151,7 @@ function Newpost () {
             bookmark:[],
             //還有這些無法加入生成欄位，看來是需要給一個值嗎？
             count:1,
+            outdate:"solved",
             // link,
             //user欄位要帶入登入的資料8
             //user, 

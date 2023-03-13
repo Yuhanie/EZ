@@ -70,7 +70,7 @@ function Newpost () {
       }
     readData();  
     }
-      ,[])
+      ,[articleId])
 
 
   

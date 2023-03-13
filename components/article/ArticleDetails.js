@@ -120,7 +120,7 @@ const ArticleDetails = (props) => {
     unsub();
   };
 }
-,[]);
+,[props.article]);
   useEffect(() => {
     async function fetchData() {
       // const querySnapProfile = collection(

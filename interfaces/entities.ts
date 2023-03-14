@@ -60,3 +60,7 @@ export type Tag = {
 export type miniTag = {
   name: string;
 };
+
+export type Profile = {
+  character: string;
+};

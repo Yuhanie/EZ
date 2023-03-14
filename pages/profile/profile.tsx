@@ -4,6 +4,9 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
+import { doc, getDoc } from "firebase/firestore";
+
+import { Profile } from 'interfaces/entities';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -93,9 +96,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
+ type Props ={
+    profile:Profile;
+}
 
-
-const Profile = () => {
+const Profile:React.FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -300,7 +305,7 @@ const Profile = () => {
                           }}
                         >
                         </Avatar>
-                        <Chip label="學習者" />
+                        <Chip label={props.profile.character} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>

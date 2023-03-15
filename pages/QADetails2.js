@@ -23,6 +23,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { maxHeight } from '@mui/system';
 
 
 
@@ -75,6 +76,7 @@ export default function AlignItemsList() {
       </CardActions>
      
     </Card>
+
       <Divider variant="inset" component="li" />
       <Card sx={{ maxWidth: 700 }}>
       <CardHeader

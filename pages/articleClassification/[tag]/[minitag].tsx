@@ -114,7 +114,7 @@ const Article = () => {
 
       setArticles([...temp]);
       setminiTags([...temp3]);
-      setIsLoading(false);
+      setTags([...temp2]);
     }
 
     readData();

@@ -92,6 +92,7 @@ const ArticleDetails = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   const [character, setCharacter]=useState("");
+  const [expertOutdate, setExpertOutdate]=useState("");
 
   useEffect(() => {
   const unsub = onAuthStateChanged(auth, async (user) => {
@@ -99,8 +100,8 @@ const ArticleDetails = (props) => {
     if(user) {
       const ref = doc(db, "profile", user.uid);
       const docSnap = await getDoc(ref);
-      if ((docSnap.exists()&&docSnap.data().character==="expert")) {
-      setCharacter("expert")
+      if ((docSnap.exists()&&docSnap.data().character==="專家")) {
+      setCharacter("專家")
       }
       if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
         setOutdated(true)
@@ -183,6 +184,44 @@ const ArticleDetails = (props) => {
 const update = (id) => {
   router.push('/Newpost?articleId='+id);
 }
+
+
+
+
+const outdate = async function(){
+  if (typeof window !== "undefined") {
+    if (user) {
+      const ref = doc(db, "text", props.article.docId);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()) {
+
+          try {
+            setIsLoading(true);
+
+            await updateDoc(doc(db,"text",props.article.docId),{
+              outdate:expertOutdate
+          });
+
+
+
+            setIsLoading(false);
+
+            props.update();
+          } catch (error) {
+            console.log(error);
+          }
+       
+      }
+    }
+  } else {
+    alert("請登入");
+  }
+};
+
+
+
+
+
 
 
   const outdateCount = async function () {
@@ -373,12 +412,15 @@ const update = (id) => {
                 id="demo-simple-select"
                 // value={topicName}
                 // label="topic"
-                // onChange={(e) => {setTagName(e.target.value); 
-                // console.log("t:")}} 
+                onChange={(e) => {setExpertOutdate(e.target.value); 
+               }} 
             >
                 <MenuItem value="stale">過時或無法使用</MenuItem>
                 <MenuItem value="solved">沒問題</MenuItem>
             </Select><br/>
+            <Button color="secondary" variant="contained" onClick={()=>outdate(expertOutdate)}>
+          送出
+        </Button>
       </>
     );
   };
@@ -454,7 +496,7 @@ const update = (id) => {
               </a>
             </div>
           </Stack>
-          {character==="expert"&&expert()}
+          {character==="專家"&&expert()}
 
           <div style={{ padding: 14 }} className="App">
             {props.article.outdate ==='stale' && (

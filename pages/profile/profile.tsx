@@ -305,7 +305,7 @@ const Profile:React.FC<Props> = (props) => {
                           }}
                         >
                         </Avatar>
-                        <Chip label={props.profile.character} />
+                        <Chip label={props.profile.character?props.profile.character:""} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>

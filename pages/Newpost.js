@@ -63,7 +63,7 @@ function Newpost () {
           setTitle(docSnapshot.data().title)
           setContent(docSnapshot.data().content)
           setLink(docSnapshot.data().link)
-          setTagName(docSnapshot.data().tagName)
+          setTagName(docSnapshot.data().tag)
           }
         }
   
@@ -123,7 +123,7 @@ function Newpost () {
     const update = async function(){
         const db = getFirestore();
         try{
-          if (action === "新增"){
+          if (!articleId){
             const docRef = await addDoc(collection(db, "text"),{
                 title,
                 content,
@@ -142,7 +142,7 @@ function Newpost () {
             console.log(docRef.id);
           }
           else {
-            await setDoc(doc(db,"text",props.article.id),{
+            await updateDoc(doc(db,"text",articleId),{
                 title,
                 content,
                 tag:tagName,
@@ -153,7 +153,7 @@ function Newpost () {
         catch(e){
           console.log(e);
         }
-        props.close();
+        router.push('/');
       }
 
 
@@ -161,44 +161,7 @@ function Newpost () {
 
 
 
-    async function onSubmit(){
-
-        // console.log(tagName);
-        // alert(user.uid)
-        // alert(user.email)        
-        // await addDoc(collection(db, "text",
-        // props.article.docId,"comment"))
-        await addDoc(collection(db, "text"), {
-            title,
-            content,
-            userid: user.uid,
-            email: user.email,
-            tag:tagName,
-            user:user.displayName,
-            heart:[],
-            bookmark:[],
-            //還有這些無法加入生成欄位，看來是需要給一個值嗎？
-            count:1,
-            outdate:"solved",
-            // link,
-            //user欄位要帶入登入的資料8
-            //user, 
-            link,
-            timestamp: serverTimestamp()
-            // createAt:Timestamp.now(),
-            // author:{
-            //     displayName: auth.currentUser.displayName || "",
-            //     photoURL: auth.currentUser.photoURL || "",
-            //     uid: auth.currentUser.uid,
-            //     email: auth.currentUser.email
-            // },
-          });
-        
-     
-            router.push('/');
-        
-    }
-
+  
     // function MultilineTextFields() {
     //     return (
     //       <Box
@@ -293,7 +256,7 @@ function Newpost () {
 
           
 
-            <Button variant="contained" sx={{ padding: 1, margin: 5 , left: 680 , top: 40}} onClick={onSubmit}>發布</Button><br></br><br></br>
+            <Button variant="contained" sx={{ padding: 1, margin: 5 , left: 680 , top: 40}} onClick={update}>發布</Button><br></br><br></br>
             <Button variant="contained" sx={{ padding: 1, margin: 4.5 , left: 1020 , top: -95}}>取消</Button>
     
 </div>

@@ -102,16 +102,18 @@ const ArticleDetails = (props) => {
       if ((docSnap.exists()&&docSnap.data().character==="expert")) {
       setCharacter("expert")
       }
+      if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
+        setOutdated(true)
+        console.log(props.article.title+'outdated');
+      }
+      else {
+        setOutdated(false)
+        console.log('article:',props.article);
+        console.log('outdateCount:',props.article.outdateCount);
+      }
     }
-    if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
-      setOutdated(true)
-      console.log(props.article.title+'outdated');
-    }
-    else {
-      setOutdated(false)
-      console.log('article:',props.article);
-      console.log('outdateCount:',props.article.outdateCount);
-    }
+
+    
 
     console.log("user", user);
   });
@@ -178,8 +180,9 @@ const ArticleDetails = (props) => {
   };
 
 
-
-
+const update = (id) => {
+  router.push('/Newpost?articleId='+id);
+}
 
 
   const outdateCount = async function () {
@@ -360,6 +363,7 @@ const ArticleDetails = (props) => {
   };
 
 
+
   const expert = () => {
     return(
       <>
@@ -390,10 +394,10 @@ const ArticleDetails = (props) => {
     );
   };
 
-  const Update = () => {
+  const Update = (id) => {
     return (
       <div>
-        <Button color="secondary" variant="contained" onClick={handleClose}>
+        <Button color="secondary" variant="contained" onClick={()=>update(id)}>
           修改
         </Button>
         <Button color="secondary" variant="contained" onClick={deleteData}>
@@ -507,7 +511,7 @@ const ArticleDetails = (props) => {
         </DialogContent>
 
         <DialogActions>
-          {user && user.uid === props.article.userid && Update()}
+          {user && user.uid === props.article.userid && Update(props.article.docId)}
           {/* {user.uid}/{props.article.userid} */}
           {/* {props.article.userid} */}
           {user && Report()}

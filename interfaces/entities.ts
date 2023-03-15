@@ -40,6 +40,8 @@ export type Question = {
   timestamp: Timestamp;
   link: string;
   userid: string;
+  outdate?:string;
+  outdateCount?:string[];
 };
 
 export type Comment = {

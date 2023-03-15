@@ -20,7 +20,7 @@
     "firebase": "^9.9.2",
     "material-ui-search-bar": "^1.0.0",
     "next": "12.2.0",
-    "next-auth": "^4.16.4",
+    "next-auth": "^4.20.1",
     "react": "18.2.0",
     "react-autocomplete-hint": "^2.0.0",
     "react-bootstrap": "^2.5.0",

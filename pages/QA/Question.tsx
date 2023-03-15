@@ -74,7 +74,7 @@ export async function getServerSideProps() {
         //   temp2.push({docId: doc.id,name:doc2.data().name}); 
         // });
         console.log(doc.data());
-        temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate}); 
+        // temp.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user,count: doc.data().count, heart: doc.data().heart, bookmark: doc.data().bookmark}); 
       });
 
       //console.log("tag4:",tag);

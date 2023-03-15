@@ -423,7 +423,7 @@ const Home: NextPage = () => {
     readData();
 
 
-  }, []);
+  }, [currentUser]);
 
 
 

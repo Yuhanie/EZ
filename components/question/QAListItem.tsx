@@ -7,7 +7,7 @@ import { collection, doc, getDocs, getFirestore, increment, updateDoc } from "fi
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
-import QADetails from "./QADetails";
+import QADetails2 from "./QADetails_copy";
 import { Question } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 //import Heart from '@mui/icons-material/Heart';
@@ -43,7 +43,7 @@ const QAListItem:
 
   return (
   <div>
-  <QADetails question={props.question} open={open} setOpen={setOpen} ></QADetails>
+  {/* <QADetails2 question={props.question} open={open} setOpen={setOpen} ></QADetails2> */}
   <div className={styles.card} key={props.question.title}>
     
     <h2><a>{props.question.title}</a></h2>

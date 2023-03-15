@@ -165,7 +165,7 @@ const QA: NextPage = () => {
         </Head>
         <Navbar />
         <Container>
-        <List sx={{ width: '100%', maxWidth: 700, bgcolor: 'background.paper' }}>
+        <List sx={{ width: '100%', minWidth: 700, bgcolor: 'background.paper' }}>
         <Box
               display="flex"
               justifyContent="center"

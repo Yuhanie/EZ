@@ -171,13 +171,17 @@ const Article = () => {
       setMobileOpen(!mobileOpen);
     };
 
+    function back(){
+      router.back();
+    }
+
     const drawer = (
       <div>
         <Box sx={{ overflow: 'auto' }}>
           <Toolbar />
           <Box display="flex" pt={3.5} pb={2}>
             <IconButton
-              href="/"
+              onClick={back}
             >
               <ArrowBackIosNewIcon />
             </IconButton>

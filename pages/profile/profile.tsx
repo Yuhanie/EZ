@@ -319,7 +319,7 @@ const Profile = () => {
                           }}
                         >
                         </Avatar>
-                        <Chip label={profile?profile.character:"未登入"} />
+                        <Chip label={profile?(profile.character?profile.character:"..."):"未登入"} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>

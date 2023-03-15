@@ -37,7 +37,8 @@ export type Question = {
   count: number;
   heart: string[];
   bookmark: string[];
-  timestamp: Timestamp
+  timestamp: Timestamp;
+  link: string;
 };
 
 export type Comment = {

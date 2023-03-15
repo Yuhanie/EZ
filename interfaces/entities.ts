@@ -39,6 +39,7 @@ export type Question = {
   bookmark: string[];
   timestamp: Timestamp;
   link: string;
+  userid: string;
 };
 
 export type Comment = {

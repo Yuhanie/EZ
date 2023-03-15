@@ -64,7 +64,7 @@ export default function Footer() {
                 <Typography variant="h6" sx={{ p: 1, textAlign: "left" }}>聯絡我們</Typography>
                 <Box display="flex" m={1} >
                   <MailOutlineIcon sx={{ mr: 2 }} />
-                  <Typography>educatineZone@gmail.com</Typography>
+                  <Typography>educationZone@gmail.com</Typography>
                 </Box>
                 <Typography variant="body2" sx={{ m: 1 }}>多利用Line官方帳號提問更便利！</Typography>
               </Box>

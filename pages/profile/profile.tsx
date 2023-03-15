@@ -2,9 +2,9 @@ import * as React from 'react';
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
-import { getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 
 import { Profile } from 'interfaces/entities';
 //mui
@@ -96,16 +96,16 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
- type Props ={
-    profile:Profile;
-}
 
-const Profile:React.FC<Props> = (props) => {
+
+
+const Profile = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
   const theme = useTheme();
   const [tags, setTags] = React.useState<string[]>([]);
+  const [profile, setProfile] = useState<Profile>();
 
   const handleChange = (event: SelectChangeEvent<typeof tags>) => {
     const {
@@ -131,6 +131,20 @@ const Profile:React.FC<Props> = (props) => {
 
 
   useEffect(() => {
+    async function readData() {
+      //var temp: Profile;
+      if(currentUser){
+        const querySnapshot = await getDoc(doc(db, "profile",currentUser.uid));
+        if (querySnapshot.exists()) {
+          //console.log(doc.id, doc.data());
+          setProfile( {character: querySnapshot.data().character});
+        };
+  
+
+      }
+    }
+    readData();
+
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log('currentUser', user)
@@ -305,7 +319,7 @@ const Profile:React.FC<Props> = (props) => {
                           }}
                         >
                         </Avatar>
-                        <Chip label={props.profile.character} />
+                        <Chip label={profile?profile.character:"未登入"} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>

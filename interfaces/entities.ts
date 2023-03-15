@@ -34,29 +34,10 @@ export type Question = {
   content: string;
   user:string;
   docId: string;
-  link: string;
   count: number;
   heart: string[];
   bookmark: string[];
-  userid: string;
-  outdateCount: string[];
-  outdate: string;
-  timestamp: Timestamp
-};
-
-export type QA = {
-  title: string;
-  content: string;
-  user:string;
-  docId: string;
-  link: string;
-  count: number;
-  heart: string[];
-  bookmark: string[];
-  userid: string;
-  outdateCount: string[];
-  outdate: string;
-  timestamp: Timestamp
+  //timestamp: Timestamp
 };
 
 export type Comment = {

@@ -24,6 +24,7 @@ import Input from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
@@ -121,6 +122,10 @@ function Newpost () {
 
 
     const update = async function(){
+if (title==""||content==""||tagName==""||link==""){
+  return (false);
+}
+
         const db = getFirestore();
         try{
           if (!articleId){
@@ -196,12 +201,15 @@ function Newpost () {
                 {user&&user.displayName}
             <FormControl fullWidth>
             <TextField
+            error={title===""}
+            helperText={title===""?"請輸入標題":""}
                 required
                 id="outlined-textarea"
                 label="請輸入筆記標題"
                 placeholder={title?"":"今天的主題是..."}
                 multiline
                 value={title}
+                
                 onChange={(e) => setTitle(e.target.value)} 
             /></FormControl>
             </div><br/>
@@ -210,6 +218,8 @@ function Newpost () {
             <div>
             <FormControl fullWidth>
             <TextField
+                error={content===""}
+                helperText={content===""?"請輸入內容":""}
                 required
                 InputProps={{ sx: { height: 250 } }}
                 id="outlined-textarea"
@@ -225,7 +235,8 @@ function Newpost () {
             <div>
             <FormControl fullWidth>
             <TextField
-                
+                error={link===""}
+                helperText={link===""?"請輸入連結":""}
                 id="outlined-textarea"
                 label="您想分享的連結"
                 placeholder={link?"":"https..."}
@@ -237,9 +248,13 @@ function Newpost () {
             </FormControl>
             </div ><br/>
 
-            <FormControl sx={{width:250}}>
-            <InputLabel id="demo-simple-select-label" required>請輸入筆記標籤</InputLabel>
+            <FormControl sx={{width:250}} 
+              error={tagName===""}
+              
+            >
+            <InputLabel id="demo-simple-select-label" required>請選擇筆記標籤</InputLabel>
             <Select
+                
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={tagName}
@@ -253,7 +268,7 @@ function Newpost () {
                 <MenuItem value="業界資源">業界資源</MenuItem>
                 <MenuItem value="其他">其他</MenuItem>
             </Select><br/>
-
+            {tagName==="" &&<FormHelperText>請選擇分類標籤</FormHelperText>}
             </FormControl>
 
           

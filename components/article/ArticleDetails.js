@@ -219,17 +219,15 @@ const outdate = async function(){
 
           try {
             setIsLoading(true);
-            if (expertOutdate==solved){
+            
+                 await updateDoc(doc(db,"text",props.article.docId),{
+                outdate:expertOutdate
+          });
+              if (expertOutdate==solved){
               await deleteDoc(doc(db, "text", props.article.docId, "outdateCount"));
                 setDeleted(deleted + 1);
-              await updateDoc(doc(db,"text",props.article.docId),{
-                outdate:"solved"
-          });    }
-          else{
-            await updateDoc(doc(db,"text",props.article.docId),{
-              outdate:"stale"
-          }); 
-          }
+                   }
+
 
           
             setIsLoading(false);

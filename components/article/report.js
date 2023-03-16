@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
-import Report from "./report";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
@@ -84,7 +83,7 @@ const auth = getAuth();
 //      </>
 //     )}
 
-const ArticleDetails = (props) => {
+const Report = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
@@ -179,7 +178,7 @@ const ArticleDetails = (props) => {
     // eslint-disable-next-line
   }, [edited, outdated, deleted]);
 
-  const handleClose = () => {
+  const reportHandleClose = () => {
     props.setOpen(false);
   };
 
@@ -189,23 +188,8 @@ const update = (id) => {
 }
 
 const report = (id) => {
-  return(
-    <>
-    
-    </>
-  )
+  router.push('/Newpost?articleId='+id);
 }
-
-
-
-const reportHandleOpen = () => {
-  setOpen(true);
-};
-
-const reportHandleClose = () => {
-  setOpen(false);
-};
-
 
 
 
@@ -482,15 +466,12 @@ const outdate = async function(){
   const Report = (id) => {
     return (
       <div>
-         
-        <Button color="secondary" variant="contained" onClick={reportHandleOpen}>
+        {/* <Button color="secondary" variant="contained" onClick={handleClose}>
+          檢舉
+        </Button> */}
+        <Button color="secondary" variant="contained" onClick={()=>report(id)}>
           檢舉
         </Button>
-{/*        
-          <Button color="secondary" variant="contained" onClick={()=>report(id)}>
-            檢舉
-          </Button> */}
-       
       </div>
     );
   };
@@ -511,7 +492,7 @@ const outdate = async function(){
 
   return (
     <div className={styles.container}>
-      <Dialog open={props.open} onClose={handleClose}>
+      <Dialog open={props.open} onClose={reportHandleClose}>
         <DialogTitle>
         {outdateIcon()}
           <a href={props.article.link}>{props.article.title}</a>
@@ -542,6 +523,16 @@ const outdate = async function(){
               </h2>
             )}
 
+            <div className={styles.yu}>
+              {props.article.outdate ==='stale'
+                ? "這篇文章已經不符合現在的版本或者無法使用"
+                : ""}
+            </div>
+            <div className={styles.yu}>
+              {props.article.outdate ==='stale'
+                ? "這篇文章已經不符合現在的版本或者無法使用"
+                : ""}
+            </div>
             <div className={styles.yu}>
               {props.article.outdate ==='stale'
                 ? "這篇文章已經不符合現在的版本或者無法使用"
@@ -592,7 +583,6 @@ const outdate = async function(){
           {user && user.uid === props.article.userid && Update(props.article.docId)}
           {/* {user.uid}/{props.article.userid} */}
           {/* {props.article.userid} */}
-
           {user && Report()}
           {}
           {/* <Button color="primary" variant="contained" onClick={handleClose}>
@@ -604,4 +594,4 @@ const outdate = async function(){
   );
 };
 
-export default ArticleDetails;
+export default Report;

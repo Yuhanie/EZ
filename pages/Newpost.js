@@ -196,6 +196,7 @@ function Newpost () {
                 {user&&user.displayName}
             <FormControl fullWidth>
             <TextField
+                required
                 id="outlined-textarea"
                 label="請輸入筆記標題"
                 placeholder={title?"":"今天的主題是..."}
@@ -209,6 +210,7 @@ function Newpost () {
             <div>
             <FormControl fullWidth>
             <TextField
+                required
                 InputProps={{ sx: { height: 250 } }}
                 id="outlined-textarea"
                 label="請輸入內容"
@@ -236,11 +238,11 @@ function Newpost () {
             </div ><br/>
 
             <FormControl sx={{width:250}}>
-            <InputLabel id="demo-simple-select-label">請輸入筆記標籤</InputLabel>
+            <InputLabel id="demo-simple-select-label" required>請輸入筆記標籤</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                // value={topicName}
+                value={tagName}
                 // label="topic"
                 onChange={(e) => {setTagName(e.target.value); 
                 console.log("t:")}} 

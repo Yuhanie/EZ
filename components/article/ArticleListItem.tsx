@@ -274,7 +274,7 @@ const ArticleListItem:
               title={props.article.user}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
               //item 
-              sx={{ p: 1.5 }}
+              sx={{ p: 1.2 }}
             />
             <Box display="flex" sx={{pr:2}}>
               <CardActions sx={{ p: 0 }}>

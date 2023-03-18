@@ -177,14 +177,7 @@ const Home = () => {
             </Button>
             <Typography variant="body2" sx={{ m: 1 }}>
               已經有帳號了嗎？
-              <Typography
-                color="secondary"
-                variant="button"
-                href='/login'
-              >
-                點此登入
-              </Typography>
-
+              <Link sx={{color:"secondary"}} href="/login">點此登入</Link>
             </Typography>
 
           </Box>

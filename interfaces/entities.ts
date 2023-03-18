@@ -37,7 +37,11 @@ export type Question = {
   count: number;
   heart: string[];
   bookmark: string[];
-  //timestamp: Timestamp
+  timestamp: Timestamp;
+  link: string;
+  userid: string;
+  outdate?:string;
+  outdateCount?:string[];
 };
 
 export type Comment = {

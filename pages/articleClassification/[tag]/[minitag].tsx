@@ -254,6 +254,14 @@ const Article = () => {
           </Button>
         </Box>
 
+        <List className={styles.line} aria-label="mailbox folders">
+            {/* <ListItem button> */}
+            {/* <ListItemText primary="分類" />
+                <ListItemText/> */}
+            {tags.map(renderTag)}
+            {/* </ListItem> */}
+          </List>
+
         <Box
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
           aria-label="mailbox folders"

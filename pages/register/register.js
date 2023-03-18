@@ -56,10 +56,11 @@ const Home = () => {
         account.email,
         account.password
       );
+
       if (res) {
-
-        await updateProfile(auth.currentUser, { displayName: account.displayName });
-
+        await updateProfile(auth.currentUser,{displayName: account.displayName});
+        await addDoc(collection(db, "profile"),{character:"學習者",tag});
+        let addDoc = db.collection('profile').doc(uid);
       }
       setMessage("帳號已產生");
       console.log({ res });

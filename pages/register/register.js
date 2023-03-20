@@ -30,7 +30,7 @@ const Home = () => {
   const handleChange = function (e) {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
-  async function haddleOnClick() {
+  async function handleOnClick() {
     // const res = await createUserWithEmailAndPassword(
     //   auth,
     //   account.email,
@@ -59,8 +59,8 @@ const Home = () => {
 
       if (res) {
         await updateProfile(auth.currentUser,{displayName: account.displayName});
-        await addDoc(collection(db, "profile"),{character:"學習者",tag});
-        let addDoc = db.collection('profile').doc(uid);
+        // await addDoc(collection(db, "profile"),{character:"學習者",tag});
+        // let addDoc = db.collection('profile').doc(uid);
       }
       setMessage("帳號已產生");
       console.log({ res });
@@ -170,7 +170,7 @@ const Home = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={haddleOnClick}
+              onClick={handleOnClick}
               sx={{ m: 1 }}
 
             >

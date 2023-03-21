@@ -68,3 +68,18 @@ export type miniTag = {
 export type Profile = {
   character: string;
 };
+
+export type Bookmark = {
+  title: string;
+  content: string;
+  user:string;
+  docId: string;
+  link: string;
+  count: number;
+  heart: string[];
+  bookmark:string[];
+  timestamp: Timestamp;
+  userid: string;
+  outdateCount: string[];
+  outdate: string;
+};

@@ -216,28 +216,25 @@ const outdate = async function(){
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
-
           try {
             setIsLoading(true);
             
                  await updateDoc(doc(db,"text",props.article.docId),{
                 outdate:expertOutdate
+                
           });
-              if (expertOutdate==solved){
-              await deleteDoc(doc(db, "text", props.article.docId, "outdateCount"));
-                setDeleted(deleted + 1);
-                   }
-
-
-          
             setIsLoading(false);
-
             props.update();
-          } catch (error) {
-            console.log(error);
           }
-       
+          catch (error) {
+            // console.log(error);
+          }
       }
+      
+  //     if((docSnap.data().outdate)=="solved"){
+  //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+  //       setDeleted(deleted + 1);
+  // }
     }
   } else {
     alert("請登入");
@@ -514,9 +511,10 @@ const outdate = async function(){
         {outdateIcon()}
           <a href={props.article.link}>{props.article.title}</a>
 
-          <Stack spacing={1} className={styles.view}>
-            <VI />
-            <div className={styles.views}>{props.article.count}</div>
+          <Stack>
+              <VI/>
+            {props.article.count}
+
           </Stack>
         </DialogTitle>
 

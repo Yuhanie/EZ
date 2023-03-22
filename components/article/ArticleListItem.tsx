@@ -29,6 +29,11 @@ import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
 import ListSubheader from '@mui/material/ListSubheader';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -266,17 +271,19 @@ const ArticleListItem:
             </CardContent>
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
+            <Box>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="recipe"></Avatar>
+                }
+                title={props.article.user}
+                subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+                //item 
+                sx={{ p: 1.2 }}
+              />
+            </Box>
 
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe"></Avatar>
-              }
-              title={props.article.user}
-              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
-              //item 
-              sx={{ p: 1.2 }}
-            />
-            <Box display="flex" sx={{pr:2}}>
+            <Box display="flex" sx={{ pr: 2 }}>
               <CardActions sx={{ p: 0 }}>
                 <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
                   <Heart />
@@ -286,7 +293,7 @@ const ArticleListItem:
                 </Typography>
 
               </CardActions>
-              <CardActions sx={{ p: 0}}>
+              <CardActions sx={{ p: 0 }}>
                 <IconButton aria-label="bookmark" size="medium" onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
                   <Bookmark />
                 </IconButton>

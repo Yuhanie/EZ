@@ -7,7 +7,7 @@ import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query } from "firebase/firestore";
 import { orderBy, limit, where } from "firebase/firestore";
 
-import { Profile,Bookmark } from 'interfaces/entities';
+import { Profile, Bookmark } from 'interfaces/entities';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -135,44 +135,45 @@ const Profile = () => {
   useEffect(() => {
     async function readData() {
       //var temp: Profile;
-      if(currentUser){
-        const querySnapshot = await getDoc(doc(db, "profile",currentUser.uid));
+      if (currentUser) {
+        const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
         if (querySnapshot.exists()) {
           //console.log(doc.id, doc.data());
-          setProfile( {character: querySnapshot.data().character});
+          setProfile({ character: querySnapshot.data().character });
         };
       }
 
-      if(currentUser){
+      if (currentUser) {
         const querySnapshot2 = await getDocs(query(collection(db, "text"), where("bookmark", "==", currentUser.uid)));
         const temp: Bookmark[] = [];
         querySnapshot2.forEach(async (doc) => {
-        console.log(doc.id);
-        //console.log("tag2:",tag)
-        // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
-        // querySnapshot2.forEach(async (doc2) => {
-        //   console.log(doc2.id);
-        //   console.log(doc2.data());
-        //   temp2.push({docId: doc.id,name:doc2.data().name}); 
-        // });
-        console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
-      });
-      }
+          console.log(doc.id);
+          //console.log("tag2:",tag)
+          // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
+          // querySnapshot2.forEach(async (doc2) => {
+          //   console.log(doc2.id);
+          //   console.log(doc2.data());
+          //   temp2.push({docId: doc.id,name:doc2.data().name}); 
+          // });
+          console.log(doc.data());
+          temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+        }
+      );}
+
       readData();
 
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log('currentUser', user)
-        setCurrentUser(user);
-      }
-    });
+      const unsub = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log('currentUser', user)
+          setCurrentUser(user);
+        }
+      });
 
-    return () => {
-      unsub();
+      return () => {
+        unsub();
+      }
     }
-  }
-});
+  });
 
 
 
@@ -245,7 +246,7 @@ const Profile = () => {
                               multiple
                               value={tags}
                               onChange={handleChange}
-                              input={<OutlinedInput id="select-multiple-chip"/>}
+                              input={<OutlinedInput id="select-multiple-chip" />}
                               renderValue={(selected) => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                   {selected.map((value) => (
@@ -335,7 +336,7 @@ const Profile = () => {
                           }}
                         >
                         </Avatar>
-                        <Chip label={profile?(profile.character?profile.character:"..."):"未登入"} />
+                        <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "not logged in"}</Typography>
@@ -383,7 +384,7 @@ const Profile = () => {
                           收藏文章
                         </Typography>
                         <Stack direction="row" spacing={1}>
-                          
+
                         </Stack>
                       </CardContent>
                     </Card>

@@ -143,23 +143,23 @@ const Profile = () => {
         };
       }
 
-      if(currentUser){
+      if (currentUser) {
         const querySnapshot2 = await getDocs(query(collection(db, "text"), where("bookmark", "==", currentUser.uid)));
         const temp: Bookmark[] = [];
         querySnapshot2.forEach(async (doc) => {
-        console.log(doc.id);
-        //console.log("tag2:",tag)
-        // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
-        // querySnapshot2.forEach(async (doc2) => {
-        //   console.log(doc2.id);
-        //   console.log(doc2.data());
-        //   temp2.push({docId: doc.id,name:doc2.data().name}); 
-        // });
-        console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
-      });
+          console.log(doc.id);
+          //console.log("tag2:",tag)
+          // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
+          // querySnapshot2.forEach(async (doc2) => {
+          //   console.log(doc2.id);
+          //   console.log(doc2.data());
+          //   temp2.push({docId: doc.id,name:doc2.data().name}); 
+          // });
+          console.log(doc.data());
+          temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+        });
       }
-      readData();
+
 
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -172,6 +172,7 @@ const Profile = () => {
         unsub();
       }
     }
+    readData();
   });
 
 

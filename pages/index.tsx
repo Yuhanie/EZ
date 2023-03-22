@@ -196,9 +196,9 @@ const lightTheme = createTheme({
 
 const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [
-    '/pic/welcomepage.png',
+    '/pic/blue.png',
     '/pic/recommend.png',
-    '/pic/introduction.png',
+    '/pic/blue.png',
 
   ];
   return (

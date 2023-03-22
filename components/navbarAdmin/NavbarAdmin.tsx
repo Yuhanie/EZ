@@ -58,7 +58,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   }),
 }));
 
-const container = window !== undefined ? () => window().document.body : undefined;
 
 
 const lightTheme = createTheme({

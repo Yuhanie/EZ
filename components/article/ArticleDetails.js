@@ -17,6 +17,8 @@ import NotificationImportantIcon from '@mui/icons-material/NotificationImportant
 import FormControl from '@mui/material/FormControl';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -26,6 +28,7 @@ import {
   collection,
   addDoc,
   Doc,
+  setDoc,
   doc,
   getDocs,
   deleteDoc,
@@ -44,7 +47,6 @@ import VI from "@mui/icons-material/Visibility";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import SendIcon from "@mui/icons-material/Send";
 import Heart from "@mui/icons-material/Favorite";
-import Typography from "@mui/material/Typography";
 import Comment from "./Comment";
 import {
   Dialog,
@@ -55,34 +57,15 @@ import {
   Stack,
   Avatar,
   Grid,
+  TextField,
   Paper,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
-// const docRef = doc(db, "English", "1");
-// const docSnap = await getDoc(docRef);
 
-// if (docSnap.exists()) {
-//   console.log("Document data:", docSnap.data());
-// } else {
-//   // doc.data() will be undefined in this case
-//   console.log("No such document!");
-// }
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 const auth = getAuth();
-
-// function Model(){
-//   const [icoStatus, setIcoStatus] = useState(true)
-//   const iconSouCangData = (event, props) => {
-//     setIcoStatus(!icoStatus)
-//   }
-//     return(
-//      <>
-//                <span className={iconSouCang ? "opts-icon icon-soucang2 soucang-color" : "icon-hide"} onClick={(e) => iconSouCangData(e,props)}></span>
-//               <span className={iconSouCang ? "icon-hide" : "opts-icon icon-soucang"} onClick={(e) => iconSouCangData(e,props)}></span>
-//      </>
-//     )}
 
 const ArticleDetails = (props) => {
   const [comments, setComments] = useState([]);
@@ -96,6 +79,7 @@ const ArticleDetails = (props) => {
   const [character, setCharacter]=useState("");
   const [expertOutdate, setExpertOutdate]=useState("");
   const [open, setOpen] = useState(false);
+  const [report, setReport]=useState("");
 
   useEffect(() => {
   const unsub = onAuthStateChanged(auth, async (user) => {
@@ -129,15 +113,6 @@ const ArticleDetails = (props) => {
 ,[props.article]);
   useEffect(() => {
     async function fetchData() {
-      // const querySnapProfile = collection(
-      //   db,
-      //   "profile",
-      //   props.article.docId,
-      // );
-      // const queryProfile = query(querySnapProfile, orderBy("timestamp", "asc"));
-      // const querySnapshotProfile = await getDocs(queryProfile);
-      // const tempProfile = [];
-
 
       console.log("docId:",props.article);
       const querySnapshot = collection(
@@ -148,17 +123,6 @@ const ArticleDetails = (props) => {
       );
       const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
       const querySnapshotArticle = await getDocs(queryText);
-
-      // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
-      // querySnapshot2.forEach(async (doc2) => {
-      //   console.log(doc2.id);
-      //   console.log(doc2.data());
-      //   temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
-
-      // });
-
-      // const temp1= [user];
-      // const temp2= [content];
       const temp = [];
 
       querySnapshotArticle.forEach((doc) => {
@@ -188,13 +152,6 @@ const update = (id) => {
   router.push('/Newpost?articleId='+id);
 }
 
-const report = (id) => {
-  return(
-    <>
-    
-    </>
-  )
-}
 
 
 
@@ -229,6 +186,47 @@ const outdate = async function(){
           catch (error) {
             // console.log(error);
           }
+      }
+      
+  //     if((docSnap.data().outdate)=="solved"){
+  //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+  //       setDeleted(deleted + 1);
+  // }
+    }
+  } else {
+    alert("請登入");
+  }
+};
+
+
+
+const denounce = async function(report){
+  console.log("report",report)
+  if (typeof window !== "undefined") {
+    if (user) {
+      const ref = doc(db, "text", props.article.docId);
+      const docSnap = await getDoc(ref);
+      if (docSnap.exists()) {
+        if(report=="stale"){
+          alert("stale")
+          try {
+            setIsLoading(true);
+                await updateDoc(doc(db,"text",props.article.docId),{
+                outdate:"pending"
+                
+          });
+            setIsLoading(false);
+            props.update();
+          }
+          catch (error) {
+            // console.log(error);
+          }
+      }
+      else{
+        await setDoc(doc(db, "text", props.article.docId, "denounce", user.uid), {
+          reason:report
+        });
+      }
       }
       
   //     if((docSnap.data().outdate)=="solved"){
@@ -328,16 +326,6 @@ const outdate = async function(){
           timestamp: serverTimestamp(),
           heart:[],
           user: user.displayName,
-
-          //user,
-
-          // createAt:Timestamp.now(),
-          // author:{
-          //     displayName: auth.currentUser.displayName || "",
-          //     photoURL: auth.currentUser.photoURL || "",
-          //     uid: auth.currentUser.uid,
-          //     email: auth.currentUser.email
-          // },
         });
         setContent("");
         setEdited(edited + 1);
@@ -346,51 +334,9 @@ const outdate = async function(){
       }
     }
 
-    // console.log(tagName);
-    // alert(user.uid)
-    // alert(user.email)
-    // await addDoc(collection(db, "text",
-    // props.article.docId,"comment"))
+
   }
 
-  // const heart = async function () {
-  //   if (typeof window !== "undefined") {
-  //     if (user) {
-  //       const ref = doc(
-  //         (db, "text", props.article.docId, "comment",id)
-  //       );
-  //       const docSnap = await getDoc(ref);
-  //       if (docSnap.exists()) {
-  //         if (docSnap.data().heart.includes(user.uid)) {
-  //           alert("remove");
-  //           updateDoc(ref, {
-  //             heart: arrayRemove(user.uid),
-  //           });
-  //           setLiked(false);
-  //           setCount(count - 1);
-  //         } else {
-  //           alert("added");
-  //           updateDoc(ref, {
-  //             heart: arrayUnion(user.uid),
-  //           });
-  //           setLiked(true);
-  //           setCount(count + 1);
-  //         }
-  //       }
-  //     }
-  //   } else {
-  //     alert("要登入才能按讚ㄛ!");
-  //     //window.alert("要登入才能新增筆記ㄛ!");
-
-  //     // <Alert action={
-  //     //   <Button >
-  //     //     UNDO
-  //     //   </Button>
-  //     // }>要登入才能新增筆記ㄛ! </Alert>
-
-  //     router.push("/login");
-  //   }
-  // };
 
   const deleteData = async function () {
     if (typeof window !== "undefined") {
@@ -477,8 +423,26 @@ const outdate = async function(){
   const Report = (id) => {
     return (
       <div>
-         
-        <Button color="secondary" variant="contained" onClick={reportHandleOpen}>
+
+        <FormControl sx={{width:110}}>
+          <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={topicName}
+                // label="topic"
+                onChange={(e) => {setReport(e.target.value); 
+               }} 
+            >
+                <MenuItem value="stale">過時或無法使用</MenuItem>
+                <MenuItem value="empty">內容空泛</MenuItem>
+                <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+                <MenuItem value="spamming">惡意洗版</MenuItem>
+                <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+            </Select>
+      </FormControl>
+
+        <Button color="secondary" variant="contained" onClick={()=>denounce(report)}>
           檢舉
         </Button>
 {/*        

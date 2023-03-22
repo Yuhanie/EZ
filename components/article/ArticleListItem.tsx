@@ -64,7 +64,7 @@ const ArticleListItem:
     const handleOpen = () => {
       setOpen(true);
       const ref = doc(db, "text", props.article.docId);
-      updateDoc(ref, { count: increment(1), bookCount: increment(1) });
+      updateDoc(ref, { count: increment(1) });
 
     };
 

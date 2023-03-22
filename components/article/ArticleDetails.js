@@ -245,58 +245,58 @@ const denounce = async function(report){
 
 
 
-  const outdateCount = async function () {
-    if (typeof window !== "undefined") {
-      if (user) {
-        const ref = doc(db, "text", props.article.docId);
-        const docSnap = await getDoc(ref);
-        if ((docSnap.exists())) {
-          // console.log(docSnap.data())
-          if (docSnap.data().outdateCount.includes(user.uid)) {
-            // alert('remove')
-            if ((docSnap.data().outdate)=="pending" && docSnap.data().outdateCount.length === 1){
-              updateDoc(ref, {
-                outdate: "solved"
-              });
-            }
-            updateDoc(ref, {
-              outdateCount: arrayRemove(user.uid)
-            });
-            setOutdated(false)
-            setCount(count - 1)
-            // if((props.article.outdateCount.length)==0){
-            //   updateDoc(ref, {
-            //     outdate: "solved"
-            //   });
-            // }
-          } else {
-            // alert('added')
-            updateDoc(ref, {
-              outdateCount: arrayUnion(user.uid)
+  // const outdateCount = async function () {
+  //   if (typeof window !== "undefined") {
+  //     if (user) {
+  //       const ref = doc(db, "text", props.article.docId);
+  //       const docSnap = await getDoc(ref);
+  //       if ((docSnap.exists())) {
+  //         // console.log(docSnap.data())
+  //         if (docSnap.data().outdateCount.includes(user.uid)) {
+  //           // alert('remove')
+  //           if ((docSnap.data().outdate)=="pending" && docSnap.data().outdateCount.length === 1){
+  //             updateDoc(ref, {
+  //               outdate: "solved"
+  //             });
+  //           }
+  //           updateDoc(ref, {
+  //             outdateCount: arrayRemove(user.uid)
+  //           });
+  //           setOutdated(false)
+  //           setCount(count - 1)
+  //           // if((props.article.outdateCount.length)==0){
+  //           //   updateDoc(ref, {
+  //           //     outdate: "solved"
+  //           //   });
+  //           // }
+  //         } else {
+  //           // alert('added')
+  //           updateDoc(ref, {
+  //             outdateCount: arrayUnion(user.uid)
 
-            });
-            setOutdated(true)
-            setCount(count + 1)
-            if ((docSnap.data().outdate)=="stale"){
-              updateDoc(ref, {
-                outdate: "stale"
-              });
-            }
-            else{
-              updateDoc(ref, {
-                outdate: "pending"
-            });
-            }
-          }
-          props.update();
-        }
-      }
-    }
-    else {
-      alert("要登入才能按讚ㄛ!")
-      router.push('/login');
-    }
-  }
+  //           });
+  //           setOutdated(true)
+  //           setCount(count + 1)
+  //           if ((docSnap.data().outdate)=="stale"){
+  //             updateDoc(ref, {
+  //               outdate: "stale"
+  //             });
+  //           }
+  //           else{
+  //             updateDoc(ref, {
+  //               outdate: "pending"
+  //           });
+  //           }
+  //         }
+  //         props.update();
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     alert("要登入才能按讚ㄛ!")
+  //     router.push('/login');
+  //   }
+  // }
 
 
 
@@ -508,7 +508,7 @@ const denounce = async function(report){
                 : ""}
             </div>
             
-            <IconButton
+            {/* <IconButton
                 style={{  }}
                 aria-label="heart"
                 size="medium"
@@ -518,15 +518,15 @@ const denounce = async function(report){
                 }}
               >
             <LiveHelpIcon/>
-            </IconButton>
+            </IconButton> */}
 
-            <Typography
+            {/* <Typography
                 style={{ position: "relative", bottom: 110, left: 340 }}
                 variant="body2"
                 color="text.secondary"
               >
                 {outdateCount ? count : 0}
-              </Typography>
+              </Typography> */}
 
             {comments.map((comment)=>renderComment(comment))}
             {/* <Comment article={props.article} /> */}

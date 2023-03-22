@@ -120,6 +120,12 @@ function ResponsiveAppBar() {
     router.push("/");
   };
 
+  //profile
+  const profile = async function () {
+    const auth = getAuth();
+    router.push("/profile");
+  };
+
   //確認是否logged
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -192,6 +198,11 @@ function ResponsiveAppBar() {
             </MenuItem>
 
           ))}
+          <MenuItem>
+            <Typography  onClick={profile}>
+                我的角色
+            </Typography>
+          </MenuItem>
           <MenuItem>
             <Typography onClick={logout}>
               登出

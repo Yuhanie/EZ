@@ -208,7 +208,14 @@ const denounce = async function(report){
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         if(report=="stale"){
-          alert("stale")
+          if((docSnap.data().outdate)=="stale"){
+            await updateDoc(doc(db,"text",props.article.docId),{
+              outdate:"stale"
+              
+        });
+          }
+          else{
+          // alert("stale")
           try {
             setIsLoading(true);
                 await updateDoc(doc(db,"text",props.article.docId),{
@@ -221,6 +228,7 @@ const denounce = async function(report){
           catch (error) {
             // console.log(error);
           }
+        }
       }
       else{
         await setDoc(doc(db, "text", props.article.docId, "denounce", user.uid), {

@@ -4,8 +4,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
-import { collection, getDocs, query } from "firebase/firestore";
-import { orderBy, limit, where } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 
 import { Profile, Bookmark } from 'interfaces/entities';
 //mui
@@ -107,7 +106,7 @@ const Profile = () => {
   const theme = useTheme();
   const [tags, setTags] = React.useState<string[]>([]);
   const [profile, setProfile] = useState<Profile>();
-  const [bookmark, setBookmark] = useState<Bookmark[]>([]);
+  // const [bookmark, setBookmark] = useState<Bookmark[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof tags>) => {
     const {
@@ -143,22 +142,15 @@ const Profile = () => {
         };
       }
 
-      if(currentUser){
-        const querySnapshot2 = await getDocs(query(collection(db, "text"), where("bookmark", "==", currentUser.uid)));
-        const temp: Bookmark[] = [];
-        querySnapshot2.forEach(async (doc) => {
-        console.log(doc.id);
-        //console.log("tag2:",tag)
-        // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
-        // querySnapshot2.forEach(async (doc2) => {
-        //   console.log(doc2.id);
-        //   console.log(doc2.data());
-        //   temp2.push({docId: doc.id,name:doc2.data().name}); 
-        // });
-        console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
-      });
-      }
+      // if(currentUser){
+      //   const querySnapshot2 = await getDocs(query(collection(db, "text"), where("bookmark", "==", currentUser.uid)));
+      //   const temp: Bookmark[] = [];
+      //   querySnapshot2.forEach(async (doc) => {
+      //   console.log(doc.id);
+      //   console.log(doc.data());
+      //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+      // });
+      // }
       readData();
 
       const unsub = onAuthStateChanged(auth, (user) => {
@@ -376,8 +368,8 @@ const Profile = () => {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ m: 2, width: 300 }}>
-                      {/* <Card sx={{ minWidth: 275 }}> */}
+                    {/* <Card sx={{ m: 2, width: 300 }}>
+                      <Card sx={{ minWidth: 275 }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           收藏文章
@@ -386,7 +378,7 @@ const Profile = () => {
 
                         </Stack>
                       </CardContent>
-                    </Card>
+                    </Card> */}
                   </Grid>
                 </Grid>
 

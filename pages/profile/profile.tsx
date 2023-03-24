@@ -164,6 +164,7 @@ const Profile = () => {
         unsub();
       }
     }
+    readData();
   });
 
 
@@ -194,12 +195,12 @@ const Profile = () => {
                 <Typography fontSize={20}>個人資料</Typography>
 
                 <Box>
-                  <IconButton aria-label="edit" size="small">
+                  <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
                     <EditIcon
                       style={{
                         color: "#7A82E7",
                       }}
-                      onClick={handleClickOpen}
+
                     />
                   </IconButton>
                   <Dialog open={open} onClose={handleClose}>

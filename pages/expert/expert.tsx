@@ -18,7 +18,7 @@ import { useRouter } from "next/router"
 // import Navbar3 from "../components/navbar/Navbar3";
 
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, where } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
@@ -135,17 +135,17 @@ const Home: NextPage = () => {
     async function readData() {
 
 
-      setIsLoading(true);
-      const examCollection = collection(db, "text");
-      const queryExam = query(examCollection, orderBy("timestamp", "desc"), limit(3));
-      const querySnapnewtext = await getDocs(queryExam);
-      const temp2: Article[] = [];
-      querySnapnewtext.forEach((doc) => {
-        temp2.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      // setIsLoading(true);
+      // const examCollection = collection(db, "text");
+      // const queryExam = query(examCollection, where("reason", "==", reason));
+      // const querySnapnewtext = await getDocs(queryExam);
+      // const temp2: Article[] = [];
+      // querySnapnewtext.forEach((doc) => {
+      //   temp2.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-        console.log(`newtext ${doc.id} => ${doc.data()}`);
-      });
-      setNewTexts([...temp2]);
+      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
+      // });
+      // setNewTexts([...temp2]);
 
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "tag"));

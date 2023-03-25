@@ -80,6 +80,8 @@ const ArticleDetails = (props) => {
   const [expertOutdate, setExpertOutdate]=useState("");
   const [open, setOpen] = useState(false);
   const [report, setReport]=useState("");
+  const [denounce, setDenounce]=useState("");
+  const [reportCount, setReportCount]=useState("");
 
   useEffect(() => {
   const unsub = onAuthStateChanged(auth, async (user) => {
@@ -87,33 +89,52 @@ const ArticleDetails = (props) => {
     if(user) {
       const ref = doc(db, "profile", user.uid);
       const docSnap = await getDoc(ref);
+
+      // const refReport = collection(db,"text",props.article.docId,"denounce");
+      // const docSnapReport = await getDoc(refReport);
       if ((docSnap.exists()&&docSnap.data().character==="專家")) {
       setCharacter("專家")
       }
-      if (props.article.outdateCount && props.article.outdateCount.includes(user.uid)) {
-        setOutdated(true)
-        console.log(props.article.title+'outdated');
-      }
+      // if (docSnapReport.exists()) {
+      //   setOutdated(true)
+      //   console.log(props.article.title+'outdated');
+      // }
       else {
         setOutdated(false)
         console.log('article:',props.article);
         console.log('outdateCount:',props.article.outdateCount);
-      }
+      }      
     }
-
-    
-
     console.log("user", user);
   });
-
   return () => {
     unsub();
   };
 }
 ,[props.article]);
+
   useEffect(() => {
     async function fetchData() {
 
+
+      // const querySnapshotDenounce = collection(
+      //   db,
+      //   "text",
+      //   props.article.docId,
+      //   "denounce"
+      // );
+      // const queryReport = query(querySnapshotDenounce);
+      // const querySnapshotReport = await getDocs(queryReport);
+      // const tempReport = [];
+      // querySnapshotReport.forEach((doc) => {
+      //   let count = value => reason.filter(reason => status == value).length;
+      //   tempReport.push(count);
+      //   console.log("data:", data)
+      // });
+      // setDenounce(() => [...tempReport]);
+
+
+      
       console.log("docId:",props.article);
       const querySnapshot = collection(
         db,
@@ -200,7 +221,7 @@ const outdate = async function(){
 
 
 
-const denounce = async function(report){
+const Denounce = async function(report){
   console.log("report",report)
   if (typeof window !== "undefined") {
     if (user) {
@@ -450,7 +471,7 @@ const denounce = async function(report){
             </Select>
       </FormControl>
 
-        <Button color="secondary" variant="contained" onClick={()=>denounce(report)}>
+        <Button color="secondary" variant="contained" onClick={()=>Denounce(report)}>
           檢舉
         </Button>
 {/*        

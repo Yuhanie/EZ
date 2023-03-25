@@ -215,12 +215,12 @@ const Home: NextPage = () => {
 
   };
 
-  const renderTag = (tag: Tag, i: number) => {
-    return (
-      <TagList key={tag.name} tag={tag}></TagList>
-    );
+  // const renderTag = (tag: Tag, i: number) => {
+  //   return (
+  //     <TagList key={tag.name} tag={tag}></TagList>
+  //   );
 
-  };
+  // };
 
   const [value, setValue] = React.useState(0);
 
@@ -257,7 +257,7 @@ const Home: NextPage = () => {
               allowScrollButtonsMobile
               aria-label="scrollable force tabs example"
             >
-              {tag.map(renderTag)}
+              {/* {tag.map(renderTag)} */}
 
             </Tabs>
             : <CircularProgress />
@@ -276,7 +276,7 @@ const Home: NextPage = () => {
             
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
-            <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
+            <Button variant="contained" color="secondary" onClick={changeStatus}>查看更多</Button>
           </Box>
           <Box
             display="flex"
@@ -300,6 +300,7 @@ const Home: NextPage = () => {
             sx={{color: 'Crimson'}}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
+            <Button variant="contained" color="secondary" onClick={changeStatus}>查看更多</Button>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box

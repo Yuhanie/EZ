@@ -25,7 +25,7 @@ import ReactDOM from "react-dom";
 import {  createTheme} from "@mui/material/styles";
 import ArticleListItem from '../../components/article/ArticleListItem';
 import TagList from '../../components/tag/TagList';
-import { Article, Newtext, Tag } from '../../interfaces/entities';
+import { Article, Newtext, Tag, Denounce } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../../components/navbar/Navbar";
@@ -121,10 +121,10 @@ const settings = {
 const Home: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [tag, setTag] = useState<Tag[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [newTexts, setNewTexts] = useState<any[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [denounces, setDenounces] = useState<Article[]>([]);
   const [updated, setUpdated] = useState(0);
+  const [pending, setPending] = useState<Article[]>([]);
   const router = useRouter();
   
   const updateUpdated = ()=>{
@@ -135,17 +135,15 @@ const Home: NextPage = () => {
     async function readData() {
 
 
-      // setIsLoading(true);
-      // const examCollection = collection(db, "text");
-      // const queryExam = query(examCollection, where("reason", "==", reason));
-      // const querySnapnewtext = await getDocs(queryExam);
-      // const temp2: Article[] = [];
-      // querySnapnewtext.forEach((doc) => {
-      //   temp2.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      setIsLoading(true);
+      const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
+      const tempStale: Article[] = [];
+      queryExam.forEach((doc) => {
+        tempStale.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
-      // });
-      // setNewTexts([...temp2]);
+        console.log(`newtext ${doc.id} => ${doc.data()}`);
+      });
+      setDenounces([...tempStale]);
 
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "tag"));
@@ -155,16 +153,16 @@ const Home: NextPage = () => {
 
       });
       setTag([...temp]);
-      const textCollection = collection(db, "text");
-      const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
-      const querySnapshotArticle = await getDocs(queryText);
-      const tempArticle: Article[] = [];
-      querySnapshotArticle.forEach((doc) => {
-        tempArticle.push({
-          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate
-   });
+
+      setIsLoading(true);
+      const queryPending = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
+      const tempPending: Article[] = [];
+      queryPending.forEach((doc) => {
+        tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+
+        console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
-      setArticles([...tempArticle]);
+      setPending([...tempPending]);
 
       const auth = getAuth();
       const unsub = onAuthStateChanged(auth, (user) => {
@@ -203,17 +201,16 @@ const Home: NextPage = () => {
     }
   }
 
-
-  const renderText = (article: Article, i: number) => {
+  const renderStale = (denounces: Article, i: number) => {
     return (
-      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
+      <ArticleListItem key={denounces.docId} article={denounces} update={updateUpdated}></ArticleListItem>
     );
 
   };
 
-  const renderNewText = (newTexts: Article, i: number) => {
+  const renderPending = (pending: Article, i: number) => {
     return (
-      <ArticleListItem key={newTexts.docId} article={newTexts} update={updateUpdated}></ArticleListItem>
+      <ArticleListItem key={pending.docId} article={pending} update={updateUpdated}></ArticleListItem>
     );
 
   };
@@ -287,7 +284,7 @@ const Home: NextPage = () => {
           >
             {!isLoading ?
               <div className={styles.grid}>
-                {articles.map(renderText)}
+                {pending&&pending.map(renderPending)}
               </div>
               : <CircularProgress />
             }
@@ -311,7 +308,7 @@ const Home: NextPage = () => {
           >
             {!isLoading ? 
               <div className={styles.grid}>
-                {newTexts&&newTexts.map(renderNewText)}
+                {denounces&&denounces.map(renderStale)}
               </div>
               : <CircularProgress />
             }

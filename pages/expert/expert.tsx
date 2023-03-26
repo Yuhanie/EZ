@@ -18,7 +18,7 @@ import { useRouter } from "next/router"
 // import Navbar3 from "../components/navbar/Navbar3";
 
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, where, doc, getDoc } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
@@ -125,6 +125,10 @@ const Home: NextPage = () => {
   const [denounces, setDenounces] = useState<Article[]>([]);
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
+  const [processing, setProcessing] = useState<Article[]>([]);
+  const [morePending, setMorePending] = useState<Article[]>([]);
+  const [moreStale, setMoreStale] = useState<Article[]>([]);
+  const [open, setOpen] =useState<boolean>(false);
   const router = useRouter();
   
   const updateUpdated = ()=>{
@@ -201,6 +205,55 @@ const Home: NextPage = () => {
     }
   }
 
+  const more = async function () {
+    if (typeof window !== "undefined") {
+      if (currentUser) {
+        if(processing==morePending){
+          // handleOpen;
+        }
+        else{
+          // handleClose;
+        }
+        if(processing==moreStale){
+          // handleOpen;
+        }
+        else{
+          // handleClose;
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+
+  // const MorePending = (id) => {
+  //   return (
+  //     <div>
+  //       <Button color="secondary" variant="contained" onClick={()=>update(id)}>
+  //         修改
+  //       </Button>
+  //       <Button color="secondary" variant="contained" onClick={deleteData}>
+  //         刪除
+  //       </Button>
+  //     </div>
+  //   );
+  // };
+
+  // const MoreStale = (id) => {
+  //   return (
+  //     <div>
+  //       <Button color="secondary" variant="contained" onClick={()=>update(id)}>
+  //         修改
+  //       </Button>
+  //       <Button color="secondary" variant="contained" onClick={deleteData}>
+  //         刪除
+  //       </Button>
+  //     </div>
+  //   );
+  // };
+
+
   const renderStale = (denounces: Article, i: number) => {
     return (
       <ArticleListItem key={denounces.docId} article={denounces} update={updateUpdated}></ArticleListItem>
@@ -276,7 +329,7 @@ const Home: NextPage = () => {
             
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
-            <Button variant="contained" color="secondary" onClick={changeStatus}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(morePending)}}>查看更多</Button>
           </Box>
           <Box
             display="flex"
@@ -300,7 +353,7 @@ const Home: NextPage = () => {
             sx={{color: 'Crimson'}}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
-            <Button variant="contained" color="secondary" onClick={changeStatus}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(moreStale)}}>查看更多</Button>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box

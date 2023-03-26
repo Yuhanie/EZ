@@ -73,47 +73,47 @@ const ArticleDetails = (props) => {
   const [user, setUser] = useState();
   const [outdated, setOutdated] = useState(false);
   const [deleted, setDeleted] = useState(0);
-  const [count, setCount] = useState(props.article.outdateCount?props.article.outdateCount.length:0);
+  const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
-  const [character, setCharacter]=useState("");
-  const [expertOutdate, setExpertOutdate]=useState("");
+  const [character, setCharacter] = useState("");
+  const [expertOutdate, setExpertOutdate] = useState("");
   const [open, setOpen] = useState(false);
-  const [report, setReport]=useState("");
-  const [denounce, setDenounce]=useState("");
-  const [reportCount, setReportCount]=useState("");
+  const [report, setReport] = useState("");
+  const [denounce, setDenounce] = useState("");
+  const [reportCount, setReportCount] = useState("");
 
 
-  
+
   useEffect(() => {
-  const unsub = onAuthStateChanged(auth, async (user) => {
-    setUser(user);
-    if(user) {
-      const ref = doc(db, "profile", user.uid);
-      const docSnap = await getDoc(ref);
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      setUser(user);
+      if (user) {
+        const ref = doc(db, "profile", user.uid);
+        const docSnap = await getDoc(ref);
 
-      // const refReport = collection(db,"text",props.article.docId,"denounce");
-      // const docSnapReport = await getDoc(refReport);
-      if ((docSnap.exists()&&docSnap.data().character==="專家")) {
-      setCharacter("專家")
+        // const refReport = collection(db,"text",props.article.docId,"denounce");
+        // const docSnapReport = await getDoc(refReport);
+        if ((docSnap.exists() && docSnap.data().character === "專家")) {
+          setCharacter("專家")
+        }
+        // if (docSnapReport.exists()) {
+        //   setOutdated(true)
+        //   console.log(props.article.title+'outdated');
+        // }
+        else {
+          setOutdated(false)
+          console.log('article:', props.article);
+          console.log('outdateCount:', props.article.outdateCount);
+        }
       }
-      // if (docSnapReport.exists()) {
-      //   setOutdated(true)
-      //   console.log(props.article.title+'outdated');
-      // }
-      else {
-        setOutdated(false)
-        console.log('article:',props.article);
-        console.log('outdateCount:',props.article.outdateCount);
-      }      
-    }
-    console.log("user", user);
-  });
-  return () => {
-    unsub();
-  };
-}
-,[props.article]);
+      console.log("user", user);
+    });
+    return () => {
+      unsub();
+    };
+  }
+    , [props.article]);
 
   useEffect(() => {
     async function fetchData() {
@@ -136,8 +136,8 @@ const ArticleDetails = (props) => {
       // setDenounce(() => [...tempReport]);
 
 
-      
-      console.log("docId:",props.article);
+
+      console.log("docId:", props.article);
       const querySnapshot = collection(
         db,
         "text",
@@ -171,80 +171,38 @@ const ArticleDetails = (props) => {
   };
 
 
-const update = (id) => {
-  router.push('/Newpost?articleId='+id);
-}
-
-
-
-
-const reportHandleOpen = () => {
-  setOpen(true);
-};
-
-const reportHandleClose = () => {
-  setOpen(false);
-};
-
-
-
-
-
-const outdate = async function(){
-  if (typeof window !== "undefined") {
-    if (user) {
-      const ref = doc(db, "text", props.article.docId);
-      const docSnap = await getDoc(ref);
-      if (docSnap.exists()) {
-          try {
-            setIsLoading(true);
-            
-                 await updateDoc(doc(db,"text",props.article.docId),{
-                outdate:expertOutdate
-                
-          });
-            setIsLoading(false);
-            props.update();
-          }
-          catch (error) {
-            // console.log(error);
-          }
-      }
-      
-  //     if((docSnap.data().outdate)=="solved"){
-  //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
-  //       setDeleted(deleted + 1);
-  // }
-    }
-  } else {
-    alert("請登入");
+  const update = (id) => {
+    router.push('/Newpost?articleId=' + id);
   }
-};
 
 
 
-const Denounce = async function(report){
-  console.log("report",report)
-  if (typeof window !== "undefined") {
-    if (user) {
-      const ref = doc(db, "text", props.article.docId);
-      const docSnap = await getDoc(ref);
-      if (docSnap.exists()) {
-        if(report=="stale"){
-          if((docSnap.data().outdate)=="stale"){
-            await updateDoc(doc(db,"text",props.article.docId),{
-              outdate:"stale"
-              
-        });
-          }
-          else{
-          // alert("stale")
+
+  const reportHandleOpen = () => {
+    setOpen(true);
+  };
+
+  const reportHandleClose = () => {
+    setOpen(false);
+  };
+
+
+
+
+
+  const outdate = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
           try {
             setIsLoading(true);
-                await updateDoc(doc(db,"text",props.article.docId),{
-                outdate:"pending"
-                
-          });
+
+            await updateDoc(doc(db, "text", props.article.docId), {
+              outdate: expertOutdate
+
+            });
             setIsLoading(false);
             props.update();
           }
@@ -252,23 +210,65 @@ const Denounce = async function(report){
             // console.log(error);
           }
         }
+
+        //     if((docSnap.data().outdate)=="solved"){
+        //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+        //       setDeleted(deleted + 1);
+        // }
       }
-      else{
-        await setDoc(doc(db, "text", props.article.docId, "denounce", user.uid), {
-          reason:report
-        });
-      }
-      }
-      
-  //     if((docSnap.data().outdate)=="solved"){
-  //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
-  //       setDeleted(deleted + 1);
-  // }
+    } else {
+      alert("請登入");
     }
-  } else {
-    alert("請登入");
-  }
-};
+  };
+
+
+
+  const Denounce = async function (report) {
+    console.log("report", report)
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (report == "stale") {
+            if ((docSnap.data().outdate) == "stale") {
+              await updateDoc(doc(db, "text", props.article.docId), {
+                outdate: "stale"
+
+              });
+            }
+            else {
+              // alert("stale")
+              try {
+                setIsLoading(true);
+                await updateDoc(doc(db, "text", props.article.docId), {
+                  outdate: "pending"
+
+                });
+                setIsLoading(false);
+                props.update();
+              }
+              catch (error) {
+                // console.log(error);
+              }
+            }
+          }
+          else {
+            await setDoc(doc(db, "text", props.article.docId, "denounce", user.uid), {
+              reason: report
+            });
+          }
+        }
+
+        //     if((docSnap.data().outdate)=="solved"){
+        //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+        //       setDeleted(deleted + 1);
+        // }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
 
 
 
@@ -355,7 +355,7 @@ const Denounce = async function(report){
           content,
           userid: user.uid,
           timestamp: serverTimestamp(),
-          heart:[],
+          heart: [],
           user: user.displayName,
         });
         setContent("");
@@ -364,8 +364,6 @@ const Denounce = async function(report){
         //router.push('/');
       }
     }
-
-
   }
 
 
@@ -404,25 +402,47 @@ const Denounce = async function(report){
 
 
   const expert = () => {
-    return(
+    return (
       <>
-      <FormControl sx={{width:110}}>
-       <InputLabel id="demo-simple-select-label">過時與否</InputLabel>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          sx={{
+            p: 2,
+            m: 1,
+            bgcolor: "#fafafa",
+            borderRadius: 2,
+            spacing: 2,
+
+          }}>
+          <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有幫助到你嗎？</Typography>
+          <FormControl sx={{ width: 140 }} size="small">
+            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
             <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                // value={topicName}
-                // label="topic"
-                onChange={(e) => {setExpertOutdate(e.target.value); 
-               }} 
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              // value={topicName}
+              // label="topic"
+              onChange={(e) => {
+                setExpertOutdate(e.target.value);
+              }}
+              sx={{ m: 1, }}
             >
-                <MenuItem value="stale">過時或無法使用</MenuItem>
-                <MenuItem value="solved">沒問題</MenuItem>
+              <MenuItem value="solved">有</MenuItem>
+              <MenuItem value="stale">過時或無法使用</MenuItem>
+
             </Select>
-      </FormControl><br/>
-            <Button color="secondary" variant="contained" onClick={()=>outdate(expertOutdate)}>
-          送出
-        </Button>
+          </FormControl><br />
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={() => outdate(expertOutdate)}
+            size="small"
+            sx={{ m: 1, height: 35 }}
+          >
+            送出
+          </Button>
+        </Box>
       </>
     );
   };
@@ -430,10 +450,10 @@ const Denounce = async function(report){
   const outdateIcon = () => {
     return (
       <div>
-        {props.article.outdate==="stale"&&<WarningIcon sx={{color:"Crimson"}}/>}
-        {props.article.outdate==="pending"&&<NotificationImportantIcon sx={{color:"Gold"}}/>}
-        {props.article.outdate==="solved"&&
-        <CheckCircleIcon sx={{color:"Green"}}/>}
+        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} />}
+        {props.article.outdate === "pending" && <NotificationImportantIcon sx={{ color: "Gold" }} />}
+        {props.article.outdate === "solved" &&
+          <CheckCircleIcon sx={{ color: "Green" }} />}
       </div>
     );
   };
@@ -441,7 +461,7 @@ const Denounce = async function(report){
   const Update = (id) => {
     return (
       <div>
-        <Button color="secondary" variant="contained" onClick={()=>update(id)}>
+        <Button color="secondary" variant="contained" onClick={() => update(id)}>
           修改
         </Button>
         <Button color="secondary" variant="contained" onClick={deleteData}>
@@ -455,32 +475,33 @@ const Denounce = async function(report){
     return (
       <div>
 
-        <FormControl sx={{width:110}}>
+        <FormControl sx={{ width: 110 }}>
           <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                // value={topicName}
-                // label="topic"
-                onChange={(e) => {setReport(e.target.value); 
-               }} 
-            >
-                <MenuItem value="stale">過時或無法使用</MenuItem>
-                <MenuItem value="empty">內容空泛</MenuItem>
-                <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
-                <MenuItem value="spamming">惡意洗版</MenuItem>
-                <MenuItem value="tagerror">文章分類錯誤</MenuItem>
-            </Select>
-      </FormControl>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            // value={topicName}
+            // label="topic"
+            onChange={(e) => {
+              setReport(e.target.value);
+            }}
+          >
+            <MenuItem value="stale">過時或無法使用</MenuItem>
+            <MenuItem value="empty">內容空泛</MenuItem>
+            <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+            <MenuItem value="spamming">惡意洗版</MenuItem>
+            <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+          </Select>
+        </FormControl>
 
-        <Button color="secondary" variant="contained" onClick={()=>Denounce(report)}>
+        <Button color="secondary" variant="contained" onClick={() => Denounce(report)}>
           檢舉
         </Button>
-{/*        
+        {/*        
           <Button color="secondary" variant="contained" onClick={()=>report(id)}>
             檢舉
           </Button> */}
-       
+
       </div>
     );
   };
@@ -488,13 +509,13 @@ const Denounce = async function(report){
   const renderComment = (comment, i) => {
     return (
       <div key={comment.content}>
-      {comment &&
-      <div  style={{ padding: 14 }} className="App">
-        
-        <Comment edited={edited} setEdited={setEdited} article={props.article} comment={comment}/>
-  
-      </div>
-  }
+        {comment &&
+          <div style={{ padding: 14 }} className="App">
+
+            <Comment edited={edited} setEdited={setEdited} article={props.article} comment={comment} />
+
+          </div>
+        }
       </div>
     );
   };
@@ -503,30 +524,34 @@ const Denounce = async function(report){
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle>
-        {outdateIcon()}
-          <a href={props.article.link}>{props.article.title}</a>
+          <Box display="flex" justifyContent="space-between">
+            <Box display="flex">
+              {outdateIcon()}<a href={props.article.link}>{props.article.title}</a>
+            </Box>
+            <Box display="flex">
+              <VI />
+              <Typography variant="body2" sx={{ml:1,pt:0.3}}>{props.article.count}</Typography>
+            </Box>
+          </Box>
 
-          <Stack>
-              <VI/>
-            {props.article.count}
 
-          </Stack>
         </DialogTitle>
 
         <DialogContent>
           <Stack spacing={1}>
             {/* {props.article.content} */}
-            <div className={styles.card3}>
-              <a href={props.article.link}>
-                {props.article.content.substring(0, 165)}
-                {props.article.content.length > 165 ? "..." : ""}
-              </a>
-            </div>
+            {/* <div className={styles.card3}> */}
+            <a href={props.article.link}>
+              {props.article.content.substring(0, 165)}
+              {props.article.content.length > 165 ? "..." : ""}
+            </a>
+            {/* </div> */}
           </Stack>
-          {character==="專家"&&expert()}
+
+          {character === "專家" && expert()}
 
           <div style={{ padding: 14 }} className="App">
-            {props.article.outdate ==='stale' && (
+            {props.article.outdate === 'stale' && (
               <h2>
                 <Image alt="版本疑慮" src={warning} />
                 版本疑慮
@@ -534,11 +559,11 @@ const Denounce = async function(report){
             )}
 
             <div className={styles.yu}>
-              {props.article.outdate ==='stale'
+              {props.article.outdate === 'stale'
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
-            
+
             {/* <IconButton
                 style={{  }}
                 aria-label="heart"
@@ -559,24 +584,29 @@ const Denounce = async function(report){
                 {outdateCount ? count : 0}
               </Typography> */}
 
-            {comments.map((comment)=>renderComment(comment))}
+            {comments.map((comment) => renderComment(comment))}
             {/* <Comment article={props.article} /> */}
           </div>
-          {user && user.displayName}
-          <OutlinedInput
-          value={content}
-            onChange={(e) => setContent(e.target.value)}
-            sx={{ padding: 1, margin: 5 , left: -20 , top: -1 , borderRadius: 12 , width: 340 , height: 35}}
-            placeholder='我要留言...'
-            // onClick={onSubmit}
-          />
-          <Button
-            size="small"
-            variant="contained"
-            endIcon={<SendIcon />}
-            onClick={onSubmit}
-            sx={{ padding: 0, margin: 1 ,right: -425 ,  top: -84 , borderRadius: 5 , width: 2 , height: 35}}
-          ></Button>
+          <Box display="flex" justifyContent="space-between">
+            {user && user.displayName}
+            <OutlinedInput
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              sx={{ ml: 2, borderRadius: 12, height: 35 }}
+              //sx={{ padding: 1, margin: 5, left: -20, top: -1, borderRadius: 12, width: 340, height: 35 }}
+              placeholder='我要留言...'
+              // onClick={onSubmit}
+              fullWidth
+            />
+            <Button
+              size="small"
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={onSubmit}
+              sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
+            // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
+            ></Button>
+          </Box>
         </DialogContent>
 
         <DialogActions>
@@ -585,13 +615,13 @@ const Denounce = async function(report){
           {/* {props.article.userid} */}
 
           {user && Report()}
-          {}
+          { }
           {/* <Button color="primary" variant="contained" onClick={handleClose}>
             關閉
           </Button> */}
         </DialogActions>
       </Dialog>
-    </div>
+    </div >
   );
 };
 

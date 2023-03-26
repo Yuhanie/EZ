@@ -83,6 +83,8 @@ const ArticleDetails = (props) => {
   const [denounce, setDenounce]=useState("");
   const [reportCount, setReportCount]=useState("");
 
+
+  
   useEffect(() => {
   const unsub = onAuthStateChanged(auth, async (user) => {
     setUser(user);

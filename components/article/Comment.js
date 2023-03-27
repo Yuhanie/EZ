@@ -87,6 +87,11 @@ const Comment = (props) => {
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
+  
+
+
+
+
   useEffect(() => {
     async function fetchData() {
       console.log("comment:", props.comment);

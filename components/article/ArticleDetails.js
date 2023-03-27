@@ -84,6 +84,23 @@ const ArticleDetails = (props) => {
   const [denounce, setDenounce] = useState("");
   const [reportCount, setReportCount] = useState("");
 
+  const [toolopen, setToolOpen] = React.useState(false);
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(Number(event.target.value) || '');
+  };
+
+  const handleToolClickOpen = () => {
+    setToolOpen(true);
+  };
+
+  const handleToolClose = (event, reason) => {
+    if (reason !== 'backdropClick') {
+      setToolOpen(false);
+    }
+  };
+
 
 
   useEffect(() => {
@@ -535,6 +552,7 @@ const ArticleDetails = (props) => {
               <Typography variant="body2" sx={{ml:1,pt:0.3}}>{props.article.count}</Typography>
             </Box>
           </Box>
+          <Button onClick={handleToolClickOpen}>Open select dialog</Button>
         </DialogTitle>
 
         <DialogContent>

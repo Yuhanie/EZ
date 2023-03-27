@@ -47,6 +47,7 @@ import {
   Avatar,
   Grid,
   Paper,
+  Box,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
 // const docRef = doc(db, "English", "1");
@@ -89,7 +90,7 @@ const Comment = (props) => {
   useEffect(() => {
     async function fetchData() {
       console.log("comment:", props.comment);
-      
+
 
 
       // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
@@ -113,7 +114,7 @@ const Comment = (props) => {
       //setComment(() => {{...props.comment}});
     }
     fetchData();
-    
+
 
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -150,7 +151,7 @@ const Comment = (props) => {
   //         content,
   //         userid: user.uid,
   //         timestamp: serverTimestamp(),
-          
+
   //         user: user.displayName,
   //         heart:[],
   //         //user,
@@ -236,12 +237,12 @@ const Comment = (props) => {
               setIsLoading(false);
               alert("刪除成功");
               props.setEdited(props.edited + 1);
-              
-              
+
+
             } catch (error) {
               console.log(error);
             }
-            
+
           } else {
             alert("不是你的留言ㄚ");
           }
@@ -256,112 +257,116 @@ const Comment = (props) => {
 
 
 
-    const heart = async function (id) {
-      if (typeof window !== "undefined") {
-        if (user) {
+  const heart = async function (id) {
+    if (typeof window !== "undefined") {
+      if (user) {
 
-          const ref = doc(db, "text", props.article.docId, "comment", id);
-          const docSnap = await getDoc(ref);
-          if ((docSnap.exists())) {
-            // console.log(docSnap.data())
-            if (docSnap.data().heart.includes(user.uid)) {
-              // alert('remove')
-              updateDoc(ref, {
-                heart: arrayRemove(user.uid)
-              });
-              setLiked(false)
-              setCount(count - 1)
-            } else {
-              // alert('added')
-              updateDoc(ref, {
-                heart: arrayUnion(user.uid)
+        const ref = doc(db, "text", props.article.docId, "comment", id);
+        const docSnap = await getDoc(ref);
+        if ((docSnap.exists())) {
+          // console.log(docSnap.data())
+          if (docSnap.data().heart.includes(user.uid)) {
+            // alert('remove')
+            updateDoc(ref, {
+              heart: arrayRemove(user.uid)
+            });
+            setLiked(false)
+            setCount(count - 1)
+          } else {
+            // alert('added')
+            updateDoc(ref, {
+              heart: arrayUnion(user.uid)
 
-              });
-              setLiked(true)
-              setCount(count + 1)
+            });
+            setLiked(true)
+            setCount(count + 1)
 
-            }
           }
         }
       }
-      else {
-        alert("要登入才能按讚ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
-        router.push('/login');
-      }
     }
+    else {
+      alert("要登入才能按讚ㄛ!")
+      //window.alert("要登入才能新增筆記ㄛ!");
+
+      // <Alert action={
+      //   <Button >
+      //     UNDO
+      //   </Button>
+      // }>要登入才能新增筆記ㄛ! </Alert>
+
+      router.push('/login');
+    }
+  }
 
 
-    const commentDelete = (comment) => {
-      return(
-        <>
-          <IconButton
-                style={{ textAlign: "left", left: 300, bottom: 80 }}
-                aria-label="heart"
-                size="medium"
-                onClick={()=>deleteComment(comment.id)}
-              >
-                <RestoreFromTrashIcon />
-              </IconButton>
-        </>
-      )
+  const commentDelete = (comment) => {
+    return (
+      <>
+        <IconButton
+          //style={{ textAlign: "left", left: 300, bottom: 80 }}
+          aria-label="heart"
+          size="small"
+          onClick={() => deleteComment(comment.id)}
+        >
+          <RestoreFromTrashIcon />
+        </IconButton>
+      </>
+    )
 
-    };
-    const usual = () => {
-      return(
-        <>
-        </>
-      )
-    };
+  };
+  const usual = () => {
+    return (
+      <>
+      </>
+    )
+  };
 
   const renderComment = (comment, i) => {
     return (
-      <div key={comment.content} style={{ padding: 14 }} className="App">
-        <Paper style={{ padding: "40px 20px" }}>
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar alt="Remy Sharp" />
-            </Grid>
-            <Grid justifyContent="left" item xs zeroMinWidth>
-              <p style={{ margin: 0, textAlign: "left" }}>{comment.user}</p>
-              <br />
-              <h4 style={{ textAlign: "left" }}>{comment.content}</h4>
-              <p style={{ textAlign: "left", color: "grey" }}>
+      <div key={comment.content} >
+        <Paper>
+          <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" >
+              <Box display="flex" flexDirection="row" alignItems="center">
+                <Avatar sx={{mr:2}} alt="Remy Sharp" />
+                <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
+              </Box>
+              <Box display="flex" alignItems="center">
+                <IconButton
+                  //style={{ textAlign: "left", left: 300, bottom: 80 }}
+                  aria-label="heart"
+                  size="small"
+                  onClick={() => heart(comment.id)}
+                  sx={
+                    liked ? { color: "error.main" } : { color: "text.disabled" }
+                  }
+                >
+                  <Heart />
+                </IconButton>
+                <Typography
+                  //style={{ position: "relative", bottom: 110, left: 340 }}
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {comment.heart ? count : 0}
+                </Typography>
+                {user && user.uid === comment.userid ? commentDelete(comment) : usual()}
+              </Box>
+            </Box>
+            <Box>
+              
+
+              <Typography variant="body2" sx={{m:2, textAlign: "left" }}>{comment.content}</Typography>
+              <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
                 {comment.timestamp &&
                   comment.timestamp.toDate().toLocaleString()}
-              </p>
-
-              <IconButton
-                style={{ textAlign: "left", left: 300, bottom: 80 }}
-                aria-label="heart"
-                size="medium"
-                onClick={()=>heart(comment.id)}
-                sx={
-                  liked ? { color: "error.main" } : { color: "text.disabled" }
-                }
-              >
-                <Heart />
-              </IconButton>
-              <Typography
-                style={{ position: "relative", bottom: 110, left: 340 }}
-                variant="body2"
-                color="text.secondary"
-              >
-                {comment.heart ? count : 0}
               </Typography>
-              {user && user.uid === comment.userid ? commentDelete(comment):usual()}
-              
-            </Grid>
-          </Grid>
+            </Box>
+
+          </Box>
         </Paper>
-      </div>
+      </div >
     );
   };
 

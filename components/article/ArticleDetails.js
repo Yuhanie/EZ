@@ -61,6 +61,7 @@ import {
   Paper,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -415,6 +416,7 @@ const ArticleDetails = (props) => {
             spacing: 2,
 
           }}>
+            <EmojiObjectsIcon sx={{mt:2}}/>
           <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有幫助到你嗎？</Typography>
           <FormControl sx={{ width: 140 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
@@ -450,7 +452,7 @@ const ArticleDetails = (props) => {
   const outdateIcon = () => {
     return (
       <div>
-        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} />}
+        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} /> }
         {props.article.outdate === "pending" && <NotificationImportantIcon sx={{ color: "Gold" }} />}
         {props.article.outdate === "solved" &&
           <CheckCircleIcon sx={{ color: "Green" }} />}
@@ -533,8 +535,6 @@ const ArticleDetails = (props) => {
               <Typography variant="body2" sx={{ml:1,pt:0.3}}>{props.article.count}</Typography>
             </Box>
           </Box>
-
-
         </DialogTitle>
 
         <DialogContent>

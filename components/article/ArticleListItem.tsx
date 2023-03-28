@@ -229,6 +229,9 @@ const ArticleListItem:
 
     }
 
+    const changeStatus = function () {
+      router.push('/introduction');
+    }
 
 
 
@@ -271,7 +274,7 @@ const ArticleListItem:
             </CardContent>
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
-            <Box>
+            <Box onClick={changeStatus}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="recipe"></Avatar>

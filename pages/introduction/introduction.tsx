@@ -101,6 +101,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 
 
 const Introduction = () => {
+   //const { articleId } = router.query;
     const [currentUser, setCurrentUser] = useState<User>();
     const [open, setOpen] = React.useState(false);
     const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -181,8 +182,8 @@ const Introduction = () => {
                                                 <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
                                             </Box>
                                             <Box>
-                                                <Typography pt={0.8} fontSize={25} >name</Typography>
-                                                <Typography fontSize={12}>email</Typography>
+                                                <Typography pt={0.8} fontSize={25} >{}</Typography>
+                                                <Typography fontSize={12}>{}</Typography>
 
                                             </Box>
                                         </Box>

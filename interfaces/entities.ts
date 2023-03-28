@@ -51,6 +51,12 @@ export type Comment = {
   // heart:string[];
 };
 
+export type Denounce = {
+  reason: string;
+  // heart:string[];
+};
+
+
 
 export type Tag = {
   name: string;

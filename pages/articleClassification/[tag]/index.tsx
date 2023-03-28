@@ -17,7 +17,7 @@ import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseConfig } from '../../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
-import Link from 'next/link';
+import Link from 'next/link'; 
 import ArticleDetails from '../../../components/post/ArticleDetails';
 import ArticleListItem from '../../../components/article/ArticleListItem';
 import MiniTags from '../../../components/miniTags/miniTags';

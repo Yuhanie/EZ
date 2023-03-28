@@ -32,8 +32,6 @@ import Navbar from "../components/navbar/Navbar";
 import SearchBar from "material-ui-search-bar";
 import navpic from '../public/pic/navpic.jpg';
 import nav from '../public/pic/nav.png';
-import yuhan from '../public/pic/yuhan.jpg';
-import snoopy from '../public/pic/snoopy.png';
 import ezlogo from '../public/pic/ezlogo.png';
 import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
 import Slider from "react-slick";

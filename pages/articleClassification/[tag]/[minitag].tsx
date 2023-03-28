@@ -23,7 +23,7 @@ import ArticleListItem from '../../../components/article/ArticleListItem';
 import MiniTags from '../../../components/miniTags/miniTags';
 import MiniTagList from '../../../components/miniTags/miniTagList';
 import TagList from '../../../components/tag/TagList';
-import { Article, Tag, miniTag } from '../../../interfaces/entities';
+import { Article, Tag, miniTag, BookMark } from '../../../interfaces/entities';
 // import { tags } from '../../interfaces/entities';
 
 import { query, orderBy, limit, where } from "firebase/firestore";
@@ -73,6 +73,7 @@ const Article = () => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
   const [updated, setUpdated] = useState(0);
+  const [bookmarks, setBookmarks] = useState<BookMark[]>([]);
 
   //console.log(props)
 
@@ -81,6 +82,7 @@ const Article = () => {
       setIsLoading(true);
       // console.log("minitag:", minitag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
+      const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
       // const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag), orderBy("order")));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
       // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
@@ -88,7 +90,14 @@ const Article = () => {
       const temp: Article[] = [];
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
+      const temp4: BookMark[] = [];
       querySnapshot.forEach(async (doc) => {
+        console.log(doc.id);
+        console.log(doc.data());
+        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      });
+
+      querySnapshot4.forEach(async (doc) => {
         console.log(doc.id);
         console.log(doc.data());
         temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -115,6 +124,7 @@ const Article = () => {
       setArticles([...temp]);
       setminiTags([...temp3]);
       setTags([...temp2]);
+      setBookmarks([...temp4]);
     }
 
     readData();
@@ -325,7 +335,7 @@ const Article = () => {
 
           {!isLoading ?
             <div className={styles.grid}>
-              {articles.map(renderText)}
+              {articles.map(renderText)} 
             </div>
             : <CircularProgress />
           }

@@ -6,7 +6,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 
-import { Profile, Bookmark } from 'interfaces/entities';
+import { Profile, BookMark } from 'interfaces/entities';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';

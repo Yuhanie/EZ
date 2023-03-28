@@ -75,7 +75,7 @@ export type Profile = {
   character: string;
 };
 
-export type Bookmark = {
+export type BookMark = {
   title: string;
   content: string;
   user:string;

@@ -19,6 +19,8 @@ import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -85,11 +87,6 @@ const ArticleDetails = (props) => {
   const [reportCount, setReportCount] = useState("");
 
   const [toolopen, setToolOpen] = React.useState(false);
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(Number(event.target.value) || '');
-  };
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -433,7 +430,7 @@ const ArticleDetails = (props) => {
             spacing: 2,
 
           }}>
-            <EmojiObjectsIcon sx={{mt:2}}/>
+          <EmojiObjectsIcon sx={{ mt: 2 }} />
           <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有幫助到你嗎？</Typography>
           <FormControl sx={{ width: 140 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
@@ -469,7 +466,7 @@ const ArticleDetails = (props) => {
   const outdateIcon = () => {
     return (
       <div>
-        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} /> }
+        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} />}
         {props.article.outdate === "pending" && <NotificationImportantIcon sx={{ color: "Gold" }} />}
         {props.article.outdate === "solved" &&
           <CheckCircleIcon sx={{ color: "Green" }} />}
@@ -513,7 +510,7 @@ const ArticleDetails = (props) => {
           </Select>
         </FormControl>
 
-        <Button color="secondary" variant="contained" onClick={() => Denounce(report)}>
+        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => Denounce(report)}>
           檢舉
         </Button>
         {/*        
@@ -543,16 +540,45 @@ const ArticleDetails = (props) => {
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle>
-          <Box display="flex" justifyContent="space-between">
-            <Box display="flex">
-              {outdateIcon()}<a href={props.article.link}>{props.article.title}</a>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box display="flex" alignItems="center">
+              {outdateIcon()}
+              <a href={props.article.link}>{props.article.title}</a>
             </Box>
-            <Box display="flex">
+            <Box display="flex" alignItems="center">
               <VI />
-              <Typography variant="body2" sx={{ml:1,pt:0.3}}>{props.article.count}</Typography>
+              <Typography variant="body2" sx={{ ml: 0.5 }}>{props.article.count}</Typography>
+
+              <Box>
+                <IconButton onClick={handleToolClickOpen} sx={{ ml: 0.5 }}><MoreHorizIcon /></IconButton>
+                <Dialog open={toolopen} onClose={handleToolClose}>
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
+                    <IconButton onClick={handleToolClose}><CloseIcon /></IconButton>
+                  </Box>
+                  <Divider />
+                  <DialogContent>
+                    <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                      <FormControl sx={{ m: 1, minWidth: 120 }}>
+
+                        {user && user.uid === props.article.userid && Update(props.article.docId)}
+                        {/* {user.uid}/{props.article.userid} */}
+                        {/* {props.article.userid} */}
+
+                        {user && Report()}
+                        { }
+                        {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
+
+                      </FormControl>
+                    </Box>
+                  </DialogContent>
+                </Dialog>
+              </Box>
             </Box>
+
           </Box>
-          <Button onClick={handleToolClickOpen}>Open select dialog</Button>
+
+
         </DialogTitle>
 
         <DialogContent>
@@ -627,17 +653,8 @@ const ArticleDetails = (props) => {
           </Box>
         </DialogContent>
 
-        <DialogActions>
-          {user && user.uid === props.article.userid && Update(props.article.docId)}
-          {/* {user.uid}/{props.article.userid} */}
-          {/* {props.article.userid} */}
-
-          {user && Report()}
-          { }
-          {/* <Button color="primary" variant="contained" onClick={handleClose}>
-            關閉
-          </Button> */}
-        </DialogActions>
+        
+         
       </Dialog>
     </div >
   );

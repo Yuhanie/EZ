@@ -141,16 +141,6 @@ const Profile = () => {
           setProfile({ character: querySnapshot.data().character });
         };
       }
-
-      // if(currentUser){
-      //   const querySnapshot2 = await getDocs(query(collection(db, "text"), where("bookmark", "==", currentUser.uid)));
-      //   const temp: Bookmark[] = [];
-      //   querySnapshot2.forEach(async (doc) => {
-      //   console.log(doc.id);
-      //   console.log(doc.data());
-      //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
-      // });
-      // }
       readData();
 
       const unsub = onAuthStateChanged(auth, (user) => {

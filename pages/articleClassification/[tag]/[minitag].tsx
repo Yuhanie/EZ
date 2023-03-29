@@ -80,24 +80,14 @@ const Article = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      // console.log("minitag:", minitag)
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
-      const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
-      // const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag), orderBy("order")));
-      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/"+{tag}+"/分類" )));
-      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/{tag}/分類")));
 
       const temp: Article[] = [];
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
       const temp4: BookMark[] = [];
+      // console.log("minitag:", minitag)
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
       querySnapshot.forEach(async (doc) => {
-        console.log(doc.id);
-        console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
-      });
-
-      querySnapshot4.forEach(async (doc) => {
         console.log(doc.id);
         console.log(doc.data());
         temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -115,7 +105,13 @@ const Article = () => {
         console.log(doc2.id);
         console.log(doc2.data());
         temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
-        
+      });
+
+      const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
+      querySnapshot4.forEach(async (doc) => {
+        console.log(doc.id);
+        console.log(doc.data());
+        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
       });
 
       const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
@@ -143,14 +139,6 @@ const Article = () => {
     );
   };
 
-  // const renderTag = (tag: Tag, i: number) => {
-  //   console.log("tags3:",tag);
-  //   return (
-  //     <MiniTags key={tag.name} miniTag={tag}></MiniTags>
-  //     <MiniTagList key={tag.name} tag={tag} minitag={minitag}></MiniTagList>
-  //   );
-  // };
-
   const renderTag = (minitag: miniTag, i: number) => {
     //console.log("tags3:",tag);
     return (
@@ -160,7 +148,6 @@ const Article = () => {
       </div>
     );
   };
-
 
   ////////////////////////////////////////////////////////////sidebar
   const drawerWidth = 240;

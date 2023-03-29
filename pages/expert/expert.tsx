@@ -126,21 +126,22 @@ const Home: NextPage = () => {
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
   const [processing, setProcessing] = useState<Article[]>([]);
-  const [morePending, setMorePending] = useState<Article[]>([]);
-  const [moreStale, setMoreStale] = useState<Article[]>([]);
   const [open, setOpen] =useState<boolean>(false);
   const router = useRouter();
   
   const updateUpdated = ()=>{
     setUpdated((currentValue)=>currentValue+1)
   }
+  console.log("open:", open)
   useEffect(() => {
 
     async function readData() {
+     console.log("readData")
 
 
       setIsLoading(true);
-      const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
+
+      const queryExam = await getDocs(open?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
         tempStale.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -187,7 +188,7 @@ const Home: NextPage = () => {
     readData();
 
 
-  }, []);
+  }, [open]);
 
   const changeStatus = function () {
     if (typeof window !== "undefined") {
@@ -205,16 +206,17 @@ const Home: NextPage = () => {
     }
   }
 
-  const more = async function () {
+  const more = async function (status:string) {
     if (typeof window !== "undefined") {
       if (currentUser) {
-        if(processing==morePending){
-          // handleOpen;
+        if(status=="morePending"){
+          setOpen(true)
+          console.log("clicked")
         }
         else{
           // handleClose;
         }
-        if(processing==moreStale){
+        if(status=="moreStale"){
           // handleOpen;
         }
         else{
@@ -329,7 +331,7 @@ const Home: NextPage = () => {
             
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(morePending)}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more("morePending")}}>查看更多</Button>
           </Box>
           <Box
             display="flex"
@@ -353,7 +355,7 @@ const Home: NextPage = () => {
             sx={{color: 'Crimson'}}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(moreStale)}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more("moreStale")}}>查看更多</Button>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box

@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
-import Report from "./report";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
@@ -50,6 +49,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import SendIcon from "@mui/icons-material/Send";
 import Heart from "@mui/icons-material/Favorite";
 import Comment from "./Comment";
+import Report from "./report";
 import {
   Dialog,
   DialogActions,
@@ -83,9 +83,7 @@ const ArticleDetails = (props) => {
   const [expertOutdate, setExpertOutdate] = useState("");
   const [open, setOpen] = useState(false);
   const [report, setReport] = useState("");
-  const [denounce, setDenounce] = useState("");
-  const [reportCount, setReportCount] = useState("");
-
+  const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
 
   const handleToolClickOpen = () => {
@@ -134,25 +132,21 @@ const ArticleDetails = (props) => {
     async function fetchData() {
 
 
-      // const querySnapshotDenounce = collection(
-      //   db,
-      //   "text",
-      //   props.article.docId,
-      //   "denounce"
-      // );
-      // const queryReport = query(querySnapshotDenounce);
-      // const querySnapshotReport = await getDocs(queryReport);
-      // const tempReport = [];
-      // querySnapshotReport.forEach((doc) => {
-      //   let count = value => reason.filter(reason => status == value).length;
-      //   tempReport.push(count);
-      //   console.log("data:", data)
-      // });
-      // setDenounce(() => [...tempReport]);
+      const querySnapshotDenounce = collection(
+        db,
+        "text",
+        props.article.docId,
+        "denounce"
+      );
+      const queryReport = query(querySnapshotDenounce);
+      const querySnapshotReport = await getDocs(queryReport);
+      const tempReport = [];
+      querySnapshotReport.forEach((doc) => {
+        let reportdata = { ...doc.data(), id: doc.id };
+        tempReport.push(reportdata);
+      });
+      setDenounces(() => [...tempReport]);
 
-
-
-      console.log("docId:", props.article);
       const querySnapshot = collection(
         db,
         "text",
@@ -444,7 +438,7 @@ const ArticleDetails = (props) => {
               }}
               sx={{ m: 1, }}
             >
-              <MenuItem value="solved">有</MenuItem>
+              <MenuItem value="solved">沒問題</MenuItem>
               <MenuItem value="stale">過時或無法使用</MenuItem>
 
             </Select>
@@ -487,7 +481,7 @@ const ArticleDetails = (props) => {
     );
   };
 
-  const Report = (id) => {
+  const reportMenu = (id) => {
     return (
       <div>
 
@@ -533,9 +527,24 @@ const ArticleDetails = (props) => {
           </div>
         }
       </div>
-    );
+    );    
   };
 
+  const renderReport = (report, i) => {
+    return (
+      <div key={report.reaso}>
+        {report &&
+          <div style={{ padding: 14 }} className="App">
+
+            <Report edited={edited} setEdited={setEdited} article={props.article} report={report} />
+
+          </div>
+        }
+      </div>
+    );
+  }
+
+  
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
@@ -565,7 +574,7 @@ const ArticleDetails = (props) => {
                         {/* {user.uid}/{props.article.userid} */}
                         {/* {props.article.userid} */}
 
-                        {user && Report()}
+                        {user && reportMenu()}
                         { }
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
 
@@ -629,6 +638,7 @@ const ArticleDetails = (props) => {
               </Typography> */}
 
             {comments.map((comment) => renderComment(comment))}
+            {character === "專家" &&denounces.map((report) => renderReport(report))}
             {/* <Comment article={props.article} /> */}
           </div>
           <Box display="flex" justifyContent="space-between">

@@ -145,14 +145,14 @@ const ArticleListItem:
           const docSnap = await getDoc(ref);
           if ((docSnap.exists())) {
             if (docSnap.data().bookmark.includes(currentUser.uid)) {
-              alert('remove')
+              // alert('remove')
               updateDoc(ref, {
                 bookmark: arrayRemove(currentUser.uid)
               });
               setBookMarked(false)
               setBookCount(bookCount - 1)
             } else {
-              alert('added')
+              // alert('added')
               updateDoc(ref, {
                 bookmark: arrayUnion(currentUser.uid)
               });
@@ -163,14 +163,6 @@ const ArticleListItem:
         }
         else {
           alert("要登入才能收藏ㄛ!")
-          //window.alert("要登入才能新增筆記ㄛ!");
-
-          // <Alert action={
-          //   <Button >
-          //     UNDO
-          //   </Button>
-          // }>要登入才能新增筆記ㄛ! </Alert>
-
           router.push('/login');
         }
       }
@@ -187,14 +179,14 @@ const ArticleListItem:
           const docSnap = await getDoc(ref);
           if ((docSnap.exists())) {
             if (docSnap.data().heart.includes(currentUser.uid)) {
-              alert('remove')
+              // alert('remove')
               updateDoc(ref, {
                 heart: arrayRemove(currentUser.uid)
               });
               setLiked(false)
               setCount(count - 1)
             } else {
-              alert('added')
+              // alert('added')
               updateDoc(ref, {
                 heart: arrayUnion(currentUser.uid)
 
@@ -211,14 +203,6 @@ const ArticleListItem:
 
         else {
           alert("要登入才能收藏ㄛ!")
-          //window.alert("要登入才能新增筆記ㄛ!");
-
-          // <Alert action={
-          //   <Button >
-          //     UNDO
-          //   </Button>
-          // }>要登入才能新增筆記ㄛ! </Alert>
-
           router.push('/login');
 
         }

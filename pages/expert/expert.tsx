@@ -126,22 +126,21 @@ const Home: NextPage = () => {
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
   const [processing, setProcessing] = useState<Article[]>([]);
-  const [open, setOpen] =useState<boolean>(false);
+  const [pendingOpen, setPendingOpen] =useState<boolean>(false);
+  const [staleOpen, setStaleOpen] =useState<boolean>(false);
   const router = useRouter();
   
   const updateUpdated = ()=>{
     setUpdated((currentValue)=>currentValue+1)
   }
-  console.log("open:", open)
   useEffect(() => {
-
-    async function readData() {
      console.log("readData")
-
+    async function readData() {
 
       setIsLoading(true);
-
-      const queryExam = await getDocs(open?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
+      // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));
+      
+      const queryExam = await getDocs(staleOpen?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
         tempStale.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -160,7 +159,7 @@ const Home: NextPage = () => {
       setTag([...temp]);
 
       setIsLoading(true);
-      const queryPending = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
+      const queryPending = await await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
       const tempPending: Article[] = [];
       queryPending.forEach((doc) => {
         tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -188,7 +187,7 @@ const Home: NextPage = () => {
     readData();
 
 
-  }, [open]);
+  }, [pendingOpen, staleOpen]);
 
   const changeStatus = function () {
     if (typeof window !== "undefined") {
@@ -210,18 +209,12 @@ const Home: NextPage = () => {
     if (typeof window !== "undefined") {
       if (currentUser) {
         if(status=="morePending"){
-          setOpen(true)
-          console.log("clicked")
-        }
-        else{
-          // handleClose;
+          setPendingOpen((currentValue)=>!currentValue)
         }
         if(status=="moreStale"){
-          // handleOpen;
+          setStaleOpen((currentValue)=>!currentValue)
         }
-        else{
-          // handleClose;
-        }
+
       }
     } else {
       alert("請登入");

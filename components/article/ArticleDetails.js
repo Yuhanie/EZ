@@ -20,6 +20,8 @@ import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -471,12 +473,12 @@ const ArticleDetails = (props) => {
   const Update = (id) => {
     return (
       <div>
-        <Button color="secondary" variant="contained" onClick={() => update(id)}>
-          修改
-        </Button>
-        <Button color="secondary" variant="contained" onClick={deleteData}>
-          刪除
-        </Button>
+        <IconButton color="secondary" onClick={() => update(id)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton color="secondary"  onClick={deleteData}>
+          <DeleteForeverIcon />
+        </IconButton>
       </div>
     );
   };
@@ -527,7 +529,7 @@ const ArticleDetails = (props) => {
           </div>
         }
       </div>
-    );    
+    );
   };
 
   const renderReport = (report, i) => {
@@ -544,7 +546,7 @@ const ArticleDetails = (props) => {
     );
   }
 
-  
+
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
@@ -556,10 +558,14 @@ const ArticleDetails = (props) => {
             </Box>
             <Box display="flex" alignItems="center">
               <VI />
-              <Typography variant="body2" sx={{ ml: 0.5 }}>{props.article.count}</Typography>
-
+              <Typography variant="body2" sx={{ ml: 0.5 ,pr:0.8}}>{props.article.count}</Typography>
+              <FormControl>
+                {user && user.uid === props.article.userid && Update(props.article.docId)}
+                {/* {user.uid}/{props.article.userid} */}
+                {/* {props.article.userid} */}
+              </FormControl>
               <Box>
-                <IconButton onClick={handleToolClickOpen} sx={{ ml: 0.5 }}><MoreHorizIcon /></IconButton>
+                <IconButton onClick={handleToolClickOpen}><MoreHorizIcon /></IconButton>
                 <Dialog open={toolopen} onClose={handleToolClose}>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
@@ -569,11 +575,6 @@ const ArticleDetails = (props) => {
                   <DialogContent>
                     <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       <FormControl sx={{ m: 1, minWidth: 120 }}>
-
-                        {user && user.uid === props.article.userid && Update(props.article.docId)}
-                        {/* {user.uid}/{props.article.userid} */}
-                        {/* {props.article.userid} */}
-
                         {user && reportMenu()}
                         { }
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
@@ -638,7 +639,7 @@ const ArticleDetails = (props) => {
               </Typography> */}
 
             {comments.map((comment) => renderComment(comment))}
-            {character === "專家" &&denounces.map((report) => renderReport(report))}
+            {character === "專家" && denounces.map((report) => renderReport(report))}
             {/* <Comment article={props.article} /> */}
           </div>
           <Box display="flex" justifyContent="space-between">
@@ -663,8 +664,8 @@ const ArticleDetails = (props) => {
           </Box>
         </DialogContent>
 
-        
-         
+
+
       </Dialog>
     </div >
   );

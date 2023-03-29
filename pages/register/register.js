@@ -157,14 +157,14 @@ const Home = () => {
               fullWidth
               margin="dense"
             />
-            <Typography variant="body1">確認密碼</Typography>
+            {/* <Typography variant="body1">確認密碼</Typography>
             <TextField
              type="password"
              name="password_check"
              placeholder="再次輸入密碼"
               fullWidth
               margin="dense"
-            />
+            /> */}
             {message}
 
             <Button

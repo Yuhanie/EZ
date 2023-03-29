@@ -205,6 +205,17 @@ const Introduction = () => {
                                                 </Stack>
                                             </CardContent>
                                         </Card>
+                                        <Card sx={{ m: 2, width: 300 }}>
+                                            {/* <Card sx={{ minWidth: 275 }}> */}
+                                            <CardContent>
+                                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                                    收藏列表
+                                                </Typography>
+                                                <Stack direction="row" spacing={1}>
+                                                    
+                                                </Stack>
+                                            </CardContent>
+                                        </Card>
 
                                         <Card sx={{ m: 2, width: 300 }}>
                                             {/* <Card sx={{ minWidth: 275 }}> */}

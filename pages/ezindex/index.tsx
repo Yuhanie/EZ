@@ -1,1 +1,1 @@
-export { default } from './ezIndex'
+export { default } from './Ezindex'

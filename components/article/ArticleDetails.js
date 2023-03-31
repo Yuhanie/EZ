@@ -86,7 +86,7 @@ const ArticleDetails = (props) => {
   const [report, setReport] = useState("");
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
-  const [expertAction, setExpertAction] = useState(false);
+  const [expertAction, setExpertAction] = useState("");
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
 
   const handleToolClickOpen = () => {
@@ -119,8 +119,8 @@ const ArticleDetails = (props) => {
         
         // 到底為什麼一直說他不是一個function啊，要中風了
 
-        // if ((docSnapReport.exists()&& docSnap.data().character === "專家")){
-        //   setExpertAction(true);
+        // if ((docSnap.exists()&& docSnap.data().character === "專家")){
+        //   setExpertAction("true");
         //   props.update();
         // }
 
@@ -141,7 +141,7 @@ const ArticleDetails = (props) => {
     //     const ref = query(collection(db, "text", props.article.docId, "denounce"));
     //     const docSnap = getDocs(ref);
     //     if ((docSnap.exists() && character === "專家")) {
-    //         setExpertAction(true);
+    //         setExpertAction("true");
     //         props.update();
     //     }
     //   }
@@ -165,7 +165,7 @@ const ArticleDetails = (props) => {
     //       const ref = query(collection(db, "text", props.article.docId, "denounce"));
     //       const docSnap = getDocs(ref);
     //       if ((docSnap.exists() && character === "專家")) {
-    //           setExpertAction(true);
+    //           setExpertAction("true");
     //           props.update();
     //       }
     //     }
@@ -439,7 +439,7 @@ const ArticleDetails = (props) => {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
-          if (character=="專家"&&expertAction(true)) {
+          if (character=="專家"&& expertAction=="true") {
             try {
               setIsLoading(true);
 
@@ -682,7 +682,7 @@ const expertReport = (id) => {
           </Stack>
 
           {character === "專家" && expert()}
-          {expertAction===true&&expertReport(props.article.docId)}
+          {expertAction==="true"&&expertReport(props.article.docId)}
           <div style={{ padding: 14 }} className="App">
             {props.article.outdate === 'stale' && (
               <h2>

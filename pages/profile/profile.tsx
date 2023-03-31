@@ -140,44 +140,49 @@ const Profile = () => {
   useEffect(() => {
     async function readData() {
       //var temp: Profile;
-      if (currentUser) {
-        const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
-        if (querySnapshot.exists()) {
-          //console.log(doc.id, doc.data());
-          setProfile({ character: querySnapshot.data().character });
-        };
-      }
-      const unsub = onAuthStateChanged(auth, (user) => {
+      // if (currentUser) {
+      //   const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
+      //   if (querySnapshot.exists()) {
+      //     //console.log(doc.id, doc.data());
+      //     setProfile({ character: querySnapshot.data().character });
+      //   };
+      // }
+      const unsub = onAuthStateChanged(auth, async(user) => {
         if (user) {
+          const querySnapshot = await getDoc(doc(db, "profile", user.uid));
+          if ((querySnapshot).exists()) {
+            //console.log(doc.id, doc.data());
+            setProfile({ character: querySnapshot.data().character });
+          };
           console.log('currentUser', user)
           setCurrentUser(user);
+
+          setIsLoading(true);
+      const queryCollect = await getDocs(query(collection(db, "text"), where("bookmark", "array-contains", user.uid)));
+      const tempCollect: Article[] = [];
+      queryCollect.forEach((doc) => {
+        tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      });
+      setCollects([...tempCollect]);
+      setIsLoading(false);
         }
       });
 
-      // setIsLoading(true);
-      // const queryCollect = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending")));
-      // const tempCollect: Article[] = [];
-      // queryCollect.forEach((doc) => {
-      //   tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
-
-      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
-      // });
-      // setCollects([...tempCollect]);
-      // setIsLoading(false);
+      
 
       return () => {
         unsub();
       }
     }
-    readData();
+    readData(),[];
   });
 
-  // const renderCollect = (collect: Article, i: number) => {
-  //   return (
-  //     <Collect key={collect.docId} article={collect} update={updateUpdated}></Collect>
-  //   );
+  const renderCollect = (collect: Article, i: number) => {
+    return (
+      <Collect key={collect.docId} article={collect} update={updateUpdated}></Collect>
+    );
 
-  // };
+  };
 
 
 
@@ -402,9 +407,9 @@ const Profile = () => {
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
                         <Chip label="我的收藏" />
  
-              {/* <div>
+              <div>
                 {collects.map(renderCollect)}
-              </div> */}
+              </div>
                                   
                 </Grid>
               </Box>

@@ -157,16 +157,16 @@ const Profile = () => {
         }
       });
 
-      setIsLoading(true);
-      const queryCollect = await getDocs(collectOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
-      const tempCollect: Article[] = [];
-      queryCollect.forEach((doc) => {
-        tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      // setIsLoading(true);
+      // const queryCollect = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending")));
+      // const tempCollect: Article[] = [];
+      // queryCollect.forEach((doc) => {
+      //   tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-        console.log(`newtext ${doc.id} => ${doc.data()}`);
-      });
-      setCollects([...tempCollect]);
-      setIsLoading(false);
+      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
+      // });
+      // setCollects([...tempCollect]);
+      // setIsLoading(false);
 
       return () => {
         unsub();

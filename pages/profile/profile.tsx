@@ -5,8 +5,8 @@ import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
+import { Profile, BookMark, Article, Tag, miniTag } from 'interfaces/entities';
 import Collect from '../../components/collect/Collect';
-import { Profile, BookMark, Article } from 'interfaces/entities';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -51,6 +51,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import  CircularProgress from "@mui/material";
+
+import ArticleListItem from '../../components/article/ArticleListItem';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -97,9 +99,6 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-
-
-
 const Profile = () => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
@@ -137,8 +136,6 @@ const Profile = () => {
   const handleClick = () => {
     setOpenDrawer(!openDrawer);
   };
-
-
 
   useEffect(() => {
     async function readData() {
@@ -385,6 +382,19 @@ const Profile = () => {
                 </Grid>
               </Box>
 
+                    <Card sx={{ m: 2, width: 300 }}>
+                      {/* <Card sx={{ minWidth: 275 }}> */}
+                      <CardContent>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                          收藏文章
+                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
 
 
               <Divider />

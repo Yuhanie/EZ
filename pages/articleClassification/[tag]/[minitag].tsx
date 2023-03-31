@@ -73,7 +73,7 @@ const Article = () => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
   const [updated, setUpdated] = useState(0);
-  const [bookmarks, setBookmarks] = useState<BookMark[]>([]);
+  // const [bookmarks, setBookmarks] = useState<BookMark[]>([]);
 
   //console.log(props)
 
@@ -84,7 +84,7 @@ const Article = () => {
       const temp: Article[] = [];
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
-      const temp4: BookMark[] = [];
+      // const temp4: BookMark[] = [];
       // console.log("minitag:", minitag)
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
       querySnapshot.forEach(async (doc) => {
@@ -107,12 +107,12 @@ const Article = () => {
         temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
       });
 
-      const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
-      querySnapshot4.forEach(async (doc) => {
-        console.log(doc.id);
-        console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
-      });
+      // const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
+      // querySnapshot4.forEach(async (doc3) => {
+      //   console.log(doc3.id);
+      //   console.log(doc3.data());
+      //   temp.push({ docId: doc3.id, content: doc3.data().content, title: doc3.data().title, user: doc3.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      // });
 
       const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
       const docSnap = await getDoc(docRef);
@@ -120,7 +120,7 @@ const Article = () => {
       setArticles([...temp]);
       setminiTags([...temp3]);
       setTags([...temp2]);
-      setBookmarks([...temp4]);
+      // setBookmarks([...temp4]);
     }
 
     readData();

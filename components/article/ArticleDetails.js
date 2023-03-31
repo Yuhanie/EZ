@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
-import Report from "./report";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
@@ -21,6 +20,8 @@ import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -50,6 +51,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import SendIcon from "@mui/icons-material/Send";
 import Heart from "@mui/icons-material/Favorite";
 import Comment from "./Comment";
+import Report from "./report";
 import {
   Dialog,
   DialogActions,
@@ -83,9 +85,7 @@ const ArticleDetails = (props) => {
   const [expertOutdate, setExpertOutdate] = useState("");
   const [open, setOpen] = useState(false);
   const [report, setReport] = useState("");
-  const [denounce, setDenounce] = useState("");
-  const [reportCount, setReportCount] = useState("");
-
+  const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
 
   const handleToolClickOpen = () => {
@@ -134,25 +134,21 @@ const ArticleDetails = (props) => {
     async function fetchData() {
 
 
-      // const querySnapshotDenounce = collection(
-      //   db,
-      //   "text",
-      //   props.article.docId,
-      //   "denounce"
-      // );
-      // const queryReport = query(querySnapshotDenounce);
-      // const querySnapshotReport = await getDocs(queryReport);
-      // const tempReport = [];
-      // querySnapshotReport.forEach((doc) => {
-      //   let count = value => reason.filter(reason => status == value).length;
-      //   tempReport.push(count);
-      //   console.log("data:", data)
-      // });
-      // setDenounce(() => [...tempReport]);
+      const querySnapshotDenounce = collection(
+        db,
+        "text",
+        props.article.docId,
+        "denounce"
+      );
+      const queryReport = query(querySnapshotDenounce);
+      const querySnapshotReport = await getDocs(queryReport);
+      const tempReport = [];
+      querySnapshotReport.forEach((doc) => {
+        let reportdata = { ...doc.data(), id: doc.id };
+        tempReport.push(reportdata);
+      });
+      setDenounces(() => [...tempReport]);
 
-
-
-      console.log("docId:", props.article);
       const querySnapshot = collection(
         db,
         "text",
@@ -444,7 +440,7 @@ const ArticleDetails = (props) => {
               }}
               sx={{ m: 1, }}
             >
-              <MenuItem value="solved">有</MenuItem>
+              <MenuItem value="solved">沒問題</MenuItem>
               <MenuItem value="stale">過時或無法使用</MenuItem>
 
             </Select>
@@ -477,17 +473,17 @@ const ArticleDetails = (props) => {
   const Update = (id) => {
     return (
       <div>
-        <Button color="secondary" variant="contained" onClick={() => update(id)}>
-          修改
-        </Button>
-        <Button color="secondary" variant="contained" onClick={deleteData}>
-          刪除
-        </Button>
+        <IconButton color="secondary" onClick={() => update(id)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton color="secondary"  onClick={deleteData}>
+          <DeleteForeverIcon />
+        </IconButton>
       </div>
     );
   };
 
-  const Report = (id) => {
+  const reportMenu = (id) => {
     return (
       <div>
 
@@ -536,6 +532,21 @@ const ArticleDetails = (props) => {
     );
   };
 
+  const renderReport = (report, i) => {
+    return (
+      <div key={report.reaso}>
+        {report &&
+          <div style={{ padding: 14 }} className="App">
+
+            <Report edited={edited} setEdited={setEdited} article={props.article} report={report} />
+
+          </div>
+        }
+      </div>
+    );
+  }
+
+
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
@@ -547,10 +558,14 @@ const ArticleDetails = (props) => {
             </Box>
             <Box display="flex" alignItems="center">
               <VI />
-              <Typography variant="body2" sx={{ ml: 0.5 }}>{props.article.count}</Typography>
-
+              <Typography variant="body2" sx={{ ml: 0.5 ,pr:0.8}}>{props.article.count}</Typography>
+              <FormControl>
+                {user && user.uid === props.article.userid && Update(props.article.docId)}
+                {/* {user.uid}/{props.article.userid} */}
+                {/* {props.article.userid} */}
+              </FormControl>
               <Box>
-                <IconButton onClick={handleToolClickOpen} sx={{ ml: 0.5 }}><MoreHorizIcon /></IconButton>
+                <IconButton onClick={handleToolClickOpen}><MoreHorizIcon /></IconButton>
                 <Dialog open={toolopen} onClose={handleToolClose}>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
@@ -560,12 +575,7 @@ const ArticleDetails = (props) => {
                   <DialogContent>
                     <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       <FormControl sx={{ m: 1, minWidth: 120 }}>
-
-                        {user && user.uid === props.article.userid && Update(props.article.docId)}
-                        {/* {user.uid}/{props.article.userid} */}
-                        {/* {props.article.userid} */}
-
-                        {user && Report()}
+                        {user && reportMenu()}
                         { }
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
 
@@ -629,6 +639,7 @@ const ArticleDetails = (props) => {
               </Typography> */}
 
             {comments.map((comment) => renderComment(comment))}
+            {character === "專家" && denounces.map((report) => renderReport(report))}
             {/* <Comment article={props.article} /> */}
           </div>
           <Box display="flex" justifyContent="space-between">
@@ -653,8 +664,8 @@ const ArticleDetails = (props) => {
           </Box>
         </DialogContent>
 
-        
-         
+
+
       </Dialog>
     </div >
   );

@@ -5,8 +5,8 @@ import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
-
 import { Profile, BookMark, Article, Tag, miniTag } from 'interfaces/entities';
+import Collect from '../../components/collect/Collect';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -50,6 +50,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
+import  CircularProgress from "@mui/material";
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 
@@ -105,7 +106,15 @@ const Profile = () => {
   const theme = useTheme();
   const [tags, setTags] = React.useState<string[]>([]);
   const [profile, setProfile] = useState<Profile>();
+  const [collects, setCollects] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [collectOpen, setCollectOpen] =useState<boolean>(false);
+  const [updated, setUpdated] = useState(0);
   // const [bookmark, setBookmark] = useState<Bookmark[]>([]);
+
+  const updateUpdated = ()=>{
+    setUpdated((currentValue)=>currentValue+1)
+  }
 
   const handleChange = (event: SelectChangeEvent<typeof tags>) => {
     const {
@@ -138,13 +147,23 @@ const Profile = () => {
           setProfile({ character: querySnapshot.data().character });
         };
       }
-
       const unsub = onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log('currentUser', user)
           setCurrentUser(user);
         }
       });
+
+      // setIsLoading(true);
+      // const queryCollect = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending")));
+      // const tempCollect: Article[] = [];
+      // queryCollect.forEach((doc) => {
+      //   tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+
+      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
+      // });
+      // setCollects([...tempCollect]);
+      // setIsLoading(false);
 
       return () => {
         unsub();
@@ -153,12 +172,17 @@ const Profile = () => {
     readData();
   });
 
+  // const renderCollect = (collect: Article, i: number) => {
+  //   return (
+  //     <Collect key={collect.docId} article={collect} update={updateUpdated}></Collect>
+  //   );
 
+  // };
 
 
 
   return (
-    <div>
+<>
       <div>
         <Head>
           <title>我的角色</title>
@@ -354,6 +378,9 @@ const Profile = () => {
                         </Stack>
                       </CardContent>
                     </Card>
+                  </Grid>                
+                </Grid>
+              </Box>
 
                     <Card sx={{ m: 2, width: 300 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
@@ -369,13 +396,30 @@ const Profile = () => {
                   </Grid>
                 </Grid>
 
+
+              <Divider />
+
+              <Box display="flex" p={2} flexWrap="wrap">
+                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
+                        <Chip label="我的收藏" />
+ 
+              {/* <div>
+                {collects.map(renderCollect)}
+              </div> */}
+                                  
+                </Grid>
               </Box>
+
+
+
+
+              
             </Box>
           </Card>
         </Container>
       </div>
 
-    </div >
+    </>
 
 
 

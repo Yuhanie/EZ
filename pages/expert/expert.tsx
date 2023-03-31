@@ -125,22 +125,21 @@ const Home: NextPage = () => {
   const [denounces, setDenounces] = useState<Article[]>([]);
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
-  const [processing, setProcessing] = useState<Article[]>([]);
-  const [morePending, setMorePending] = useState<Article[]>([]);
-  const [moreStale, setMoreStale] = useState<Article[]>([]);
-  const [open, setOpen] =useState<boolean>(false);
+  const [pendingOpen, setPendingOpen] =useState<boolean>(false);
+  const [staleOpen, setStaleOpen] =useState<boolean>(false);
   const router = useRouter();
   
   const updateUpdated = ()=>{
     setUpdated((currentValue)=>currentValue+1)
   }
   useEffect(() => {
-
+     console.log("readData")
     async function readData() {
 
-
       setIsLoading(true);
-      const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
+      // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));
+      
+      const queryExam = await getDocs(staleOpen?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
         tempStale.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -159,7 +158,7 @@ const Home: NextPage = () => {
       setTag([...temp]);
 
       setIsLoading(true);
-      const queryPending = await getDocs(query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
+      const queryPending = await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
       const tempPending: Article[] = [];
       queryPending.forEach((doc) => {
         tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
@@ -187,7 +186,7 @@ const Home: NextPage = () => {
     readData();
 
 
-  }, []);
+  }, [pendingOpen, staleOpen]);
 
   const changeStatus = function () {
     if (typeof window !== "undefined") {
@@ -205,21 +204,16 @@ const Home: NextPage = () => {
     }
   }
 
-  const more = async function () {
+  const more = async function (status:string) {
     if (typeof window !== "undefined") {
       if (currentUser) {
-        if(processing==morePending){
-          // handleOpen;
+        if(status=="morePending"){
+          setPendingOpen((currentValue)=>!currentValue)
         }
-        else{
-          // handleClose;
+        if(status=="moreStale"){
+          setStaleOpen((currentValue)=>!currentValue)
         }
-        if(processing==moreStale){
-          // handleOpen;
-        }
-        else{
-          // handleClose;
-        }
+
       }
     } else {
       alert("請登入");
@@ -329,7 +323,7 @@ const Home: NextPage = () => {
             
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(morePending)}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more("morePending")}}>查看更多</Button>
           </Box>
           <Box
             display="flex"
@@ -353,7 +347,7 @@ const Home: NextPage = () => {
             sx={{color: 'Crimson'}}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more; setProcessing(moreStale)}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => {more("moreStale")}}>查看更多</Button>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box

@@ -5,13 +5,13 @@ import { useRouter } from "next/router"
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
-import QAListItem_copy from '../components/question/QAListItem_copy';
+import QAListItem from '../components/question/QAListItem';
 import { Question } from '../interfaces/entities';
 import { Container } from '@mui/system';
 import List from '@mui/material/List';
 import Navbar from "../components/navbar/Navbar";
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import styles from '../styles/Home.module.css';
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -147,7 +147,7 @@ const QA: NextPage = () => {
 
   const renderText = (question: Question, i: number) => {
     return (
-      <QAListItem_copy key={question.docId} question={question} update={updateUpdated}></QAListItem_copy>
+      <QAListItem key={question.docId} question={question} update={updateUpdated}></QAListItem>
     );
 
   };
@@ -163,8 +163,19 @@ const QA: NextPage = () => {
           <meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Navbar />
+        <Navbar /><br/>
+        <Box>
+            {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
+            <Box
+              display="flex"
+              pl="5%"
+              pt={4}
+              alignItems='center'
+            >
+              <Button variant="contained" color="secondary" onClick={changeStatus}>新增問題</Button>
+            </Box></Box>
         <Container>
+  
         <List sx={{ width: '100%', minWidth: 700, bgcolor: 'background.paper' }}>
         <Box
               display="flex"

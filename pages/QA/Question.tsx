@@ -42,6 +42,8 @@ export async function getServerSideProps() {
   };
 }
 
+
+
 //////////////////////////////////////////////////////////////////////////
   const Question = () => {
     const router = useRouter()
@@ -50,9 +52,13 @@ export async function getServerSideProps() {
     const [question, setQuestion] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [tags, setTags] = useState<Tag[]>([]);
+    const [updated, setUpdated] = useState(0);
 
   //console.log(props)
-  
+  const updateUpdated = () => {
+    setUpdated((currentValue) => currentValue + 1)
+  }
+
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
@@ -101,7 +107,7 @@ export async function getServerSideProps() {
 
   const renderText = (question: Question, i: number) => {
     return (
-      <QAListItem key={question.docId} question={question}></QAListItem>
+      <QAListItem key={question.docId} question={question} update={updateUpdated}></QAListItem>
 
     );
   };

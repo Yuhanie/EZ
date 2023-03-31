@@ -174,8 +174,8 @@ const Profile = () => {
         unsub();
       }
     }
-    readData(),[];
-  });
+    readData();
+  },[]);
 
   const renderCollect = (collect: Article, i: number) => {
     return (

@@ -382,8 +382,7 @@ const Profile = () => {
                 </Grid>
               </Box>
 
-                    <Card sx={{ m: 2, width: 300 }}>
-                      {/* <Card sx={{ minWidth: 275 }}> */}
+                    {/* <Card sx={{ m: 2, width: 300 }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           收藏文章
@@ -394,7 +393,7 @@ const Profile = () => {
                       </CardContent>
                     </Card>
                   </Grid>
-                </Grid>
+                </Grid> */}
 
 
               <Divider />

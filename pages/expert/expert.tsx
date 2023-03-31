@@ -125,7 +125,6 @@ const Home: NextPage = () => {
   const [denounces, setDenounces] = useState<Article[]>([]);
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
-  const [processing, setProcessing] = useState<Article[]>([]);
   const [pendingOpen, setPendingOpen] =useState<boolean>(false);
   const [staleOpen, setStaleOpen] =useState<boolean>(false);
   const router = useRouter();
@@ -159,7 +158,7 @@ const Home: NextPage = () => {
       setTag([...temp]);
 
       setIsLoading(true);
-      const queryPending = await await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
+      const queryPending = await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
       const tempPending: Article[] = [];
       queryPending.forEach((doc) => {
         tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});

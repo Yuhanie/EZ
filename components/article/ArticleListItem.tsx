@@ -55,14 +55,7 @@ const ArticleListItem:
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
-    // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    // const open = Boolean(anchorEl);
-    // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    //   setAnchorEl(event.currentTarget);
-    // };
-    // const handleClose = () => {
-    //   setAnchorEl(null);
-    // };
+
 
 
 

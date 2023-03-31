@@ -127,6 +127,8 @@ const Home: NextPage = () => {
   const [pending, setPending] = useState<Article[]>([]);
   const [pendingOpen, setPendingOpen] =useState<boolean>(false);
   const [staleOpen, setStaleOpen] =useState<boolean>(false);
+  const [denounceOpen, setDenounceOpen] =useState<boolean>(false);
+  const [stale, setStale] = useState<Article[]>([]);
   const router = useRouter();
   
   const updateUpdated = ()=>{
@@ -135,6 +137,16 @@ const Home: NextPage = () => {
   useEffect(() => {
      console.log("readData")
     async function readData() {
+
+      setIsLoading(true);      
+      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("denounce","==",{"exists":true})):query(collection(db, "text"), where("denounce","==",{"exists":true}), limit(3)));
+      const tempDenounce: Article[] = [];
+      queryDenounce.forEach((doc) => {
+        tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+
+        console.log(`newtext ${doc.id} => ${doc.data()}`);
+      });
+      setDenounces([...tempDenounce]);
 
       setIsLoading(true);
       // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));
@@ -146,7 +158,7 @@ const Home: NextPage = () => {
 
         console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
-      setDenounces([...tempStale]);
+      setStale([...tempStale]);
 
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "tag"));
@@ -186,23 +198,9 @@ const Home: NextPage = () => {
     readData();
 
 
-  }, [pendingOpen, staleOpen]);
-
-  const changeStatus = function () {
-    if (typeof window !== "undefined") {
-
-      if (currentUser) {
-        router.push('/Newpost');
-      }
-      else {
-        alert("要登入才能新增筆記ㄛ!")
-        router.push('/login');
-
-      }
+  }, [pendingOpen, staleOpen, denounceOpen]);
 
 
-    }
-  }
 
   const more = async function (status:string) {
     if (typeof window !== "undefined") {
@@ -213,7 +211,9 @@ const Home: NextPage = () => {
         if(status=="moreStale"){
           setStaleOpen((currentValue)=>!currentValue)
         }
-
+        if(status=="moreDenounce"){
+          setDenounceOpen((currentValue)=>!currentValue)
+        }
       }
     } else {
       alert("請登入");
@@ -248,9 +248,9 @@ const Home: NextPage = () => {
   // };
 
 
-  const renderStale = (denounces: Article, i: number) => {
+  const renderStale = (stale: Article, i: number) => {
     return (
-      <ArticleListItem key={denounces.docId} article={denounces} update={updateUpdated}></ArticleListItem>
+      <ArticleListItem key={stale.docId} article={stale} update={updateUpdated}></ArticleListItem>
     );
 
   };
@@ -262,6 +262,14 @@ const Home: NextPage = () => {
 
   };
 
+
+
+  const renderDenounce = (denounces: Article, i: number) => {
+    return (
+      <ArticleListItem key={denounces.docId} article={denounces} update={updateUpdated}></ArticleListItem>
+    );
+
+  };
   // const renderTag = (tag: Tag, i: number) => {
   //   return (
   //     <TagList key={tag.name} tag={tag}></TagList>
@@ -356,12 +364,35 @@ const Home: NextPage = () => {
           >
             {!isLoading ? 
               <div className={styles.grid}>
-                {denounces&&denounces.map(renderStale)}
+                {stale&&stale.map(renderStale)}
               </div>
               : <CircularProgress />
             }
           </Box>
           
+          <Box
+            display="flex"
+            pl="10%"
+            pt={4}
+          >
+            <WarningIcon
+            sx={{color: 'Crimson'}}
+            />
+            <Typography variant='h6' pr={2}>檢舉</Typography>
+            <Button variant="contained" color="secondary" onClick={() => {more("moreDenounce")}}>查看更多</Button>
+            {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            {!isLoading ? 
+              <div className={styles.grid}>
+                {denounces&&denounces.map(renderDenounce)}
+              </div>
+              : <CircularProgress />
+            }
+          </Box>
           
         
 

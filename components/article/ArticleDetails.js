@@ -78,7 +78,6 @@ const ArticleDetails = (props) => {
   const [user, setUser] = useState();
   const [outdated, setOutdated] = useState(false);
   const [deleted, setDeleted] = useState(0);
-  const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   const [character, setCharacter] = useState("");
@@ -87,6 +86,8 @@ const ArticleDetails = (props) => {
   const [report, setReport] = useState("");
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
+  const [expertAction, setExpertAction] = useState(false);
+  // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -106,16 +107,23 @@ const ArticleDetails = (props) => {
       if (user) {
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
-
+        
+        // 第一種是把讀取denounce存在的條件直接塞進原本的這個useeffect的function
+//=====================================================================================================
         // const refReport = collection(db,"text",props.article.docId,"denounce");
-        // const docSnapReport = await getDoc(refReport);
+        // const docSnapReport = await getDocs(refReport);
+
         if ((docSnap.exists() && docSnap.data().character === "專家")) {
           setCharacter("專家")
         }
-        // if (docSnapReport.exists()) {
-        //   setOutdated(true)
-        //   console.log(props.article.title+'outdated');
+        
+        // 到底為什麼一直說他不是一個function啊，要中風了
+
+        // if ((docSnapReport.exists()&& docSnap.data().character === "專家")){
+        //   setExpertAction(true);
+        //   props.update();
         // }
+
         else {
           setOutdated(false)
           console.log('article:', props.article);
@@ -124,11 +132,51 @@ const ArticleDetails = (props) => {
       }
       console.log("user", user);
     });
+
+    // 第二種是把讀取denounce存在的條件在同一個useeffect再創一個function
+//============================================================================================================
+    // const expertActive = (user) => {
+    //   setUser(user);
+    //   if (user) {
+    //     const ref = query(collection(db, "text", props.article.docId, "denounce"));
+    //     const docSnap = getDocs(ref);
+    //     if ((docSnap.exists() && character === "專家")) {
+    //         setExpertAction(true);
+    //         props.update();
+    //     }
+    //   }
+
+    // };
+
     return () => {
       unsub();
+      // expertActive();
     };
   }
     , [props.article]);
+
+
+    // 第三種是直接重新創一個useeffect 把讀取denounce存在的條件放進去＾＾，到底要怎麼搞呢
+//============================================================================================================
+    // useEffect(() => {
+    //   const expertActive = onAuthStateChanged(auth, (user) => {
+    //     setUser(user);
+    //     if (user) {
+    //       const ref = query(collection(db, "text", props.article.docId, "denounce"));
+    //       const docSnap = getDocs(ref);
+    //       if ((docSnap.exists() && character === "專家")) {
+    //           setExpertAction(true);
+    //           props.update();
+    //       }
+    //     }
+  
+    //   });
+  
+    //   return () => {
+    //     expertActive();
+    //   };
+    // }
+    //   );
 
   useEffect(() => {
     async function fetchData() {
@@ -185,20 +233,6 @@ const ArticleDetails = (props) => {
   const update = (id) => {
     router.push('/Newpost?articleId=' + id);
   }
-
-
-
-
-  const reportHandleOpen = () => {
-    setOpen(true);
-  };
-
-  const reportHandleClose = () => {
-    setOpen(false);
-  };
-
-
-
 
 
   const outdate = async function () {
@@ -282,11 +316,6 @@ const ArticleDetails = (props) => {
   };
 
 
-
-
-
-
-
   // const outdateCount = async function () {
   //   if (typeof window !== "undefined") {
   //     if (user) {
@@ -339,13 +368,6 @@ const ArticleDetails = (props) => {
   //     router.push('/login');
   //   }
   // }
-
-
-
-
-
-
-
 
 
   async function onSubmit() {
@@ -411,6 +433,62 @@ const ArticleDetails = (props) => {
   };
 
 
+  const reportDelete = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (character=="專家"&&expertAction(true)) {
+            try {
+              setIsLoading(true);
+
+              await deleteDoc(doc(db, "text", props.article.docId));
+
+              //console.log("deleted");
+
+              setDeleted(deleted + 1);
+
+              setIsLoading(false);
+              alert("刪除成功");
+              props.update();
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            alert("你不是專家吧？");
+          }
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+const expertReport = (id) => {
+  return(
+    <>
+      {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
+
+
+      <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有疑慮需要下架嗎？（注意！下架即刪除）</Typography>
+          <FormControl sx={{ width: 100 }} size="small">
+            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+            <Button
+            color="secondary"
+            variant="contained"
+            onClick={reportDelete()}
+            size="small"
+            sx={{ m: 1, height: 35 }}
+          >
+            需要下架
+            </Button>
+          </FormControl><br />
+          
+    </>
+  )
+}
+
 
   const expert = () => {
     return (
@@ -454,6 +532,7 @@ const ArticleDetails = (props) => {
           >
             送出
           </Button>
+
         </Box>
       </>
     );
@@ -603,7 +682,7 @@ const ArticleDetails = (props) => {
           </Stack>
 
           {character === "專家" && expert()}
-
+          {expertAction===true&&expertReport(props.article.docId)}
           <div style={{ padding: 14 }} className="App">
             {props.article.outdate === 'stale' && (
               <h2>

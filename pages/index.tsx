@@ -196,7 +196,7 @@ const Demo: React.FC = () => {
   const partnerLogo: Array<string> = [
     '/pic/blue.png',
     '/pic/recommend.png',
-    '/pic/blue.png',
+    '/pic/report.png',
 
   ];
   return (

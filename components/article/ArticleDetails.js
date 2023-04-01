@@ -44,6 +44,7 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
+  getCountFromServer
 } from "firebase/firestore";
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import VI from "@mui/icons-material/Visibility";
@@ -110,8 +111,8 @@ const ArticleDetails = (props) => {
         
         // 第一種是把讀取denounce存在的條件直接塞進原本的這個useeffect的function
 //=====================================================================================================
-        // const refReport = collection(db,"text",props.article.docId,"denounce");
-        // const docSnapReport = await getDocs(refReport);
+        const refReport = collection(db,"text",props.article.docId,"denounce");
+        const snapshot = await getCountFromServer(refReport);
 
         if ((docSnap.exists() && docSnap.data().character === "專家")) {
           setCharacter("專家")
@@ -119,13 +120,14 @@ const ArticleDetails = (props) => {
         
         // 到底為什麼一直說他不是一個function啊，要中風了
 
-        // if ((docSnap.exists()&& docSnap.data().character === "專家")){
-        //   setExpertAction("true");
-        //   props.update();
-        // }
+        if ((snapshot.data().count>0 && docSnap.data().character === "專家")){
+          setExpertAction("true");
+          props.update();
+        }
 
         else {
           setOutdated(false)
+          setExpertAction("false");
           console.log('article:', props.article);
           console.log('outdateCount:', props.article.outdateCount);
         }
@@ -450,7 +452,7 @@ const ArticleDetails = (props) => {
               setDeleted(deleted + 1);
 
               setIsLoading(false);
-              alert("刪除成功");
+              alert("下架成功");
               props.update();
             } catch (error) {
               console.log(error);
@@ -465,7 +467,7 @@ const ArticleDetails = (props) => {
     }
   };
 
-const expertReport = (id) => {
+const expertReport = () => {
   return(
     <>
       {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
@@ -477,7 +479,7 @@ const expertReport = (id) => {
             <Button
             color="secondary"
             variant="contained"
-            onClick={reportDelete()}
+            onClick={reportDelete}
             size="small"
             sx={{ m: 1, height: 35 }}
           >
@@ -585,7 +587,7 @@ const expertReport = (id) => {
           </Select>
         </FormControl>
 
-        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => Denounce(report)}>
+        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
           檢舉
         </Button>
         {/*        
@@ -654,7 +656,7 @@ const expertReport = (id) => {
                   <DialogContent>
                     <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        {user && reportMenu()}
+                        {reportMenu()}
                         { }
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
 
@@ -682,7 +684,7 @@ const expertReport = (id) => {
           </Stack>
 
           {character === "專家" && expert()}
-          {expertAction==="true"&&expertReport(props.article.docId)}
+          {expertAction==="true"&&expertReport()}
           <div style={{ padding: 14 }} className="App">
             {props.article.outdate === 'stale' && (
               <h2>

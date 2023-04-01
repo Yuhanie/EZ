@@ -26,6 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { red } from "@mui/material/colors";
 
 
 const MENU_LIST = [
@@ -287,7 +288,7 @@ function Newpost() {
               </FormControl>
               <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button variant="contained" onClick={update}>發布</Button><br></br><br></br>
-                <Button variant="contained">取消</Button>
+                <Button variant="contained" sx={{color:red}}>取消</Button>
               </CardActions>
 
 

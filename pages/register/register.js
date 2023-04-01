@@ -15,6 +15,30 @@ import Link from "next/link";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Button, TextField, Card, Divider } from "@mui/material";
+import {
+  collection,
+  addDoc,
+  Doc,
+  setDoc,
+  doc,
+  getDocs,
+  deleteDoc,
+  getDoc,
+  getFirestore,
+  query,
+  orderBy,
+  limit,
+  updateDoc,
+  serverTimestamp,
+  arrayRemove,
+  arrayUnion,
+  getCountFromServer
+} from "firebase/firestore";
+
+const firebaseApp =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+
 
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
@@ -30,7 +54,20 @@ const Home = () => {
   const handleChange = function (e) {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
-  async function handleOnClick() {
+  const handleOnClick = async function () {
+    // const ref = doc(db, "profile", account.uid);
+    // const docSnap = await getDoc(ref);
+
+    // if(docSnap.exists()){
+    //   }
+    //   else{
+    //     await addDoc(collection(db, "profile", account.uid), {
+    //       character:"學習者",
+    //       tag:"",
+    //     })
+    //   }
+    // console.log(docRef.id);
+    
     // const res = await createUserWithEmailAndPassword(
     //   auth,
     //   account.email,

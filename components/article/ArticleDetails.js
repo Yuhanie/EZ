@@ -505,7 +505,7 @@ const expertReport = (id) => {
 
           }}>
           <EmojiObjectsIcon sx={{ mt: 2 }} />
-          <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有幫助到你嗎？</Typography>
+          <Typography variant="body1" sx={{ mt: 2 }}>文章審核</Typography>
           <FormControl sx={{ width: 140 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
             <Select

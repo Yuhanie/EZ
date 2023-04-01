@@ -18,7 +18,7 @@ import { useRouter } from "next/router"
 // import Navbar3 from "../components/navbar/Navbar3";
 
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs, where, doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, where, doc, getDoc, getCountFromServer } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
@@ -118,7 +118,7 @@ const settings = {
 
 
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [tag, setTag] = useState<Tag[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -135,22 +135,25 @@ const Home: NextPage = () => {
     setUpdated((currentValue)=>currentValue+1)
   }
   useEffect(() => {
-     console.log("readData")
     async function readData() {
 
       setIsLoading(true);      
-      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("denounce","==",{"exists":true})):query(collection(db, "text"), where("denounce","==",{"exists":true}), limit(3)));
-      const tempDenounce: Article[] = [];
-      queryDenounce.forEach((doc) => {
-        tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      // const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("denounce","==",{"exists":true})):query(collection(db, "text"), where("denounce","==",{"exists":true}), limit(3)));
+      
+      // const queryDenounce = collection(db, "text", doc.Id, "denounce");
+      // const snapshot = await getCountFromServer(queryDenounce);
+      
+      // const tempDenounce: Article[] = [];
+      // queryDenounce.forEach((doc) => {
+      //   tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-        console.log(`newtext ${doc.id} => ${doc.data()}`);
-      });
-      setDenounces([...tempDenounce]);
+      // });
+      
+      // setDenounces(...tempDenounce);
 
       setIsLoading(true);
       // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));
-      
+
       const queryExam = await getDocs(staleOpen?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
@@ -219,33 +222,6 @@ const Home: NextPage = () => {
       alert("請登入");
     }
   };
-
-
-  // const MorePending = (id) => {
-  //   return (
-  //     <div>
-  //       <Button color="secondary" variant="contained" onClick={()=>update(id)}>
-  //         修改
-  //       </Button>
-  //       <Button color="secondary" variant="contained" onClick={deleteData}>
-  //         刪除
-  //       </Button>
-  //     </div>
-  //   );
-  // };
-
-  // const MoreStale = (id) => {
-  //   return (
-  //     <div>
-  //       <Button color="secondary" variant="contained" onClick={()=>update(id)}>
-  //         修改
-  //       </Button>
-  //       <Button color="secondary" variant="contained" onClick={deleteData}>
-  //         刪除
-  //       </Button>
-  //     </div>
-  //   );
-  // };
 
 
   const renderStale = (stale: Article, i: number) => {

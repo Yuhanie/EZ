@@ -587,7 +587,7 @@ const expertReport = () => {
           </Select>
         </FormControl>
 
-        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => Denounce(report)}>
+        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
           檢舉
         </Button>
         {/*        
@@ -656,7 +656,7 @@ const expertReport = () => {
                   <DialogContent>
                     <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        {user && reportMenu()}
+                        {reportMenu()}
                         { }
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
 

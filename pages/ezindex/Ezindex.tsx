@@ -43,20 +43,19 @@ const Ezindex = () => {
                         <Grid item>
 
                             <Box display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">
-                                <Box display="flex" flexDirection="column" justifyContent="space-between" sx={{ height: 350, p: 4 }}>
+                                <Box display="flex" flexDirection="column" justifyContent="space-between"  maxWidth={400} sx={{ p: 4 }}>
                                     {/* 網頁 */}
                                     <Typography
-                                        variant="h3"
+                                        variant="h2"
                                         noWrap
                                         component="a"
-                                        href="/"
                                         sx={{
-                                            mr: 2,
                                             display: { xs: "none", md: "flex" },
                                             fontWeight: 700,
                                             letterSpacing: ".3rem",
                                             color: "inherit",
                                             textDecoration: "none",
+                                            pb:3
                                         }}
                                     >
                                         讓學習變得<br />更Easy
@@ -66,23 +65,23 @@ const Ezindex = () => {
                                         variant="h3"
                                         noWrap
                                         component="a"
-                                        href=""
+                                       
                                         sx={{
-                                            mr: 2,
                                             display: { xs: "flex", md: "none" },
                                             flexGrow: 1,
                                             fontWeight: 700,
                                             letterSpacing: ".3rem",
                                             color: "inherit",
                                             textDecoration: "none",
+                                            pb:3
                                         }}
                                     >
                                         讓學習變得<br />更Easy
                                     </Typography>
 
-                                    {/* <Typography sx={{ textAlign: "left", }}>看看大家的學習筆記！</Typography> */}
+                                    <Typography variant="body1" sx={{ textAlign: "left",letterSpacing:".1rem",lineHeight:1.8,color:"#000000" }}>以「Tag、Link、Update」優化文章閱讀體驗，快速獲得正確知識，讓學習更省時、更高效。</Typography>
                                     {/* <Typography sx={{ textAlign: "left", }}>獲取最新的資訊</Typography> */}
-                                    <Button variant="contained" color="secondary">文章分享區</Button>
+                                    <Button variant="contained" color="secondary" href="/" sx={{mt:7}}>文章分享區</Button>
                                 </Box>
                                 <Toolbar />
                                 <Box sx={{ maxWidth: 600, p: 4 }}>

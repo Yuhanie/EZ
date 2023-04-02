@@ -117,7 +117,11 @@ const ArticleDetails = (props) => {
         );
         const snapshot = await getCountFromServer(refReport);
 
-        if (docSnap.exists() && docSnap.data().character === "專家") {
+        if (
+          docSnap.exists() &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
           setCharacter("專家");
         } else {
           setCharacter("學習者");

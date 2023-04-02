@@ -256,7 +256,7 @@ const Article = () => {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
-            href="/"
+            href="/note"
           >
             <ArrowBackIosNewIcon />
           </IconButton>

@@ -146,7 +146,7 @@ const Home = () => {
           }}
         >
           <Image alt="裝飾用圖片" src={myImage} sx={{ p: 5 }} />
-          <Button href="/" variant="contained" fullWidth="full">
+          <Button href="/note" variant="contained" fullWidth="full">
             先看看其他文章 &rarr;
           </Button>
         </Card>

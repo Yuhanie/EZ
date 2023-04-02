@@ -477,7 +477,7 @@ const expertReport = () => {
           <FormControl sx={{ width: 100 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
             <Button
-            color="secondary"
+            color="error"
             variant="contained"
             onClick={reportDelete}
             size="small"
@@ -526,7 +526,7 @@ const expertReport = () => {
             </Select>
           </FormControl><br />
           <Button
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={() => outdate(expertOutdate)}
             size="small"
@@ -596,7 +596,7 @@ const expertReport = () => {
           </Select>
         </FormControl>
 
-        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
+        <Button color="warning" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
           檢舉
         </Button>
         {/*        

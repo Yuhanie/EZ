@@ -188,12 +188,15 @@ export default function SignIn() {
               登入
             </Button>
             <Button onClick={handleForgetPwd}>忘記密碼</Button>
+            
             <Typography variant="body2" sx={{m:1}}>
               沒有帳號？現在就加入我們吧！
+
               <Typography
               color="secondary"
               variant="button"
               onClick={changeStatus}
+              className={  styles.register}
             >
               註冊
             </Typography>

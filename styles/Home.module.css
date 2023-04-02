@@ -1288,3 +1288,7 @@
   top: 100px;
   left: 175px;
 }
+
+.register{
+  cursor: pointer;
+}

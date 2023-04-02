@@ -8,20 +8,20 @@ import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
-import FormControl from '@mui/material/FormControl';
-import WarningIcon from '@mui/icons-material/Warning';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
+import FormControl from "@mui/material/FormControl";
+import WarningIcon from "@mui/icons-material/Warning";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -44,7 +44,7 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
-  getCountFromServer
+  getCountFromServer,
 } from "firebase/firestore";
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import VI from "@mui/icons-material/Visibility";
@@ -66,7 +66,7 @@ import {
   Paper,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -95,12 +95,10 @@ const ArticleDetails = (props) => {
   };
 
   const handleToolClose = (event, reason) => {
-    if (reason !== 'backdropClick') {
+    if (reason !== "backdropClick") {
       setToolOpen(false);
     }
   };
-
-
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
@@ -108,35 +106,40 @@ const ArticleDetails = (props) => {
       if (user) {
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
-        
+
         // 第一種是把讀取denounce存在的條件直接塞進原本的這個useeffect的function
-//=====================================================================================================
-        const refReport = collection(db,"text",props.article.docId,"denounce");
+        //=====================================================================================================
+        const refReport = collection(
+          db,
+          "text",
+          props.article.docId,
+          "denounce"
+        );
         const snapshot = await getCountFromServer(refReport);
 
-        if ((docSnap.exists() && docSnap.data().character === "專家")) {
-          setCharacter("專家")
+        if (docSnap.exists() && docSnap.data().character === "專家") {
+          setCharacter("專家");
+        } else {
+          setCharacter("學習者");
         }
-        
+
         // 到底為什麼一直說他不是一個function啊，要中風了
 
-        if ((snapshot.data().count>0 && docSnap.data().character === "專家")){
+        if (snapshot.data().count > 0 && docSnap.data().character === "專家") {
           setExpertAction("true");
           props.update();
-        }
-
-        else {
-          setOutdated(false)
+        } else {
+          setOutdated(false);
           setExpertAction("false");
-          console.log('article:', props.article);
-          console.log('outdateCount:', props.article.outdateCount);
+          console.log("article:", props.article);
+          console.log("outdateCount:", props.article.outdateCount);
         }
       }
       console.log("user", user);
     });
 
     // 第二種是把讀取denounce存在的條件在同一個useeffect再創一個function
-//============================================================================================================
+    //============================================================================================================
     // const expertActive = (user) => {
     //   setUser(user);
     //   if (user) {
@@ -154,36 +157,32 @@ const ArticleDetails = (props) => {
       unsub();
       // expertActive();
     };
-  }
-    , [props.article]);
+  }, [props.article]);
 
+  // 第三種是直接重新創一個useeffect 把讀取denounce存在的條件放進去＾＾，到底要怎麼搞呢
+  //============================================================================================================
+  // useEffect(() => {
+  //   const expertActive = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //     if (user) {
+  //       const ref = query(collection(db, "text", props.article.docId, "denounce"));
+  //       const docSnap = getDocs(ref);
+  //       if ((docSnap.exists() && character === "專家")) {
+  //           setExpertAction("true");
+  //           props.update();
+  //       }
+  //     }
 
-    // 第三種是直接重新創一個useeffect 把讀取denounce存在的條件放進去＾＾，到底要怎麼搞呢
-//============================================================================================================
-    // useEffect(() => {
-    //   const expertActive = onAuthStateChanged(auth, (user) => {
-    //     setUser(user);
-    //     if (user) {
-    //       const ref = query(collection(db, "text", props.article.docId, "denounce"));
-    //       const docSnap = getDocs(ref);
-    //       if ((docSnap.exists() && character === "專家")) {
-    //           setExpertAction("true");
-    //           props.update();
-    //       }
-    //     }
-  
-    //   });
-  
-    //   return () => {
-    //     expertActive();
-    //   };
-    // }
-    //   );
+  //   });
+
+  //   return () => {
+  //     expertActive();
+  //   };
+  // }
+  //   );
 
   useEffect(() => {
     async function fetchData() {
-
-
       const querySnapshotDenounce = collection(
         db,
         "text",
@@ -212,7 +211,7 @@ const ArticleDetails = (props) => {
       querySnapshotArticle.forEach((doc) => {
         let data = { ...doc.data(), id: doc.id };
         temp.push(data);
-        console.log("data:", data)
+        console.log("data:", data);
       });
 
       // setComments(() => [temp1, temp2]);
@@ -222,8 +221,6 @@ const ArticleDetails = (props) => {
     console.log("user:", user);
     console.log("article:", props.article);
 
-
-
     // eslint-disable-next-line
   }, [edited, outdated, deleted]);
 
@@ -231,11 +228,9 @@ const ArticleDetails = (props) => {
     props.setOpen(false);
   };
 
-
   const update = (id) => {
-    router.push('/Newpost?articleId=' + id);
-  }
-
+    router.push("/Newpost?articleId=" + id);
+  };
 
   const outdate = async function () {
     if (typeof window !== "undefined") {
@@ -247,13 +242,11 @@ const ArticleDetails = (props) => {
             setIsLoading(true);
 
             await updateDoc(doc(db, "text", props.article.docId), {
-              outdate: expertOutdate
-
+              outdate: expertOutdate,
             });
             setIsLoading(false);
             props.update();
-          }
-          catch (error) {
+          } catch (error) {
             // console.log(error);
           }
         }
@@ -268,42 +261,38 @@ const ArticleDetails = (props) => {
     }
   };
 
-
-
   const Denounce = async function (report) {
-    console.log("report", report)
+    console.log("report", report);
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
           if (report == "stale") {
-            if ((docSnap.data().outdate) == "stale") {
+            if (docSnap.data().outdate == "stale") {
               await updateDoc(doc(db, "text", props.article.docId), {
-                outdate: "stale"
-
+                outdate: "stale",
               });
-            }
-            else {
+            } else {
               // alert("stale")
               try {
                 setIsLoading(true);
                 await updateDoc(doc(db, "text", props.article.docId), {
-                  outdate: "pending"
-
+                  outdate: "pending",
                 });
                 setIsLoading(false);
                 props.update();
-              }
-              catch (error) {
+              } catch (error) {
                 // console.log(error);
               }
             }
-          }
-          else {
-            await setDoc(doc(db, "text", props.article.docId, "denounce", user.uid), {
-              reason: report
-            });
+          } else {
+            await setDoc(
+              doc(db, "text", props.article.docId, "denounce", user.uid),
+              {
+                reason: report,
+              }
+            );
           }
         }
 
@@ -316,7 +305,6 @@ const ArticleDetails = (props) => {
       alert("請登入");
     }
   };
-
 
   // const outdateCount = async function () {
   //   if (typeof window !== "undefined") {
@@ -371,7 +359,6 @@ const ArticleDetails = (props) => {
   //   }
   // }
 
-
   async function onSubmit() {
     if (typeof window !== "undefined") {
       if (!user) {
@@ -400,7 +387,6 @@ const ArticleDetails = (props) => {
       }
     }
   }
-
 
   const deleteData = async function () {
     if (typeof window !== "undefined") {
@@ -434,14 +420,13 @@ const ArticleDetails = (props) => {
     }
   };
 
-
   const reportDelete = async function () {
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
-          if (character=="專家"&& expertAction=="true") {
+          if (character == "專家" && expertAction == "true") {
             try {
               setIsLoading(true);
 
@@ -467,16 +452,17 @@ const ArticleDetails = (props) => {
     }
   };
 
-const expertReport = () => {
-  return(
-    <>
-      {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
+  const expertReport = () => {
+    return (
+      <>
+        {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
 
-
-      <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有疑慮需要下架嗎？（注意！下架即刪除）</Typography>
-          <FormControl sx={{ width: 100 }} size="small">
-            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
-            <Button
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
+        </Typography>
+        <FormControl sx={{ width: 100 }} size="small">
+          {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+          <Button
             color="secondary"
             variant="contained"
             onClick={reportDelete}
@@ -484,13 +470,12 @@ const expertReport = () => {
             sx={{ m: 1, height: 35 }}
           >
             需要下架
-            </Button>
-          </FormControl><br />
-          
-    </>
-  )
-}
-
+          </Button>
+        </FormControl>
+        <br />
+      </>
+    );
+  };
 
   const expert = () => {
     return (
@@ -504,10 +489,12 @@ const expertReport = () => {
             bgcolor: "#fafafa",
             borderRadius: 2,
             spacing: 2,
-
-          }}>
+          }}
+        >
           <EmojiObjectsIcon sx={{ mt: 2 }} />
-          <Typography variant="body1" sx={{ mt: 2 }}>文章審核</Typography>
+          <Typography variant="body1" sx={{ mt: 2 }}>
+            文章審核
+          </Typography>
           <FormControl sx={{ width: 140 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
             <Select
@@ -518,13 +505,13 @@ const expertReport = () => {
               onChange={(e) => {
                 setExpertOutdate(e.target.value);
               }}
-              sx={{ m: 1, }}
+              sx={{ m: 1 }}
             >
               <MenuItem value="solved">沒問題</MenuItem>
               <MenuItem value="stale">過時或無法使用</MenuItem>
-
             </Select>
-          </FormControl><br />
+          </FormControl>
+          <br />
           <Button
             color="secondary"
             variant="contained"
@@ -534,7 +521,6 @@ const expertReport = () => {
           >
             送出
           </Button>
-
         </Box>
       </>
     );
@@ -543,10 +529,15 @@ const expertReport = () => {
   const outdateIcon = () => {
     return (
       <div>
-        {props.article.outdate === "stale" && <WarningIcon sx={{ color: "Crimson" }} />}
-        {props.article.outdate === "pending" && <NotificationImportantIcon sx={{ color: "Gold" }} />}
-        {props.article.outdate === "solved" &&
-          <CheckCircleIcon sx={{ color: "Green" }} />}
+        {props.article.outdate === "stale" && (
+          <WarningIcon sx={{ color: "Crimson" }} />
+        )}
+        {props.article.outdate === "pending" && (
+          <NotificationImportantIcon sx={{ color: "Gold" }} />
+        )}
+        {props.article.outdate === "solved" && (
+          <CheckCircleIcon sx={{ color: "Green" }} />
+        )}
       </div>
     );
   };
@@ -557,7 +548,7 @@ const expertReport = () => {
         <IconButton color="secondary" onClick={() => update(id)}>
           <EditIcon />
         </IconButton>
-        <IconButton color="secondary"  onClick={deleteData}>
+        <IconButton color="secondary" onClick={deleteData}>
           <DeleteForeverIcon />
         </IconButton>
       </div>
@@ -567,45 +558,60 @@ const expertReport = () => {
   const reportMenu = (id) => {
     return (
       <div>
-
-<IconButton onClick={handleToolClickOpen}><MoreHorizIcon /></IconButton>
-                <Dialog open={toolopen} onClose={handleToolClose}>
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
-                    <IconButton onClick={handleToolClose}><CloseIcon /></IconButton>
-                  </Box>
-                  <Divider />
- <DialogContent>
-                    <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        <FormControl sx={{ width: 110 }}>
-          <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            // value={topicName}
-            // label="topic"
-            onChange={(e) => {
-              setReport(e.target.value);
-            }}
+        <IconButton onClick={handleToolClickOpen}>
+          <MoreHorizIcon />
+        </IconButton>
+        <Dialog open={toolopen} onClose={handleToolClose}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <MenuItem value="stale">過時或無法使用</MenuItem>
-            <MenuItem value="empty">內容空泛</MenuItem>
-            <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
-            <MenuItem value="spamming">惡意洗版</MenuItem>
-            <MenuItem value="tagerror">文章分類錯誤</MenuItem>
-          </Select>
-        </FormControl>
+            <Typography variant="body1" sx={{ m: 2 }}>
+              遇到問題了嗎？
+            </Typography>
+            <IconButton onClick={handleToolClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Divider />
+          <DialogContent>
+            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+              <FormControl sx={{ width: 110 }}>
+                <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  // value={topicName}
+                  // label="topic"
+                  onChange={(e) => {
+                    setReport(e.target.value);
+                  }}
+                >
+                  <MenuItem value="stale">過時或無法使用</MenuItem>
+                  <MenuItem value="empty">內容空泛</MenuItem>
+                  <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+                  <MenuItem value="spamming">惡意洗版</MenuItem>
+                  <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+                </Select>
+              </FormControl>
 
-        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
-          檢舉
-        </Button>
-        {/*        
+              <Button
+                color="secondary"
+                variant="contained"
+                sx={{ ml: 2 }}
+                size="small"
+                onClick={() => (user ? Denounce(report) : alert("請登入"))}
+              >
+                檢舉
+              </Button>
+              {/*        
           <Button color="secondary" variant="contained" onClick={()=>report(id)}>
             檢舉
           </Button> */}
-       </Box> 
-    </DialogContent> 
-  </Dialog>
+            </Box>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   };
@@ -613,13 +619,16 @@ const expertReport = () => {
   const renderComment = (comment, i) => {
     return (
       <div key={comment.content}>
-        {comment &&
+        {comment && (
           <div style={{ padding: 14 }} className="App">
-
-            <Comment edited={edited} setEdited={setEdited} article={props.article} comment={comment} />
-
+            <Comment
+              edited={edited}
+              setEdited={setEdited}
+              article={props.article}
+              comment={comment}
+            />
           </div>
-        }
+        )}
       </div>
     );
   };
@@ -627,49 +636,52 @@ const expertReport = () => {
   const renderReport = (report, i) => {
     return (
       <div key={report.reaso}>
-        {report &&
+        {report && (
           <div style={{ padding: 14 }} className="App">
-
-            <Report edited={edited} setEdited={setEdited} article={props.article} report={report} />
-
+            <Report
+              edited={edited}
+              setEdited={setEdited}
+              article={props.article}
+              report={report}
+            />
           </div>
-        }
+        )}
       </div>
     );
-  }
-
+  };
 
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose}>
         <DialogTitle>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Box display="flex" alignItems="center">
               {outdateIcon()}
               <a href={props.article.link}>{props.article.title}</a>
             </Box>
             <Box display="flex" alignItems="center">
               <VI />
-              <Typography variant="body2" sx={{ ml: 0.5 ,pr:0.8}}>{props.article.count}</Typography>
+              <Typography variant="body2" sx={{ ml: 0.5, pr: 0.8 }}>
+                {props.article.count}
+              </Typography>
               <FormControl>
-                {user && user.uid === props.article.userid && Update(props.article.docId)}
+                {user &&
+                  user.uid === props.article.userid &&
+                  Update(props.article.docId)}
                 {/* {user.uid}/{props.article.userid} */}
                 {/* {props.article.userid} */}
               </FormControl>
               <Box>
-                
-                 
-                        {user && user.uid !== props.article.userid&&reportMenu()}
-              
-                        {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
-   
+                {user && user.uid !== props.article.userid && reportMenu()}
 
+                {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
               </Box>
             </Box>
-
           </Box>
-
-
         </DialogTitle>
 
         <DialogContent>
@@ -684,9 +696,9 @@ const expertReport = () => {
           </Stack>
 
           {character === "專家" && expert()}
-          {expertAction==="true"&&expertReport()}
+          {expertAction === "true" && expertReport()}
           <div style={{ padding: 14 }} className="App">
-            {props.article.outdate === 'stale' && (
+            {props.article.outdate === "stale" && (
               <h2>
                 <Image alt="版本疑慮" src={warning} />
                 版本疑慮
@@ -694,7 +706,7 @@ const expertReport = () => {
             )}
 
             <div className={styles.yu}>
-              {props.article.outdate === 'stale'
+              {props.article.outdate === "stale"
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
@@ -720,7 +732,8 @@ const expertReport = () => {
               </Typography> */}
 
             {comments.map((comment) => renderComment(comment))}
-            {character === "專家" && denounces.map((report) => renderReport(report))}
+            {character === "專家" &&
+              denounces.map((report) => renderReport(report))}
             {/* <Comment article={props.article} /> */}
           </div>
           <Box display="flex" justifyContent="space-between">
@@ -730,7 +743,7 @@ const expertReport = () => {
               onChange={(e) => setContent(e.target.value)}
               sx={{ ml: 2, borderRadius: 12, height: 35 }}
               //sx={{ padding: 1, margin: 5, left: -20, top: -1, borderRadius: 12, width: 340, height: 35 }}
-              placeholder='我要留言...'
+              placeholder="我要留言..."
               // onClick={onSubmit}
               fullWidth
             />
@@ -740,15 +753,12 @@ const expertReport = () => {
               endIcon={<SendIcon />}
               onClick={onSubmit}
               sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
-            // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
+              // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
             ></Button>
           </Box>
         </DialogContent>
-
-
-
       </Dialog>
-    </div >
+    </div>
   );
 };
 

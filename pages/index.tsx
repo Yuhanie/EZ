@@ -16,6 +16,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Card from "@mui/material/Card";
 import VI from "@mui/icons-material/Visibility";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from "react";
@@ -100,10 +107,11 @@ const index = () => {
                         </Grid>
 
                         <Grid item minWidth={300}>
-                            <Box display="flex" flexWrap="wrap" >
+                            <Grid display="flex" flexWrap="wrap">
 
-                                <Grid xs={6} sx={{ p: 4 }}>
-                                    <Box display="flex" flexDirection="column" flexWrap="wrap">
+                                <Grid item xs={6} sx={{ p: 4 }}>
+                                    {/* <Box display="flex" flexDirection="column" flexWrap="wrap">
+
                                         <Typography variant="h6">文章狀態</Typography>
                                         <Box display="flex" alignItems="center">
                                             <IconButton ><CheckCircleIcon sx={{ color: "Green" }} /></IconButton>
@@ -113,16 +121,90 @@ const index = () => {
                                             <IconButton><NotificationImportantIcon sx={{ color: "Gold" }} /></IconButton>
                                             <Typography>專家審核中</Typography>
                                         </Box>
+                                        <Typography variant="caption" sx={{ pl: 5 }}>
+                                            此為專家角色權限，可針對有問題的文章做審核。
+                                        </Typography>
                                         <Box display="flex" alignItems="center" >
                                             <IconButton><WarningIcon sx={{ color: "Crimson" }} /></IconButton>
                                             <Typography>版本疑慮</Typography><br />
-                                            
+
                                         </Box>
-                                        <Typography variant="caption">經由專家審核後，這篇文章已經不符合現在的版本或者無法使用</Typography>
-                                    </Box>
+                                        <Typography variant="caption" sx={{ pl: 5 }}>經由專家審核後，這篇文章已經不符合現在的版本或者無法使用</Typography>
+                                    </Box> */}
+
+
+                                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                        <Typography variant="h6">文章狀態</Typography>
+                                        <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
+                                                <Avatar alt="check" sx={{ color: "Green", bgcolor: "#ffffff" }} ><CheckCircleIcon /></Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary=" 審核通過"
+                                                secondary={
+
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        「文章預設」、文章審核通過
+                                                    </Typography>
+
+
+                                                }
+                                            />
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                        <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
+                                                <Avatar alt="check" sx={{ color: "Gold", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary="專家審核中"
+                                                secondary={
+
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        此為專家角色權限：專家可針對有問題的文章做審核
+                                                    </Typography>
+
+                                                }
+                                            />
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                        <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
+                                                <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary="版本疑慮"
+                                                secondary={
+                                                    <React.Fragment>
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        經由專家審核後，這篇文章已經不符合現在的版本或者無法使用。
+                                                    </Typography>
+                                                    {"出現提示框告知讀者文章狀態。"}
+                                                    </React.Fragment>
+
+
+                                                }
+                                            />
+                                        </ListItem>
+                                    </List>
 
                                 </Grid>
-                                <Grid xs={3}>
+                                <Grid item xs={3}>
                                     <Card sx={{ width: 350, height: 500, p: 2 }}>
                                         <Box display="flex" alignItems="center" justifyContent="space-between">
                                             <Box display="flex">
@@ -146,10 +228,11 @@ const index = () => {
 
                                     </Card>
                                 </Grid>
-                                <Grid xs={3}>
+                                <Grid item xs={3}>
                                     <Box display="flex" flexDirection="column" sx={{ m: 2, pl: 4 }}>
-                                        <Box sx={{ m: 1, p: 2, height: 150, bgcolor: "#FFF6E1" }}>
+                                        <Box sx={{ m: 1, p: 2, height: 150,width:200, bgcolor: "#FFF6E1" }}>
                                             <Typography variant="h6">學習者</Typography>
+                                            <Box></Box>
                                         </Box>
                                         <Box sx={{ m: 1, p: 2, height: 150, bgcolor: "#E9F0E7" }}>
                                             <Typography variant="h6">專家</Typography>
@@ -161,7 +244,7 @@ const index = () => {
 
 
 
-                            </Box>
+                            </Grid>
                         </Grid>
 
                     </Grid>

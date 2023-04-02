@@ -70,7 +70,7 @@ ElevationScroll.propTypes = {
 //appbar排版
 const pages = [
   // '筆記分享區', '問答區',
-  { text: "筆記分享區", href: "/" },
+  { text: "筆記分享區", href: "/note" },
   // { text: "問答區", href: "" },
 ];
 const settings = [

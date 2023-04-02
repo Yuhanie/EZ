@@ -50,7 +50,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
-import  CircularProgress from "@mui/material";
+import CircularProgress from "@mui/material";
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 
@@ -108,12 +108,12 @@ const Profile = () => {
   const [profile, setProfile] = useState<Profile>();
   const [collects, setCollects] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [collectOpen, setCollectOpen] =useState<boolean>(false);
+  const [collectOpen, setCollectOpen] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
   // const [bookmark, setBookmark] = useState<Bookmark[]>([]);
 
-  const updateUpdated = ()=>{
-    setUpdated((currentValue)=>currentValue+1)
+  const updateUpdated = () => {
+    setUpdated((currentValue) => currentValue + 1)
   }
 
   const handleChange = (event: SelectChangeEvent<typeof tags>) => {
@@ -147,35 +147,35 @@ const Profile = () => {
       //     setProfile({ character: querySnapshot.data().character });
       //   };
       // }
-      const unsub = onAuthStateChanged(auth, async(user) => {
+      const unsub = onAuthStateChanged(auth, async (user) => {
         if (user) {
           const querySnapshot = await getDoc(doc(db, "profile", user.uid));
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character });
+            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者" });
           };
           console.log('currentUser', user)
           setCurrentUser(user);
 
           setIsLoading(true);
-      const queryCollect = await getDocs(query(collection(db, "text"), where("bookmark", "array-contains", user.uid)));
-      const tempCollect: Article[] = [];
-      queryCollect.forEach((doc) => {
-        tempCollect.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
-      });
-      setCollects([...tempCollect]);
-      setIsLoading(false);
+          const queryCollect = await getDocs(query(collection(db, "text"), where("bookmark", "array-contains", user.uid)));
+          const tempCollect: Article[] = [];
+          queryCollect.forEach((doc) => {
+            tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+          });
+          setCollects([...tempCollect]);
+          setIsLoading(false);
         }
       });
 
-      
+
 
       return () => {
         unsub();
       }
     }
     readData();
-  },[]);
+  }, []);
 
   const renderCollect = (collect: Article, i: number) => {
     return (
@@ -187,7 +187,7 @@ const Profile = () => {
 
 
   return (
-<>
+    <>
       <div>
         <Head>
           <title>我的角色</title>
@@ -383,11 +383,11 @@ const Profile = () => {
                         </Stack>
                       </CardContent>
                     </Card>
-                  </Grid>                
+                  </Grid>
                 </Grid>
               </Box>
 
-                    {/* <Card sx={{ m: 2, width: 300 }}>
+              {/* <Card sx={{ m: 2, width: 300 }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           收藏文章
@@ -405,19 +405,19 @@ const Profile = () => {
 
               <Box display="flex" p={2} flexWrap="wrap">
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
-                        <Chip label="我的收藏" />
- 
-              <div>
-                {collects.map(renderCollect)}
-              </div>
-                                  
+                  <Chip label="我的收藏" />
+
+                  <div>
+                    {collects.map(renderCollect)}
+                  </div>
+
                 </Grid>
               </Box>
 
 
 
 
-              
+
             </Box>
           </Card>
         </Container>

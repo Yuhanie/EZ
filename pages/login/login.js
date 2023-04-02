@@ -192,14 +192,14 @@ export default function SignIn() {
             <Typography variant="body2" sx={{m:1}}>
               沒有帳號？現在就加入我們吧！
 
-              <Typography
-              color="secondary"
-              variant="button"
+              <Button
+              color="success"
+              variant="contained"
               onClick={changeStatus}
-              className={  styles.register}
+              cursor="pointer"
             >
               註冊
-            </Typography>
+            </Button>
             </Typography>
             
           </Box>

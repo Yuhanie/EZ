@@ -234,11 +234,12 @@ function Newpost() {
                   error={content === ""}
                   helperText={content === "" ? "請輸入內容" : ""}
                   required
-                  InputProps={{ sx: { height: 250 } }}
+                  InputProps
                   id="outlined-textarea"
                   label="請輸入內容"
                   placeholder={content ? "" : "我想分享..."}
                   margin="normal"
+                  rows={10}
                   multiline
                   value={content}
                   onChange={(e) => setContent(e.target.value)}

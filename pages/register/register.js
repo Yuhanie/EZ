@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Button, TextField, Card, Divider } from "@mui/material";
+import { useRouter } from "next/router"
 import {
   collection,
   addDoc,
@@ -50,10 +51,16 @@ const Home = () => {
   });
   const [message, setMessage] = useState("");
   const auth = getAuth();
+  const router = useRouter();
   const handleChange = function (e) {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
+
+  
   const handleOnClick = async function () {
+        alert("註冊成功");
+        router.push('/login');
+      
     // const res = await createUserWithEmailAndPassword(
     //   auth,
     //   account.email,
@@ -116,6 +123,7 @@ const Home = () => {
     //   character: "學習者",
     //   tag:""
     // });
+    
   };
 
   return (
@@ -216,9 +224,12 @@ const Home = () => {
             </Button>
             <Typography variant="body2" sx={{ m: 1 }}>
               已經有帳號了嗎？
-              <Link sx={{ color: "secondary" }} href="/login">
-                點此登入
-              </Link>
+              <Button 
+             color="primary"
+              variant="contained"
+              href="/login">
+              點此登入
+              </Button>
             </Typography>
           </Box>
         </Card>

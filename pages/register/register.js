@@ -32,13 +32,12 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
-  getCountFromServer
+  getCountFromServer,
 } from "firebase/firestore";
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
-
 
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
@@ -55,19 +54,6 @@ const Home = () => {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
   const handleOnClick = async function () {
-    // const ref = doc(db, "profile", account.uid);
-    // const docSnap = await getDoc(ref);
-
-    // if(docSnap.exists()){
-    //   }
-    //   else{
-    //     await addDoc(collection(db, "profile", account.uid), {
-    //       character:"學習者",
-    //       tag:"",
-    //     })
-    //   }
-    // console.log(docRef.id);
-    
     // const res = await createUserWithEmailAndPassword(
     //   auth,
     //   account.email,
@@ -95,8 +81,14 @@ const Home = () => {
       );
 
       if (res) {
-        await updateProfile(auth.currentUser,{displayName: account.displayName});
-        // await addDoc(collection(db, "profile"),{character:"學習者",tag});
+        await updateProfile(auth.currentUser, {
+          displayName: account.displayName,
+        });
+
+        await setDoc(doc(db, "profile", auth.currentUser.uid), {
+          character: "學習者",
+          tag: "",
+        });
         // let addDoc = db.collection('profile').doc(uid);
       }
       setMessage("帳號已產生");
@@ -119,7 +111,12 @@ const Home = () => {
       }
       setMessage(message);
     }
-  }
+
+    // await addDoc(doc(db, "text", auth.uid), {
+    //   character: "學習者",
+    //   tag:""
+    // });
+  };
 
   return (
     <div>
@@ -129,8 +126,13 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-      <Box display="flex" flexWrap="wrap" justifyContent="center" alignItems="center" pt={"5%"}>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="center"
+        pt={"5%"}
+      >
         <Card
           display="flex"
           flexDirection="column"
@@ -140,7 +142,7 @@ const Home = () => {
             // bgcolor: "#000000",
             borderRadius: 2,
             p: 2,
-            m: 2
+            m: 2,
           }}
         >
           <Image alt="裝飾用圖片" src={myImage} sx={{ p: 5 }} />
@@ -149,7 +151,6 @@ const Home = () => {
           </Button>
         </Card>
 
-
         <Card
           display="flex"
           flexDirection="column"
@@ -157,11 +158,12 @@ const Home = () => {
             width: 345,
             height: 550,
             borderRadius: 2,
-            m: 2
+            m: 2,
           }}
         >
-
-          <Typography variant="h5" sx={{ textAlign: "center", m: 1 }}>註冊</Typography>
+          <Typography variant="h5" sx={{ textAlign: "center", m: 1 }}>
+            註冊
+          </Typography>
           <Divider />
           <Box p={2}>
             <Typography variant="body1">使用者名稱</Typography>
@@ -209,19 +211,17 @@ const Home = () => {
               color="primary"
               onClick={handleOnClick}
               sx={{ m: 1 }}
-
             >
               註冊
             </Button>
             <Typography variant="body2" sx={{ m: 1 }}>
               已經有帳號了嗎？
-              <Link sx={{color:"secondary"}} href="/login">點此登入</Link>
+              <Link sx={{ color: "secondary" }} href="/login">
+                點此登入
+              </Link>
             </Typography>
-
           </Box>
         </Card>
-
-
       </Box>
       {/* <main className={styles.main}>
         <div className={styles.group}>
@@ -286,7 +286,6 @@ const Home = () => {
       {/* </div> */}
       {/* </div> */}
       {/* </main> */}
-
     </div>
   );
 };

@@ -129,7 +129,11 @@ const ArticleDetails = (props) => {
 
         // 到底為什麼一直說他不是一個function啊，要中風了
 
-        if (snapshot.data().count > 0 && docSnap.data().character === "專家") {
+        if (
+          snapshot.data().count > 0 &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
           setExpertAction("true");
           props.update();
         } else {

@@ -165,7 +165,8 @@ const ArticleDetails = (props) => {
       unsub();
       // expertActive();
     };
-  }, [props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 第三種是直接重新創一個useeffect 把讀取denounce存在的條件放進去＾＾，到底要怎麼搞呢
   //============================================================================================================
@@ -250,9 +251,7 @@ const ArticleDetails = (props) => {
             setIsLoading(true);
 
             await updateDoc(doc(db, "text", props.article.docId), {
-
               outdate: expertOutdate,
-
             });
             setEdited(edited + 1);
             setIsLoading(false);
@@ -286,9 +285,7 @@ const ArticleDetails = (props) => {
               });
 
               setEdited(edited + 1);
-            }
-            else {
-
+            } else {
               // alert("stale")
               try {
                 setIsLoading(true);
@@ -299,9 +296,7 @@ const ArticleDetails = (props) => {
                 props.update();
 
                 setEdited(edited + 1);
-              }
-              catch (error) {
-
+              } catch (error) {
                 // console.log(error);
               }
             }
@@ -468,14 +463,13 @@ const ArticleDetails = (props) => {
       <>
         {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
 
-
-
-      <Typography variant="body1" sx={{ mt: 2 }}>這篇文章有疑慮需要下架嗎？（注意！下架即刪除）</Typography>
-          <FormControl sx={{ width: 100 }} size="small">
-            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
-            <Button
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
+        </Typography>
+        <FormControl sx={{ width: 100 }} size="small">
+          {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+          <Button
             color="error"
-
             variant="contained"
             onClick={reportDelete}
             size="small"
@@ -514,9 +508,8 @@ const ArticleDetails = (props) => {
               id="demo-simple-select"
               // value={topicName}
               // label="topic"
-              
-              onChange={(e) => {
 
+              onChange={(e) => {
                 setExpertOutdate(e.target.value);
               }}
               sx={{ m: 1 }}
@@ -574,7 +567,6 @@ const ArticleDetails = (props) => {
   const reportMenu = (id) => {
     return (
       <div>
-
         <IconButton onClick={handleToolClickOpen}>
           <MoreHorizIcon />
         </IconButton>
@@ -583,7 +575,6 @@ const ArticleDetails = (props) => {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-
           >
             <Typography variant="body1" sx={{ m: 2 }}>
               遇到問題了嗎？
@@ -614,12 +605,17 @@ const ArticleDetails = (props) => {
                 </Select>
               </FormControl>
 
-
-        <Button edited={edited} setEdited={setEdited} color="warning" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
-
-          檢舉
-        </Button>
-
+              <Button
+                edited={edited}
+                setEdited={setEdited}
+                color="warning"
+                variant="contained"
+                sx={{ ml: 2 }}
+                size="small"
+                onClick={() => (user ? Denounce(report) : alert("請登入"))}
+              >
+                檢舉
+              </Button>
             </Box>
           </DialogContent>
         </Dialog>

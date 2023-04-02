@@ -551,7 +551,7 @@ const ArticleDetails = (props) => {
 
         )}
         {props.article.outdate === "solved" && (
-          <Tooltip title="過時">
+          <Tooltip title="版本疑慮">
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>
 

@@ -107,17 +107,18 @@ const index = () => {
                                         <Typography variant="h6">文章狀態</Typography>
                                         <Box display="flex" alignItems="center">
                                             <IconButton ><CheckCircleIcon sx={{ color: "Green" }} /></IconButton>
-                                            <Typography>正確</Typography>
+                                            <Typography>審核通過</Typography>
                                         </Box>
                                         <Box display="flex" alignItems="center">
                                             <IconButton><NotificationImportantIcon sx={{ color: "Gold" }} /></IconButton>
-                                            <Typography>審查中</Typography>
+                                            <Typography>專家審核中</Typography>
                                         </Box>
                                         <Box display="flex" alignItems="center" >
                                             <IconButton><WarningIcon sx={{ color: "Crimson" }} /></IconButton>
                                             <Typography>版本疑慮</Typography><br />
+                                            
                                         </Box>
-                                        <Typography variant="caption">經由專家審查後，確認文章版本過時或無法使用</Typography>
+                                        <Typography variant="caption">經由專家審核後，這篇文章已經不符合現在的版本或者無法使用</Typography>
                                     </Box>
 
                                 </Grid>
@@ -129,9 +130,9 @@ const index = () => {
                                                 <Typography>文章標題</Typography>
                                             </Box>
                                             <Box display="flex">
-                                                <VI  />
+                                                <VI />
                                                 <Typography variant="body2">10</Typography>
-                                                <MoreHorizIcon sx={{bgcolor:"#FFF6E1",borderRadius:10}}/>
+                                                <MoreHorizIcon sx={{ bgcolor: "#FFF6E1", borderRadius: 10 }} />
                                             </Box>
                                         </Box>
                                         <Box sx={{ height: 150, bgcolor: "#fafafa", p: 2, m: 2 }}>
@@ -146,11 +147,11 @@ const index = () => {
                                     </Card>
                                 </Grid>
                                 <Grid xs={3}>
-                                    <Box display="flex" flexDirection="column" sx={{m:2,pl:4}}>
-                                        <Box sx={{m:1,p:2,height:150,bgcolor:"#FFF6E1"}}>
+                                    <Box display="flex" flexDirection="column" sx={{ m: 2, pl: 4 }}>
+                                        <Box sx={{ m: 1, p: 2, height: 150, bgcolor: "#FFF6E1" }}>
                                             <Typography variant="h6">學習者</Typography>
                                         </Box>
-                                        <Box sx={{m:1,p:2,height:150,bgcolor:"#E9F0E7"}}>
+                                        <Box sx={{ m: 1, p: 2, height: 150, bgcolor: "#E9F0E7" }}>
                                             <Typography variant="h6">專家</Typography>
                                         </Box>
 

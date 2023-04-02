@@ -105,6 +105,7 @@ const index = () => {
                             </Box>
 
                         </Grid>
+                        <Toolbar /> <Toolbar />
 
                         <Grid item minWidth={300}>
                             <Grid display="flex" flexWrap="wrap">
@@ -186,15 +187,15 @@ const index = () => {
                                                 primary="版本疑慮"
                                                 secondary={
                                                     <React.Fragment>
-                                                    <Typography
-                                                        sx={{ display: 'inline' }}
-                                                        component="span"
-                                                        variant="body2"
-                                                        color="text.primary"
-                                                    >
-                                                        經由專家審核後，這篇文章已經不符合現在的版本或者無法使用。
-                                                    </Typography>
-                                                    {"出現提示框告知讀者文章狀態。"}
+                                                        <Typography
+                                                            sx={{ display: 'inline' }}
+                                                            component="span"
+                                                            variant="body2"
+                                                            color="text.primary"
+                                                        >
+                                                            經由專家審核後，這篇文章已經不符合現在的版本或者無法使用。
+                                                        </Typography>
+                                                        {"出現提示框告知讀者文章狀態。"}
                                                     </React.Fragment>
 
 
@@ -230,7 +231,7 @@ const index = () => {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Box display="flex" flexDirection="column" sx={{ m: 2, pl: 4 }}>
-                                        <Box sx={{ m: 1, p: 2, height: 150,width:200, bgcolor: "#FFF6E1" }}>
+                                        <Box sx={{ m: 1, p: 2, height: 150, width: 200, bgcolor: "#FFF6E1" }}>
                                             <Typography variant="h6">學習者</Typography>
                                             <Box></Box>
                                         </Box>
@@ -250,7 +251,7 @@ const index = () => {
                     </Grid>
                 </ThemeProvider>
             </Container>
-
+            <Toolbar />
             <Footer />
 
         </div>

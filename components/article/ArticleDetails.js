@@ -81,7 +81,7 @@ const ArticleDetails = (props) => {
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
-  const [character, setCharacter] = useState("");
+  const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState("");
   const [open, setOpen] = useState(false);
   const [report, setReport] = useState("");

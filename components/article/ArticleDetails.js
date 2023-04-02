@@ -568,6 +568,15 @@ const expertReport = () => {
     return (
       <div>
 
+<IconButton onClick={handleToolClickOpen}><MoreHorizIcon /></IconButton>
+                <Dialog open={toolopen} onClose={handleToolClose}>
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
+                    <IconButton onClick={handleToolClose}><CloseIcon /></IconButton>
+                  </Box>
+                  <Divider />
+ <DialogContent>
+                    <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
         <FormControl sx={{ width: 110 }}>
           <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
           <Select
@@ -594,7 +603,9 @@ const expertReport = () => {
           <Button color="secondary" variant="contained" onClick={()=>report(id)}>
             檢舉
           </Button> */}
-
+       </Box> 
+    </DialogContent> 
+  </Dialog>
       </div>
     );
   };
@@ -646,24 +657,13 @@ const expertReport = () => {
                 {/* {props.article.userid} */}
               </FormControl>
               <Box>
-                <IconButton onClick={handleToolClickOpen}><MoreHorizIcon /></IconButton>
-                <Dialog open={toolopen} onClose={handleToolClose}>
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body1" sx={{ m: 2 }}>遇到問題了嗎？</Typography>
-                    <IconButton onClick={handleToolClose}><CloseIcon /></IconButton>
-                  </Box>
-                  <Divider />
-                  <DialogContent>
-                    <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                      <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        {reportMenu()}
-                        { }
+                
+                 
+                        {user && user.uid !== props.article.userid&&reportMenu()}
+              
                         {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
+   
 
-                      </FormControl>
-                    </Box>
-                  </DialogContent>
-                </Dialog>
               </Box>
             </Box>
 

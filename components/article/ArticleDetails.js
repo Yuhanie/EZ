@@ -248,8 +248,9 @@ const ArticleDetails = (props) => {
 
             await updateDoc(doc(db, "text", props.article.docId), {
               outdate: expertOutdate
-
+              
             });
+            setEdited(edited + 1);
             setIsLoading(false);
             props.update();
           }
@@ -283,6 +284,7 @@ const ArticleDetails = (props) => {
                 outdate: "stale"
 
               });
+              setEdited(edited + 1);
             }
             else {
               // alert("stale")
@@ -294,6 +296,7 @@ const ArticleDetails = (props) => {
                 });
                 setIsLoading(false);
                 props.update();
+                setEdited(edited + 1);
               }
               catch (error) {
                 // console.log(error);
@@ -376,14 +379,6 @@ const ArticleDetails = (props) => {
     if (typeof window !== "undefined") {
       if (!user) {
         alert("要登入才能新增留言ㄛ!");
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
         router.push("/login");
       } else {
         await addDoc(collection(db, "text", props.article.docId, "comment"), {
@@ -515,7 +510,9 @@ const expertReport = () => {
               id="demo-simple-select"
               // value={topicName}
               // label="topic"
+              
               onChange={(e) => {
+
                 setExpertOutdate(e.target.value);
               }}
               sx={{ m: 1, }}
@@ -531,6 +528,8 @@ const expertReport = () => {
             onClick={() => outdate(expertOutdate)}
             size="small"
             sx={{ m: 1, height: 35 }}
+            edited={edited}
+            setEdited={setEdited}
           >
             送出
           </Button>
@@ -584,6 +583,7 @@ const expertReport = () => {
             id="demo-simple-select"
             // value={topicName}
             // label="topic"
+
             onChange={(e) => {
               setReport(e.target.value);
             }}
@@ -596,7 +596,7 @@ const expertReport = () => {
           </Select>
         </FormControl>
 
-        <Button color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
+        <Button edited={edited} setEdited={setEdited} color="secondary" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
           檢舉
         </Button>
         {/*        

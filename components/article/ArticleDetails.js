@@ -250,8 +250,11 @@ const ArticleDetails = (props) => {
             setIsLoading(true);
 
             await updateDoc(doc(db, "text", props.article.docId), {
+
               outdate: expertOutdate,
+
             });
+            setEdited(edited + 1);
             setIsLoading(false);
             props.update();
           } catch (error) {
@@ -281,7 +284,11 @@ const ArticleDetails = (props) => {
               await updateDoc(doc(db, "text", props.article.docId), {
                 outdate: "stale",
               });
-            } else {
+
+              setEdited(edited + 1);
+            }
+            else {
+
               // alert("stale")
               try {
                 setIsLoading(true);
@@ -290,7 +297,11 @@ const ArticleDetails = (props) => {
                 });
                 setIsLoading(false);
                 props.update();
-              } catch (error) {
+
+                setEdited(edited + 1);
+              }
+              catch (error) {
+
                 // console.log(error);
               }
             }
@@ -371,14 +382,6 @@ const ArticleDetails = (props) => {
     if (typeof window !== "undefined") {
       if (!user) {
         alert("要登入才能新增留言ㄛ!");
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
         router.push("/login");
       } else {
         await addDoc(collection(db, "text", props.article.docId, "comment"), {
@@ -511,7 +514,9 @@ const ArticleDetails = (props) => {
               id="demo-simple-select"
               // value={topicName}
               // label="topic"
+              
               onChange={(e) => {
+
                 setExpertOutdate(e.target.value);
               }}
               sx={{ m: 1 }}
@@ -527,6 +532,8 @@ const ArticleDetails = (props) => {
             onClick={() => outdate(expertOutdate)}
             size="small"
             sx={{ m: 1, height: 35 }}
+            edited={edited}
+            setEdited={setEdited}
           >
             送出
           </Button>
@@ -567,6 +574,7 @@ const ArticleDetails = (props) => {
   const reportMenu = (id) => {
     return (
       <div>
+
         <IconButton onClick={handleToolClickOpen}>
           <MoreHorizIcon />
         </IconButton>
@@ -575,6 +583,7 @@ const ArticleDetails = (props) => {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
+
           >
             <Typography variant="body1" sx={{ m: 2 }}>
               遇到問題了嗎？
@@ -606,7 +615,8 @@ const ArticleDetails = (props) => {
               </FormControl>
 
 
-        <Button color="warning" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
+        <Button edited={edited} setEdited={setEdited} color="warning" variant="contained" sx={{ ml: 2 }} size="small" onClick={() => user?Denounce(report):alert("請登入")}>
+
           檢舉
         </Button>
 

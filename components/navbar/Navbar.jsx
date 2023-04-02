@@ -69,7 +69,7 @@ ElevationScroll.propTypes = {
 
 //appbar排版
 const pages = [
-  // '筆記分享區', '問答區',
+  { text: "首頁", href: "/" },
   { text: "筆記分享區", href: "/note" },
   // { text: "問答區", href: "" },
 ];
@@ -130,10 +130,10 @@ function ResponsiveAppBar() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      if (user){
+      if (user) {
         setLogged(false)
       }
-      else{
+      else {
         setLogged(true)
       }
       console.log(user);
@@ -199,8 +199,8 @@ function ResponsiveAppBar() {
 
           ))}
           <MenuItem>
-            <Typography  onClick={profile}>
-                我的角色
+            <Typography onClick={profile}>
+              我的角色
             </Typography>
           </MenuItem>
           <MenuItem>

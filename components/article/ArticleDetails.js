@@ -67,6 +67,7 @@ import {
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import Tooltip from "@mui/material/Tooltip";
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -539,13 +540,21 @@ const ArticleDetails = (props) => {
     return (
       <div>
         {props.article.outdate === "stale" && (
-          <WarningIcon sx={{ color: "Crimson" }} />
+          <Tooltip title="審核通過">
+            <WarningIcon sx={{ color: "Crimson" }} />
+          </Tooltip>
         )}
         {props.article.outdate === "pending" && (
-          <NotificationImportantIcon sx={{ color: "Gold" }} />
+          <Tooltip title="專家審核中...">
+            <NotificationImportantIcon sx={{ color: "Gold" }} />
+          </Tooltip>
+
         )}
         {props.article.outdate === "solved" && (
-          <CheckCircleIcon sx={{ color: "Green" }} />
+          <Tooltip title="過時">
+            <CheckCircleIcon sx={{ color: "Green" }} />
+          </Tooltip>
+
         )}
       </div>
     );
@@ -760,7 +769,7 @@ const ArticleDetails = (props) => {
               endIcon={<SendIcon />}
               onClick={onSubmit}
               sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
-              // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
+            // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
             ></Button>
           </Box>
         </DialogContent>

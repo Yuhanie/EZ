@@ -55,19 +55,8 @@ const Home = () => {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
   const handleOnClick = async function () {
-    // const ref = doc(db, "profile", account.uid);
-    // const docSnap = await getDoc(ref);
 
-    // if(docSnap.exists()){
-    //   }
-    //   else{
-    //     await addDoc(collection(db, "profile", account.uid), {
-    //       character:"學習者",
-    //       tag:"",
-    //     })
-    //   }
-    // console.log(docRef.id);
-    
+
     // const res = await createUserWithEmailAndPassword(
     //   auth,
     //   account.email,
@@ -96,6 +85,8 @@ const Home = () => {
 
       if (res) {
         await updateProfile(auth.currentUser,{displayName: account.displayName});
+ 
+   
         // await addDoc(collection(db, "profile"),{character:"學習者",tag});
         // let addDoc = db.collection('profile').doc(uid);
       }
@@ -119,6 +110,12 @@ const Home = () => {
       }
       setMessage(message);
     }
+
+    // await addDoc(doc(db, "text", auth.uid), {
+    //   character: "學習者",
+    //   tag:""
+    // });
+    
   }
 
   return (

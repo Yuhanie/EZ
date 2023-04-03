@@ -295,8 +295,8 @@ function Index() {
                                         <Box display="flex" flexDirection="column" sx={{ m: 1 }}>
                                             <Box sx={{ m: 1, p: 2, bgcolor: "#FFF6E1" }}>
                                                 <Typography variant="h6">學習者</Typography>
-                                                <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />下的檢舉功能做出問題回報</Typography><br />
-                                                <Typography variant="caption">文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
+                                                <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
+                                                <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
                                                 <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
                                                     <Box component="form" sx={{ display: "flex" }}>
                                                         <FormControl sx={{ width: 140 }} size="small">

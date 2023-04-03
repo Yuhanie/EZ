@@ -220,7 +220,7 @@ const Collect:
                 {props.article.title}
               </Typography>
               <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {props.article.content}
+              {props.article.content.substring(0, 30)}{props.article.content.length > 30 ? "..." : ""}
               </Typography>
               {/* <Stack direction="row" spacing={1}>
                 <Chip label="tag 1" component="a" href="#chip" />

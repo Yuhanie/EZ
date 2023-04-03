@@ -160,7 +160,7 @@ function Newpost() {
     catch (e) {
       console.log(e);
     }
-    router.push('/');
+    router.push('/note');
   }
 
 

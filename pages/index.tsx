@@ -203,7 +203,7 @@ function Index() {
                                                             有學習者針對此文章做出問題回報。
 
                                                         </Typography>
-                                                        
+
 
                                                     }
                                                 />
@@ -330,7 +330,7 @@ function Index() {
                                             </Box>
                                             <Box sx={{ m: 1, p: 2, bgcolor: "#E9F0E7" }}>
                                                 <Typography variant="h6">專家</Typography>
-                                                <Typography variant="caption">專家可審核學習者回報的文章</Typography><br />
+                                                <Typography variant="caption" >專家可審核有疑慮的文章</Typography><br />
                                                 <Typography variant="caption">-沒問題：狀態更新為<CheckCircleIcon sx={{ color: "Green", fontSize: 16 }} /></Typography><br />
                                                 <Typography variant="caption">-過時：狀態更新為<WarningIcon sx={{ color: "Crimson", fontSize: 16 }} /></Typography>
                                                 <Box display="flex" sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>

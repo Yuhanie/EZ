@@ -140,6 +140,7 @@ function Newpost() {
           heart: [],
           bookmark: [],
           count: 1,
+          report: false,
           link,
           outdate: "solved",
           outdateCount: [],

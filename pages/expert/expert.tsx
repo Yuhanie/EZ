@@ -138,18 +138,15 @@ const Home: NextPage = (props) => {
     async function readData() {
 
       setIsLoading(true);      
-      // const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("denounce","==",{"exists":true})):query(collection(db, "text"), where("denounce","==",{"exists":true}), limit(3)));
+      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("report","==",true)):query(collection(db, "text"), where("report","==",true), limit(3)));
       
-      // const queryDenounce = collection(db, "text", doc.Id, "denounce");
-      // const snapshot = await getCountFromServer(queryDenounce);
-      
-      // const tempDenounce: Article[] = [];
-      // queryDenounce.forEach((doc) => {
-      //   tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      const tempDenounce: Article[] = [];
+      queryDenounce.forEach((doc) => {
+        tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-      // });
+      });
       
-      // setDenounces(...tempDenounce);
+      setDenounces([...tempDenounce]);
 
       setIsLoading(true);
       // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));

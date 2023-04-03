@@ -153,7 +153,10 @@ const Profile = () => {
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
             setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者" });
-          };
+          } else {
+            setProfile({ character: "學習者" });
+          }
+
           console.log('currentUser', user)
           setCurrentUser(user);
 
@@ -343,7 +346,7 @@ const Profile = () => {
                           }}
                         >
                         </Avatar>
-                        <Chip label={profile ? (profile.character ? profile.character : "學習者") : "學習者"} />
+                        <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "未登入"}</Typography>

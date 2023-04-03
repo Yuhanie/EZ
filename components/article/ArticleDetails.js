@@ -284,6 +284,7 @@ const ArticleDetails = (props) => {
             if (docSnap.data().outdate == "stale") {
               await updateDoc(doc(db, "text", props.article.docId), {
                 outdate: "stale",
+
               });
 
               setEdited(edited + 1);
@@ -293,6 +294,7 @@ const ArticleDetails = (props) => {
                 setIsLoading(true);
                 await updateDoc(doc(db, "text", props.article.docId), {
                   outdate: "pending",
+
                 });
                 setIsLoading(false);
                 props.update();
@@ -304,11 +306,13 @@ const ArticleDetails = (props) => {
             }
           } else {
             await setDoc(
-              doc(db, "text", props.article.docId, "denounce", user.uid),
-              {
+              doc(db, "text", props.article.docId, "denounce", user.uid), {
                 reason: report,
               }
             );
+            await updateDoc(doc(db, "text", props.article.docId), {
+                report: true,
+              });
           }
         }
 

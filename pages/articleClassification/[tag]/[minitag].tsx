@@ -18,7 +18,6 @@ import { getFirestore, collection, getDocs, doc, getDoc } from "firebase/firesto
 import { firebaseConfig } from '../../../settings/firebaseConfig';
 import styles from '/styles/Home.module.css';
 import Link from 'next/link';
-import ArticleDetails from '../../../components/post/ArticleDetails';
 import ArticleListItem from '../../../components/article/ArticleListItem';
 import MiniTags from '../../../components/miniTags/miniTags';
 import MiniTagList from '../../../components/miniTags/miniTagList';

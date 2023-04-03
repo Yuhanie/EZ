@@ -442,11 +442,9 @@ const Profile = () => {
               <Box display="flex" p={2} flexWrap="wrap">
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
                   <Chip label="我的收藏" />
-
-                  <div>
-                    {collects.map(renderCollect)}
-                  </div>
-
+                    <div>
+                      {collects.map(renderCollect)}
+                    </div>
                 </Grid>
               </Box>
 

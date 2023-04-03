@@ -181,7 +181,7 @@ const index = () => {
                                         <Divider variant="inset" component="li" />
                                         <ListItem alignItems="flex-start">
                                             <ListItemAvatar>
-                                                <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
+                                                <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><WarningIcon /></Avatar>
                                             </ListItemAvatar>
                                             <ListItemText
                                                 primary="版本疑慮"
@@ -206,7 +206,7 @@ const index = () => {
 
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <Card sx={{ width: 350, height: 500, p: 2 }}>
+                                    <Card sx={{ width: 350,p: 2 }}>
                                         <Box display="flex" alignItems="center" justifyContent="space-between">
                                             <Box display="flex">
                                                 <WarningIcon />
@@ -233,7 +233,9 @@ const index = () => {
                                     <Box display="flex" flexDirection="column" sx={{ m: 2, pl: 4 }}>
                                         <Box sx={{ m: 1, p: 2, height: 150, width: 200, bgcolor: "#FFF6E1" }}>
                                             <Typography variant="h6">學習者</Typography>
-                                            <Box></Box>
+                                            <Box>
+
+                                            </Box>
                                         </Box>
                                         <Box sx={{ m: 1, p: 2, height: 150, bgcolor: "#E9F0E7" }}>
                                             <Typography variant="h6">專家</Typography>

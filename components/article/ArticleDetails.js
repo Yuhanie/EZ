@@ -132,6 +132,7 @@ const ArticleDetails = (props) => {
 
         if (
           snapshot.data().count > 0 &&
+          docSnap.exists() &&
           docSnap.data().character &&
           docSnap.data().character === "專家"
         ) {
@@ -548,13 +549,11 @@ const ArticleDetails = (props) => {
           <Tooltip title="專家審核中...">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
-
         )}
         {props.article.outdate === "solved" && (
           <Tooltip title="版本疑慮">
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>
-
         )}
       </div>
     );
@@ -769,7 +768,7 @@ const ArticleDetails = (props) => {
               endIcon={<SendIcon />}
               onClick={onSubmit}
               sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
-            // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
+              // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
             ></Button>
           </Box>
         </DialogContent>

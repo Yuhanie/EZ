@@ -134,7 +134,7 @@ function Index() {
                         >
                             Update
                         </Typography>
-                        <Card sx={{p:2,boxShadow:4}}>
+                        <Card sx={{ p: 2, boxShadow: 4 }}>
                             <Grid item minWidth={300}>
                                 <Grid display="flex" flexWrap="wrap" spacing={4}>
 
@@ -191,7 +191,7 @@ function Index() {
                                                     <Avatar alt="check" sx={{ color: "Gold", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary="專家審核中"
+                                                    primary="版本疑慮"
                                                     secondary={
 
                                                         <Typography
@@ -200,8 +200,10 @@ function Index() {
                                                             variant="body2"
                                                             color="text.primary"
                                                         >
-                                                            專家可針對有問題的文章做審核
+                                                            有學習者針對此文章做出問題回報。
+
                                                         </Typography>
+                                                        
 
                                                     }
                                                 />
@@ -212,7 +214,7 @@ function Index() {
                                                     <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><WarningIcon /></Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary="版本疑慮"
+                                                    primary="專家審核中"
                                                     secondary={
                                                         <React.Fragment>
                                                             <Typography
@@ -235,7 +237,7 @@ function Index() {
 
 
                                     <Grid item xs={4} sx={{ m: 2 }}>
-                                        <Card sx={{ width: 350,height:450, p: 2 }}>
+                                        <Card sx={{ width: 350, height: 450, p: 2 }}>
                                             <Box display="flex" alignItems="center" justifyContent="space-between">
                                                 <Box display="flex">
                                                     <WarningIcon />
@@ -293,7 +295,7 @@ function Index() {
                                         <Box display="flex" flexDirection="column" sx={{ m: 1 }}>
                                             <Box sx={{ m: 1, p: 2, bgcolor: "#FFF6E1" }}>
                                                 <Typography variant="h6">學習者</Typography>
-                                                <Typography variant="caption">學習者可透過下的檢舉功能做出問題回報</Typography><br />
+                                                <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />下的檢舉功能做出問題回報</Typography><br />
                                                 <Typography variant="caption">文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
                                                 <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
                                                     <Box component="form" sx={{ display: "flex" }}>

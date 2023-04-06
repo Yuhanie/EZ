@@ -1,4 +1,6 @@
-import firebase from 'firebase';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 const firebaseConfig = {
 	apiKey: "AIzaSyDpK9585Nist4dDRMyUbxf98APPUeF051g",
     authDomain: "ez-group-6808f.firebaseapp.com",
@@ -8,6 +10,12 @@ const firebaseConfig = {
     appId: "1:747617601049:web:f158c5e83fadb3505a0c88",
     measurementId: "G-PGXTMCCV8T"
 };
-firebase.initializeApp(firebaseConfig);
-var storage = firebase.storage();
-export default storage;
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+export {auth, provider};
+
+// var storage = firebase.storage();
+// export default storage;

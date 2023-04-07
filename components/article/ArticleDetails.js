@@ -545,17 +545,17 @@ const ArticleDetails = (props) => {
     return (
       <div>
         {props.article.outdate === "stale" && (
-          <Tooltip title="審核通過">
+          <Tooltip title="專家審核中">
             <WarningIcon sx={{ color: "Crimson" }} />
           </Tooltip>
         )}
         {props.article.outdate === "pending" && (
-          <Tooltip title="專家審核中...">
+          <Tooltip title="版本疑慮">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
         )}
         {props.article.outdate === "solved" && (
-          <Tooltip title="版本疑慮">
+          <Tooltip title="審核通過">
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>
         )}

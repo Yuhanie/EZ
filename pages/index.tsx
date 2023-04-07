@@ -136,6 +136,9 @@ function Character() {
                                 >
                                     角色
                                 </Typography>
+                                <Typography >
+                                    hhhhhhhhhh
+                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={4} sx={{ maxWidth: 345, }}>
@@ -147,8 +150,7 @@ function Character() {
 
                             <CardContent>
                                 <Typography variant="body2" color="text">
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                                    species, ranging across all continents except Antarctica
+                                    成為各領域專家你可以...
                                 </Typography>
                             </CardContent>
 
@@ -469,7 +471,7 @@ function Index() {
                     <Toolbar />
                     <Toolbar />
 
-                    {/* <Character /> */}
+                    <Character />
 
                     <Toolbar />
                     <Toolbar />

@@ -471,10 +471,10 @@ function Index() {
                     <Toolbar />
                     <Toolbar />
 
-                    <Character />
+                    {/* <Character />
 
                     <Toolbar />
-                    <Toolbar />
+                    <Toolbar /> */}
 
                     <Update />
 

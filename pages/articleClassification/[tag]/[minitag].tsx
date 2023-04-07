@@ -118,7 +118,7 @@ const Article = () => {
 
       setArticles([...temp]);
       setminiTags([...temp3]);
-      setTags([...temp2]);
+      // setTags([...temp2]);
       // setBookmarks([...temp4]);
     }
 

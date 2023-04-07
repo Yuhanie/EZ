@@ -315,7 +315,7 @@ const Profile = () => {
                         <Box display="flex" alignItems="center" sx={{ m: 0.2 }}>
                           <Typography sx={{ minWidth: 50 }}>角色</Typography>
                           <Chip label="學習者" />
-                          <Button variant="contained" color="secondary" size='small' sx={{ m: 1 }}>升級</Button>
+                          {/* <Button variant="contained" color="secondary" size='small' sx={{ m: 1 }}>升級</Button> */}
                         </Box>
 
                         <ListItemButton onClick={handleClick}>
@@ -342,14 +342,14 @@ const Profile = () => {
                               <ListItemText primary="專家" />
                             </ListItemButton>
                           </List>
-                          <List component="div" disablePadding>
+                          {/* <List component="div" disablePadding>
                             <ListItemButton sx={{ pl: 4 }}>
                               <ListItemIcon>
                                 <FaceIcon />
                               </ListItemIcon>
                               <ListItemText primary="業界" />
                             </ListItemButton>
-                          </List>
+                          </List> */}
                         </Collapse>
 
                       </Box>

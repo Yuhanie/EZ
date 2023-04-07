@@ -136,8 +136,13 @@ function Character() {
                                 >
                                     角色
                                 </Typography>
-                                <Typography >
-                                    hhhhhhhhhh
+                                <Typography variant="body1">
+                                如果你在某個領域擁有一定程度的知識，並且想要分享你所學，幫助更多人解決他們的問題。
+                                你可以向官方申請或藉由其他專家推薦，成為某領域的專家！  
+                                <br /><br />
+                                透過雙向的知識交流，「加強過往所學、更新過時知識」，建構出更完善的學習環境。
+                                幫助雙方共同發展成長。
+                                
                                 </Typography>
                             </Box>
                         </Grid>
@@ -148,10 +153,13 @@ function Character() {
                                 />
                             </CardMedia>
 
-                            <CardContent>
-                                <Typography variant="body2" color="text">
-                                    成為各領域專家你可以...
-                                </Typography>
+                            <CardContent >
+                                {/* <Typography variant="body2" color="text">
+                                專家可以透過經驗分享和討論的方式與學習者交流。
+                                </Typography> */}
+                                {/* <Typography variant="body1" color="text">
+                                「經驗分享」「尋求新知」//把這個內容加到圖上
+                                </Typography> */}
                             </CardContent>
 
                         </Grid>
@@ -163,10 +171,12 @@ function Character() {
                             </CardMedia>
 
                             <CardContent>
-                                <Typography variant="body2" color="text">
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                                    species, ranging across all continents except Antarctica
-                                </Typography>
+                                {/* <Typography variant="body2" color="text">
+                                學習者可以透過問題和反饋的方式與專家交流。
+                                </Typography> */}
+                                {/* <Typography variant="body1" color="text">
+                                「閱讀」「提問」「反饋」//把這個內容加到圖上
+                                </Typography> */}
                             </CardContent>
 
                         </Grid>
@@ -471,10 +481,10 @@ function Index() {
                     <Toolbar />
                     <Toolbar />
 
-                    {/* <Character />
+                    <Character />
 
                     <Toolbar />
-                    <Toolbar /> */}
+                    <Toolbar />
 
                     <Update />
 

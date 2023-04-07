@@ -163,7 +163,7 @@ const Profile = () => {
           setCurrentUser(user);
 
           setIsLoading(true);
-          const queryCollect = await getDocs(collectOpen?query(collection(db, "text"), where("bookmark", "array-contains", user.uid)):query(collection(db, "text"), where("bookmark", "array-contains", user.uid), limit(3)));
+          const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", user.uid)) : query(collection(db, "text"), where("bookmark", "array-contains", user.uid), limit(3)));
           const tempCollect: Article[] = [];
           queryCollect.forEach((doc) => {
             tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
@@ -172,7 +172,7 @@ const Profile = () => {
           setIsLoading(false);
 
           setIsLoading(true);
-          const queryMyNote = await getDocs(myNotesOpen?query(collection(db, "text"), where("userid","==",user.uid)):query(collection(db, "text"), where("userid","==",user.uid), limit(3)));
+          const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", user.uid)) : query(collection(db, "text"), where("userid", "==", user.uid), limit(3)));
           const tempMyNote: Article[] = [];
           queryMyNote.forEach((doc) => {
             tempMyNote.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
@@ -191,14 +191,14 @@ const Profile = () => {
     readData();
   }, [myNotesOpen, collectOpen]);
 
-  const more = async function (status:string) {
+  const more = async function (status: string) {
     if (typeof window !== "undefined") {
       if (currentUser) {
-        if(status=="moreNotes"){
-          setMyNotesOpen((currentValue)=>!currentValue)
+        if (status == "moreNotes") {
+          setMyNotesOpen((currentValue) => !currentValue)
         }
-        if(status=="moreCollects"){
-          setCollectOpen((currentValue)=>!currentValue)
+        if (status == "moreCollects") {
+          setCollectOpen((currentValue) => !currentValue)
         }
       }
     } else {
@@ -368,7 +368,7 @@ const Profile = () => {
 
               <Box display="flex" p={2} flexWrap="wrap">
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
-                  <Box display="flex" flexDirection="column" sx={{ p: 2, width: 300 }} bgcolor={'#fafafa'} >
+                  <Box display="flex" flexDirection="column" sx={{ p: 2, minWidth: 300, maxWidth: 345 }} bgcolor={'#fafafa'} >
                     <Box display="flex">
                       <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
                         <Avatar
@@ -438,26 +438,33 @@ const Profile = () => {
 
 
               <Divider />
-              <Button variant="contained" color="secondary" onClick={() => {more("moreCollects")}}>查看更多</Button>
+
               <Box display="flex" p={2} flexWrap="wrap">
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
-                  <Chip label="我的收藏" />
-                    <div>
-                      {collects.map(renderCollect)}
-                    </div>
+                  <Grid container item>
+                    <Chip label="我的收藏" />
+                    <Button variant="contained" color="secondary" size='small' sx={{ ml: 2 }} onClick={() => { more("moreCollects") }}>查看更多</Button>
+                  </Grid>
+
+                  <Box display="flex" flexWrap="wrap">
+                    {collects.map(renderCollect)}
+                  </Box>
                 </Grid>
+
               </Box>
 
               <Divider />
-              <Button variant="contained" color="secondary" onClick={() => {more("moreNotes")}}>查看更多</Button>
-              <Box display="flex" p={2} flexWrap="wrap">
-                
-                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
 
-                  <Chip label="我的筆記" />
-                  <div>
+              <Box display="flex" p={2} flexWrap="wrap">
+
+                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
+                  <Grid container item>
+                    <Chip label="我的筆記" />
+                    <Button variant="contained" color="secondary" size='small' sx={{ ml: 2 }} onClick={() => { more("moreNotes") }}>查看更多</Button>
+                  </Grid>
+                  <Box display="flex" flexWrap="wrap">
                     {myNotes.map(renderMyNote)}
-                  </div>
+                  </Box>
 
                 </Grid>
               </Box>

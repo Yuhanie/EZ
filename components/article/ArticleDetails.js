@@ -44,8 +44,8 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
-  getCountFromServer,
 } from "firebase/firestore";
+import { getCountFromServer } from 'firebase/firestore'
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import VI from "@mui/icons-material/Visibility";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -108,8 +108,6 @@ const ArticleDetails = (props) => {
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
 
-        // 第一種是把讀取denounce存在的條件直接塞進原本的這個useeffect的function
-        //=====================================================================================================
         const refReport = collection(
           db,
           "text",
@@ -148,49 +146,14 @@ const ArticleDetails = (props) => {
       console.log("user", user);
     });
 
-    // 第二種是把讀取denounce存在的條件在同一個useeffect再創一個function
-    //============================================================================================================
-    // const expertActive = (user) => {
-    //   setUser(user);
-    //   if (user) {
-    //     const ref = query(collection(db, "text", props.article.docId, "denounce"));
-    //     const docSnap = getDocs(ref);
-    //     if ((docSnap.exists() && character === "專家")) {
-    //         setExpertAction("true");
-    //         props.update();
-    //     }
-    //   }
-
-    // };
 
     return () => {
       unsub();
-      // expertActive();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 第三種是直接重新創一個useeffect 把讀取denounce存在的條件放進去＾＾，到底要怎麼搞呢
-  //============================================================================================================
-  // useEffect(() => {
-  //   const expertActive = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //     if (user) {
-  //       const ref = query(collection(db, "text", props.article.docId, "denounce"));
-  //       const docSnap = getDocs(ref);
-  //       if ((docSnap.exists() && character === "專家")) {
-  //           setExpertAction("true");
-  //           props.update();
-  //       }
-  //     }
 
-  //   });
-
-  //   return () => {
-  //     expertActive();
-  //   };
-  // }
-  //   );
 
   useEffect(() => {
     async function fetchData() {

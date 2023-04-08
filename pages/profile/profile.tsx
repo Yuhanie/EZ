@@ -7,6 +7,7 @@ import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 import { Profile, BookMark, Article, Tag, miniTag } from 'interfaces/entities';
 import Collect from '../../components/collect/Collect';
+import styles from '../../styles/Home.module.css';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -379,6 +380,8 @@ const Profile = () => {
                           }}
                         >
                         </Avatar>
+                        {/* <img  className={styles.googlephoto} src={currentUser?.photoURL}/> */}
+
                         <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
                       </Box>
                       <Box>

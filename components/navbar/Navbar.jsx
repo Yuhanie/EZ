@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ezlogo from "../../public/pic/ezlogo.png";
 import PropTypes from "prop-types";
-
+import styles from '../../styles/Home.module.css';
 //mui的各種import
 import { ThemeProvider, createTheme, ThemeOptions } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
@@ -162,7 +162,8 @@ function ResponsiveAppBar() {
       <Box>
         <Tooltip title="查看更多">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="avatar" />
+          {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
+          <img className={styles.googlephoto} src={currentUser?.photoURL}/>
           </IconButton>
         </Tooltip>
         <Menu

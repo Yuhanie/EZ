@@ -21,6 +21,10 @@ import Typography from "@mui/material/Typography";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   getAuth,
@@ -270,12 +274,12 @@ const ArticleDetails = (props) => {
           } else {
             await setDoc(
               doc(db, "text", props.article.docId, "denounce", user.uid), {
-                reason: report,
-              }
+              reason: report,
+            }
             );
             await updateDoc(doc(db, "text", props.article.docId), {
-                report: true,
-              });
+              report: true,
+            });
           }
         }
 
@@ -431,22 +435,50 @@ const ArticleDetails = (props) => {
     return (
       <>
         {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          alignItems="center"
+          sx={{
+            p: 2,
+            
+            mt: 2,
+            bgcolor: "#fafafa",
+            borderRadius: 1,
+          }}
+        >
 
-        <Typography variant="body1" sx={{ mt: 2 }}>
-          這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
-        </Typography>
-        <FormControl sx={{ width: 100 }} size="small">
-          {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
-          <Button
-            color="error"
-            variant="contained"
-            onClick={reportDelete}
-            size="small"
-            sx={{ m: 1, height: 35 }}
-          >
-            需要下架
-          </Button>
-        </FormControl>
+          <Typography variant="body1">
+            這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
+          </Typography>
+          <FormControl sx={{ width: 100 }} size="small">
+            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+            <Button
+              color="error"
+              variant="contained"
+              onClick={reportDelete}
+              size="small"
+              sx={{ m: 1, height: 35 }}
+            >
+              需要下架
+            </Button>
+          </FormControl>
+          <br/>
+          
+        </Box>
+        <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>查看原因</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {character === "專家" &&
+                denounces.map((report) => renderReport(report))}
+            </AccordionDetails>
+          </Accordion>
         <br />
       </>
     );
@@ -458,30 +490,29 @@ const ArticleDetails = (props) => {
         <Box
           display="flex"
           flexWrap="wrap"
+          alignItems="center"
           sx={{
             p: 2,
-            m: 1,
+            mt: 2,
             bgcolor: "#fafafa",
-            borderRadius: 2,
-            spacing: 2,
+            borderRadius: 1,
           }}
         >
-          <EmojiObjectsIcon sx={{ mt: 2 }} />
-          <Typography variant="body1" sx={{ mt: 2 }}>
+          <EmojiObjectsIcon />
+          <Typography variant="body1" >
             文章審核
           </Typography>
-          <FormControl sx={{ width: 140 }} size="small">
+          <FormControl sx={{ width: 140, ml: 2 }} size="small">
             {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               // value={topicName}
               // label="topic"
-
+              sx={{ height: 35 }}
               onChange={(e) => {
                 setExpertOutdate(e.target.value);
               }}
-              sx={{ m: 1 }}
             >
               <MenuItem value="solved">沒問題</MenuItem>
               <MenuItem value="stale">過時或無法使用</MenuItem>
@@ -493,7 +524,7 @@ const ArticleDetails = (props) => {
             variant="contained"
             onClick={() => outdate(expertOutdate)}
             size="small"
-            sx={{ m: 1, height: 35 }}
+            sx={{ height: 35, ml: 2 }}
             edited={edited}
             setEdited={setEdited}
           >
@@ -634,7 +665,7 @@ const ArticleDetails = (props) => {
 
   return (
     <div className={styles.container}>
-      <Dialog open={props.open} onClose={handleClose}>
+      <Dialog open={props.open} onClose={handleClose} >
         <DialogTitle>
           <Box
             display="flex"
@@ -667,7 +698,7 @@ const ArticleDetails = (props) => {
         </DialogTitle>
 
         <DialogContent>
-          <Stack spacing={1}>
+          <Stack spacing={1} sx={{ minHeight: 150,ml:1 }}>
             {/* {props.article.content} */}
             {/* <div className={styles.card3}> */}
             <a href={props.article.link}>
@@ -676,15 +707,12 @@ const ArticleDetails = (props) => {
             </a>
             {/* </div> */}
           </Stack>
-
-          {character === "專家" && expert()}
-          {expertAction === "true" && expertReport()}
-          <div style={{ padding: 14 }} className="App">
+          <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>
             {props.article.outdate === "stale" && (
-              <h2>
+              <h3>
                 <Image alt="版本疑慮" src={warning} />
                 版本疑慮
-              </h2>
+              </h3>
             )}
 
             <div className={styles.yu}>
@@ -692,6 +720,19 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
+          </Box>
+
+          <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
+            <Typography variant="h6">專家權限</Typography>
+
+            {character === "專家" && expert()}
+            {expertAction === "true" && expertReport()}
+          </Box>
+
+
+
+          <div style={{ padding: 14 }} className="App">
+
 
             {/* <IconButton
                 style={{  }}
@@ -714,11 +755,10 @@ const ArticleDetails = (props) => {
               </Typography> */}
 
             {comments.map((comment) => renderComment(comment))}
-            {character === "專家" &&
-              denounces.map((report) => renderReport(report))}
+
             {/* <Comment article={props.article} /> */}
           </div>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" position="relative" justifyContent="space-between">
             {user && user.displayName}
             <OutlinedInput
               value={content}
@@ -735,7 +775,7 @@ const ArticleDetails = (props) => {
               endIcon={<SendIcon />}
               onClick={onSubmit}
               sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
-              // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
+            // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
             ></Button>
           </Box>
         </DialogContent>

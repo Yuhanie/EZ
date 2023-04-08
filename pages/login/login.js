@@ -3,7 +3,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "/styles/Home.module.css";
 import Index from "pages";
-
+import googleSignin from "../../components/googleSignin/signin";
+import Note from "../../pages/note"
 //firebase
 import { getApps, getApp, initializeApp } from "firebase/app";
 import {
@@ -28,12 +29,14 @@ import {auth, provider} from "myapp/src/firebase";
 
 
 export default function SignIn() {
-  const [value, setValue]=useState('')
+  const [value, setValue]=useState('');
+  
   const handleClick =()=>{
     signInWithPopup(auth,provider).then((data=>{
       setValue(data.user.email)
       localStorage.setItem("email",data.user.email)
     }))
+    // {value?router.push("/note"): }
   }
   useEffect(()=>{
     setValue(localStorage.getItem('email'))
@@ -200,11 +203,12 @@ export default function SignIn() {
             >
               登入
             </Button>
+            {/* <googleSignin/> */}
             <Button onClick={handleForgetPwd}>忘記密碼</Button>
             
-            {value?<Index/>:
+            {/* {value?router.push("/note"): */}
             <button onClick={handleClick}>Signin with Google</button>
-            }
+            {/* } */}
             <Typography variant="body2" sx={{m:1}}>
               沒有帳號？現在就加入我們吧！
 

@@ -25,9 +25,26 @@ import { Button, TextField, Card, Divider } from "@mui/material";
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";  
 import {auth, provider} from "myapp/src/firebase";
+import {
+  collection,
+  addDoc,
+  Doc,
+  setDoc,
+  doc,
+  getDocs,
+  deleteDoc,
+  getDoc,
+  getFirestore,
+  query,
+  orderBy,
+  limit,
+  updateDoc,
+  serverTimestamp,
+  arrayRemove,
+  arrayUnion,
+} from "firebase/firestore";
 
-
-
+const db = getFirestore();
 export default function SignIn() {
   const [value, setValue]=useState('');
   
@@ -35,6 +52,23 @@ export default function SignIn() {
     signInWithPopup(auth,provider).then((data=>{
       setValue(data.user.email)
       localStorage.setItem("email",data.user.email)
+      if(value){
+        router.push("/note")
+      }
+
+      const ref = doc(db, "profile", data.user.uid);
+      const docSnap = getDoc(ref);
+      if(docSnap.character=="專家"){
+      setDoc(doc(db, "profile", data.user.uid), {
+        character: "專家",
+        tag: "",
+      });}
+      else{
+        setDoc(doc(db, "profile", data.user.uid), {
+          character: "學習者",
+          tag: "",
+        });
+      }
     }))
     // {value?router.push("/note"): }
   }
@@ -208,7 +242,7 @@ export default function SignIn() {
             
             {/* {value?router.push("/note"): */}
             <button onClick={handleClick}>Signin with Google</button>
-            {/* } */}
+            {/* }  */}
             <Typography variant="body2" sx={{m:1}}>
               沒有帳號？現在就加入我們吧！
 

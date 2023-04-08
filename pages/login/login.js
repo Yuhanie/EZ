@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "/styles/Home.module.css";
 import Index from "pages";
+import googleIcon from "../../public/pic/googleIcon.png";
 import googleSignin from "../../components/googleSignin/signin";
 import Note from "../../pages/note"
 //firebase

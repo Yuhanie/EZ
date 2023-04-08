@@ -1,7 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+//import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
 import { getApp, getApps } from "firebase/app";
+
 const firebaseConfig = {
 	apiKey: "AIzaSyDpK9585Nist4dDRMyUbxf98APPUeF051g",
     authDomain: "ez-group-6808f.firebaseapp.com",
@@ -11,14 +14,18 @@ const firebaseConfig = {
     appId: "1:747617601049:web:f158c5e83fadb3505a0c88",
     measurementId: "G-PGXTMCCV8T"
 };
+if (!firebase.apps.length) {
+    firebase.initializeApp({});
+}
 
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 const auth = getAuth();
+
 const provider = new GoogleAuthProvider();
-export {auth, provider};
+export { auth, provider};
 
 // var storage = firebase.storage();
 // export default storage;

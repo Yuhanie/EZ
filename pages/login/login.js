@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "/styles/Home.module.css";
+import Index from "pages";
 
 //firebase
 import { getApps, getApp, initializeApp } from "firebase/app";
@@ -21,7 +22,7 @@ import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Button, TextField, Card, Divider } from "@mui/material";
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";  
 import {auth, provider} from "myapp/src/firebase";
 
 
@@ -37,6 +38,8 @@ export default function SignIn() {
   useEffect(()=>{
     setValue(localStorage.getItem('email'))
   })
+
+  
   const router = useRouter();
   if (getApps().length === 0) {
     initializeApp(firebaseConfig);
@@ -199,9 +202,9 @@ export default function SignIn() {
             </Button>
             <Button onClick={handleForgetPwd}>忘記密碼</Button>
             
-            {/* {value?<Home/>: */}
+            {value?<Index/>:
             <button onClick={handleClick}>Signin with Google</button>
-            {/* }        */}
+            }
             <Typography variant="body2" sx={{m:1}}>
               沒有帳號？現在就加入我們吧！
 

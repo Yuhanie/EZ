@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "/styles/Home.module.css";
 import Index from "pages";
+import googleIcon from "../../public/pic/googleIcon.png";
 import googleSignin from "../../components/googleSignin/signin";
 import Note from "../../pages/note"
 //firebase
@@ -22,9 +23,10 @@ import { Container } from "@mui/material/Container";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Button, TextField, Card, Divider } from "@mui/material";
+import SvgIcon from '@material-ui/core/SvgIcon';
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";  
-import {auth, provider} from "myapp/src/firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, provider } from "myapp/src/firebase";
 import {
   collection,
   addDoc,
@@ -46,24 +48,25 @@ import {
 
 const db = getFirestore();
 export default function SignIn() {
-  const [value, setValue]=useState('');
-  
-  const handleClick =()=>{
-    signInWithPopup(auth,provider).then((data=>{
+  const [value, setValue] = useState('');
+
+  const handleClick = () => {
+    signInWithPopup(auth, provider).then((data => {
       setValue(data.user.email)
-      localStorage.setItem("email",data.user.email)
-      if(value){
+      localStorage.setItem("email", data.user.email)
+      if (value) {
         router.push("/note")
       }
 
       const ref = doc(db, "profile", data.user.uid);
       const docSnap = getDoc(ref);
-      if(docSnap.character=="專家"){
-      setDoc(doc(db, "profile", data.user.uid), {
-        character: "專家",
-        tag: "",
-      });}
-      else{
+      if (docSnap.character == "專家") {
+        setDoc(doc(db, "profile", data.user.uid), {
+          character: "專家",
+          tag: "",
+        });
+      }
+      else {
         setDoc(doc(db, "profile", data.user.uid), {
           character: "學習者",
           tag: "",
@@ -72,11 +75,11 @@ export default function SignIn() {
     }))
     // {value?router.push("/note"): }
   }
-  useEffect(()=>{
+  useEffect(() => {
     setValue(localStorage.getItem('email'))
   })
 
-  
+
   const router = useRouter();
   if (getApps().length === 0) {
     initializeApp(firebaseConfig);
@@ -179,7 +182,7 @@ export default function SignIn() {
           flexDirection="column"
           sx={{
             width: 345,
-            height: 400,
+            height: 450,
             // bgcolor: "#000000",
             borderRadius: 2,
             p: 2,
@@ -196,13 +199,13 @@ export default function SignIn() {
           flexDirection="column"
           sx={{
             width: 345,
-            height: 400,
+            height: 450,
             borderRadius: 2,
             m: 2
           }}
         >
 
-          <Typography variant="h5"  sx={{ textAlign: "center", m: 1 }}>登入</Typography>
+          <Typography variant="h5" sx={{ textAlign: "center", m: 1 }}>登入</Typography>
           <Divider />
           <Box p={2}>
             <Typography variant="body1">常用信箱：</Typography>
@@ -228,35 +231,46 @@ export default function SignIn() {
               margin="dense"
             />
             {message}
-            
+
             <Button
               variant="contained"
               color="primary"
               onClick={handleSubmit}
-              sx={{m:1}}
+              sx={{ m: 1 }}
             >
               登入
             </Button>
             {/* <googleSignin/> */}
             <Button onClick={handleForgetPwd}>忘記密碼</Button>
-            
-            {/* {value?router.push("/note"): */}
-            <button onClick={handleClick}>Signin with Google</button>
-            {/* }  */}
-            <Typography variant="body2" sx={{m:1}}>
-              沒有帳號？現在就加入我們吧！
 
-              <Button
-              color="success"
-              variant="contained"
-              onClick={changeStatus}
-              cursor="pointer"
-            >
-              註冊
-            </Button>
-            </Typography>
-            
+            {/* {value?router.push("/note"): */}
+
+            {/* }  */}
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <Typography variant="body2" sx={{ m: 1 }}>沒有帳號？現在就加入我們吧！</Typography>
+              <Typography
+                variant="body2"
+                color="secondary"
+                onClick={changeStatus}
+                cursor="pointer"
+              >
+                註冊
+              </Typography>
+            </Box>
+
           </Box>
+          <Divider />
+
+          <Box display="flex" justifyContent="center" alignItems="center" sx={{ mt: 2 }}>
+
+            <Button variant="contained" sx={{ bgcolor: "#ffffff", color: "#000000", borderRadius: 10 }} onClick={handleClick}>
+              <Box sx={{width:20,height:20,mr:1}}>
+                <Image src={googleIcon} />
+              </Box>
+              Signin with Google
+            </Button>
+          </Box>
+
         </Card>
       </Box>
 

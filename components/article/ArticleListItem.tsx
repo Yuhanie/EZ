@@ -5,6 +5,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc } from "firebase/firestore";
 import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Tooltip from "@mui/material/Tooltip";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import ArticleDetails from "./ArticleDetails";
@@ -19,7 +20,7 @@ import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
+import OfflinePinIcon from '@mui/icons-material/OfflinePin';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
@@ -55,6 +56,7 @@ const ArticleListItem:
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
+    const [character, setCharacter] = useState("學習者");
 
 
 
@@ -109,16 +111,31 @@ const ArticleListItem:
       }
     }
 
+  
+
 
 
     useEffect(() => {
-      const unsub = onAuthStateChanged(auth, (user) => {
+      const unsub = onAuthStateChanged(auth, async(user) => {
         if (user) {
           console.log('currentUser', user)
           setCurrentUser(user);
           setHeart(user);
           setBookmark(user);
-        }
+
+            const ref = doc(db, "profile", user.uid);
+            const docSnap = await getDoc(ref);
+    
+            if (
+              docSnap.exists() &&
+              docSnap.data().character &&
+              docSnap.data().character === "專家"
+            ) {
+              setCharacter("專家");
+            } else {
+              setCharacter("學習者");
+            }
+          }
         //console.log(user);
       });
 
@@ -210,7 +227,18 @@ const ArticleListItem:
       router.push('/introduction');
     }
 
-
+    const expertIcon = () => {
+      return (
+        <div>
+          
+            <Tooltip title="專家審核中">
+              <OfflinePinIcon sx={{ color: "green" }} />
+            </Tooltip>
+       
+         
+        </div>
+      );
+    };
 
 
 
@@ -261,6 +289,7 @@ const ArticleListItem:
                 //item 
                 sx={{ p: 1.2 }}
               />
+              {/* {character=="專家"&&expertIcon()} */}
             </Box>
 
             <Box display="flex" sx={{ pr: 2 }}>

@@ -270,7 +270,7 @@ function Update() {
                                             <Avatar alt="check" sx={{ color: "Gold", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
                                         </ListItemAvatar>
                                         <ListItemText
-                                            primary="版本疑慮"
+                                            primary="專家審核中"
                                             secondary={
 
                                                 <Typography
@@ -293,7 +293,7 @@ function Update() {
                                             <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><WarningIcon /></Avatar>
                                         </ListItemAvatar>
                                         <ListItemText
-                                            primary="專家審核中"
+                                            primary="版本疑慮"
                                             secondary={
                                                 <React.Fragment>
                                                     <Typography

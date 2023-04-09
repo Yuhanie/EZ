@@ -151,7 +151,9 @@ const Profile = () => {
       //   };
       // }
       const unsub = onAuthStateChanged(auth, async (user) => {
+
         if (user) {
+ 
           const querySnapshot = await getDoc(doc(db, "profile", user.uid));
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
@@ -372,14 +374,18 @@ const Profile = () => {
                   <Box display="flex" flexDirection="column" sx={{ p: 2, minWidth: 300, maxWidth: 345 }} bgcolor={'#fafafa'} >
                     <Box display="flex">
                       <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
-                        <Avatar
-                          sx={{
-                            width: 70,
-                            height: 70,
-                            mb: 1,
-                          }}
+                      {currentUser && currentUser.photoURL?
+          <img className={styles.googlephoto_profile} src={currentUser?.photoURL}/>:
+          <Avatar sx={{
+            width: 70,
+            height: 70,
+            mb: 1,
+          }}/>}
+                        {/* <Avatar
+                        
                         >
-                        </Avatar>
+
+                        </Avatar> */}
                         {/* <img  className={styles.googlephoto} src={currentUser?.photoURL}/> */}
 
                         <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />

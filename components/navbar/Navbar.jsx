@@ -91,6 +91,7 @@ function ResponsiveAppBar() {
   const [activeIdx, setActiveIdx] = useState(-1);
   const [currentUser, setCurrentUser] = useState();
   const [logged, setLogged] = useState(false);
+  const [photoURL, setPhotoURL] =useState();
 
 
   const handleOpenNavMenu = (event) => {
@@ -132,6 +133,9 @@ function ResponsiveAppBar() {
       setCurrentUser(user);
       if (user) {
         setLogged(false)
+        if (user.photoURL){
+          setPhotoURL(user.photoURL)
+        }
       }
       else {
         setLogged(true)
@@ -163,8 +167,9 @@ function ResponsiveAppBar() {
         <Tooltip title="查看更多">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
-          <Avatar/>
-          <img className={styles.googlephoto} src={currentUser?.photoURL}/>
+          {photoURL?
+          <img className={styles.googlephoto} src={currentUser?.photoURL}/>:
+          <Avatar/>}
           </IconButton>
         </Tooltip>
         <Menu

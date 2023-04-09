@@ -9,7 +9,7 @@ import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 
-import QADetails_copy from "./QADetails_copy";
+import QADetails from "./QADetails";
 import { Question } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 //import Heart from '@mui/icons-material/Heart';
@@ -230,7 +230,7 @@ const QAListItem:
     <div>
           <div className={styles.QAmenu}>
 
-    {/* <QADetails_copy question={props.question} open={open} setOpen={setOpen} update={props.update} ></QADetails_copy> */}
+    <QADetails question={props.question} open={open} setOpen={setOpen} update={props.update} ></QADetails>
     <Card sx={{ minWidth: 700 }}>
       <CardHeader
         avatar={

@@ -139,7 +139,7 @@ const ArticleDetails = (props) => {
           docSnap.data().character === "專家"
         ) {
           setExpertAction("true");
-          props.update();
+          //props.update();
         } else {
           setOutdated(false);
           setExpertAction("false");

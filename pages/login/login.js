@@ -59,16 +59,11 @@ export default function SignIn() {
 
       const ref = doc(db, "profile", data.user.uid);
       const docSnap = getDoc(ref);
-      if (docSnap.character == "專家") {
-        setDoc(doc(db, "profile", data.user.uid), {
-          character: "專家",
-          tag: "",
-        });
+      if (docSnap.character) {
       }
       else {
-        setDoc(doc(db, "profile", data.user.uid), {
+        updateDoc(doc(db, "profile", data.user.uid), {
           character: "學習者",
-          tag: "",
         });
       }
     }))
@@ -76,7 +71,7 @@ export default function SignIn() {
   }
   useEffect(() => {
     setValue(localStorage.getItem('email'))
-  })
+  },[])
 
 
   const router = useRouter();

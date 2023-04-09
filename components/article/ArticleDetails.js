@@ -87,12 +87,13 @@ const ArticleDetails = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
   const [character, setCharacter] = useState("學習者");
-  const [expertOutdate, setExpertOutdate] = useState("");
+  const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
   const [open, setOpen] = useState(false);
   const [report, setReport] = useState("");
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
+  //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
 
   const handleToolClickOpen = () => {
@@ -210,7 +211,7 @@ const ArticleDetails = (props) => {
     router.push("/Newpost?articleId=" + id);
   };
 
-  const outdate = async function () {
+  const outdate = async function (status) {
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -220,9 +221,10 @@ const ArticleDetails = (props) => {
             setIsLoading(true);
 
             await updateDoc(doc(db, "text", props.article.docId), {
-              outdate: expertOutdate,
+              outdate: status,
             });
             setEdited(edited + 1);
+            setExpertOutdate(status);
             setIsLoading(false);
             props.update();
           } catch (error) {
@@ -511,7 +513,8 @@ const ArticleDetails = (props) => {
               // label="topic"
               sx={{ height: 35 }}
               onChange={(e) => {
-                setExpertOutdate(e.target.value);
+                outdate(e.target.value)
+                
               }}
             >
               <MenuItem value="solved">沒問題</MenuItem>
@@ -519,7 +522,7 @@ const ArticleDetails = (props) => {
             </Select>
           </FormControl>
           <br />
-          <Button
+          {/* <Button
             color="primary"
             variant="contained"
             onClick={() => outdate(expertOutdate)}
@@ -529,7 +532,7 @@ const ArticleDetails = (props) => {
             setEdited={setEdited}
           >
             送出
-          </Button>
+          </Button> */}
         </Box>
       </>
     );
@@ -538,17 +541,17 @@ const ArticleDetails = (props) => {
   const outdateIcon = () => {
     return (
       <div>
-        {props.article.outdate === "stale" && (
-          <Tooltip title="專家審核中">
+        {(expertOutdate === "stale" ) && (
+          <Tooltip title="版本疑慮">
             <WarningIcon sx={{ color: "Crimson" }} />
           </Tooltip>
         )}
-        {props.article.outdate === "pending" && (
-          <Tooltip title="版本疑慮">
+        {(expertOutdate == "" || expertOutdate == "pending" ) && (
+          <Tooltip title="專家審核中">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
         )}
-        {props.article.outdate === "solved" && (
+        {(expertOutdate === "solved") && (
           <Tooltip title="審核通過">
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>

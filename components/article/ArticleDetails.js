@@ -89,7 +89,7 @@ const ArticleDetails = (props) => {
   const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
   const [open, setOpen] = useState(false);
-  const [report, setReport] = useState("");
+  const [report, setReport] = useState();
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
@@ -224,7 +224,7 @@ const ArticleDetails = (props) => {
               outdate: status,
             });
             setEdited(edited + 1);
-            setExpertOutdate(status);
+            setExpertOutdate(status)
             setIsLoading(false);
             props.update();
           } catch (error) {
@@ -242,17 +242,17 @@ const ArticleDetails = (props) => {
     }
   };
 
-  const Denounce = async function (report) {
-    console.log("report", report);
+  const Denounce = async function (status) {
+    // console.log("report", report);
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
-          if (report == "stale") {
-            if (docSnap.data().outdate == "stale") {
+          if (status == "stale") {
+            if (expertOutdate == "stale") {
               await updateDoc(doc(db, "text", props.article.docId), {
-                outdate: "stale",
+                outdate: status,
 
               });
 
@@ -263,12 +263,12 @@ const ArticleDetails = (props) => {
                 setIsLoading(true);
                 await updateDoc(doc(db, "text", props.article.docId), {
                   outdate: "pending",
-
                 });
                 setIsLoading(false);
                 props.update();
 
                 setEdited(edited + 1);
+                setExpertOutdate("pending")
               } catch (error) {
                 // console.log(error);
               }
@@ -276,7 +276,7 @@ const ArticleDetails = (props) => {
           } else {
             await setDoc(
               doc(db, "text", props.article.docId, "denounce", user.uid), {
-              reason: report,
+              reason: status,
             }
             );
             await updateDoc(doc(db, "text", props.article.docId), {
@@ -546,7 +546,7 @@ const ArticleDetails = (props) => {
             <WarningIcon sx={{ color: "Crimson" }} />
           </Tooltip>
         )}
-        {(expertOutdate == "" || expertOutdate == "pending" ) && (
+        {((expertOutdate == "pending" ||expertOutdate == "")) && (
           <Tooltip title="專家審核中">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
@@ -603,7 +603,8 @@ const ArticleDetails = (props) => {
                   // value={topicName}
                   // label="topic"
                   onChange={(e) => {
-                    setReport(e.target.value);
+                    Denounce(e.target.value);
+                    // setReport(e.target.value);
                   }}
                 >
                   <MenuItem value="stale">過時或無法使用</MenuItem>

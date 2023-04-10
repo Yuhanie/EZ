@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { getApp,getApps, initializeApp } from "firebase/app";
 import { collection, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, arrayUnion } from "firebase/firestore";
-import { Button, TableCell, TableRow } from "@mui/material";
+import { Button, TableCell, TableRow, Tooltip } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
@@ -29,6 +29,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import OfflinePinIcon from '@mui/icons-material/OfflinePin';
+
 
 
 
@@ -54,6 +56,8 @@ const QAListItem:
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
+    const [character, setCharacter] = useState("學習者");
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -109,19 +113,32 @@ const QAListItem:
 
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log('currentUser', user)
         setCurrentUser(user);
         setHeart(user);
         setBookmark(user);
-      }
-      //console.log(user);
-    });
+        
+        const ref = doc(db, "profile", user.uid);
+        const docSnap = await getDoc(ref);
 
-    return () => {
-      unsub();
-    }
+        if (
+          docSnap.exists() &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
+          setCharacter("專家");
+        } else {
+          setCharacter("學習者");
+        }
+      }
+    //console.log(user);
+  });
+
+  return () => {
+    unsub();
+  }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liked, bookMarked]);
@@ -135,14 +152,14 @@ const QAListItem:
         const docSnap = await getDoc(ref);
         if ((docSnap.exists())) {
           if (docSnap.data().bookmark.includes(currentUser.uid)) {
-            alert('remove')
+            // alert('remove')
             updateDoc(ref, {
               bookmark: arrayRemove(currentUser.uid)
             });
             setBookMarked(false)
             setBookCount(bookCount - 1)
           } else {
-            alert('added')
+            // alert('added')
             updateDoc(ref, {
               bookmark: arrayUnion(currentUser.uid)
             });
@@ -153,14 +170,6 @@ const QAListItem:
       }
       else {
         alert("要登入才能收藏ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
         router.push('/login');
       }
     }
@@ -177,14 +186,14 @@ const QAListItem:
         const docSnap = await getDoc(ref);
         if ((docSnap.exists())) {
           if (docSnap.data().heart.includes(currentUser.uid)) {
-            alert('remove')
+            // alert('remove')
             updateDoc(ref, {
               heart: arrayRemove(currentUser.uid)
             });
             setLiked(false)
             setCount(count - 1)
           } else {
-            alert('added')
+            // alert('added')
             updateDoc(ref, {
               heart: arrayUnion(currentUser.uid)
 
@@ -201,14 +210,6 @@ const QAListItem:
 
       else {
         alert("要登入才能收藏ㄛ!")
-        //window.alert("要登入才能新增筆記ㄛ!");
-
-        // <Alert action={
-        //   <Button >
-        //     UNDO
-        //   </Button>
-        // }>要登入才能新增筆記ㄛ! </Alert>
-
         router.push('/login');
 
       }
@@ -219,6 +220,23 @@ const QAListItem:
 
   }
 
+  const changeStatus = function () {
+    router.push('/introduction');
+  }
+
+  const expertIcon = () => {
+    return (
+      <div>
+        
+          <Tooltip title="專家審核中">
+            <OfflinePinIcon sx={{ color: "green" }} />
+          </Tooltip>
+     
+       
+      </div>
+    );
+  };
+
 
 // function heart(){
 //   const ref = doc(db, "text", props.article.docId);
@@ -228,10 +246,21 @@ const QAListItem:
 
   return (
     <div>
-          <div className={styles.QAmenu}>
+          {/* <div className={styles.QAmenu}> */}
 
     <QADetails question={props.question} open={open} setOpen={setOpen} update={props.update} ></QADetails>
-    <Card sx={{ minWidth: 700 }}>
+    <Card
+          sx={{
+            // maxWidth: 345,
+            width: 770,
+            maxheight: 200,
+            m: 2,
+            spacing: 2,
+            borderRadius: 3,
+            bgcolor: 'background.paper',
+            boxShadow: 1,
+          }}
+        >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -257,7 +286,7 @@ const QAListItem:
         {props.question.content}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
@@ -266,6 +295,27 @@ const QAListItem:
         </IconButton>
         
       </CardActions>
+       */}
+       <Box display="flex" sx={{ pr: 2 }}>
+              <CardActions sx={{ p: 0 }}>
+                <IconButton aria-label="heart" size="medium" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }} >
+                  <Heart />
+                </IconButton>
+                <Typography variant="body2" color="text.secondary">
+                  {count}
+                </Typography>
+
+              </CardActions>
+              <CardActions sx={{ p: 0 }}>
+                <IconButton aria-label="bookmark" size="medium" onClick={bookmark} sx={bookMarked ? { color: 'info.main' } : { color: 'text.disabled' }}>
+                  <Bookmark />
+                </IconButton>
+                <Typography variant="body2" color="text.secondary">
+                  {bookCount}
+                </Typography>
+              </CardActions>
+            </Box>
+
      
     </Card>
           
@@ -279,7 +329,8 @@ const QAListItem:
 
 
 
-</div><br/>
+{/* </div> */}
+{/* <br/> */}
   </div>
   );
 };
@@ -287,3 +338,5 @@ export default QAListItem;
 function setUser(user: import("@firebase/auth").User | null) {
   throw new Error('Function not implemented.');
 }
+
+

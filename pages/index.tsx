@@ -116,37 +116,46 @@ function Character() {
         <div>
             <Box sx={{ bgcolor: "#fafafa" }}>
                 <Container>
-                    <Grid container spacing={4} display="flex" >
-                        <Grid item xs={4}>
-                            <Box sx={{ bgcolor: "#fafafa", maxWidth: 345, height: 400, p: 5, m: 2 }}>
+                    <Grid container spacing={4} display="flex" flexWrap="wrap" alignItems="center" justifyContent="center" >
+                        <Grid item xs={4} sx={{ bgcolor: "#fafafa", minWidth: 345,  }}>
+                           
                                 <Typography
-                                    display="flex"
+                                    
                                     variant="h2"
                                     noWrap
                                     component="a"
+
                                     sx={{
-                                        maxWidth: 280,
-                                        fontWeight: 700,
+                                        fontWeight: 600,
                                         letterSpacing: ".3rem",
                                         color: "#000000",
                                         textDecoration: "none",
-                                        pb: 5,
+                                        mb: 5,
                                         height: 80,
+                                        minWidth: 345,
                                     }}
                                 >
                                     角色
                                 </Typography>
-                                <Typography variant="body1">
-                                如果你在某個領域擁有一定程度的知識，並且想要分享你所學，幫助更多人解決他們的問題。
-                                你可以向官方申請或藉由其他專家推薦，成為某領域的專家！  
-                                <br /><br />
-                                透過雙向的知識交流，「加強過往所學、更新過時知識」，建構出更完善的學習環境。
-                                幫助雙方共同發展成長。
-                                
+                                <Typography 
+                                variant="body1" 
+                                sx={{
+                                    letterSpacing: ".1rem",
+                                    color: "#000000",
+                                    textDecoration: "none",
+                                    minWidth: 345,
+                                }}
+                                >
+                                    如果你在某個領域擁有一定程度的知識，並且想要分享你所學，幫助更多人解決他們的問題。
+                                    你可以向官方申請或藉由其他專家推薦，成為某領域的專家！
+                                    <br /><br />
+                                    透過雙向的知識交流，「加強過往所學、更新過時知識」，建構出更完善的學習環境。
+                                    幫助雙方共同發展成長。
+
                                 </Typography>
-                            </Box>
+                            
                         </Grid>
-                        <Grid item xs={4} sx={{ maxWidth: 345, }}>
+                        <Grid item xs={4} sx={{ minWidth: 345, }}>
                             <CardMedia>
                                 <Image
                                     src={expert}
@@ -163,7 +172,7 @@ function Character() {
                             </CardContent>
 
                         </Grid>
-                        <Grid item xs={4} sx={{ maxWidth: 345, }}>
+                        <Grid item xs={4} sx={{ minWidth: 345, }}>
                             <CardMedia>
                                 <Image
                                     src={learner}

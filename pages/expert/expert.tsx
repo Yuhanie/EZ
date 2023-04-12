@@ -164,7 +164,7 @@ const Home: NextPage = (props) => {
       const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Tag[] = [];
       querySnapshot.forEach((doc) => {
-        temp.push({ name: doc.data().name, pic: doc.data().pic });
+        temp.push({ name: doc.data().name, pic: doc.data().pic,  order: doc.data().order });
 
       });
       setTag([...temp]);

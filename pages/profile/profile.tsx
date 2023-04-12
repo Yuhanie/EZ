@@ -415,9 +415,9 @@ const Profile = () => {
 
 
                   <Grid >
-                    <Card sx={{ m: 2, width: 300 }}>
+                    {/* <Card sx={{ m: 2, width: 300 }}> */}
                       {/* <Card sx={{ minWidth: 275 }}> */}
-                      <CardContent>
+                      {/* <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           擅長領域
                         </Typography>
@@ -427,7 +427,7 @@ const Profile = () => {
                           <Chip label="tag 3" component="a" href="#chip" />
                         </Stack>
                       </CardContent>
-                    </Card>
+                    </Card> */}
                   </Grid>
                 </Grid>
               </Box>

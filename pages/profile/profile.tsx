@@ -100,7 +100,13 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const Profile = () => {
+type Props = {
+  article: Article;
+  update: Function;
+};
+
+const Profile:
+React.FC<Props> = (props) =>{
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -113,6 +119,7 @@ const Profile = () => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
+  const [countHeart, setCountHeart] = useState(0);
   // const [bookmark, setBookmark] = useState<Bookmark[]>([]);
 
   const updateUpdated = () => {
@@ -182,6 +189,21 @@ const Profile = () => {
           });
           setMyNotes([...tempMyNote]);
           setIsLoading(false);
+
+          setIsLoading(true);
+          const ref = await getDocs(query(collection(db, "text"), where("userid", "==", user.uid)));
+          if(ref&&(user.uid===props.article.userid)){
+            setCountHeart(props.article.heart ? props.article.heart.length : 0)
+          }
+          setIsLoading(false);
+          // setIsLoading(true);
+          // const queryHeart = await getDocs(query(collection(db, "text"), where("userid", "==", user.uid)));
+          // const tempHeart: Article[] = [];
+          // queryHeart.forEach((doc) => {
+          //   tempHeart.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+          // });
+          // setCountHeart([...tempHeart]);
+          // setIsLoading(false);
         }
       });
 

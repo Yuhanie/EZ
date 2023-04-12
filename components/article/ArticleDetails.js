@@ -727,12 +727,12 @@ const ArticleDetails = (props) => {
             </div>
           </Box>
 
-          <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
-            <Typography variant="h6">專家權限</Typography>
+          {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
+            <Typography variant="h6">專家權限</Typography> */}
 
             {character === "專家" && expert()}
             {expertAction === "true" && expertReport()}
-          </Box>
+          {/* </Box> */}
 
 
 

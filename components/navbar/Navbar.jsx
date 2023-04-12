@@ -72,6 +72,7 @@ const pages = [
   { text: "首頁", href: "/" },
   { text: "筆記分享區", href: "/note" },
   // { text: "問答區", href: "" },
+
 ];
 const settings = [
   //  { text: "我的角色", href: "/profile" },

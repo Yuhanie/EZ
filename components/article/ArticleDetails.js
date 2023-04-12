@@ -615,7 +615,7 @@ const ArticleDetails = (props) => {
                 </Select>
               </FormControl>
 
-              <Button
+              {/* <Button
                 edited={edited}
                 setEdited={setEdited}
                 color="warning"
@@ -625,7 +625,8 @@ const ArticleDetails = (props) => {
                 onClick={() => (user ? Denounce(report) : alert("請登入"))}
               >
                 檢舉
-              </Button>
+              </Button> */}
+              
             </Box>
           </DialogContent>
         </Dialog>

@@ -71,8 +71,7 @@ ElevationScroll.propTypes = {
 const pages = [
   { text: "首頁", href: "/" },
   { text: "筆記分享區", href: "/note" },
-  { text: "問答區", href: "" },
-  { text: "審查筆記", href: "/expert" },
+  // { text: "問答區", href: "" },
 ];
 const settings = [
   //  { text: "我的角色", href: "/profile" },
@@ -337,13 +336,13 @@ function ResponsiveAppBar() {
                 </Button>
               ))}
 
-              {/* <Tooltip title="即將登場！">
+              <Tooltip title="即將登場！">
                 <Button sx={{ my: 2, color: "black", display: "block" }}>
                   <Typography>
                     問答區
                   </Typography>
                 </Button>
-              </Tooltip> */}
+              </Tooltip>
 
             </Box>
 

@@ -52,6 +52,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import CircularProgress from "@mui/material";
+import { getCountFromServer } from 'firebase/firestore'
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 
@@ -104,9 +105,8 @@ type Props = {
   article: Article;
   update: Function;
 };
-
 const Profile:
-React.FC<Props> = (props) =>{
+  React.FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -190,12 +190,24 @@ React.FC<Props> = (props) =>{
           setMyNotes([...tempMyNote]);
           setIsLoading(false);
 
-          setIsLoading(true);
-          const ref = await getDocs(query(collection(db, "text"), where("userid", "==", user.uid)));
-          if(ref&&(user.uid===props.article.userid)){
-            setCountHeart(props.article.heart ? props.article.heart.length : 0)
-          }
-          setIsLoading(false);
+          // const ref = doc(db, "text", user.uid);
+          // const docSnap = await getDoc(ref);
+
+          // const refReport = collection(
+          //   db,
+          //   "text",
+          //   props.article.docId,
+          //   "denounce"
+          // );
+          // const snapshot = await getCountFromServer(refReport);
+
+          // setIsLoading(true);
+          // const ref = await getDocs(query(collection(db, "text"), where("userid", "==", user.uid)));
+          // if(ref&&(user.uid===props.article.userid)){
+          //   setCountHeart(props.article.heart ? props.article.heart.length : 0)
+          // }
+          // setIsLoading(false);
+
           // setIsLoading(true);
           // const queryHeart = await getDocs(query(collection(db, "text"), where("userid", "==", user.uid)));
           // const tempHeart: Article[] = [];

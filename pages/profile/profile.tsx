@@ -5,7 +5,7 @@ import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
-import { Profile, BookMark, Article, Tag, miniTag } from 'interfaces/entities';
+import { Profile, BookMark, Article, Tag, miniTag, MajorTag } from 'interfaces/entities';
 import Collect from '../../components/collect/Collect';
 import styles from '../../styles/Home.module.css';
 //mui
@@ -52,6 +52,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import CircularProgress from "@mui/material";
+
+import TagList from '../../components/tag/TagList';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 
@@ -113,7 +115,7 @@ const Profile = () => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
-  // const [bookmark, setBookmark] = useState<Bookmark[]>([]);
+  const [MajorTag, setMajorTag] = useState<MajorTag[]>([]);
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -182,6 +184,15 @@ const Profile = () => {
           });
           setMyNotes([...tempMyNote]);
           setIsLoading(false);
+
+          setIsLoading(true);
+          const queryMajorTag = await getDocs(collection(db, "MajorTag"));
+          const temp: MajorTag[] = [];
+          queryMajorTag.forEach((doc) => {
+            temp.push({ name: doc.data().name });
+          });
+          setMajorTag([...temp]);
+          setIsLoading(false);
         }
       });
 
@@ -220,10 +231,14 @@ const Profile = () => {
     return (
       <Collect key={myNotes.docId} article={myNotes} update={updateUpdated}></Collect>
     );
-
   };
 
+  // const renderMajorTag = (MajorTag: MajorTag, i: number) => {
+  //   return (
+  //     <TagList key={MajorTag.name}></TagList>
+  //   );
 
+  // };
 
   return (
     <>
@@ -425,26 +440,13 @@ const Profile = () => {
                           <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" />
+                          {/* {MajorTag.map(renderMajorTag)} */}
                         </Stack>
                       </CardContent>
                     </Card>
                   </Grid>
                 </Grid>
               </Box>
-
-              {/* <Card sx={{ m: 2, width: 300 }}>
-                      <CardContent>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          收藏文章
-                        </Typography>
-                        <Stack direction="row" spacing={1}>
-                          
-                        </Stack>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                </Grid> */}
-
 
               <Divider />
 

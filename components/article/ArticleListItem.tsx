@@ -57,6 +57,7 @@ const ArticleListItem:
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
     const [character, setCharacter] = useState("學習者");
+    const [photoURL, setPhotoURL] =useState();
 
 
 
@@ -125,7 +126,9 @@ const ArticleListItem:
 
             const ref = doc(db, "profile", user.uid);
             const docSnap = await getDoc(ref);
-    
+            
+  
+
             if (
               docSnap.exists() &&
               docSnap.data().character &&

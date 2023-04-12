@@ -354,14 +354,17 @@ const Home: NextPage = () => {
       setNewTexts([...temp2]);
 
       setIsLoading(true);
-      const querySnapshot = await getDocs(collection(db, "tag"));
+      // const querySnapshot = await getDocs(query(collection(db, "tag"), orderBy("order", "asc")));
+      const Tag = collection(db, "tag");
+      const queryTag = query(Tag, orderBy("order", "asc"));
+      const querySnapshot = await getDocs(queryTag);
       const temp: Tag[] = [];
       querySnapshot.forEach((doc) => {
         //console.log(doc.id, doc.data());
-        temp.push({ name: doc.data().name, pic: doc.data().pic });
-
+        temp.push({ name: doc.data().name, pic: doc.data().pic, order: doc.data().order });
       });
       setTag([...temp]);
+      
       const textCollection = collection(db, "text");
       const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
       //const queryNewText =query(textCollection, orderBy("timestamp", "desc"), limit(3)); 

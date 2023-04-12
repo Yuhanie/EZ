@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button, TableCell, TableRow } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
-import { Tag } from '../../interfaces/entities';
+import { Tag, MajorTag } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 
 type Props = {

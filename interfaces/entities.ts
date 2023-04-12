@@ -65,11 +65,12 @@ export type Denounce = {
 export type Tag = {
   name: string;
   pic: string;
+  order: string;
 };
 
-// export type tags = {
-//   name: string;
-// };
+export type MajorTag = {
+  name: string;
+};
 
 export type miniTag = {
   name: string;

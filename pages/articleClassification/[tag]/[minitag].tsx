@@ -103,23 +103,15 @@ const Article = () => {
       querySnapshot3.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());
-        temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+        temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
       });
-
-      // const querySnapshot4 = await getDocs(query(collection(db, "text"), where("user", "==", "yuhan")));
-      // querySnapshot4.forEach(async (doc3) => {
-      //   console.log(doc3.id);
-      //   console.log(doc3.data());
-      //   temp.push({ docId: doc3.id, content: doc3.data().content, title: doc3.data().title, user: doc3.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
-      // });
-
+      
       const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
       const docSnap = await getDoc(docRef);
 
       setArticles([...temp]);
       setminiTags([...temp3]);
-      // setTags([...temp2]);
-      // setBookmarks([...temp4]);
+      setTags([...temp2]);
     }
 
     readData();

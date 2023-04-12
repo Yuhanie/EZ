@@ -110,7 +110,7 @@ const Article = () => {
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());
-        temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+        temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
         
       });
 

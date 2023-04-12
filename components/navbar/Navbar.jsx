@@ -71,7 +71,8 @@ ElevationScroll.propTypes = {
 const pages = [
   { text: "首頁", href: "/" },
   { text: "筆記分享區", href: "/note" },
-  // { text: "問答區", href: "" },
+  { text: "問答區", href: "" },
+  { text: "審查筆記", href: "/expert" },
 ];
 const settings = [
   //  { text: "我的角色", href: "/profile" },
@@ -91,7 +92,7 @@ function ResponsiveAppBar() {
   const [activeIdx, setActiveIdx] = useState(-1);
   const [currentUser, setCurrentUser] = useState();
   const [logged, setLogged] = useState(false);
-  const [photoURL, setPhotoURL] =useState();
+  const [photoURL, setPhotoURL] = useState();
 
 
   const handleOpenNavMenu = (event) => {
@@ -133,7 +134,7 @@ function ResponsiveAppBar() {
       setCurrentUser(user);
       if (user) {
         setLogged(false)
-        if (user.photoURL){
+        if (user.photoURL) {
           setPhotoURL(user.photoURL)
         }
       }
@@ -166,10 +167,10 @@ function ResponsiveAppBar() {
       <Box>
         <Tooltip title="查看更多">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
-          {photoURL?
-          <img className={styles.googlephoto_nav} src={currentUser?.photoURL}/>:
-          <Avatar/>}
+            {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
+            {photoURL ?
+              <img className={styles.googlephoto_nav} src={currentUser?.photoURL} /> :
+              <Avatar />}
           </IconButton>
         </Tooltip>
         <Menu
@@ -296,11 +297,11 @@ function ResponsiveAppBar() {
                     </Typography>
                   </MenuItem>
                 ))}
-                <MenuItem>
+                {/* <MenuItem>
                   <Typography>
                     問答區
                   </Typography>
-                </MenuItem>
+                </MenuItem> */}
               </Menu>
             </Box>
 
@@ -342,14 +343,14 @@ function ResponsiveAppBar() {
                   </Typography>
                 </Button>
               ))}
-
+{/* 
               <Tooltip title="即將登場！">
                 <Button sx={{ my: 2, color: "black", display: "block" }}>
                   <Typography>
                     問答區
                   </Typography>
                 </Button>
-              </Tooltip>
+              </Tooltip> */}
 
             </Box>
 

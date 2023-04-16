@@ -212,6 +212,8 @@ const ArticleDetails = (props) => {
   };
 
   const outdate = async function (status) {
+    // let status = e.target.value
+    // console.log("outdateE", status)
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -227,8 +229,9 @@ const ArticleDetails = (props) => {
             setExpertOutdate(status)
             setIsLoading(false);
             props.update();
+            // console.log("outdate:", status);
           } catch (error) {
-            // console.log(error);
+            // console.log("outdateError:", error);
           }
         }
 
@@ -269,8 +272,9 @@ const ArticleDetails = (props) => {
 
                 setEdited(edited + 1);
                 setExpertOutdate("pending")
+                // console.log("denounce:", status)
               } catch (error) {
-                // console.log(error);
+                // console.log("denounceError:", error);
               }
             }
           } else {
@@ -512,13 +516,16 @@ const ArticleDetails = (props) => {
               // value={topicName}
               // label="topic"
               sx={{ height: 35 }}
-              onChange={(e) => {
-                outdate(e.target.value)
-                
-              }}
+              
             >
-              <MenuItem value="solved">沒問題</MenuItem>
-              <MenuItem value="stale">過時或無法使用</MenuItem>
+              <MenuItem onClick={(e) => {
+                outdate("solved")}}>
+                沒問題
+              </MenuItem>
+              <MenuItem 
+                onClick={(e) => {outdate("stale")}}>
+                過時或無法使用
+              </MenuItem>
             </Select>
           </FormControl>
           <br />

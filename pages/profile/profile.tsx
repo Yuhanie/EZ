@@ -222,14 +222,14 @@ const Profile = () => {
 
   const renderCollect = (collect: Article, i: number) => {
     return (
-      <Collect key={collect.docId} article={collect} update={updateUpdated}></Collect>
+      <ArticleListItem key={collect.docId} article={collect} update={updateUpdated}></ArticleListItem>
     );
 
   };
 
   const renderMyNote = (myNotes: Article, i: number) => {
     return (
-      <Collect key={myNotes.docId} article={myNotes} update={updateUpdated}></Collect>
+      <ArticleListItem key={myNotes.docId} article={myNotes} update={updateUpdated}></ArticleListItem>
     );
   };
 

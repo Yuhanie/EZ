@@ -112,25 +112,29 @@ function ResponsiveAppBar() {
 
   //logout
   const router = useRouter();
+
   const logout = async function () {
+    alert("logout")
     const auth = getAuth();
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
       setLogged(true);
     }
-    router.push("/");
   };
 
   //profile
   const profile = async function () {
-    const auth = getAuth();
+    // const auth = getAuth();
+    console.log("profile")
+    alert("請稍候...")
     router.push("/profile");
   };
 
   //確認是否logged
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
+      console.log("useEffect")
       setCurrentUser(user);
       if (user) {
         setLogged(false)
@@ -206,13 +210,13 @@ function ResponsiveAppBar() {
             </MenuItem>
 
           ))}
-          <MenuItem>
-            <Typography onClick={profile}>
+          <MenuItem onClick={profile}>
+            <Typography>
               我的角色
             </Typography>
           </MenuItem>
-          <MenuItem>
-            <Typography onClick={logout}>
+          <MenuItem onClick={logout}>
+            <Typography>
               登出
             </Typography>
           </MenuItem>

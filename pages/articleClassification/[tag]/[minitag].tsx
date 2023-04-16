@@ -69,7 +69,7 @@ const Article = () => {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [tags, setTags] = useState<Tag[]>([]);
+  // const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
   const [updated, setUpdated] = useState(0);
   // const [bookmarks, setBookmarks] = useState<BookMark[]>([]);
@@ -79,13 +79,12 @@ const Article = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-
-      const temp: Article[] = [];
-      const temp2: Tag[] = [];
-      const temp3: miniTag[] = [];
-      // const temp4: BookMark[] = [];
-      // console.log("minitag:", minitag)
+      console.log("minitag:",minitag)
+    
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
+      const temp: Article[] = [];
+      // const temp2: Tag[] = [];
+      const temp3: miniTag[] = [];
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
         console.log(doc.data());
@@ -99,19 +98,20 @@ const Article = () => {
       //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       // });
 
-      const querySnapshot3 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
-      querySnapshot3.forEach(async (doc2) => {
-        console.log(doc2.id);
-        console.log(doc2.data());
-        temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
-      });
+      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      // querySnapshot2.forEach(async (doc2) => {
+      //   console.log(doc2.id);
+      //   console.log(doc2.data());
+      //   temp3.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
+      // });
       
       const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
       const docSnap = await getDoc(docRef);
 
       setArticles([...temp]);
       setminiTags([...temp3]);
-      setTags([...temp2]);
+      // setTags([...temp2]);
+      setIsLoading(false);
     }
 
     readData();
@@ -126,19 +126,21 @@ const Article = () => {
   const renderText = (article: Article, i: number) => {
     return (
       <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
-
     );
   };
 
-  const renderTag = (minitag: miniTag, i: number) => {
+  // const renderTag = (tag: Tag, i: number) => {
     //console.log("tags3:",tag);
-    return (
-      <div>
-      {!Array.isArray(tag)&&tag&&
-      <MiniTagList key={minitag.name} tag={tag} minitag={minitag}></MiniTagList>}
-      </div>
-    );
-  };
+    // return (
+    //   <div>
+    //   {!Array.isArray(tag)&&tag&&
+    //   <MiniTagList key={minitag.name} tag={tag} minitag={minitag}></MiniTagList>}
+    //   </div>
+    // );
+  //   return (
+  //     <MiniTags key={tag.name} miniTag={tag}></MiniTags>
+  //   );
+  // };
 
   ////////////////////////////////////////////////////////////sidebar
   const drawerWidth = 240;
@@ -199,7 +201,7 @@ const Article = () => {
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {tags.map(renderTag)}
+            {/* {tags.map(renderTag)} */}
             {/* </ListItem> */}
           </List>
         </Box>
@@ -227,8 +229,8 @@ const Article = () => {
             size="medium"
             color="primary"
             sx={{ mr: 2, display: { sm: 'none', } }}
-
           >
+            {minitag}
           </Button>
           <Button
             variant="contained"
@@ -242,13 +244,13 @@ const Article = () => {
           </Button>
         </Box>
 
-        <List className={styles.line} aria-label="mailbox folders">
+        {/* <List className={styles.line} aria-label="mailbox folders"> */}
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {tags.map(renderTag)}
+            {/* {tags.map(renderTag)} */}
             {/* </ListItem> */}
-          </List>
+          {/* </List> */}
 
         <Box
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

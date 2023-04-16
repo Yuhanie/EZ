@@ -115,7 +115,8 @@ const Profile = () => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
-  const [MajorTag, setMajorTag] = useState<MajorTag[]>([]);
+  // const [MajorTag, setMajorTag] = useState<MajorTag[]>([]);
+  const [MajorTag, setMajorTag] = useState<Article[]>([]);
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -186,12 +187,16 @@ const Profile = () => {
           setIsLoading(false);
 
           setIsLoading(true);
-          const queryMajorTag = await getDocs(collection(db, "MajorTag"));
-          const temp: MajorTag[] = [];
-          queryMajorTag.forEach((doc) => {
-            temp.push({ name: doc.data().name });
-          });
-          setMajorTag([...temp]);
+          const queryMajorTag = await getDocs(query(collection(db, "MajorTag"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
+          const temp3: Article[] = [];
+          queryMajorTag.forEach(async (doc) => {
+        temp3.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      });
+          // const temp: MajorTag[] = [];
+          // queryMajorTag.forEach((doc) => {
+          //   temp.push({ name: doc.data().name });
+          // });
+          setMajorTag([...temp3]);
           setIsLoading(false);
         }
       });

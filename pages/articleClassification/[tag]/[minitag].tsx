@@ -128,7 +128,6 @@ const Article = () => {
       <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
     );
   };
-
   // const renderTag = (tag: Tag, i: number) => {
     //console.log("tags3:",tag);
     // return (

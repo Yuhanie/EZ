@@ -144,11 +144,11 @@ const ArticleDetails = (props) => {
         } else {
           setOutdated(false);
           setExpertAction("false");
-          console.log("article:", props.article);
-          console.log("outdateCount:", props.article.outdateCount);
+          // console.log("article:", props.article);
+          // console.log("outdateCount:", props.article.outdateCount);
         }
       }
-      console.log("user", user);
+      // console.log("user", user);
     });
 
 
@@ -190,15 +190,15 @@ const ArticleDetails = (props) => {
       querySnapshotArticle.forEach((doc) => {
         let data = { ...doc.data(), id: doc.id };
         temp.push(data);
-        console.log("data:", data);
+        // console.log("data:", data);
       });
 
       // setComments(() => [temp1, temp2]);
       setComments(() => [...temp]);
     }
     fetchData();
-    console.log("user:", user);
-    console.log("article:", props.article);
+    // console.log("user:", user);
+    // console.log("article:", props.article);
 
     // eslint-disable-next-line
   }, [edited, outdated, deleted]);
@@ -382,18 +382,16 @@ const ArticleDetails = (props) => {
           if (docSnap.data().userid == user.uid) {
             try {
               setIsLoading(true);
-
+              //要先把集合裡的東刪掉才能刪集合才能刪整個文件ㄟ
               await deleteDoc(doc(db, "text", props.article.docId));
-
               //console.log("deleted");
-
-              setDeleted(deleted + 1);
-
+              // setDeleted(deleted + 1);
               setIsLoading(false);
               alert("刪除成功");
-              props.update();
+              // props.update();
+              router.reload("/note")
             } catch (error) {
-              console.log(error);
+              alert(error);
             }
           } else {
             alert("不是你的文章ㄚ");
@@ -425,7 +423,7 @@ const ArticleDetails = (props) => {
               alert("下架成功");
               props.update();
             } catch (error) {
-              console.log(error);
+              alert(error);
             }
           } else {
             alert("你不是專家吧？");

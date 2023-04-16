@@ -139,6 +139,8 @@ const ArticleListItem:
         //console.log(user);
       });
 
+      
+
       return () => {
         unsub();
       }
@@ -146,6 +148,7 @@ const ArticleListItem:
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [liked, bookMarked]);
 
+    
 
 
     const bookmark = async function () {
@@ -227,6 +230,32 @@ const ArticleListItem:
       router.push('/introduction');
     }
 
+    // const intro = (id) => {
+    //   router.push('/introduction?articleId'+id);
+    // }
+
+    // const Intro = (id) => {
+    //   return (
+    //     <div>
+    //       <Box onClick={() => intro(id)}>
+    //       <CardHeader
+    //             avatar={
+    //               <Avatar aria-label="recipe"></Avatar>
+    //             }
+    //             title={props.article.user}
+    //             subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+    //             //item 
+    //             sx={{ p: 1.2 }}
+    //           />
+    //           {/* {character=="專家"&&expertIcon()} */}
+    //           </Box>
+    //     </div>
+    //   );
+    // };
+
+    
+  
+
     const expertIcon = () => {
       return (
         <div>
@@ -279,8 +308,11 @@ const ArticleListItem:
             </CardContent>
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
+            {/* <Box>
+              {Intro(props.article.docId)}
+            </Box> */}
             <Box onClick={changeStatus}>
-              <CardHeader
+            <CardHeader
                 avatar={
                   <Avatar aria-label="recipe"></Avatar>
                 }

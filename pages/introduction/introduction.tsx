@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRouter } from "next/router"
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
@@ -100,8 +101,10 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 
 
 
-const Introduction = () => {
-   //const { articleId } = router.query;
+function Introduction() {
+
+    const router = useRouter();
+    const { articleId } = router.query;
     const [currentUser, setCurrentUser] = useState<User>();
     const [open, setOpen] = React.useState(false);
     const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -144,8 +147,27 @@ const Introduction = () => {
             }
         }
         readData();
-    },[]);
+    }, []);
 
+
+
+    // useEffect(() => {
+
+    //     async function readData() {
+    //         if (articleId) {
+    //             const ref = doc(db, "text", articleId);
+    //             const docSnapshot = await getDoc(ref);
+    //             if (docSnapshot.exists()) {
+    //                 console.log("doc", docSnapshot.data())
+    //             }
+    //         }
+
+    //     }
+    //     readData();
+    // }, [articleId])
+
+
+    
 
 
 
@@ -182,8 +204,8 @@ const Introduction = () => {
                                                 <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
                                             </Box>
                                             <Box>
-                                                <Typography pt={0.8} fontSize={25} >{}</Typography>
-                                                <Typography fontSize={12}>{}</Typography>
+                                                <Typography pt={0.8} fontSize={25} >{ }</Typography>
+                                                <Typography fontSize={12}>{ }</Typography>
 
                                             </Box>
                                         </Box>

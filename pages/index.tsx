@@ -4,7 +4,7 @@ import Image from "next/image";
 import workingPerson from "../public/pic/workingPerson.png";
 import expert from "../public/pic/expert.png";
 import learner from "../public/pic/learner.png";
-
+import code1 from "../public/pic/code1.png"
 
 import { Button, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -57,7 +57,10 @@ const lightTheme = createTheme({
 function Solgan() {
     return (
         <div>
+
             <Container>
+
+
                 <Box display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">
                     <Box display="flex" flexDirection="column" justifyContent="space-between" maxWidth={400} sx={{ p: 4 }}>
                         {/* 網頁 */}
@@ -117,43 +120,43 @@ function Character() {
             <Box sx={{ bgcolor: "#fafafa" }}>
                 <Container>
                     <Grid container spacing={4} display="flex" flexWrap="wrap" alignItems="center" justifyContent="center" >
-                        <Grid item xs={4} sx={{ bgcolor: "#fafafa", minWidth: 345,  }}>
-                           
-                                <Typography
-                                    
-                                    variant="h2"
-                                    noWrap
-                                    component="a"
+                        <Grid item xs={4} sx={{ bgcolor: "#fafafa", minWidth: 345, }}>
 
-                                    sx={{
-                                        fontWeight: 600,
-                                        letterSpacing: ".3rem",
-                                        color: "#000000",
-                                        textDecoration: "none",
-                                        mb: 5,
-                                        height: 80,
-                                        minWidth: 345,
-                                    }}
-                                >
-                                    角色
-                                </Typography>
-                                <Typography 
-                                variant="body1" 
+                            <Typography
+
+                                variant="h2"
+                                noWrap
+                                component="a"
+
+                                sx={{
+                                    fontWeight: 600,
+                                    letterSpacing: ".3rem",
+                                    color: "#000000",
+                                    textDecoration: "none",
+                                    mb: 5,
+                                    height: 80,
+                                    minWidth: 345,
+                                }}
+                            >
+                                角色
+                            </Typography>
+                            <Typography
+                                variant="body1"
                                 sx={{
                                     letterSpacing: ".1rem",
                                     color: "#000000",
                                     textDecoration: "none",
                                     minWidth: 345,
                                 }}
-                                >
-                                    如果你在某個領域擁有一定程度的知識，並且想要分享你所學，幫助更多人解決他們的問題。
-                                    你可以向官方申請或藉由其他專家推薦，成為某領域的專家！
-                                    <br /><br />
-                                    透過雙向的知識交流，「加強過往所學、更新過時知識」，建構出更完善的學習環境。
-                                    幫助雙方共同發展成長。
+                            >
+                                如果你在某個領域擁有一定程度的知識，並且想要分享你所學，幫助更多人解決他們的問題。
+                                你可以向官方申請或藉由其他專家推薦，成為某領域的專家！
+                                <br /><br />
+                                透過雙向的知識交流，「加強過往所學、更新過時知識」，建構出更完善的學習環境。
+                                幫助雙方共同發展成長。
 
-                                </Typography>
-                            
+                            </Typography>
+
                         </Grid>
                         <Grid item xs={4} sx={{ minWidth: 345, }}>
                             <CardMedia>
@@ -471,6 +474,7 @@ function Update() {
 
 
 
+
 function Index() {
 
     return (
@@ -482,9 +486,11 @@ function Index() {
 
             <Toolbar />
 
+
+
             <ThemeProvider theme={lightTheme}>
                 <Grid display="flex" flexWrap="wrap" flexDirection="column">
-
+                    
                     <Solgan />
 
                     <Toolbar />

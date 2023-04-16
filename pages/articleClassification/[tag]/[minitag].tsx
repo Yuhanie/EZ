@@ -69,21 +69,18 @@ const Article = () => {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [tags, setTags] = useState<Tag[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [miniTags, setminiTags] = useState<miniTag[]>([]);
   const [updated, setUpdated] = useState(0);
-  // const [bookmarks, setBookmarks] = useState<BookMark[]>([]);
 
   //console.log(props)
 
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      console.log("minitag:",minitag)
-    
       const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
       const temp: Article[] = [];
-      // const temp2: Tag[] = [];
+      const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
@@ -98,19 +95,20 @@ const Article = () => {
       //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       // });
 
-      // const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
-      // querySnapshot2.forEach(async (doc2) => {
-      //   console.log(doc2.id);
-      //   console.log(doc2.data());
-      //   temp3.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
-      // });
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      querySnapshot2.forEach(async (doc2) => {
+        console.log(doc2.id);
+        console.log(doc2.data());
+        temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
+        
+      });
       
       const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
       const docSnap = await getDoc(docRef);
 
       setArticles([...temp]);
-      setminiTags([...temp3]);
-      // setTags([...temp2]);
+      // setminiTags([...temp3]);
+      setTags([...temp2]);
       setIsLoading(false);
     }
 
@@ -128,8 +126,7 @@ const Article = () => {
       <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
     );
   };
-  // const renderTag = (tag: Tag, i: number) => {
-    //console.log("tags3:",tag);
+  // const renderminiTag = (tag: Tag, i: number) => {
     // return (
     //   <div>
     //   {!Array.isArray(tag)&&tag&&
@@ -140,6 +137,15 @@ const Article = () => {
   //     <MiniTags key={tag.name} miniTag={tag}></MiniTags>
   //   );
   // };
+
+  const renderTag = (minitag: miniTag, i: number) => {
+    return (
+      <div>
+      {!Array.isArray(tag)&&tag&&
+      <MiniTagList key={minitag.name} tag={tag} minitag={minitag}></MiniTagList>}
+      </div>
+    );
+  };
 
   ////////////////////////////////////////////////////////////sidebar
   const drawerWidth = 240;
@@ -200,7 +206,7 @@ const Article = () => {
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {/* {tags.map(renderTag)} */}
+            {tags.map(renderTag)}
             {/* </ListItem> */}
           </List>
         </Box>
@@ -229,7 +235,7 @@ const Article = () => {
             color="primary"
             sx={{ mr: 2, display: { sm: 'none', } }}
           >
-            {minitag}
+            {/* {minitag} */}
           </Button>
           <Button
             variant="contained"
@@ -247,7 +253,7 @@ const Article = () => {
             {/* <ListItem button> */}
             {/* <ListItemText primary="分類" />
                 <ListItemText/> */}
-            {/* {tags.map(renderTag)} */}
+            {tags.map(renderTag)}
             {/* </ListItem> */}
           {/* </List> */}
 
@@ -311,15 +317,12 @@ const Article = () => {
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
         >
-
           {!isLoading ?
             <div className={styles.grid}>
               {articles.map(renderText)} 
             </div>
             : <CircularProgress />
           }
-
-
         </Box>
 
       </div>

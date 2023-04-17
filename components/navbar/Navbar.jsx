@@ -93,6 +93,7 @@ function ResponsiveAppBar() {
   const [currentUser, setCurrentUser] = useState();
   const [logged, setLogged] = useState(false);
   const [photoURL, setPhotoURL] = useState();
+  const [character, setCharacter] = useState("學習者");
 
 
   const handleOpenNavMenu = (event) => {
@@ -130,6 +131,13 @@ function ResponsiveAppBar() {
     alert("請稍候...")
     router.push("/profile");
   };
+  const expert = () => {
+    if (character == "專家" && expert()){
+ 
+    }
+ 
+
+  };
 
   //確認是否logged
   useEffect(() => {
@@ -163,7 +171,7 @@ function ResponsiveAppBar() {
       </Box>
     )
   }
-
+  
   //人頭
   const Other = () => {
 
@@ -306,6 +314,12 @@ function ResponsiveAppBar() {
                     問答區
                   </Typography>
                 </MenuItem>
+                <Box sx={{ pr: 2 }}>
+        
+      </Box>
+            <Button variant="text" color="primary" href="/expert">
+                審查筆記
+              </Button>
               </Menu>
             </Box>
 
@@ -354,9 +368,14 @@ function ResponsiveAppBar() {
                     問答區
                   </Typography>
                 </Button>
+               
+                
               </Tooltip>
-
+              <Button variant="text" color="secondary" href="/expert">
+                審查筆記
+              </Button>
             </Box>
+           
 
             {/* 登入前後後 */}
             <Box sx={{ flexGrow: 0 }}>

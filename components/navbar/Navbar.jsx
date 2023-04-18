@@ -132,9 +132,11 @@ function ResponsiveAppBar() {
     router.push("/profile");
   };
   const expert = () => {
-    if (character == "專家" && expert()){
- 
-    }
+    return(
+      <Button variant="text" color="primary" href="/expert">
+                審查筆記
+      </Button>
+    )
  
 
   };
@@ -316,10 +318,8 @@ function ResponsiveAppBar() {
                 </MenuItem>
                 <Box sx={{ pr: 2 }}>
         
-      </Box>
-            <Button variant="text" color="primary" href="/expert">
-                審查筆記
-              </Button>
+          </Box>
+              {character == "專家" && expert()}
               </Menu>
             </Box>
 
@@ -371,9 +371,7 @@ function ResponsiveAppBar() {
                
                 
               </Tooltip>
-              <Button variant="text" color="secondary" href="/expert">
-                審查筆記
-              </Button>
+              {character == "專家" && expert()}
             </Box>
            
 

@@ -52,6 +52,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
+import useId from '@mui/material/utils/useId';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -104,12 +105,13 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 function Introduction() {
 
     const router = useRouter();
-    const { articleId } = router.query;
+    const { userId } = router.query;
     const [currentUser, setCurrentUser] = useState<User>();
     const [open, setOpen] = React.useState(false);
     const [openDrawer, setOpenDrawer] = React.useState(true);
     const theme = useTheme();
     const [profile, setProfile] = useState<Profile>();
+    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -121,6 +123,17 @@ function Introduction() {
     const handleClick = () => {
         setOpenDrawer(!openDrawer);
     };
+
+    useEffect(() => {
+        async function readData() {
+            if (userId) {
+                
+              }
+    
+        }
+        readData();
+      }
+        , [userId])
 
 
 
@@ -145,6 +158,8 @@ function Introduction() {
             return () => {
                 unsub();
             }
+
+            
         }
         readData();
     }, []);

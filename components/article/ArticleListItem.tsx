@@ -111,35 +111,35 @@ const ArticleListItem:
       }
     }
 
-  
+
 
 
 
     useEffect(() => {
-      const unsub = onAuthStateChanged(auth, async(user) => {
+      const unsub = onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log('currentUser', user)
           setCurrentUser(user);
           setHeart(user);
           setBookmark(user);
 
-            const ref = doc(db, "profile", user.uid);
-            const docSnap = await getDoc(ref);
-    
-            if (
-              docSnap.exists() &&
-              docSnap.data().character &&
-              docSnap.data().character === "專家"
-            ) {
-              setCharacter("專家");
-            } else {
-              setCharacter("學習者");
-            }
+          const ref = doc(db, "profile", user.uid);
+          const docSnap = await getDoc(ref);
+
+          if (
+            docSnap.exists() &&
+            docSnap.data().character &&
+            docSnap.data().character === "專家"
+          ) {
+            setCharacter("專家");
+          } else {
+            setCharacter("學習者");
           }
+        }
         //console.log(user);
       });
 
-      
+
 
       return () => {
         unsub();
@@ -148,7 +148,7 @@ const ArticleListItem:
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [liked, bookMarked]);
 
-    
+
 
 
     const bookmark = async function () {
@@ -226,45 +226,45 @@ const ArticleListItem:
 
     }
 
-    const changeStatus = function () {
-      router.push('/introduction');
-    }
-
-    // const intro = (id) => {
-    //   router.push('/introduction?articleId'+id);
+    // const changeStatus = function () {
+    //   router.push('/introduction');
     // }
 
-    // const Intro = (id) => {
-    //   return (
-    //     <div>
-    //       <Box onClick={() => intro(id)}>
-    //       <CardHeader
-    //             avatar={
-    //               <Avatar aria-label="recipe"></Avatar>
-    //             }
-    //             title={props.article.user}
-    //             subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
-    //             //item 
-    //             sx={{ p: 1.2 }}
-    //           />
-    //           {/* {character=="專家"&&expertIcon()} */}
-    //           </Box>
-    //     </div>
-    //   );
-    // };
+    const intro = (uid:any) => {
+      router.push('/introduction?userId=' + uid);
+    }
 
-    
-  
+    const Intro = (uid:any) => {
+      return (
+        <div>
+          <Box onClick={() => intro(uid)}>
+            <CardHeader
+              avatar={
+                <Avatar aria-label="recipe"></Avatar>
+              }
+              title={props.article.user}
+              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+              //item 
+              sx={{ p: 1.2 }}
+            />
+            {/* {character=="專家"&&expertIcon()} */}
+          </Box>
+        </div>
+      );
+    };
+
+
+
 
     const expertIcon = () => {
       return (
         <div>
-          
-            <Tooltip title="專家審核中">
-              <OfflinePinIcon sx={{ color: "green" }} />
-            </Tooltip>
-       
-         
+
+          <Tooltip title="專家審核中">
+            <OfflinePinIcon sx={{ color: "green" }} />
+          </Tooltip>
+
+
         </div>
       );
     };
@@ -308,11 +308,11 @@ const ArticleListItem:
             </CardContent>
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
-            {/* <Box>
-              {Intro(props.article.docId)}
-            </Box> */}
-            <Box onClick={changeStatus}>
-            <CardHeader
+            <Box>
+              {Intro(props.article.userid)}
+            </Box>
+            {/* <Box onClick={changeStatus}>
+              <CardHeader
                 avatar={
                   <Avatar aria-label="recipe"></Avatar>
                 }
@@ -322,7 +322,7 @@ const ArticleListItem:
                 sx={{ p: 1.2 }}
               />
               {/* {character=="專家"&&expertIcon()} */}
-            </Box>
+            
 
             <Box display="flex" sx={{ pr: 2 }}>
               <CardActions sx={{ p: 0 }}>

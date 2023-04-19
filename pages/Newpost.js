@@ -144,7 +144,8 @@ function Newpost() {
           link,
           outdate: "solved",
           outdateCount: [],
-          timestamp: serverTimestamp()
+          timestamp: serverTimestamp(),
+          minitag: [],
         });
         console.log(docRef.id);
       }

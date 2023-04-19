@@ -243,14 +243,14 @@ export default function SignIn() {
             {/* }  */}
             <Box display="flex" flexDirection="row" alignItems="center">
               <Typography variant="body2" sx={{ m: 1 }}>沒有帳號？現在就加入我們吧！</Typography>
-              <Typography
-                variant="body2"
+              <Button
+                variant="contained"
                 color="secondary"
                 onClick={changeStatus}
                 cursor="pointer"
               >
                 註冊
-              </Typography>
+              </Button>
             </Box>
 
           </Box>

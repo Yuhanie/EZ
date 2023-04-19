@@ -21,6 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import NavItem from "./NavItem";
 import { useEffect } from "react";
+import {setDoc,doc,getDocs,getDoc,getFirestore} from "firebase/firestore";
 
 //登出功能
 import { getApp, getApps, initializeApp } from "firebase/app";
@@ -30,6 +31,8 @@ import { firebaseConfig, } from "settings/firebaseConfig";
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
+const db = getFirestore();
+
 
 //色調
 const lightTheme = createTheme({
@@ -132,19 +135,32 @@ function ResponsiveAppBar() {
     router.push("/profile");
   };
   const expert = () => {
-    if (character == "專家" && expert()){
- 
-    }
+    return(
+      <Button variant="variant" color="primary" href="/expert">
+                審查筆記
+      </Button>
+    )
  
 
   };
 
   //確認是否logged
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       console.log("useEffect")
       setCurrentUser(user);
       if (user) {
+        const ref = doc(db, "profile", user.uid);
+        const docSnap = await getDoc(ref);
+        if (
+          docSnap.exists() &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
+          setCharacter("專家");
+        } else {
+          setCharacter("學習者");
+        }
         setLogged(false)
         if (user.photoURL) {
           setPhotoURL(user.photoURL)
@@ -153,6 +169,7 @@ function ResponsiveAppBar() {
       else {
         setLogged(true)
       }
+      
       console.log(user);
     });
 
@@ -313,13 +330,12 @@ function ResponsiveAppBar() {
                   <Typography>
                     問答區
                   </Typography>
+                  {character == "專家" && expert()}
                 </MenuItem>
                 <Box sx={{ pr: 2 }}>
         
-      </Box>
-            <Button variant="text" color="primary" href="/expert">
-                審查筆記
-              </Button>
+          </Box>
+              
               </Menu>
             </Box>
 
@@ -368,12 +384,11 @@ function ResponsiveAppBar() {
                     問答區
                   </Typography>
                 </Button>
+                
                
                 
               </Tooltip>
-              <Button variant="text" color="secondary" href="/expert">
-                審查筆記
-              </Button>
+              {character == "專家" && expert()}
             </Box>
            
 

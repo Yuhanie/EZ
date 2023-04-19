@@ -181,18 +181,18 @@ const Introduction:
 
 
 
-                console.log("introduction", props.article)
-                const ref = doc(db, "text", props.article.docId);
-                const docSnapshot = await getDoc(ref);
+                // console.log("introduction", props.article)
+                // const ref = doc(db, "text", props.article.docId);
+                // const docSnapshot = await getDoc(ref);
 
 
-                if (docSnapshot.exists()) {
-                    console.log("doc", docSnapshot.data().userId)
-                    // setTitle(docSnapshot.data().title)
-                    // setContent(docSnapshot.data().content)
-                    // setLink(docSnapshot.data().link)
-                    // setTagName(docSnapshot.data().tag)
-                }
+                // if (docSnapshot.exists()) {
+                //     console.log("doc", docSnapshot.data().userId)
+                //     // setTitle(docSnapshot.data().title)
+                //     // setContent(docSnapshot.data().content)
+                //     // setLink(docSnapshot.data().link)
+                //     // setTagName(docSnapshot.data().tag)
+                // }
 
                 
 
@@ -245,7 +245,7 @@ const Introduction:
                                                     <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
                                                 </Box>
                                                 <Box>
-                                                    <Typography pt={0.8} fontSize={25}>{props.article.user}</Typography>
+                                                    <Typography pt={0.8} fontSize={25}>{ }</Typography>
                                                     <Typography fontSize={12}>{ }</Typography>
 
                                                 </Box>

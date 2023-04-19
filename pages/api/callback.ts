@@ -35,7 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
 
       // Return an error message.
-      return res.status(500).json({
+      return res.status(200).json({
         status: "error",
       });
     }

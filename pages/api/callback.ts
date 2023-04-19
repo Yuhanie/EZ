@@ -21,30 +21,41 @@ const client = new Client(clientConfig);
 //   results?: any;
 // };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const events: WebhookEvent[] = req.body.events;
   console.log(events);
+  const relyToken = req.body.events[0].replyToken;
+  const response = {
+    type: "text",
+    text: "test",
+  };
+  await client.replyMessage(req.body.events[0].replyToken, response);
+
+  // res.send("HTTP POST request sent to the webhook URL!");
   // Process all of the received events asynchronously.
 
-  const results = events.map(async (event: WebhookEvent) => {
-    try {
-      await textEventHandler(event);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error("Error in textEventHandler:", err);
-      }
+  // const results = events.map(async (event: WebhookEvent) => {
+  //   try {
+  //     await textEventHandler(event);
+  //   } catch (err: unknown) {
+  //     if (err instanceof Error) {
+  //       console.error("Error in textEventHandler:", err);
+  //     }
 
-      // Return an error message.
-      return res.status(500).json({
-        status: "error",
-      });
-    }
-  });
+  //     // Return an error message.
+  //     return res.status(500).json({
+  //       status: "error",
+  //     });
+  //   }
+  // });
 
   // Return a successfull message.
   return res.status(200).json({
     status: "success",
-    results,
+    // results,
   });
 }
 
@@ -124,19 +135,15 @@ const textEventHandler = async (
   };
 
   // Reply to the user.
-  try{
+  try {
     if (text === "筆記") {
       await client.replyMessage(replyToken, responseNotes);
     } else {
       await client.replyMessage(replyToken, response);
     }
-  
-  }
-  catch (err: unknown) {
+  } catch (err: unknown) {
     if (err instanceof Error) {
       console.error("Error in replyMessage:", err);
     }
-
-
   }
 };

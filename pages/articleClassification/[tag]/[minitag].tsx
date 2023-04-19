@@ -78,7 +78,7 @@ const Article = () => {
   useEffect(() => {
     async function readData() {
       setIsLoading(true);
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("mini tag", "array-contains", minitag), where("tag", "==", tag)));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("minitag", "array-contains", minitag), where("tag", "==", tag)));
       const temp: Article[] = [];
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];

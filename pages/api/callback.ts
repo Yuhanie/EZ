@@ -31,11 +31,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       await textEventHandler(event);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error(err);
+        console.error("Error in textEventHandler:", err);
       }
 
       // Return an error message.
-      return res.status(200).json({
+      return res.status(500).json({
         status: "error",
       });
     }
@@ -124,9 +124,19 @@ const textEventHandler = async (
   };
 
   // Reply to the user.
-  if (text === "筆記") {
-    await client.replyMessage(replyToken, responseNotes);
-  } else {
-    await client.replyMessage(replyToken, response);
+  try{
+    if (text === "筆記") {
+      await client.replyMessage(replyToken, responseNotes);
+    } else {
+      await client.replyMessage(replyToken, response);
+    }
+  
+  }
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Error in replyMessage:", err);
+    }
+
+
   }
 };

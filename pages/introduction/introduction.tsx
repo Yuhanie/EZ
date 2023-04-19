@@ -8,7 +8,7 @@ import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query } from "firebase/firestore";
 import { orderBy, limit, where } from "firebase/firestore";
 
-import { Profile, BookMark } from 'interfaces/entities';
+import { Profile, BookMark, Article } from 'interfaces/entities';
 //mui
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -53,6 +53,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import useId from '@mui/material/utils/useId';
+import ArticleListItem from '../../components/article/ArticleListItem';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -99,163 +100,188 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
+type Props = {
+    article: Article;
+    update: Function;
+};
+
+
+const Introduction:
+    React.FC<Props> = (props) => {
+        const router = useRouter();
+        const { userId } = router.query;
+        const [currentUser, setCurrentUser] = useState<User>();
+        const [open, setOpen] = React.useState(false);
+        const [openDrawer, setOpenDrawer] = React.useState(true);
+        const theme = useTheme();
+        const [profile, setProfile] = useState<Profile>();
+        const [intro, setIntro] = useState<Article>();
+        const [newTexts, setNewTexts] = useState<any[]>();
+        const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
 
-function Introduction() {
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+        const handleClose = () => {
+            setOpen(false);
+        };
 
-    const router = useRouter();
-    const { userId } = router.query;
-    const [currentUser, setCurrentUser] = useState<User>();
-    const [open, setOpen] = React.useState(false);
-    const [openDrawer, setOpenDrawer] = React.useState(true);
-    const theme = useTheme();
-    const [profile, setProfile] = useState<Profile>();
-    
+        const handleClick = () => {
+            setOpenDrawer(!openDrawer);
+        };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+        // useEffect(() => {
+        //     async function readData() {
+        //         if (userId) {
 
-    const handleClick = () => {
-        setOpenDrawer(!openDrawer);
-    };
+        //         }
 
-    useEffect(() => {
-        async function readData() {
-            if (userId) {
-                
-              }
-    
-        }
-        readData();
-      }
-        , [userId])
+        //     }
+        //     readData();
+        // }
+        //     , [userId])
 
 
 
-    useEffect(() => {
-        async function readData() {
-            //var temp: Profile;
-            if (currentUser) {
-                const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
-                if (querySnapshot.exists()) {
-                    //console.log(doc.id, doc.data());
-                    setProfile({ character: querySnapshot.data().character });
-                };
-            }
+        useEffect(() => {
+            async function readData() {
+                //var temp: Profile;
 
-            const unsub = onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    console.log('currentUser', user)
-                    setCurrentUser(user);
+                // if (currentUser) {
+                //     const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
+                //     if (querySnapshot.exists()) {
+                //         //console.log(doc.id, doc.data());
+                //         setProfile({ character: querySnapshot.data().character });
+                //     };
+                // }
+
+                // const unsub = onAuthStateChanged(auth, (user) => {
+                //     if (user) {
+                //         console.log('currentUser', user)
+                //         setCurrentUser(user);
+                //     }
+                // });
+                //讀所有的texts
+                setIsLoading(true);
+                const textsCollection = collection(db, "text");
+                //const queryTexts = query(textsCollection, orderBy("timestamp", "desc"), limit(3));
+                const queryTexts = query(textsCollection);
+                const querySnapnewtexts = await getDocs(queryTexts);
+                const temp2: Article[] = [];
+                querySnapnewtexts.forEach((doc) => {
+                    temp2.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+
+                    console.log(`newtexts ${doc.id} => ${doc.data()}`);
+                });
+                setNewTexts([...temp2]);
+
+               
+
+
+
+                console.log("introduction", props.article)
+                const ref = doc(db, "text", props.article.docId);
+                const docSnapshot = await getDoc(ref);
+
+
+                if (docSnapshot.exists()) {
+                    console.log("doc", docSnapshot.data().userId)
+                    // setTitle(docSnapshot.data().title)
+                    // setContent(docSnapshot.data().content)
+                    // setLink(docSnapshot.data().link)
+                    // setTagName(docSnapshot.data().tag)
                 }
-            });
 
-            return () => {
-                unsub();
+                
+
+
+
+
             }
-
-            
-        }
-        readData();
-    }, []);
+            readData();
+        }, [userId]);
 
 
 
-    // useEffect(() => {
-
-    //     async function readData() {
-    //         if (articleId) {
-    //             const ref = doc(db, "text", articleId);
-    //             const docSnapshot = await getDoc(ref);
-    //             if (docSnapshot.exists()) {
-    //                 console.log("doc", docSnapshot.data())
-    //             }
-    //         }
-
-    //     }
-    //     readData();
-    // }, [articleId])
-
-
-    
 
 
 
-    return (
-        <div>
-            <Head>
-                <title>的個人檔案</title>
-                <meta name="description" content="Generated by create next app" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Navbar />
+
+
+
+
+        return (
             <div>
-                <Container >
-                    <Toolbar />
-                    <br />
-                    <Card>
+                <Head>
+                    <title>的個人檔案</title>
+                    <meta name="description" content="Generated by create next app" />
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
+                <Navbar />
+                <div>
+                    <Container >
+                        <Toolbar />
+                        <br />
+                        <Card>
 
-                        <Box sx={{ bgcolor: '#ffffff' }}>
-                            {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
+                            <Box sx={{ bgcolor: '#ffffff' }}>
+                                {/* <Box sx={{ bgcolor: '#BCD4DE', height: '100vh', }}> */}
 
-                            <Box display="flex" p={2} flexWrap="wrap">
-                                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
-                                    <Box display="flex" flexDirection="column" sx={{ p: 2, width: 300 }} bgcolor={'#fafafa'} >
-                                        <Box display="flex">
-                                            <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
-                                                <Avatar
-                                                    sx={{
-                                                        width: 70,
-                                                        height: 70,
-                                                        mb: 1,
-                                                    }}
-                                                >
-                                                </Avatar>
-                                                <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
+                                <Box display="flex" p={2} flexWrap="wrap">
+                                    <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
+                                        <Box display="flex" flexDirection="column" sx={{ p: 2, width: 300 }} bgcolor={'#fafafa'} >
+                                            <Box display="flex">
+                                                <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
+                                                    <Avatar
+                                                        sx={{
+                                                            width: 70,
+                                                            height: 70,
+                                                            mb: 1,
+                                                        }}
+                                                    >
+                                                    </Avatar>
+                                                    <Chip label={profile ? (profile.character ? profile.character : "...") : "未登入"} />
+                                                </Box>
+                                                <Box>
+                                                    <Typography pt={0.8} fontSize={25}>{props.article.user}</Typography>
+                                                    <Typography fontSize={12}>{ }</Typography>
+
+                                                </Box>
                                             </Box>
-                                            <Box>
-                                                <Typography pt={0.8} fontSize={25} >{ }</Typography>
-                                                <Typography fontSize={12}>{ }</Typography>
 
-                                            </Box>
                                         </Box>
 
-                                    </Box>
 
+                                        <Grid >
+                                            <Card sx={{ m: 2, width: 300 }}>
+                                                {/* <Card sx={{ minWidth: 275 }}> */}
+                                                <CardContent>
+                                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                                        擅長領域
+                                                    </Typography>
+                                                    <Stack direction="row" spacing={1}>
+                                                        <Chip label="tag 1" component="a" href="#chip" />
+                                                        <Chip label="tag 2" component="a" href="#chip" />
+                                                        <Chip label="tag 3" component="a" href="#chip" />
+                                                    </Stack>
+                                                </CardContent>
+                                            </Card>
 
-                                    <Grid >
-                                        <Card sx={{ m: 2, width: 300 }}>
-                                            {/* <Card sx={{ minWidth: 275 }}> */}
-                                            <CardContent>
-                                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                                    擅長領域
-                                                </Typography>
-                                                <Stack direction="row" spacing={1}>
-                                                    <Chip label="tag 1" component="a" href="#chip" />
-                                                    <Chip label="tag 2" component="a" href="#chip" />
-                                                    <Chip label="tag 3" component="a" href="#chip" />
-                                                </Stack>
-                                            </CardContent>
-                                        </Card>
-
-                                        <Card sx={{ m: 2, width: 300 }}>
-                                            {/* <Card sx={{ minWidth: 275 }}> */}
-                                        </Card>
+                                            <Card sx={{ m: 2, width: 300 }}>
+                                                {/* <Card sx={{ minWidth: 275 }}> */}
+                                            </Card>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
 
+                                </Box>
                             </Box>
-                        </Box>
-                    </Card>
-                </Container>
-            </div>
+                        </Card>
+                    </Container>
+                </div>
 
-        </div>
-    );
-}
+            </div>
+        );
+    }
 export default Introduction;

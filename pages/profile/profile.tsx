@@ -397,7 +397,7 @@ const Profile = () => {
             mb: 1,
           }}/>}
                         {/* <Avatar
-                        
+                        g04
                         >
 
                         </Avatar> */}
@@ -435,6 +435,56 @@ const Profile = () => {
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           擅長領域
+                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          {/* <Chip label="tag 1" component="a" href="#chip" />
+                          <Chip label="tag 2" component="a" href="#chip" />
+                          <Chip label="tag 3" component="a" href="#chip" /> */}
+                          {/* {MajorTag.map(renderMajorTag)} */}
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid >
+                    <Card sx={{ m: 2, width: 120, height: 100 }}>
+                      {/* <Card sx={{ minWidth: 275 }}> */}
+                      <CardContent>
+                        <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
+                          發布筆記
+                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          {/* <Chip label="tag 1" component="a" href="#chip" />
+                          <Chip label="tag 2" component="a" href="#chip" />
+                          <Chip label="tag 3" component="a" href="#chip" /> */}
+                          {/* {MajorTag.map(renderMajorTag)} */}
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid >
+                    <Card sx={{ m: 2, width: 120, height: 100 }}>
+                      {/* <Card sx={{ minWidth: 275 }}> */}
+                      <CardContent>
+                        <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
+                          文章被收藏
+                          
+                          
+                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          {/* <Chip label="tag 1" component="a" href="#chip" />
+                          <Chip label="tag 2" component="a" href="#chip" />
+                          <Chip label="tag 3" component="a" href="#chip" /> */}
+                          {/* {MajorTag.map(renderMajorTag)} */}
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid >
+                    <Card sx={{ m: 2, width: 120, height: 100 }}>
+                      {/* <Card sx={{ minWidth: 275 }}> */}
+                      <CardContent>
+                        <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
+                          文章被按讚
                         </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />

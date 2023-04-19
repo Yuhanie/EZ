@@ -48,6 +48,10 @@ import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import Footer from '../../components/footer/Footer';
 import SearchIcon from '@mui/icons-material/Search';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import "swiper/css";
+import "swiper/css/pagination";
+
+
 
 // import App from 'myapp/src/App';
 
@@ -204,11 +208,13 @@ const Demo: React.FC = () => {
     <div className={styles.demo}>
 
       {/* 增加"autoplay" */}
-      <Swiper spaceBetween={20} slidesPerView={1} loop autoplay>
+      <Swiper spaceBetween={20} slidesPerView={1} loop autoplay pagination={{clickable: true,}}
+        modules={[Pagination]}
+        className="mySwiper" >
         {partnerLogo.map((value, index) => {
           //console.log("value:", value);
           return (
-            <SwiperSlide key={value}>
+            <SwiperSlide key={value} >
               <img alt={value} className={styles.item} src={value} />
             </SwiperSlide>
           );

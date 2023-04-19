@@ -8,8 +8,8 @@ import {
   WebhookEvent,
 } from "@line/bot-sdk";
 const clientConfig = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || "",
-  channelSecret: process.env.CHANNEL_SECRET,
+  channelAccessToken: process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN || "",
+  channelSecret: process.env.NEXT_PUBLIC_CHANNEL_SECRET,
 };
 
 // Create a new LINE SDK client.
@@ -31,7 +31,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       await textEventHandler(event);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error(err);
+        console.error("Error in textEventHandler:", err);
       }
 
       // Return an error message.
@@ -72,18 +72,18 @@ const textEventHandler = async (
     altText: text,
     contents: {
       type: "bubble",
-      hero: {
-        type: "image",
-        url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-        size: "full",
-        aspectRatio: "20:13",
-        aspectMode: "cover",
-        action: {
-          type: "uri",
-          label: "link",
-          uri: "http://linecorp.com/",
-        },
-      },
+      // hero: {
+      //   type: "image",
+      //   url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+      //   size: "full",
+      //   aspectRatio: "20:13",
+      //   aspectMode: "cover",
+      //   action: {
+      //     type: "uri",
+      //     label: "link",
+      //     uri: "http://linecorp.com/",
+      //   },
+      // },
       body: {
         type: "box",
         layout: "vertical",
@@ -124,9 +124,19 @@ const textEventHandler = async (
   };
 
   // Reply to the user.
-  if (text === "筆記") {
-    await client.replyMessage(replyToken, responseNotes);
-  } else {
-    await client.replyMessage(replyToken, response);
+  try{
+    if (text === "筆記") {
+      await client.replyMessage(replyToken, responseNotes);
+    } else {
+      await client.replyMessage(replyToken, response);
+    }
+  
+  }
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Error in replyMessage:", err);
+    }
+
+
   }
 };

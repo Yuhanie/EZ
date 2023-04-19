@@ -53,7 +53,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import CircularProgress from "@mui/material";
 
-import TagList from '../../components/tag/TagList';
+import MajorTagList from '../../components/tag/MajorTagList';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
 
@@ -115,8 +115,8 @@ const Profile = () => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
-  // const [MajorTag, setMajorTag] = useState<MajorTag[]>([]);
-  const [MajorTag, setMajorTag] = useState<Article[]>([]);
+  const [MajorTag, setMajorTag] = useState<Profile[]>([]);
+  // const [MajorTag, setMajorTag] = useState<Article[]>([]);
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -160,7 +160,7 @@ const Profile = () => {
           const querySnapshot = await getDoc(doc(db, "profile", user.uid));
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者" });
+            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者"});
           } else {
             setProfile({ character: "學習者" });
           }
@@ -187,15 +187,11 @@ const Profile = () => {
           setIsLoading(false);
 
           setIsLoading(true);
-          const queryMajorTag = await getDocs(query(collection(db, "MajorTag"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
-          const temp3: Article[] = [];
+          const queryMajorTag = await getDocs(query(collection(db, "Profile"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
+          const temp3: Profile[] = [];
           queryMajorTag.forEach(async (doc) => {
-        temp3.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+        temp3.push({ majortag: doc.data().majortag });
       });
-          // const temp: MajorTag[] = [];
-          // queryMajorTag.forEach((doc) => {
-          //   temp.push({ name: doc.data().name });
-          // });
           setMajorTag([...temp3]);
           setIsLoading(false);
         }
@@ -238,12 +234,11 @@ const Profile = () => {
     );
   };
 
-  // const renderMajorTag = (MajorTag: MajorTag, i: number) => {
-  //   return (
-  //     <TagList key={MajorTag.name}></TagList>
-  //   );
-
-  // };
+  const renderMajorTag = (MajorTag: Profile, i: number) => {
+    // return (
+    //   <MajorTagList key={MajorTag.majortag}></MajorTagList>
+    // );
+  };
 
   return (
     <>
@@ -442,9 +437,9 @@ const Profile = () => {
                           擅長領域
                         </Typography>
                         <Stack direction="row" spacing={1}>
-                          <Chip label="tag 1" component="a" href="#chip" />
+                          {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
-                          <Chip label="tag 3" component="a" href="#chip" />
+                          <Chip label="tag 3" component="a" href="#chip" /> */}
                           {/* {MajorTag.map(renderMajorTag)} */}
                         </Stack>
                       </CardContent>

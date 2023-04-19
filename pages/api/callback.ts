@@ -8,8 +8,8 @@ import {
   WebhookEvent,
 } from "@line/bot-sdk";
 const clientConfig = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || "",
-  channelSecret: process.env.CHANNEL_SECRET,
+  channelAccessToken: process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN || "",
+  channelSecret: process.env.NEXT_PUBLIC_CHANNEL_SECRET,
 };
 
 // Create a new LINE SDK client.

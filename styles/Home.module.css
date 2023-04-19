@@ -535,6 +535,8 @@
   justify-content: center;
   box-shadow: 1px 1px 4px rgba(111, 111, 111, 0.7);
   border-radius: 200px;
+
+  cursor: "pointer";
 }
 
 .tag2 {
@@ -547,6 +549,13 @@
 
   border-radius: 0 0 5px 5px;
 }
+
+/* 小手套 */
+.pointer {
+  cursor: "pointer";
+}
+
+
 
 
 .card:hover,

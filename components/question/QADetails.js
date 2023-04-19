@@ -5,9 +5,50 @@ import React,{useEffect, useState} from 'react';
 import warning from '../../public/pic/warning.jpg';
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
-import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import VI from '@mui/icons-material/Visibility';
+import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import SendIcon from "@mui/icons-material/Send";
+import Answer from "./Answer";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CloseIcon from "@mui/icons-material/Close";
+import InputLabel from "@mui/material/InputLabel";
+
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import {
+  collection,
+  addDoc,
+  Doc,
+  setDoc,
+  doc,
+  getDocs,
+  deleteDoc,
+  getDoc,
+  getFirestore,
+  query,
+  orderBy,
+  limit,
+  updateDoc,
+  serverTimestamp,
+  arrayRemove,
+  arrayUnion,
+  getCountFromServer,
+} from "firebase/firestore";
+
+
 
 import {
   Dialog,
@@ -22,6 +63,11 @@ import {
 } from "@mui/material";
 import { getApp,getApps, initializeApp } from "firebase/app";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 
 // const docRef = doc(db, "English", "1");
@@ -35,40 +81,125 @@ import { getApp,getApps, initializeApp } from "firebase/app";
 // }
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
+const auth = getAuth();
 
-
-
-
-
-// function Model(){
-//   const [icoStatus, setIcoStatus] = useState(true)
-//   const iconSouCangData = (event, props) => {
-//     setIcoStatus(!icoStatus)
-//   }
-//     return(
-//      <>
-//                <span className={iconSouCang ? "opts-icon icon-soucang2 soucang-color" : "icon-hide"} onClick={(e) => iconSouCangData(e,props)}></span>
-//               <span className={iconSouCang ? "icon-hide" : "opts-icon icon-soucang"} onClick={(e) => iconSouCangData(e,props)}></span>
-//      </>
-//     )}
 
 
 const QADetails= (props) => {
-  const [answers,setAnswers]=useState([])
+  const [answers,setAnswers]=useState([]);
+  const [comments, setComments] = useState([]);
+  const [content, setContent] = useState("");
+  const [user, setUser] = useState();
+  const [deleted, setDeleted] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [edited, setEdited] = useState(0);
+  const [character, setCharacter] = useState("學習者");
+  const [report, setReport] = useState("");
+  const [denounces, setDenounces] = useState([]);
+  const [expertAction, setExpertAction] = useState("");
+  const [open, setOpen] = useState(false);
+  const [outdated, setOutdated] = useState(false);
+  const [toolopen, setToolOpen] = React.useState(false);
+  const [expertOutdate, setExpertOutdate] = useState(props.question.outdate);
+
+
+
+  const handleToolClickOpen = () => {
+    setToolOpen(true);
+  };
+
+  const handleToolClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setToolOpen(false);
+    }
+  };
+
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      setUser(user);
+      if (user) {
+        const ref = doc(db, "profile", user.uid);
+        const docSnap = await getDoc(ref);
+
+        const refReport = collection(
+          db,
+          "text",
+          props.question.docId,
+          "denounce"
+        );
+        const snapshot = await getCountFromServer(refReport);
+
+        if (
+          docSnap.exists() &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
+          setCharacter("專家");
+        } else {
+          setCharacter("學習者");
+        }
+
+        // 到底為什麼一直說他不是一個function啊，要中風了
+
+        if (
+          snapshot.data().count > 0 &&
+          docSnap.exists() &&
+          docSnap.data().character &&
+          docSnap.data().character === "專家"
+        ) {
+          setExpertAction("true");
+          //props.update();
+        } else {
+          setOutdated(false);
+          setExpertAction("false");
+          // console.log("question:", props.question);
+          // console.log("outdateCount:", props.question.outdateCount);
+        }
+      }
+      // console.log("user", user);
+    });
+
+
+    return () => {
+      unsub();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+
 useEffect(() => {
   async function fetchData() {
-    const querySnapshot = await getDocs(collection(db, "question",
-    props.question.docId,"answer"));
 
-    // const temp1= [user];
-    // const temp2= [content];
-    const temp= [];
+    const querySnapshotDenounce = collection(
+      db,
+      "text",
+      props.question.docId,
+      "denounce"
+    );
+    const queryReport = query(querySnapshotDenounce);
+    const querySnapshotReport = await getDocs(queryReport);
+    const tempReport = [];
+    querySnapshotReport.forEach((doc) => {
+      let reportdata = { ...doc.data(), id: doc.id };
+      tempReport.push(reportdata);
+    });
+    setDenounces(() => [...tempReport]);
 
-    querySnapshot.forEach((doc) => {
-      // temp1.push(doc.data());
-      // temp2.push(doc.data());
-      temp.push(doc.data());
-      console.log(`${doc.id} => ${doc.data().content}`);
+    const querySnapshot = collection(
+      db,
+      "text",
+      props.question.docId,
+      "answer"
+    );
+    const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
+    const querySnapshotQuestion = await getDocs(queryText);
+    const temp = [];
+
+    querySnapshotQuestion.forEach((doc) => {
+      let data = { ...doc.data(), id: doc.id };
+      temp.push(data);
+      // console.log("data:", data);
     });
 
     // setComments(() => [temp1, temp2]);
@@ -81,40 +212,378 @@ useEffect(() => {
     props.setOpen(false);
   };
 
+  //NotSure
+  const update = (id) => {
+    router.push("/Newqa?questionId=" + id);
+  };
+
+  const outdate = async function (status) {
+    // let status = e.target.value
+    // console.log("outdateE", status)
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.question.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          try {
+            setIsLoading(true);
+
+            await updateDoc(doc(db, "text", props.question.docId), {
+              outdate: status,
+            });
+            setEdited(edited + 1);
+            setExpertOutdate(status)
+            setIsLoading(false);
+            props.update();
+            // console.log("outdate:", status);
+          } catch (error) {
+            // console.log("outdateError:", error);
+          }
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+
+  const Denounce = async function (status) {
+    // console.log("report", report);
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.question.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (report == "stale") {
+            if (docSnap.data().outdate == "stale") {
+              await updateDoc(doc(db, "text", props.question.docId), {
+                outdate: status,
+
+              });
+
+              setEdited(edited + 1);
+            } else {
+              // alert("stale")
+              try {
+                setIsLoading(true);
+                await updateDoc(doc(db, "text", props.question.docId), {
+                  outdate: "pending",
+                });
+                setIsLoading(false);
+                props.update();
+
+                setEdited(edited + 1);
+                setExpertOutdate("pending")
+              } catch (error) {
+                // console.log(error);
+              }
+            }
+          } else {
+            await setDoc(
+              doc(db, "text", props.question.docId, "denounce", user.uid), {
+              reason: status,
+            }
+            );
+            await updateDoc(doc(db, "text", props.question.docId), {
+              report: true,
+            });
+          }
+        }
+
+        //     if((docSnap.data().outdate)=="solved"){
+        //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+        //       setDeleted(deleted + 1);
+        // }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+  async function onSubmit() {
+    if (typeof window !== "undefined") {
+      if (!user) {
+        alert("要登入才能新增留言ㄛ!");
+        router.push("/login");
+      } else {
+        await addDoc(collection(db, "text", props.question.docId, "answer"), {
+          content,
+          userid: user.uid,
+          timestamp: serverTimestamp(),
+          heart: [],
+          user: user.displayName,
+        });
+        setContent("");
+        setEdited(edited + 1);
+
+        //router.push('/');
+      }
+    }
+  }
+
+  const deleteData = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.question.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (docSnap.data().userid == user.uid) {
+            try {
+              setIsLoading(true);
+
+              await deleteDoc(doc(db, "text", props.question.docId));
+
+              //console.log("deleted");
+
+              setDeleted(deleted + 1);
+
+              setIsLoading(false);
+              alert("刪除成功");
+              // props.update();
+            } catch (error) {
+              alert(error);
+            }
+          } else {
+            alert("不是你的問題ㄚ");
+          }
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+  const reportDelete = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.question.docId);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          if (character == "專家" && expertAction == "true") {
+            try {
+              setIsLoading(true);
+
+              await deleteDoc(doc(db, "text", props.question.docId));
+
+              //console.log("deleted");
+
+              setDeleted(deleted + 1);
+
+              setIsLoading(false);
+              alert("下架成功");
+              props.update();
+            } catch (error) {
+              alert(error);
+            }
+          } else {
+            alert("你不是專家吧？");
+          }
+        }
+      }
+    } else {
+      alert("請登入");
+    }
+  };
+
+  const expertReport = () => {
+    return (
+      <>
+        {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          alignItems="center"
+          sx={{
+            p: 2,
+            
+            mt: 2,
+            bgcolor: "#fafafa",
+            borderRadius: 1,
+          }}
+        >
+
+          <Typography variant="body1">
+            這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
+          </Typography>
+          <FormControl sx={{ width: 100 }} size="small">
+            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+            <Button
+              color="error"
+              variant="contained"
+              onClick={reportDelete}
+              size="small"
+              sx={{ m: 1, height: 35 }}
+            >
+              需要下架
+            </Button>
+          </FormControl>
+          <br/>
+          
+        </Box>
+        <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>查看原因</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {character === "專家" &&
+                denounces.map((report) => renderReport(report))}
+            </AccordionDetails>
+          </Accordion>
+        <br />
+      </>
+    );
+  };
+
+  const expert = () => {
+    return (
+      <>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          alignItems="center"
+          sx={{
+            p: 2,
+            mt: 2,
+            bgcolor: "#fafafa",
+            borderRadius: 1,
+          }}
+        >
+          <EmojiObjectsIcon />
+          <Typography variant="body1" >
+            文章審核
+          </Typography>
+          <FormControl sx={{ width: 140, ml: 2 }} size="small">
+            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              // value={topicName}
+              // label="topic"
+              sx={{ height: 35 }}
+              onChange={(e) => {
+                outdate(e.target.value)
+                
+              }}
+            >
+              <MenuItem onClick={(e) => {
+                outdate("solved")}}>
+                沒問題
+              </MenuItem>
+              <MenuItem 
+                onClick={(e) => {outdate("stale")}}>
+                過時或無法使用
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <br />
+          {/* <Button
+            color="primary"
+            variant="contained"
+            onClick={() => outdate(expertOutdate)}
+            size="small"
+            sx={{ height: 35, ml: 2 }}
+            edited={edited}
+            setEdited={setEdited}
+          >
+            送出
+          </Button> */}
+        </Box>
+      </>
+    );
+  };
+
+  
+
+  const Update = (id) => {
+    return (
+      <div>
+        <IconButton color="secondary" onClick={() => update(id)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton color="secondary" onClick={deleteData}>
+          <DeleteForeverIcon />
+        </IconButton>
+      </div>
+    );
+  };
+
+  const reportMenu = (id) => {
+    return (
+      <div>
+        <IconButton onClick={handleToolClickOpen}>
+          <MoreHorizIcon />
+        </IconButton>
+        <Dialog open={toolopen} onClose={handleToolClose}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="body1" sx={{ m: 2 }}>
+              遇到問題了嗎？
+            </Typography>
+            <IconButton onClick={handleToolClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Divider />
+          <DialogContent>
+            <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+              <FormControl sx={{ width: 110 }}>
+                <InputLabel id="demo-simple-select-label">選擇原因</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  // value={topicName}
+                  // label="topic"
+                  onChange={(e) => {
+                    setReport(e.target.value);
+                  }}
+                >
+                  <MenuItem value="stale">過時或無法使用</MenuItem>
+                  <MenuItem value="empty">內容空泛</MenuItem>
+                  <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+                  <MenuItem value="spamming">惡意洗版</MenuItem>
+                  <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+                </Select>
+              </FormControl>
+
+              <Button
+                edited={edited}
+                setEdited={setEdited}
+                color="warning"
+                variant="contained"
+                sx={{ ml: 2 }}
+                size="small"
+                onClick={() => (user ? Denounce(report) : alert("請登入"))}
+              >
+                檢舉
+              </Button>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      </div>
+    );
+  };
   const renderAnswer = (answer, i) => {
     return (
-      
 
-      
-      
-      <div key={answer.content} style={{ padding: 14 }} className="App">
-      <Paper style={{ padding: "40px 20px" }}>
-      <Grid container wrap="nowrap" spacing={2}>
-      <Grid item>
-         <Avatar alt="Remy Sharp" />
-          </Grid>
-         <Grid  justifyContent="left" item xs zeroMinWidth>
-         <h4 style={{ margin: 0, textAlign: "left" }}>{answer.user}</h4>
-         <p style={{ textAlign: "left" }}>
-          {answer.content}
-          </p>
-         <p style={{ textAlign: "left", color: "gray" }}>
-         {/* posted 1 minute ago */}
-          </p>
-         
-        
-         
-         
-
-        
-      </Grid>
-      </Grid>
-
-      </Paper>
+      <div key={answer.content}>
+        {answer && (
+          <div style={{ padding: 14 }} className="App">
+            <Answer
+              edited={edited}
+              setEdited={setEdited}
+              question={props.question}
+              answer={answer}
+            />
+          </div>
+        )}
       </div>
-     
-      
-
     );
   };
 
@@ -127,37 +596,75 @@ useEffect(() => {
 return(
   <div className={styles.container}>
     <Dialog open={props.open} onClose={handleClose}>
-    <DialogTitle>{props.question.title}
+    <DialogTitle>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Box display="flex" alignItems="center">
+        <a href={props.question.link}>{props.question.title}</a>
+      </Box>      
+      <Box display="flex" alignItems="center">
+        <VI/>
+        <Typography variant="body2" sx={{ ml: 0.5, pr:0.8}}>
+          {props.question.count}
+        </Typography>
+        <FormControl>
+          {user &&
+                  user.uid === props.question.userid &&
+                  Update(props.question.docId)}
+        </FormControl>
+      
+      <Box>
+        {user && user.id !== props.question.userid}
+      </Box>
     
-      <div spacing={1} className={styles.view}>
+      {/* <div spacing={1} className={styles.view}>
       <VI/>
       <div className={styles.views}>{props.question.count}</div>
- </div>
-    
-    
+ </div> */}
+        </Box>
+      </Box>
     </DialogTitle>
-    <div>
+    {/* <div>
   <a className={styles.users}>使用者{props.question.user}發布</a>
-  </div>
+  </div> */}
     <DialogContent>
 
       <Stack spacing={2}>
            {props.question.content}
-           
-            </Stack>
-            
+      </Stack> 
             <div style={{ padding: 14 }} className="App">
             <h2>回答</h2>
       
            {/* <div className={styles.yu}>這篇文章已經不符合現在的版本或者無法使用</div><br/> */}
-            {answers.map(renderAnswer)}
+            {answers.map((answer) => renderAnswer(answer))}
 
             </div>
             
+
+            <Box display="flex" position="relative" justifyContent="space-between">
+            {user && user.displayName}
+            <OutlinedInput
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              sx={{ ml: 2, borderRadius: 12, height: 35 }}
+              placeholder="我要留言..."
+              fullWidth
+            />
+            <Button
+              size="small"
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={onSubmit}
+              sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
+            ></Button>
+          </Box>
       </DialogContent>
 
 
-      <DialogActions>
+      {/* <DialogActions>
              <Button color="secondary" variant="contained" onClick={handleClose}>
               愛心
             </Button>
@@ -173,7 +680,10 @@ return(
             </Button>
 
 
-          </DialogActions> 
+            
+
+
+      </DialogActions>  */}
 
 
 

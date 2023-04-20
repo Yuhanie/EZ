@@ -56,6 +56,7 @@ import CircularProgress from "@mui/material";
 import MajorTagList from '../../components/tag/MajorTagList';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
+import { useRouter } from 'next/router';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -102,7 +103,12 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const Profile = () => {
+type Props = {
+  article: Article;
+  update: Function;
+};
+
+const Profile:React.FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -116,7 +122,14 @@ const Profile = () => {
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
   const [MajorTag, setMajorTag] = useState<Profile[]>([]);
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
+  const [heartCount, setHeartCount] = useState(0);
+  const [bookMarkCount, setBookMarkCount] = useState(0);
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
+  const router = useRouter()
+  const { userId } = router.query || ""
+  console.log("id in profile",userId)
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -154,10 +167,12 @@ const Profile = () => {
       //   };
       // }
       const unsub = onAuthStateChanged(auth, async (user) => {
-
+        
         if (user) {
- 
-          const querySnapshot = await getDoc(doc(db, "profile", user.uid));
+          const user_Id = Array.isArray(userId)? userId[0]: userId; 
+          const id = user_Id? user_Id: user.uid;
+          alert("id in useEffect:"+id);
+          const querySnapshot = await getDoc(doc(db, "profile",id));
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
             setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者"});
@@ -180,10 +195,22 @@ const Profile = () => {
           setIsLoading(true);
           const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", user.uid)) : query(collection(db, "text"), where("userid", "==", user.uid), limit(3)));
           const tempMyNote: Article[] = [];
+          let count = 0;
+          let countHeart = 0;
+          let countBookMark = 0;
           queryMyNote.forEach((doc) => {
+            count ++;
+            countHeart += doc.data().heart.length;
+            countBookMark += doc.data().bookmark.length;
+
             tempMyNote.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
           });
           setMyNotes([...tempMyNote]);
+          setCount(count);
+          setHeartCount(countHeart);
+          setBookMarkCount(countBookMark);
+          //alert(countHeart + " " +countBookMark);
+
           setIsLoading(false);
 
           setIsLoading(true);
@@ -205,6 +232,29 @@ const Profile = () => {
     }
     readData();
   }, [myNotesOpen, collectOpen]);
+  
+  // const heart = async function () {
+  //   if (typeof window !== "undefined") {
+  //     if (currentUser) {
+  //       const ref = doc(db, "text", props.article.docId);
+  //       const docSnap = await getDoc(ref);
+  //       if ((docSnap.exists())) {
+  //         if (docSnap.data().heart.includes(currentUser.uid)) {
+  //           // alert('remove')
+          
+  //           setLiked(false)
+  //           setCount(count - 1)
+  //         } else {
+  //           // alert('added')
+
+  //           };
+  //           setLiked(true)
+  //           setCount(count + 1)
+  //         }
+  //       }
+  //     }
+  //   }
+
 
   const more = async function (status: string) {
     if (typeof window !== "undefined") {
@@ -452,6 +502,7 @@ const Profile = () => {
                         <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
                           發布筆記
                         </Typography>
+                        {count}
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -467,9 +518,10 @@ const Profile = () => {
                       <CardContent>
                         <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
                           文章被收藏
-                          
+                        
                           
                         </Typography>
+                        {bookMarkCount}
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -485,8 +537,11 @@ const Profile = () => {
                       <CardContent>
                         <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
                           文章被按讚
+                          
                         </Typography>
+                        {heartCount}
                         <Stack direction="row" spacing={1}>
+                        <Chip label={heartCount}></Chip>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}

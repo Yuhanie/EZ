@@ -64,7 +64,7 @@ export default function SignIn() {
       else {
         setDoc(doc(db, "profile", data.user.uid), {
           character: "學習者",
-          // photoURL: data.user.photoURL,
+          photoURL: data.user.photoURL,
         });
       }
     }))

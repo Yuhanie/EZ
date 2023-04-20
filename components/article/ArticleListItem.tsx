@@ -231,7 +231,7 @@ const ArticleListItem:
     // }
 
     const intro = (uid:any) => {
-      router.push('/introduction?userId=' + uid);
+      router.push('/profile?userId=' + uid);
     }
 
     const Intro = (uid:any) => {

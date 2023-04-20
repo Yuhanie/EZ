@@ -4,12 +4,18 @@ import {
   Client,
   FlexMessage,
   MessageAPIResponseBase,
+  MiddlewareConfig,
   TextMessage,
   WebhookEvent,
+  middleware,
 } from "@line/bot-sdk";
 const clientConfig = {
   channelAccessToken: process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN || "",
   channelSecret: process.env.NEXT_PUBLIC_CHANNEL_SECRET,
+};
+const middlewareConfig: MiddlewareConfig = {
+  channelAccessToken: process.env.NEXT_PUBLIC_CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.NEXT_PUBLIC_CHANNEL_SECRET || "",
 };
 
 // Create a new LINE SDK client.
@@ -25,36 +31,37 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  middleware(middlewareConfig);
   const events: WebhookEvent[] = req.body.events;
   console.log(events);
-  const replyToken = req.body.events[0].replyToken;
-  const response: TextMessage = {
-    type: "text",
-    text: "test",
-  };
-  // const response = {
+  // const replyToken = req.body.events[0].replyToken;
+  // const response: TextMessage = {
   //   type: "text",
   //   text: "test",
   // };
-  await client.replyMessage(replyToken, response);
+  // // const response = {
+  // //   type: "text",
+  // //   text: "test",
+  // // };
+  // await client.replyMessage(replyToken, response);
 
   // res.send("HTTP POST request sent to the webhook URL!");
   // Process all of the received events asynchronously.
 
-  // const results = events.map(async (event: WebhookEvent) => {
-  //   try {
-  //     await textEventHandler(event);
-  //   } catch (err: unknown) {
-  //     if (err instanceof Error) {
-  //       console.error("Error in textEventHandler:", err);
-  //     }
+  const results = events.map(async (event: WebhookEvent) => {
+    try {
+      await textEventHandler(event);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error in textEventHandler:", err);
+      }
 
-  //     // Return an error message.
-  //     return res.status(500).json({
-  //       status: "error",
-  //     });
-  //   }
-  // });
+      // Return an error message.
+      return res.status(500).json({
+        status: "error",
+      });
+    }
+  });
 
   // Return a successfull message.
   return res.status(200).json({

@@ -27,12 +27,16 @@ export default async function handler(
 ) {
   const events: WebhookEvent[] = req.body.events;
   console.log(events);
-  const relyToken = req.body.events[0].replyToken;
-  const response = {
+  const replyToken = req.body.events[0].replyToken;
+  const response: TextMessage = {
     type: "text",
     text: "test",
   };
-  await client.replyMessage(req.body.events[0].replyToken, response);
+  // const response = {
+  //   type: "text",
+  //   text: "test",
+  // };
+  await client.replyMessage(replyToken, response);
 
   // res.send("HTTP POST request sent to the webhook URL!");
   // Process all of the received events asynchronously.

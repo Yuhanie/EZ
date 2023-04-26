@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 //QRcode
 const itemData = [
   {
-    img: 'https://qr-official.line.me/gs/M_467mfwsu_BW.png',
+    img: "https://qr-official.line.me/gs/M_190tnsge_GW.png",
   }
 ]
 

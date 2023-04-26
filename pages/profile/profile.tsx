@@ -541,7 +541,7 @@ const Profile:React.FC<Props> = (props) => {
                         </Typography>
                         {heartCount}
                         <Stack direction="row" spacing={1}>
-                        <Chip label={heartCount}></Chip>
+                        {/* <Chip label={heartCount}></Chip> */}
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}

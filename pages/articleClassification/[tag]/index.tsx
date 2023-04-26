@@ -106,7 +106,7 @@ const Article = () => {
       });
 
       //console.log("tag4:",tag);
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"),orderBy("order", "asc")));
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());

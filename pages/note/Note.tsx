@@ -369,7 +369,7 @@ const Home: NextPage = () => {
         //console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name, pic: doc.data().pic, order: doc.data().order });
       });
-      setTag([...temp]);
+      setTag([...temp]); 
       
       const textCollection = collection(db, "text");
       const queryText = query(textCollection, orderBy("count", "desc"), limit(3));

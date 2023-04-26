@@ -95,7 +95,7 @@ const Article = () => {
       //   temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp });
       // });
 
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類")));
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"),orderBy("order", "asc")));
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());

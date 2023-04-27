@@ -285,9 +285,9 @@ const Profile:React.FC<Props> = (props) => {
   };
 
   const renderMajorTag = (MajorTag: Profile, i: number) => {
-    // return (
-    //   <MajorTagList key={MajorTag.majortag}></MajorTagList>
-    // );
+    return (
+      <MajorTagList key={MajorTag.majortag}></MajorTagList>
+    );
   };
 
   return (
@@ -490,7 +490,7 @@ const Profile:React.FC<Props> = (props) => {
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}
-                          {/* {MajorTag.map(renderMajorTag)} */}
+                          {MajorTag.map(renderMajorTag)}
                         </Stack>
                       </CardContent>
                     </Card>

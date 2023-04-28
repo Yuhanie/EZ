@@ -53,15 +53,17 @@ const textEventHandler = async (
       type: "bubble",
       hero: {
         type: "image",
-        url: "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+        url: "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/343563846_142826835287947_6637212040245042921_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=conkD8VUPyYAX8uwFIi&_nc_ht=scontent-hkt1-2.xx&oh=00_AfDSWw4Sf2veKgFc3RA8k1iu1FnfuijWC8JmKMsxYB_M7Q&oe=645164D0",
         size: "full",
-        aspectRatio: "20:13",
+        aspectRatio: "20:12",
         aspectMode: "cover",
         action: {
           type: "uri",
           label: "link",
           uri: "http://linecorp.com/",
         },
+        margin: "none",
+        align: "center"
       },
       body: {
         type: "box",
@@ -73,6 +75,36 @@ const textEventHandler = async (
             weight: "bold",
             size: "xl",
           },
+          {
+            type: "box",
+            layout: "vertical",
+            margin: "lg",
+            spacing: "sm",
+            contents: [
+              {
+                type: "box",
+                layout: "baseline",
+                spacing: "sm",
+                contents: [
+                  {
+                    type: "text",
+                    text: "標籤",
+                    color: "#aaaaaa",
+                    size: "sm",
+                    flex: 1
+                  },
+                  {
+                    type: "text",
+                    text: "專題相關",
+                    wrap: true,
+                    color: "#666666",
+                    size: "sm",
+                    flex: 5
+                  }
+                ],
+              }
+            ],
+          }
         ],
       },
       footer: {
@@ -90,16 +122,11 @@ const textEventHandler = async (
               uri: "https://fju-benwu.notion.site/Next-548a6c9fed644164ae9562510e30cffb",
             },
           },
-          {
-            type: "box",
-            layout: "vertical",
-            contents: [],
-            margin: "sm",
-          },
         ],
         flex: 0,
       },
     },
+
   }
   // Reply to the user.
   if (text === "筆記") {

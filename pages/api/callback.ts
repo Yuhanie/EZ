@@ -129,7 +129,7 @@ const textEventHandler = async (
 
   }
   // Reply to the user.
-  if (text === "筆記") {
+  if (text === "推薦筆記") {
     await client.replyMessage(replyToken, responseNotes);
   } else {
     await client.replyMessage(replyToken, response);

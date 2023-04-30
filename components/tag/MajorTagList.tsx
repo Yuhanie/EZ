@@ -26,7 +26,7 @@ const MajorTagList: React.FC<Props> = (props) => {
      
       return (
       <ListItem>
-        <Link href={`/note`}>{props.MajorTag.majortag}</Link>
+        <Link href={`/note`}>{props.MajorTag.majortag&&props.MajorTag.majortag[0]}</Link>
       </ListItem>
       );
     };

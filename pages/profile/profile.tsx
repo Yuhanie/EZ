@@ -535,7 +535,6 @@ const Profile:React.FC<Props> = (props) => {
                       <CardContent>
                         <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
                           文章被按讚
-                          
                         </Typography>
                         {heartCount}
                         <Stack direction="row" spacing={1}>

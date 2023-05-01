@@ -175,7 +175,7 @@ const Profile:React.FC<Props> = (props) => {
           const querySnapshot = await getDoc(doc(db, "profile",id));
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者"});
+            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag:querySnapshot.data().majortag});
           } else {
             setProfile({ character: "學習者" });
           }
@@ -213,14 +213,14 @@ const Profile:React.FC<Props> = (props) => {
 
           setIsLoading(false);
 
-          setIsLoading(true);
-          const queryMajorTag = await getDocs(query(collection(db, "Profile"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
-          const temp3: Profile[] = [];
-          queryMajorTag.forEach(async (doc) => {
-        temp3.push({ majortag: doc.data().majortag });
-      });
-          setMajorTag([...temp3]);
-          setIsLoading(false);
+      //     setIsLoading(true);
+      //     const queryMajorTag = await getDocs(query(collection(db, "Profile"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
+      //     const temp3: Profile[] = [];
+      //     queryMajorTag.forEach(async (doc) => {
+      //   temp3.push({ majortag: doc.data().majortag });
+      // });
+      //     setMajorTag([...temp3]);
+      //     setIsLoading(false);
         }
       });
 
@@ -284,10 +284,10 @@ const Profile:React.FC<Props> = (props) => {
     );
   };
 
-  const renderMajorTag = (MajorTag: Profile, i: number) => {
-    // return (
-    //   <MajorTagList key={MajorTag.majortag}></MajorTagList>
-    // );
+  const renderMajorTag = () => {
+    return (
+      profile&&<MajorTagList MajorTag={profile}></MajorTagList>
+    );
   };
 
   return (
@@ -490,7 +490,7 @@ const Profile:React.FC<Props> = (props) => {
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}
-                          {/* {MajorTag.map(renderMajorTag)} */}
+                          {renderMajorTag()}
                         </Stack>
                       </CardContent>
                     </Card>
@@ -518,8 +518,6 @@ const Profile:React.FC<Props> = (props) => {
                       <CardContent>
                         <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
                           文章被收藏
-                        
-                          
                         </Typography>
                         {bookMarkCount}
                         <Stack direction="row" spacing={1}>
@@ -537,7 +535,6 @@ const Profile:React.FC<Props> = (props) => {
                       <CardContent>
                         <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
                           文章被按讚
-                          
                         </Typography>
                         {heartCount}
                         <Stack direction="row" spacing={1}>

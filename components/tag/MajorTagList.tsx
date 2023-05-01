@@ -13,7 +13,7 @@ type Props = {
     MajorTag: Profile; 
 };
 
-const MiniTags: React.FC<Props> = (props) => {
+const MajorTagList: React.FC<Props> = (props) => {
     //   const [open, setOpen] = useState(false);
     
     //   const handleOpen = () => {
@@ -25,9 +25,9 @@ const MiniTags: React.FC<Props> = (props) => {
     //   };
      
       return (
-      <ListItem>{props.MajorTag.majortag}
-        {/* <Link href={`/articleClassification/${props.tag.name}`} ></Link> */}
+      <ListItem>
+        <Link href={`/note`}>{props.MajorTag.majortag&&props.MajorTag.majortag[0]}</Link>
       </ListItem>
       );
     };
-    export default MajorTag;
+    export default MajorTagList;

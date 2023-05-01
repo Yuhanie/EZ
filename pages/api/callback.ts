@@ -220,7 +220,7 @@ const textEventHandler = async (
       type: "bubble",
       hero: {
         type: "image",
-        url: "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/343563846_142826835287947_6637212040245042921_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=conkD8VUPyYAX8uwFIi&_nc_ht=scontent-hkt1-2.xx&oh=00_AfDSWw4Sf2veKgFc3RA8k1iu1FnfuijWC8JmKMsxYB_M7Q&oe=645164D0",
+        url:"https://scontent.ftpe4-1.fna.fbcdn.net/v/t39.30808-6/344376177_258385913229382_2652593194967422598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=rFAthciA1R0AX8TGyz9&_nc_ht=scontent.ftpe4-1.fna&oh=00_AfCKChMphPQWDyv-jBYjUBkIFGjhxgKevYoWVRNSPCQFqQ&oe=645542D7",
         size: "full",
         aspectRatio: "20:12",
         aspectMode: "cover",
@@ -238,59 +238,19 @@ const textEventHandler = async (
         contents: [
           {
             type: "text",
-            text: "吳老師的Next筆記",
-            weight: "bold",
-            size: "xl",
+            text: "「Education zone」這個平台的開發目的在於創造友善的學習區，讓人們在資訊量爆炸的環境中，能以最有效率的方式獲取知識。",
+            wrap: true,
+            size: "xs",
+            margin: "sm"
           },
           {
-            type: "box",
-            layout: "vertical",
-            margin: "lg",
-            spacing: "sm",
-            contents: [
-              {
-                type: "box",
-                layout: "baseline",
-                spacing: "sm",
-                contents: [
-                  {
-                    type: "text",
-                    text: "標籤",
-                    color: "#aaaaaa",
-                    size: "sm",
-                    flex: 1
-                  },
-                  {
-                    type: "text",
-                    text: "專題相關",
-                    wrap: true,
-                    color: "#666666",
-                    size: "sm",
-                    flex: 5
-                  }
-                ],
-              }
-            ],
+            type: "text",
+            text: "改變學習方式，讓學習者能夠相互交流、分享學習心得，這樣不僅可以加強學習者的學習成果，也可以讓學習變得更加有趣和有意義。",
+            wrap: true,
+            size: "xs",
+            margin: "xl"
           }
-        ],
-      },
-      footer: {
-        type: "box",
-        layout: "vertical",
-        spacing: "sm",
-        contents: [
-          {
-            type: "button",
-            style: "link",
-            height: "sm",
-            action: {
-              type: "uri",
-              label: "WEBSITE",
-              uri: "https://fju-benwu.notion.site/Next-548a6c9fed644164ae9562510e30cffb",
-            },
-          },
-        ],
-        flex: 0,
+        ]
       },
     },
   }

@@ -138,7 +138,7 @@ const Home: NextPage = (props) => {
     async function readData() {
 
       setIsLoading(true);      
-      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("report","==",true)):query(collection(db, "text"), where("report","==",true), limit(3)));
+      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("report","==",true)||where("outdate", "==", "pending")):query(collection(db, "text"), where("report","==",true)||where("outdate", "==", "pending"), limit(3)));
       
       const tempDenounce: Article[] = [];
       queryDenounce.forEach((doc) => {
@@ -169,15 +169,15 @@ const Home: NextPage = (props) => {
       });
       setTag([...temp]);
 
-      setIsLoading(true);
-      const queryPending = await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
-      const tempPending: Article[] = [];
-      queryPending.forEach((doc) => {
-        tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+      // setIsLoading(true);
+      // const queryPending = await getDocs(pendingOpen?query(collection(db, "text"), where("outdate", "==", "pending")):query(collection(db, "text"), where("outdate", "==", "pending"), limit(3)));
+      // const tempPending: Article[] = [];
+      // queryPending.forEach((doc) => {
+      //   tempPending.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
 
-        console.log(`newtext ${doc.id} => ${doc.data()}`);
-      });
-      setPending([...tempPending]);
+      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
+      // });
+      // setPending([...tempPending]);
 
       const auth = getAuth();
       const unsub = onAuthStateChanged(auth, (user) => {
@@ -228,12 +228,12 @@ const Home: NextPage = (props) => {
 
   };
 
-  const renderPending = (pending: Article, i: number) => {
-    return (
-      <ArticleListItem key={pending.docId} article={pending} update={updateUpdated}></ArticleListItem>
-    );
+  // const renderPending = (pending: Article, i: number) => {
+  //   return (
+  //     <ArticleListItem key={pending.docId} article={pending} update={updateUpdated}></ArticleListItem>
+  //   );
 
-  };
+  // };
 
 
 
@@ -293,17 +293,16 @@ const Home: NextPage = (props) => {
         </Box>
 
         <Box>
-          {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
-          <Box
+
+          {/* <Box
             display="flex"
             pl="10%"
             pt={4}
           >
-            <NotificationImportantIcon
-            sx={{color: 'Gold', left:200}}
-            
+            <WarningIcon
+            sx={{color: 'Crimson'}}
             />
-            <Typography variant='h6' pr={2}>待處理</Typography>
+            <Typography variant='h6' pr={2}>過時待處理</Typography>
             <Button variant="contained" color="secondary" onClick={() => {more("morePending")}}>查看更多</Button>
           </Box>
           <Box
@@ -316,7 +315,38 @@ const Home: NextPage = (props) => {
               </div>
               : <CircularProgress />
             }
+          </Box> */}
+
+
+          <Box
+            display="flex"
+            pl="10%"
+            pt={4}
+          >
+
+                        <NotificationImportantIcon
+            sx={{color: 'Gold', left:200}}
+            
+            />
+            <Typography variant='h6' pr={2}>待處理</Typography>
+            <Button variant="contained" color="secondary" onClick={() => {more("moreDenounce")}}>查看更多</Button>
           </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            {!isLoading ? 
+              <div className={styles.grid}>
+                {denounces&&denounces.map(renderDenounce)}
+              </div>
+              : <CircularProgress />
+            }
+          </Box>
+          
+        
+
+
+
 
 
           <Box
@@ -343,31 +373,7 @@ const Home: NextPage = (props) => {
             }
           </Box>
           
-          <Box
-            display="flex"
-            pl="10%"
-            pt={4}
-          >
-            <WarningIcon
-            sx={{color: 'Crimson'}}
-            />
-            <Typography variant='h6' pr={2}>檢舉</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more("moreDenounce")}}>查看更多</Button>
-            {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="center"
-          >
-            {!isLoading ? 
-              <div className={styles.grid}>
-                {denounces&&denounces.map(renderDenounce)}
-              </div>
-              : <CircularProgress />
-            }
-          </Box>
-          
-        
+         
 
 
         </Box>

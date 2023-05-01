@@ -100,9 +100,10 @@ const Home = () => {
           email: "",
         });
         // let addDoc = db.collection('profile').doc(uid);
+        alert("帳號已產生");
       }
-      setMessage("帳號已產生");
-      console.log({ res });
+      
+      // console.log({ res });
     } catch (error) {
       let message = "";
 

@@ -119,7 +119,7 @@ const textEventHandler = async (
             height: "sm",
             action: {
               type: "uri",
-              label: "WEBSITE",
+              label: "查看更多",
               uri: "https://fju-benwu.notion.site/Next-548a6c9fed644164ae9562510e30cffb",
             },
           },
@@ -137,7 +137,7 @@ const textEventHandler = async (
       type: "bubble",
       hero: {
         type: "image",
-        url: "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/343563846_142826835287947_6637212040245042921_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=conkD8VUPyYAX8uwFIi&_nc_ht=scontent-hkt1-2.xx&oh=00_AfDSWw4Sf2veKgFc3RA8k1iu1FnfuijWC8JmKMsxYB_M7Q&oe=645164D0",
+        url: "https://scontent.ftpe4-2.fna.fbcdn.net/v/t39.30808-6/344538372_903173417419520_2356649982331164325_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=HyIdbOuZeBwAX_kZ82O&_nc_ht=scontent.ftpe4-2.fna&oh=00_AfBvOyZv4Q85ScQhN3u9fhOLGvXMJw6NKkPQM1gkvGNRKA&oe=6454618C",
         size: "full",
         aspectRatio: "20:12",
         aspectMode: "cover",
@@ -155,7 +155,7 @@ const textEventHandler = async (
         contents: [
           {
             type: "text",
-            text: "吳老師的Next筆記",
+            text: "Deeplink 專題分享",
             weight: "bold",
             size: "xl",
           },
@@ -202,8 +202,8 @@ const textEventHandler = async (
             height: "sm",
             action: {
               type: "uri",
-              label: "WEBSITE",
-              uri: "https://fju-benwu.notion.site/Next-548a6c9fed644164ae9562510e30cffb",
+              label: "查看更多",
+              uri: "https://deeplink.tw/#/webinarContent/xgHtzskYqW2N7TKWlOiD",
             },
           },
         ],

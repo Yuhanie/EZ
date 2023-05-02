@@ -62,7 +62,7 @@ function Solgan() {
 
 
                 <Box display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">
-                    <Box display="flex" flexDirection="column" justifyContent="space-between" maxWidth={400} sx={{ p: 2 }}>
+                    <Box display="flex" flexDirection="column" justifyContent="space-between" maxWidth={400} sx={{ p: 4 }}>
                         {/* 網頁 */}
                         <Typography
                             variant="h2"
@@ -252,7 +252,7 @@ function Update() {
                 </Typography>
 
                 {/* 網頁*/}
-                <Card sx={{ p: 2, boxShadow: 4 ,display: { xs: "none", md: "flex" },}}>
+                <Card sx={{ p: 2, boxShadow: 4, display: { xs: "none", md: "flex" }, }}>
                     <Grid item minWidth={340}>
                         <Grid display="flex" flexWrap="wrap" spacing={4}>
 
@@ -355,7 +355,7 @@ function Update() {
 
 
                             <Grid item xs={4} sx={{ m: 2 }}>
-                                <Card sx={{display: { xs: "none", md: "flex" },flexDirection:"column", width: 340, height: 450, p: 2 }}>
+                                <Card sx={{ display: { xs: "none", md: "flex" }, flexDirection: "column", width: 340, height: 450, p: 2 }}>
                                     <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Box display="flex">
                                             <WarningIcon />
@@ -407,15 +407,15 @@ function Update() {
 
                                 </Card>
 
-                               
+
                             </Grid>
 
                             <Grid item xs={4}>
                                 <Typography variant="h6" sx={{ pl: 1 }}>使用者權限</Typography>
                                 <Box display="flex" flexDirection="column" sx={{ m: 1 }}>
-                                    <Box sx={{m: 1,  p: 2, bgcolor: "#FFF6E1" }}>
+                                    <Box sx={{ m: 1, p: 2, bgcolor: "#FFF6E1" }}>
                                         <Typography variant="h6">學習者</Typography>
-                                        <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
+                                        <Typography variant="caption" >學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
                                         <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
                                         <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
                                             <Box component="form" sx={{ display: "flex" }}>
@@ -495,8 +495,8 @@ function Update() {
                     </Grid>
                 </Card>
 
-                 {/* 手機 */}
-                 <Card sx={{ p: 2, boxShadow: 4 ,display: { xs: "flex", md: "none" },maxWidth:360}}>
+                {/* 手機 */}
+                <Card sx={{ p: 2, boxShadow: 4, display: { xs: "flex", md: "none" }, maxWidth: 360 }}>
                     <Grid item minWidth={300} alignContent="center">
                         <Grid display="flex" flexWrap="wrap" spacing={4}>
 
@@ -598,9 +598,9 @@ function Update() {
                             </Grid>
 
 
-                            <Grid item xs={4} sx={{ml:0.5,mb:2 }}>
-                                 <Card sx={{display: { xs: "flex", md: "none" },flexDirection:"column", width: 320, height: 350, p: 2 }}>
-                                    <Box display="flex"  alignItems="center" justifyContent="space-between">
+                            <Grid item xs={4} sx={{ ml: 0.5, mb: 2 }}>
+                                <Card sx={{ display: { xs: "flex", md: "none" }, flexDirection: "column", width: 320, height: 350, p: 2 }}>
+                                    <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Box display="flex">
                                             <WarningIcon />
                                             <Typography>文章標題</Typography>
@@ -630,11 +630,11 @@ function Update() {
                             </Grid>
 
                             <Grid item xs={4}>
-                                <Typography variant="h6" sx={{ pl: 1,height:40 }}>使用者權限</Typography>
+                                <Typography variant="h6" sx={{ pl: 1, height: 40 }}>使用者權限</Typography>
                                 <Box display="flex" flexDirection="column" >
-                                    <Box sx={{ mb:2, p: 2, bgcolor: "#FFF6E1" }}>
+                                    <Box sx={{ mb: 2, p: 2, bgcolor: "#FFF6E1" }}>
                                         <Typography variant="h6">學習者</Typography>
-                                        <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
+                                        <Typography variant="caption" sx={{height:18}}>學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
                                         <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
                                         <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
                                             <Box component="form" sx={{ display: "flex" }}>
@@ -667,7 +667,7 @@ function Update() {
 
                                         </Box>
                                     </Box>
-                                    <Box sx={{  p: 2, bgcolor: "#E9F0E7" }}>
+                                    <Box sx={{ p: 2, bgcolor: "#E9F0E7" }}>
                                         <Typography variant="h6">專家</Typography>
                                         <Typography variant="caption" >專家可審核有疑慮的文章</Typography><br />
                                         <Typography variant="caption">-沒問題：狀態更新為<CheckCircleIcon sx={{ color: "Green", fontSize: 16 }} /></Typography><br />
@@ -759,6 +759,7 @@ function Index() {
             </ThemeProvider>
 
             <Toolbar />
+
             <Footer />
 
         </div>

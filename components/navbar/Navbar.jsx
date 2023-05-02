@@ -21,7 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import NavItem from "./NavItem";
 import { useEffect } from "react";
-import {setDoc,doc,getDocs,getDoc,getFirestore} from "firebase/firestore";
+import { setDoc, doc, getDocs, getDoc, getFirestore } from "firebase/firestore";
 
 //登出功能
 import { getApp, getApps, initializeApp } from "firebase/app";
@@ -135,12 +135,15 @@ function ResponsiveAppBar() {
     router.push("/profile");
   };
   const expert = () => {
-    return(
-      <Button variant="variant" color="primary" href="/expert">
-                審查筆記
+    return (
+
+      <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign:"left"}}>
+        <Typography>
+          審查筆記
+        </Typography>
       </Button>
     )
- 
+
 
   };
 
@@ -169,7 +172,7 @@ function ResponsiveAppBar() {
       else {
         setLogged(true)
       }
-      
+
       console.log(user);
     });
 
@@ -188,7 +191,7 @@ function ResponsiveAppBar() {
       </Box>
     )
   }
-  
+
   //人頭
   const Other = () => {
 
@@ -330,12 +333,11 @@ function ResponsiveAppBar() {
                   <Typography>
                     問答區
                   </Typography>
+                </MenuItem>
+                <MenuItem>
                   {character == "專家" && expert()}
                 </MenuItem>
-                <Box sx={{ pr: 2 }}>
-        
-          </Box>
-              
+
               </Menu>
             </Box>
 
@@ -384,13 +386,19 @@ function ResponsiveAppBar() {
                     問答區
                   </Typography>
                 </Button>
-                
-               
-                
+
+
+
               </Tooltip>
-              {character == "專家" && expert()}
+
+              <Box sx={{ my: 2, color: "black", display: "block" }}>
+                <Typography>
+                  {character == "專家" && expert()}
+                </Typography>
+              </Box>
+
             </Box>
-           
+
 
             {/* 登入前後後 */}
             <Box sx={{ flexGrow: 0 }}>

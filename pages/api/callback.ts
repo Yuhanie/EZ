@@ -224,11 +224,11 @@ const textEventHandler = async (
         size: "full",
         aspectRatio: "20:12",
         aspectMode: "cover",
-        action: {
-          type: "uri",
-          label: "link",
-          uri: "http://linecorp.com/",
-        },
+        // action: {
+        //   type: "uri",
+        //   label: "link",
+        //   uri: "http://linecorp.com/",
+        // },
         margin: "none",
         align: "center"
       },

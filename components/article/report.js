@@ -22,16 +22,17 @@ const Report = (props) => {
   const [liked, setLiked] = useState(false);
   const [deleted, setDeleted] = useState(0);
   const [edited, setEdited] = useState(0);
+  const [reportMessage, setReportMessage] = useState("");
   
 
 
 
 
   useEffect(() => {
-    async function fetchData() {
-      console.log("report:", props.report);
-    }
-    fetchData();
+    // async function fetchData() {
+    //   console.log("report:", props.report);
+    // }
+    // fetchData();
 
 
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -46,14 +47,6 @@ const Report = (props) => {
 
     // eslint-disable-next-line
   }, [edited, liked, deleted]);
-
-
-  const usual = () => {
-    return (
-      <>
-      </>
-    )
-  };
 
   const renderReport = (report, i) => {
     return (

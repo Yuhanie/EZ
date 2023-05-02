@@ -89,7 +89,8 @@ const ArticleDetails = (props) => {
   const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
   const [open, setOpen] = useState(false);
-  const [report, setReport] = useState();
+  const [reportMessage, setReportMessage] = useState("");
+  const [message, setMessage] = useState([]);
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
@@ -162,6 +163,7 @@ const ArticleDetails = (props) => {
 
   useEffect(() => {
     async function fetchData() {
+
       const querySnapshotDenounce = collection(
         db,
         "text",
@@ -173,9 +175,36 @@ const ArticleDetails = (props) => {
       const tempReport = [];
       querySnapshotReport.forEach((doc) => {
         let reportdata = { ...doc.data(), id: doc.id };
-        tempReport.push(reportdata);
+        let reportMessage = "";
+        switch (reportdata) {
+          case "empty":
+            reportMessage = "內容空泛";
+            break;
+          case "curse":
+            reportMessage = "中傷、挑釁、謾罵他人";
+            break;
+          case "spamming":
+            reportMessage = "惡意洗版";
+            break;
+          default:
+            reportMessage = "分類錯誤";
+        }
+        setMessage(() => [...reportMessage]);
+
+        tempReport.push(message);
+
+
       });
       setDenounces(() => [...tempReport]);
+    
+
+      
+      // setReportMessage(reportMessage);
+
+
+    
+    
+
 
       const querySnapshot = collection(
         db,
@@ -664,7 +693,7 @@ const ArticleDetails = (props) => {
 
   const renderReport = (report, i) => {
     return (
-      <div key={report.reaso}>
+      <div key={report.reason}>
         {report && (
           <div style={{ padding: 14 }} className="App">
             <Report

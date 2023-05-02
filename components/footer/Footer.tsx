@@ -40,7 +40,7 @@ export default function Footer() {
           display="flex"
           justifyContent="center"
         >
-          <Grid container maxWidth="80%" display="flex" flexWrap="wrap">
+          <Grid display="flex" flexWrap="wrap">
             <Grid item xs={4} minWidth={300}>
               <Box display="flex" sx={{ height: 150 }}>
                 <Grid item xs={7}>
@@ -69,7 +69,7 @@ export default function Footer() {
                 <Typography variant="body2" sx={{ m: 1 }}>多利用Line官方帳號提問更便利！</Typography>
               </Box>
             </Grid>
-            <Grid item xs={4} minWidth={350}>
+            <Grid item xs={4} minWidth={330}>
               <Box width="1" height={100}>
                 <Image
                   src={welcome2}

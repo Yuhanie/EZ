@@ -58,8 +58,8 @@ const Home = () => {
 
   
   const handleOnClick = async function () {
-        alert("註冊成功");
-        router.push('/login');
+        // alert("註冊成功");
+        // router.push('/login');
       
     // const res = await createUserWithEmailAndPassword(
     //   auth,
@@ -100,7 +100,7 @@ const Home = () => {
           email: "",
         });
         // let addDoc = db.collection('profile').doc(uid);
-        alert("帳號已產生");
+        alert("註冊成功");
       }
       
       // console.log({ res });

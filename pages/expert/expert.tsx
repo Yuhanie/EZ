@@ -18,7 +18,7 @@ import { useRouter } from "next/router"
 // import Navbar3 from "../components/navbar/Navbar3";
 
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs, where, doc, getDoc, getCountFromServer } from "firebase/firestore";
+import { getFirestore, collection, getDocs, where, doc, getDoc, getCountFromServer, or } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
@@ -138,7 +138,7 @@ const Home: NextPage = (props) => {
     async function readData() {
 
       setIsLoading(true);      
-      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), where("report","==",true)||where("outdate", "==", "pending")):query(collection(db, "text"), where("report","==",true)||where("outdate", "==", "pending"), limit(3)));
+      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending"))):query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending")), limit(3)));
       
       const tempDenounce: Article[] = [];
       queryDenounce.forEach((doc) => {

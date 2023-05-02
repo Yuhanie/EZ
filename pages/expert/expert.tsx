@@ -139,7 +139,6 @@ const Home: NextPage = (props) => {
 
       setIsLoading(true);      
       const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending"))):query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending")), limit(3)));
-      
       const tempDenounce: Article[] = [];
       queryDenounce.forEach((doc) => {
         tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});

@@ -57,6 +57,7 @@ const ArticleListItem:
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
     const [character, setCharacter] = useState("學習者");
+    const [userInfo, setUserInfo] = useState("");
 
 
 
@@ -116,6 +117,19 @@ const ArticleListItem:
 
 
     useEffect(() => {
+
+      // setIsLoading(true);
+      // const examCollection = collection(db, "profile", props.article.uid);
+      // const queryExam = query(examCollection);
+      // const querySnapnewtext = await getDocs(queryExam);
+      // const temp2: Article[] = [];
+      // querySnapnewtext.forEach((doc) => {
+      //   temp2.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+
+      //   console.log(`newtext ${doc.id} => ${doc.data()}`);
+      // });
+      // setUserInfo([...temp2]);
+
       const unsub = onAuthStateChanged(auth, async (user) => {
         if (user) {
           console.log('currentUser', user)
@@ -180,10 +194,6 @@ const ArticleListItem:
         }
       }
     }
-
-
-
-
 
     const heart = async function () {
       if (typeof window !== "undefined") {

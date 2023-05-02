@@ -56,7 +56,7 @@ const Report = (props) => {
             <Box display="flex" justifyContent="space-between" alignItems="center" >
             </Box>
             <Box>
-              <Typography variant="body2" sx={{m:2, textAlign: "left" }}>{report.reason}</Typography>
+              <Typography variant="body2" sx={{m:2, textAlign: "left" }}>{report.message}</Typography>
             </Box>
           </Box>
         </Paper>

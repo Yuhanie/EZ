@@ -174,9 +174,10 @@ const ArticleDetails = (props) => {
       const querySnapshotReport = await getDocs(queryReport);
       const tempReport = [];
       querySnapshotReport.forEach((doc) => {
-        let reportdata = { ...doc.data(), id: doc.id };
+        
         let reportMessage = "";
-        switch (reportdata) {
+
+        switch (doc.data().reason) {
           case "empty":
             reportMessage = "內容空泛";
             break;
@@ -189,14 +190,15 @@ const ArticleDetails = (props) => {
           default:
             reportMessage = "分類錯誤";
         }
-        setMessage(() => [...reportMessage]);
-
-        tempReport.push(message);
+        // setMessage(() => [...]);
+        let reportdata = { ...doc.data(), id: doc.id, message:reportMessage };
+        // console.log("reportData", reportdata)
+        tempReport.push(reportdata);
 
 
       });
       setDenounces(() => [...tempReport]);
-    
+      
 
       
       // setReportMessage(reportMessage);

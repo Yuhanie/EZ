@@ -121,7 +121,7 @@ const Profile:React.FC<Props> = (props) => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
-  const [MajorTag, setMajorTag] = useState<Profile[]>([]);
+  const [majorTags, setMajorTags] = useState<Profile[]>([]);
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   const [heartCount, setHeartCount] = useState(0);
@@ -169,13 +169,26 @@ const Profile:React.FC<Props> = (props) => {
       const unsub = onAuthStateChanged(auth, async (user) => {
         
         if (user) {
+
+          // const examMajorTag = collection(db, "profile");
+          // const queryExam = query(examMajorTag);
+          // const querySnapTag = await getDocs(queryExam);
+          // const temp2: Profile[] = [];
+          // querySnapTag.forEach((doc) => {
+          //   temp2.push({majortag: doc.data().majortag});
+    
+          //    console.log("MMMMMMM", temp2);
+          // });
+          // setMajorTags([...temp2]);
+
           const user_Id = Array.isArray(userId)? userId[0]: userId; 
           const id = user_Id? user_Id: user.uid;
           alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
+          
           if ((querySnapshot).exists()) {
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag:querySnapshot.data().majortag});
+            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : []});
           } else {
             setProfile({ character: "學習者" });
           }
@@ -284,9 +297,25 @@ const Profile:React.FC<Props> = (props) => {
     );
   };
 
-  const renderMajorTag = () => {
+  // const renderMajorTag = () => {
+  //   return (
+  //     <>
+
+      
+  //     <Box>
+  //       {profile&&<MajorTagList MajorTag={profile}/>}
+  //     </Box>
+  //     </>
+  //   );
+  // };
+  console.log("profile:", profile);
+  const renderMajorTagTest = () => {
     return (
-      profile&&<MajorTagList MajorTag={profile}></MajorTagList>
+      <>
+      <Box>
+        {profile&&<MajorTagList MajorTag={profile}/>}
+      </Box>
+      </>
     );
   };
 
@@ -490,7 +519,8 @@ const Profile:React.FC<Props> = (props) => {
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}
-                          {renderMajorTag()}
+                          {renderMajorTagTest()}
+                          {/* {Profile.map(renderMajorTag)} */}
                         </Stack>
                       </CardContent>
                     </Card>
@@ -583,7 +613,7 @@ const Profile:React.FC<Props> = (props) => {
               </Box>
 
 
-
+              {majorTags.map(renderMajorTagTest)}
 
 
             </Box>

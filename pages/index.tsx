@@ -62,7 +62,7 @@ function Solgan() {
 
 
                 <Box display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">
-                    <Box display="flex" flexDirection="column" justifyContent="space-between" maxWidth={400} sx={{ p: 4 }}>
+                    <Box display="flex" flexDirection="column" justifyContent="space-between" maxWidth={400} sx={{ p: 2 }}>
                         {/* 網頁 */}
                         <Typography
                             variant="h2"
@@ -204,6 +204,7 @@ function Update() {
     return (
         <div>
             <Container>
+                {/* 網頁 */}
                 <Typography
                     display="flex"
                     justifyContent="center"
@@ -211,6 +212,7 @@ function Update() {
                     noWrap
                     component="a"
                     sx={{
+                        display: { xs: "none", md: "flex" },
                         maxWidth: 280,
                         fontWeight: 700,
                         letterSpacing: ".3rem",
@@ -225,8 +227,33 @@ function Update() {
                 >
                     Update
                 </Typography>
-                <Card sx={{ p: 2, boxShadow: 4 }}>
-                    <Grid item minWidth={300}>
+                {/* 手機 */}
+                <Typography
+                    display="flex"
+                    justifyContent="center"
+                    variant="h4"
+                    noWrap
+                    component="a"
+                    sx={{
+                        display: { xs: "flex", md: "none" },
+                        maxWidth: 200,
+                        fontWeight: 700,
+                        letterSpacing: ".3rem",
+                        color: "#ffffff",
+                        textDecoration: "none",
+                        pb: 3,
+                        bgcolor: "#7A82E7",
+                        borderTopRightRadius: 12,
+                        borderTopLeftRadius: 12,
+                        height: 50,
+                    }}
+                >
+                    Update
+                </Typography>
+
+                {/* 網頁*/}
+                <Card sx={{ p: 2, boxShadow: 4 ,display: { xs: "none", md: "flex" },}}>
+                    <Grid item minWidth={340}>
                         <Grid display="flex" flexWrap="wrap" spacing={4}>
 
                             <Grid item xs={4}>
@@ -328,7 +355,7 @@ function Update() {
 
 
                             <Grid item xs={4} sx={{ m: 2 }}>
-                                <Card sx={{ width: 350, height: 450, p: 2 }}>
+                                <Card sx={{display: { xs: "none", md: "flex" },flexDirection:"column", width: 340, height: 450, p: 2 }}>
                                     <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Box display="flex">
                                             <WarningIcon />
@@ -379,12 +406,14 @@ function Update() {
 
 
                                 </Card>
+
+                               
                             </Grid>
 
                             <Grid item xs={4}>
                                 <Typography variant="h6" sx={{ pl: 1 }}>使用者權限</Typography>
                                 <Box display="flex" flexDirection="column" sx={{ m: 1 }}>
-                                    <Box sx={{ m: 1, p: 2, bgcolor: "#FFF6E1" }}>
+                                    <Box sx={{m: 1,  p: 2, bgcolor: "#FFF6E1" }}>
                                         <Typography variant="h6">學習者</Typography>
                                         <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
                                         <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
@@ -465,6 +494,225 @@ function Update() {
                         </Grid>
                     </Grid>
                 </Card>
+
+                 {/* 手機 */}
+                 <Card sx={{ p: 2, boxShadow: 4 ,display: { xs: "flex", md: "none" },maxWidth:360}}>
+                    <Grid item minWidth={300} alignContent="center">
+                        <Grid display="flex" flexWrap="wrap" spacing={4}>
+
+                            <Grid item xs={4}>
+                                {/* <Box display="flex" flexDirection="column" flexWrap="wrap">
+
+                                        <Typography variant="h6">文章狀態</Typography>
+                                        <Box display="flex" alignItems="center">
+                                            <IconButton ><CheckCircleIcon sx={{ color: "Green" }} /></IconButton>
+                                            <Typography>審核通過</Typography>
+                                        </Box>
+                                        <Box display="flex" alignItems="center">
+                                            <IconButton><NotificationImportantIcon sx={{ color: "Gold" }} /></IconButton>
+                                            <Typography>專家審核中</Typography>
+                                        </Box>
+                                        <Typography variant="caption" sx={{ pl: 5 }}>
+                                            此為專家角色權限，可針對有問題的文章做審核。
+                                        </Typography>
+                                        <Box display="flex" alignItems="center" >
+                                            <IconButton><WarningIcon sx={{ color: "Crimson" }} /></IconButton>
+                                            <Typography>版本疑慮</Typography><br />
+
+                                        </Box>
+                                        <Typography variant="caption" sx={{ pl: 5 }}>經由專家審核後，這篇文章已經不符合現在的版本或者無法使用</Typography>
+                                    </Box> */}
+
+
+                                <List sx={{ width: '100%', maxWidth: 320, bgcolor: 'background.paper' }}>
+                                    <Typography variant="h6">文章狀態</Typography>
+                                    <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar alt="check" sx={{ color: "Green", bgcolor: "#ffffff" }} ><CheckCircleIcon /></Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary=" 審核通過"
+                                            secondary={
+
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    「文章預設」、文章審核通過
+                                                </Typography>
+
+
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                    <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar alt="check" sx={{ color: "Gold", bgcolor: "#ffffff" }} ><NotificationImportantIcon /></Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="專家審核中"
+                                            secondary={
+
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    有學習者針對此文章做出問題回報。
+
+                                                </Typography>
+
+
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                    <ListItem alignItems="flex-start" className={styles.section1}>
+                                        <ListItemAvatar>
+                                            <Avatar alt="check" sx={{ color: "Crimson", bgcolor: "#ffffff" }} ><WarningIcon /></Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="版本疑慮"
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        經由專家審核後，這篇文章已經不符合現在的版本或者無法使用。
+                                                    </Typography>
+                                                    {"出現提示框告知讀者文章狀態。"}
+                                                </React.Fragment>
+
+
+                                            }
+                                        />
+                                    </ListItem>
+                                </List>
+                            </Grid>
+
+
+                            <Grid item xs={4} sx={{ml:0.5,mb:2 }}>
+                                 <Card sx={{display: { xs: "flex", md: "none" },flexDirection:"column", width: 320, height: 350, p: 2 }}>
+                                    <Box display="flex"  alignItems="center" justifyContent="space-between">
+                                        <Box display="flex">
+                                            <WarningIcon />
+                                            <Typography>文章標題</Typography>
+                                        </Box>
+                                        <Box display="flex">
+                                            <VI />
+                                            <Typography variant="body2">10</Typography>
+                                            <MoreHorizIcon sx={{ bgcolor: "#FFF6E1", borderRadius: 10 }} />
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{ height: 150, bgcolor: "#fafafa", p: 2, m: 2 }}>
+                                        <Typography>文章內容</Typography>
+                                    </Box>
+
+                                    <Box
+                                        alignItems="center"
+                                        sx={{ height: 100, bgcolor: "#fafafa", p: 2, m: 2 }}
+                                    >
+                                        <Box display="flex">
+                                            <WarningIcon />
+                                            <Typography>版本疑慮</Typography>
+                                        </Box>
+                                        <Typography variant="subtitle2">這篇文章已經不符合現在的版本或者無法使用</Typography>
+                                    </Box>
+
+                                </Card>
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                <Typography variant="h6" sx={{ pl: 1,height:40 }}>使用者權限</Typography>
+                                <Box display="flex" flexDirection="column" >
+                                    <Box sx={{ mb:2, p: 2, bgcolor: "#FFF6E1" }}>
+                                        <Typography variant="h6">學習者</Typography>
+                                        <Typography variant="caption">學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
+                                        <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
+                                        <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
+                                            <Box component="form" sx={{ display: "flex" }}>
+                                                <FormControl sx={{ width: 140 }} size="small">
+                                                    <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        sx={{ m: 1, height: 35 }}
+
+                                                    >
+                                                        <MenuItem value="stale">過時或無法使用</MenuItem>
+                                                        <MenuItem value="empty">內容空泛</MenuItem>
+                                                        <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+                                                        <MenuItem value="spamming">惡意洗版</MenuItem>
+                                                        <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+
+                                                <Button
+                                                    color="primary"
+                                                    variant="contained"
+                                                    size="small"
+                                                    sx={{ m: 1, height: 35 }}
+
+                                                >
+                                                    檢舉
+                                                </Button>
+                                            </Box>
+
+
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{  p: 2, bgcolor: "#E9F0E7" }}>
+                                        <Typography variant="h6">專家</Typography>
+                                        <Typography variant="caption" >專家可審核有疑慮的文章</Typography><br />
+                                        <Typography variant="caption">-沒問題：狀態更新為<CheckCircleIcon sx={{ color: "Green", fontSize: 16 }} /></Typography><br />
+                                        <Typography variant="caption">-過時：狀態更新為<WarningIcon sx={{ color: "Crimson", fontSize: 16 }} /></Typography>
+                                        <Box display="flex" sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
+                                            <EmojiObjectsIcon sx={{ mt: 2 }} />
+                                            <Typography variant="body1" sx={{ mt: 2 }}>
+                                                專家審核
+                                            </Typography>
+
+                                            <FormControl sx={{ width: 140, }} size="small">
+                                                {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    // value={topicName}
+                                                    // label="topic"
+
+                                                    sx={{ m: 1 }}
+                                                >
+                                                    <MenuItem value="solved">沒問題</MenuItem>
+                                                    <MenuItem value="stale">過時或無法使用</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <br />
+                                            <Button
+                                                color="primary"
+                                                variant="contained"
+                                                size="small"
+                                                sx={{ m: 1, height: 35 }}
+                                            >
+                                                送出
+                                            </Button>
+                                        </Box>
+                                    </Box>
+
+                                </Box>
+
+                            </Grid>
+
+
+
+                        </Grid>
+                    </Grid>
+                </Card>
             </Container>
 
         </div>
@@ -489,8 +737,8 @@ function Index() {
 
 
             <ThemeProvider theme={lightTheme}>
-                <Grid display="flex" flexWrap="wrap" flexDirection="column">
-                    
+                <Grid display="flex" flexWrap="wrap" flexDirection="column" >
+
                     <Solgan />
 
                     <Toolbar />

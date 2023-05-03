@@ -59,7 +59,15 @@ export default function SignIn() {
 
       const ref = doc(db, "profile", data.user.uid);
       const docSnap = getDoc(ref);
-      if (docSnap.character) {
+      if (docSnap) {
+        // updateDoc(doc(db, "profile", data.user.uid), {
+        //   character: docSnap.character,
+        //   majortag: [],
+        //   userid: auth.currentUser.uid,
+        //   user: auth.currentUser.displayName,
+        //   email: auth.currentUser.email,
+        //   photoURL: data.user.photoURL,
+        // });
       }
       else {
         setDoc(doc(db, "profile", data.user.uid), {

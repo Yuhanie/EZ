@@ -26,6 +26,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Chip from '@material-ui/core/Chip';
+import CircleIcon from '@mui/icons-material/Circle';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -654,7 +656,7 @@ const ArticleDetails = (props) => {
                   <MenuItem value="empty">內容空泛</MenuItem>
                   <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
                   <MenuItem value="spamming">惡意洗版</MenuItem>
-                  <MenuItem value="tagerror">文章分類錯誤</MenuItem>
+                  {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
                 </Select>
               </FormControl>
 
@@ -768,6 +770,7 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
+            {/* <CircleIcon sx={{width:900}}/> */}
           </Box>
 
           {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}> */}

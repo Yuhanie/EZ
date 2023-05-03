@@ -123,8 +123,9 @@ function ResponsiveAppBar() {
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
-      setLogged(true);
+      setLogged(true);    
     }
+    router.push('/');
   };
 
   //profile
@@ -198,7 +199,7 @@ function ResponsiveAppBar() {
     return (
       <Box>
         <Tooltip title="查看更多">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <IconButton onClick={handleOpenUserMenu}>
             {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
             {photoURL ?
               <img className={styles.googlephoto_nav} src={currentUser?.photoURL} /> :

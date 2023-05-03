@@ -186,6 +186,7 @@ const Profile: React.FC<Props> = (props) => {
           //alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
+
           if ((querySnapshot).exists()) {
 
             //console.log(doc.id, doc.data());
@@ -515,7 +516,7 @@ const Profile: React.FC<Props> = (props) => {
 
 
                   <Grid >
-                    <Card sx={{ m: 2, width: 300 }}>
+                    <Card sx={{ m: 2, width: 300,minHeight:100 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -538,7 +539,9 @@ const Profile: React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           發布筆記
                         </Typography>
-                            {count}
+                        <Typography display="flex" sx={{ fontSize: 20, justifyContent: "center" }}>
+                          {count}
+                        </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -555,7 +558,9 @@ const Profile: React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           文章被收藏
                         </Typography>
-                            {bookMarkCount}
+                        <Typography display="flex" sx={{ fontSize: 20, justifyContent: "center" }}>
+                          {bookMarkCount}
+                        </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -572,7 +577,9 @@ const Profile: React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           文章被按讚
                         </Typography>
-                            {heartCount}
+                        <Typography display="flex" sx={{ fontSize: 20, justifyContent: "center" }}>
+                          {heartCount}
+                        </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label={heartCount}></Chip> */}
                           {/* <Chip label="tag 1" component="a" href="#chip" />

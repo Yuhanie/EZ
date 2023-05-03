@@ -187,8 +187,8 @@ const ArticleDetails = (props) => {
           case "spamming":
             reportMessage = "惡意洗版";
             break;
-          default:
-            reportMessage = "分類錯誤";
+          // default:
+          //   reportMessage = "分類錯誤";
         }
         // setMessage(() => [...]);
         let reportdata = { ...doc.data(), id: doc.id, message:reportMessage };

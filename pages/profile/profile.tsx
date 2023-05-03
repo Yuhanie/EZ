@@ -187,6 +187,7 @@ const Profile:React.FC<Props> = (props) => {
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
           if ((querySnapshot).exists()) {
+            
             //console.log(doc.id, doc.data());
             setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : []});
           } else {

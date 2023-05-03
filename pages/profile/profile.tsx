@@ -108,7 +108,7 @@ type Props = {
   update: Function;
 };
 
-const Profile:React.FC<Props> = (props) => {
+const Profile: React.FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<User>();
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -129,7 +129,7 @@ const Profile:React.FC<Props> = (props) => {
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
   const router = useRouter()
   const { userId } = router.query || ""
-  //console.log("id in profile",userId)
+  console.log("id in profile",userId)
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -167,7 +167,7 @@ const Profile:React.FC<Props> = (props) => {
       //   };
       // }
       const unsub = onAuthStateChanged(auth, async (user) => {
-        
+
         if (user) {
 
           // const examMajorTag = collection(db, "profile");
@@ -176,29 +176,29 @@ const Profile:React.FC<Props> = (props) => {
           // const temp2: Profile[] = [];
           // querySnapTag.forEach((doc) => {
           //   temp2.push({majortag: doc.data().majortag});
-    
+
           //    console.log("MMMMMMM", temp2);
           // });
           // setMajorTags([...temp2]);
 
           const user_Id = Array.isArray(userId)? userId[0]: userId; 
           const id = user_Id? user_Id: user.uid;
-          //alert("id in useEffect:"+id);
+          alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
           if ((querySnapshot).exists()) {
-            
+
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : []});
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
           } else {
             setProfile({ character: "學習者" });
           }
 
-          console.log('currentUser', user)
+
           setCurrentUser(user);
 
           setIsLoading(true);
-          const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", user.uid)) : query(collection(db, "text"), where("bookmark", "array-contains", user.uid), limit(3)));
+          const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", id)) : query(collection(db, "text"), where("bookmark", "array-contains", id), limit(3)));
           const tempCollect: Article[] = [];
           queryCollect.forEach((doc) => {
             tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
@@ -207,13 +207,13 @@ const Profile:React.FC<Props> = (props) => {
           setIsLoading(false);
 
           setIsLoading(true);
-          const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", user.uid)) : query(collection(db, "text"), where("userid", "==", user.uid), limit(3)));
+          const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", id)) : query(collection(db, "text"), where("userid", "==", id), limit(3)));
           const tempMyNote: Article[] = [];
           let count = 0;
           let countHeart = 0;
           let countBookMark = 0;
           queryMyNote.forEach((doc) => {
-            count ++;
+            count++;
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
 
@@ -227,14 +227,14 @@ const Profile:React.FC<Props> = (props) => {
 
           setIsLoading(false);
 
-      //     setIsLoading(true);
-      //     const queryMajorTag = await getDocs(query(collection(db, "Profile"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
-      //     const temp3: Profile[] = [];
-      //     queryMajorTag.forEach(async (doc) => {
-      //   temp3.push({ majortag: doc.data().majortag });
-      // });
-      //     setMajorTag([...temp3]);
-      //     setIsLoading(false);
+          //     setIsLoading(true);
+          //     const queryMajorTag = await getDocs(query(collection(db, "Profile"),where("userid", "==", "CQhhg7JfKZYCqopukFu11zzTZcG3")));
+          //     const temp3: Profile[] = [];
+          //     queryMajorTag.forEach(async (doc) => {
+          //   temp3.push({ majortag: doc.data().majortag });
+          // });
+          //     setMajorTag([...temp3]);
+          //     setIsLoading(false);
         }
       });
 
@@ -246,7 +246,7 @@ const Profile:React.FC<Props> = (props) => {
     }
     readData();
   }, [myNotesOpen, collectOpen]);
-  
+
   // const heart = async function () {
   //   if (typeof window !== "undefined") {
   //     if (currentUser) {
@@ -255,7 +255,7 @@ const Profile:React.FC<Props> = (props) => {
   //       if ((docSnap.exists())) {
   //         if (docSnap.data().heart.includes(currentUser.uid)) {
   //           // alert('remove')
-          
+
   //           setLiked(false)
   //           setCount(count - 1)
   //         } else {
@@ -302,7 +302,7 @@ const Profile:React.FC<Props> = (props) => {
   //   return (
   //     <>
 
-      
+
   //     <Box>
   //       {profile&&<MajorTagList MajorTag={profile}/>}
   //     </Box>
@@ -313,9 +313,9 @@ const Profile:React.FC<Props> = (props) => {
   const renderMajorTagTest = () => {
     return (
       <>
-      <Box>
-        {profile&&<MajorTagList MajorTag={profile}/>}
-      </Box>
+        <Box>
+          {profile && <MajorTagList MajorTag={profile} />}
+        </Box>
       </>
     );
   };
@@ -469,13 +469,18 @@ const Profile:React.FC<Props> = (props) => {
                   <Box display="flex" flexDirection="column" sx={{ p: 2, minWidth: 300, maxWidth: 345 }} bgcolor={'#fafafa'} >
                     <Box display="flex">
                       <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
-                      {currentUser && currentUser.photoURL?
-          <img className={styles.googlephoto_profile} src={currentUser?.photoURL}/>:
-          <Avatar sx={{
-            width: 70,
-            height: 70,
-            mb: 1,
-          }}/>}
+                        {userId && profile && profile.photoURL ?
+                          <img className={styles.googlephoto_profile} src={profile.photoURL} /> :
+                          !userId && currentUser && currentUser.photoURL ?
+                            <img className={styles.googlephoto_profile} src={currentUser.photoURL} /> :
+                            <Avatar sx={{
+                              width: 70,
+                              height: 70,
+                              mb: 1,
+                            }} />}
+
+
+
                         {/* <Avatar
                         g04
                         >
@@ -486,8 +491,8 @@ const Profile:React.FC<Props> = (props) => {
                         <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
                       </Box>
                       <Box>
-                        <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "未登入"}</Typography>
-                        <Typography fontSize={12}>{currentUser ? currentUser.email : "未登入"}</Typography>
+                        <Typography pt={0.8} fontSize={25} >{profile ? profile.user : "未登入"}</Typography>
+                        <Typography fontSize={12}>{profile ? profile.email : "未登入"}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>
@@ -530,7 +535,7 @@ const Profile:React.FC<Props> = (props) => {
                     <Card sx={{ m: 2, width: 120, height: 100 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
-                        <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           發布筆記
                         </Typography>
                             {count}
@@ -547,7 +552,7 @@ const Profile:React.FC<Props> = (props) => {
                     <Card sx={{ m: 2, width: 120, height: 100 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
-                        <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           文章被收藏
                         </Typography>
                             {bookMarkCount}
@@ -564,12 +569,12 @@ const Profile:React.FC<Props> = (props) => {
                     <Card sx={{ m: 2, width: 120, height: 100 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
-                        <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 15, textAlign: 'center' }} color="text.secondary" gutterBottom>
                           文章被按讚
                         </Typography>
                             {heartCount}
                         <Stack direction="row" spacing={1}>
-                        {/* <Chip label={heartCount}></Chip> */}
+                          {/* <Chip label={heartCount}></Chip> */}
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}

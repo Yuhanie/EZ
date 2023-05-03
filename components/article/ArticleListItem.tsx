@@ -225,7 +225,7 @@ const ArticleListItem:
         }
 
         else {
-          alert("要登入才能收藏ㄛ!")
+          alert("要登入才能按讚ㄛ!")
           router.push('/login');
 
         }

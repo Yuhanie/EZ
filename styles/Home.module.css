@@ -453,8 +453,8 @@
 .grid {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   flex-wrap: wrap;
   /* max-width: 800%; */
   /* top: 60px; */

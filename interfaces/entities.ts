@@ -79,6 +79,9 @@ export type miniTag = {
 export type Profile = {
   character?: string;
   majortag?: string[];
+  email?: string;
+  photoURL?: string;
+  user?: string;
 };
 
 export type BookMark = {

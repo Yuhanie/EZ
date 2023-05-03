@@ -470,7 +470,7 @@ const ArticleDetails = (props) => {
     return (
       <>
         {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
-        <Box>
+        <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
             {/* <Typography variant="h6">專家權限</Typography> */}
         <Box
           display="flex"
@@ -525,7 +525,8 @@ const ArticleDetails = (props) => {
   const expert = () => {
     return (
       <>
-      <Box >
+          <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}>
+               
             <Typography variant="h6">專家權限</Typography>
         <Box
           display="flex"

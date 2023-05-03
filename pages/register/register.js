@@ -100,6 +100,7 @@ const Home = () => {
         });
         // let addDoc = db.collection('profile').doc(uid);
         alert("註冊成功");
+        router.push("/login");
       }
       
       // console.log({ res });

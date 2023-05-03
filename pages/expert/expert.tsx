@@ -22,7 +22,7 @@ import { getFirestore, collection, getDocs, where, doc, getDoc, getCountFromServ
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import ReactDOM from "react-dom";
 
-import {  createTheme} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import ArticleListItem from '../../components/article/ArticleListItem';
 import TagList from '../../components/tag/TagList';
 import { Article, Newtext, Tag, Denounce } from '../../interfaces/entities';
@@ -125,35 +125,35 @@ const Home: NextPage = (props) => {
   const [denounces, setDenounces] = useState<Article[]>([]);
   const [updated, setUpdated] = useState(0);
   const [pending, setPending] = useState<Article[]>([]);
-  const [pendingOpen, setPendingOpen] =useState<boolean>(false);
-  const [staleOpen, setStaleOpen] =useState<boolean>(false);
-  const [denounceOpen, setDenounceOpen] =useState<boolean>(false);
+  const [pendingOpen, setPendingOpen] = useState<boolean>(false);
+  const [staleOpen, setStaleOpen] = useState<boolean>(false);
+  const [denounceOpen, setDenounceOpen] = useState<boolean>(false);
   const [stale, setStale] = useState<Article[]>([]);
   const router = useRouter();
-  
-  const updateUpdated = ()=>{
-    setUpdated((currentValue)=>currentValue+1)
+
+  const updateUpdated = () => {
+    setUpdated((currentValue) => currentValue + 1)
   }
   useEffect(() => {
     async function readData() {
 
-      setIsLoading(true);      
-      const queryDenounce = await getDocs(denounceOpen?query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending"))):query(collection(db, "text"), or(where("report","==",true), where("outdate", "==", "pending")), limit(3)));
+      setIsLoading(true);
+      const queryDenounce = await getDocs(denounceOpen ? query(collection(db, "text"), or(where("report", "==", true), where("outdate", "==", "pending"))) : query(collection(db, "text"), or(where("report", "==", true), where("outdate", "==", "pending")), limit(3)));
       const tempDenounce: Article[] = [];
       queryDenounce.forEach((doc) => {
-        tempDenounce.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+        tempDenounce.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
 
       });
-      
+
       setDenounces([...tempDenounce]);
 
       setIsLoading(true);
       // const queryExam = await getDocs(query(collection(db, "text"), where("outdate", "==", "stale")));
 
-      const queryExam = await getDocs(staleOpen?query(collection(db, "text"), where("outdate", "==", "stale")):query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
+      const queryExam = await getDocs(staleOpen ? query(collection(db, "text"), where("outdate", "==", "stale")) : query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
-        tempStale.push({docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+        tempStale.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
 
         console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
@@ -163,7 +163,7 @@ const Home: NextPage = (props) => {
       const querySnapshot = await getDocs(collection(db, "tag"));
       const temp: Tag[] = [];
       querySnapshot.forEach((doc) => {
-        temp.push({ name: doc.data().name, pic: doc.data().pic,  order: doc.data().order });
+        temp.push({ name: doc.data().name, pic: doc.data().pic, order: doc.data().order });
 
       });
       setTag([...temp]);
@@ -201,17 +201,17 @@ const Home: NextPage = (props) => {
 
 
 
-  const more = async function (status:string) {
+  const more = async function (status: string) {
     if (typeof window !== "undefined") {
       if (currentUser) {
-        if(status=="morePending"){
-          setPendingOpen((currentValue)=>!currentValue)
+        if (status == "morePending") {
+          setPendingOpen((currentValue) => !currentValue)
         }
-        if(status=="moreStale"){
-          setStaleOpen((currentValue)=>!currentValue)
+        if (status == "moreStale") {
+          setStaleOpen((currentValue) => !currentValue)
         }
-        if(status=="moreDenounce"){
-          setDenounceOpen((currentValue)=>!currentValue)
+        if (status == "moreDenounce") {
+          setDenounceOpen((currentValue) => !currentValue)
         }
       }
     } else {
@@ -255,7 +255,7 @@ const Home: NextPage = (props) => {
     setValue(newValue);
   };
 
- 
+
   return (
     <div >
       <Head>
@@ -319,30 +319,30 @@ const Home: NextPage = (props) => {
 
           <Box
             display="flex"
-            pl="10%"
+            pl="5%"
             pt={4}
           >
 
-                        <NotificationImportantIcon
-            sx={{color: 'Gold', left:200}}
-            
+            <NotificationImportantIcon
+              sx={{ color: 'Gold', left: 200 ,mt:0.5,mr:1}}
+
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more("moreDenounce")}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => { more("moreDenounce") }}>查看更多</Button>
           </Box>
           <Box
             display="flex"
             justifyContent="center"
           >
-            {!isLoading ? 
+            {!isLoading ?
               <div className={styles.grid}>
-                {denounces&&denounces.map(renderDenounce)}
+                {denounces && denounces.map(renderDenounce)}
               </div>
               : <CircularProgress />
             }
           </Box>
-          
-        
+
+
 
 
 
@@ -350,29 +350,29 @@ const Home: NextPage = (props) => {
 
           <Box
             display="flex"
-            pl="10%"
+            pl="5%"
             pt={4}
           >
             <WarningIcon
-            sx={{color: 'Crimson'}}
+              sx={{ color: 'Crimson' ,mt:0.5,mr:1}}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
-            <Button variant="contained" color="secondary" onClick={() => {more("moreStale")}}>查看更多</Button>
+            <Button variant="contained" color="secondary" onClick={() => { more("moreStale") }}>查看更多</Button>
             {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
           </Box>
           <Box
             display="flex"
             justifyContent="center"
           >
-            {!isLoading ? 
+            {!isLoading ?
               <div className={styles.grid}>
-                {stale&&stale.map(renderStale)}
+                {stale && stale.map(renderStale)}
               </div>
               : <CircularProgress />
             }
           </Box>
-          
-         
+
+
 
 
         </Box>

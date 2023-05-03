@@ -129,7 +129,7 @@ const Profile: React.FC<Props> = (props) => {
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
   const router = useRouter()
   const { userId } = router.query || ""
-  console.log("id in profile",userId)
+  //console.log("id in profile",userId)
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -183,7 +183,7 @@ const Profile: React.FC<Props> = (props) => {
 
           const user_Id = Array.isArray(userId)? userId[0]: userId; 
           const id = user_Id? user_Id: user.uid;
-          alert("id in useEffect:"+id);
+          //alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
           if ((querySnapshot).exists()) {

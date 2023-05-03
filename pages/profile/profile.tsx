@@ -183,18 +183,19 @@ const Profile:React.FC<Props> = (props) => {
 
           const user_Id = Array.isArray(userId)? userId[0]: userId; 
           const id = user_Id? user_Id: user.uid;
+
           alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
           if ((querySnapshot).exists()) {
             
             //console.log(doc.id, doc.data());
-            setProfile({ character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : []});
+            setProfile({user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : []});
           } else {
             setProfile({ character: "學習者" });
           }
 
-          console.log('currentUser', user)
+
           setCurrentUser(user);
 
           setIsLoading(true);
@@ -486,8 +487,8 @@ const Profile:React.FC<Props> = (props) => {
                         <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
                       </Box>
                       <Box>
-                        <Typography pt={0.8} fontSize={25} >{currentUser ? currentUser.displayName : "未登入"}</Typography>
-                        <Typography fontSize={12}>{currentUser ? currentUser.email : "未登入"}</Typography>
+                        <Typography pt={0.8} fontSize={25} >{profile ? profile.user : "未登入"}</Typography>
+                        <Typography fontSize={12}>{profile ? profile.email : "未登入"}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>

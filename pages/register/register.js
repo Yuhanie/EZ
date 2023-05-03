@@ -95,9 +95,8 @@ const Home = () => {
         await setDoc(doc(db, "profile", auth.currentUser.uid), {
           character: "學習者",
           majortag: [],
-          userid: auth.currentUser.uid,
-          user: "",
-          email: "",
+          user: auth.currentUser.displayName,
+          email: auth.currentUser.email,
         });
         // let addDoc = db.collection('profile').doc(uid);
         alert("註冊成功");

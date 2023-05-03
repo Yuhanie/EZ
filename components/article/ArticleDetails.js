@@ -769,12 +769,12 @@ const ArticleDetails = (props) => {
             </div>
           </Box>
 
-          <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}>
+          {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}> */}
 
             {character === "專家" && expert()}
             {expertAction === "true" && expertReport()}
 
-          </Box>
+          {/* </Box> */}
 
           <div style={{ padding: 14 }} className="App">
 

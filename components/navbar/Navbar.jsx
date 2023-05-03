@@ -118,7 +118,7 @@ function ResponsiveAppBar() {
   const router = useRouter();
 
   const logout = async function () {
-    alert("logout")
+    // alert("logout")
     const auth = getAuth();
     await signOut(auth);
     if (typeof window !== "undefined") {

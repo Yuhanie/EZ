@@ -129,7 +129,7 @@ const Profile:React.FC<Props> = (props) => {
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
   const router = useRouter()
   const { userId } = router.query || ""
-  console.log("id in profile",userId)
+  //console.log("id in profile",userId)
 
   const updateUpdated = () => {
     setUpdated((currentValue) => currentValue + 1)
@@ -183,7 +183,7 @@ const Profile:React.FC<Props> = (props) => {
 
           const user_Id = Array.isArray(userId)? userId[0]: userId; 
           const id = user_Id? user_Id: user.uid;
-          alert("id in useEffect:"+id);
+          //alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile",id));
           
           if ((querySnapshot).exists()) {
@@ -379,7 +379,7 @@ const Profile:React.FC<Props> = (props) => {
                         </Box>
 
                         <Box display="flex" alignItems="center">
-                          <Typography sx={{ minWidth: 100 }}>擅長領域</Typography>
+                          <Typography sx={{ minWidth: 100 }}>興趣領域</Typography>
                           <FormControl sx={{ m: 1, width: 300 }}>
                             <Select
                               labelId="demo-multiple-chip-label"
@@ -514,7 +514,7 @@ const Profile:React.FC<Props> = (props) => {
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          擅長領域
+                          興趣領域
                         </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
@@ -533,7 +533,7 @@ const Profile:React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
                           發布筆記
                         </Typography>
-                        {count}
+                            {count}
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -550,7 +550,7 @@ const Profile:React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign:'center' }} color="text.secondary" gutterBottom>
                           文章被收藏
                         </Typography>
-                        {bookMarkCount}
+                            {bookMarkCount}
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
@@ -567,7 +567,7 @@ const Profile:React.FC<Props> = (props) => {
                         <Typography sx={{ fontSize: 15, textAlign:'center'}} color="text.secondary" gutterBottom>
                           文章被按讚
                         </Typography>
-                        {heartCount}
+                            {heartCount}
                         <Stack direction="row" spacing={1}>
                         {/* <Chip label={heartCount}></Chip> */}
                           {/* <Chip label="tag 1" component="a" href="#chip" />

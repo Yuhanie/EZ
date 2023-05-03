@@ -118,13 +118,14 @@ function ResponsiveAppBar() {
   const router = useRouter();
 
   const logout = async function () {
-    alert("logout")
+    //alert("logout")
     const auth = getAuth();
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
-      setLogged(true);
+      setLogged(true);    
     }
+    router.push('/');
   };
 
   //profile

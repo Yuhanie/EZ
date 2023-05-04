@@ -252,12 +252,15 @@ const ArticleDetails = (props) => {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
+          if(status==="solved"){
           try {
             setIsLoading(true);
 
             await updateDoc(doc(db, "text", props.article.docId), {
               outdate: status,
+              report: false,
             });
+          
             setEdited(edited + 1);
             setExpertOutdate(status)
             setIsLoading(false);
@@ -273,7 +276,30 @@ const ArticleDetails = (props) => {
         //       setDeleted(deleted + 1);
         // }
       }
-    } else {
+else{
+  try {
+    setIsLoading(true);
+
+    await updateDoc(doc(db, "text", props.article.docId), {
+      outdate: status,
+      report: true,
+    });
+  
+    setEdited(edited + 1);
+    setExpertOutdate(status)
+    setIsLoading(false);
+    props.update();
+    // console.log("outdate:", status);
+  } catch (error) {
+    // console.log("outdateError:", error);
+  }
+
+}
+      
+    }
+    }
+    
+    else {
       alert("請登入");
     }
   };

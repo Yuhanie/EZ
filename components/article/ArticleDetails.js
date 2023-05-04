@@ -275,26 +275,28 @@ const ArticleDetails = (props) => {
         //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
         //       setDeleted(deleted + 1);
         // }
+        else{
+          try {
+            setIsLoading(true);
+        
+            await updateDoc(doc(db, "text", props.article.docId), {
+              outdate: status,
+              report: false,
+            });
+          
+            setEdited(edited + 1);
+            setExpertOutdate(status)
+            setIsLoading(false);
+            props.update();
+            // console.log("outdate:", status);
+          } catch (error) {
+            // console.log("outdateError:", error);
+          }
+        
+        }
+
       }
-else{
-  try {
-    setIsLoading(true);
 
-    await updateDoc(doc(db, "text", props.article.docId), {
-      outdate: status,
-      report: true,
-    });
-  
-    setEdited(edited + 1);
-    setExpertOutdate(status)
-    setIsLoading(false);
-    props.update();
-    // console.log("outdate:", status);
-  } catch (error) {
-    // console.log("outdateError:", error);
-  }
-
-}
       
     }
     }

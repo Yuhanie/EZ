@@ -1438,3 +1438,7 @@
     transform: translate(-20px) rotate(225deg);
   }
 }
+
+.attention{
+  color: "#7A82E7";
+}

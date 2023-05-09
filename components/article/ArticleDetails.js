@@ -28,6 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Chip from '@material-ui/core/Chip';
 import CircleIcon from '@mui/icons-material/Circle';
+import LinkIcon from '@mui/icons-material/Link';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -176,7 +177,7 @@ const ArticleDetails = (props) => {
       const querySnapshotReport = await getDocs(queryReport);
       const tempReport = [];
       querySnapshotReport.forEach((doc) => {
-        
+
         let reportMessage = "";
 
         switch (doc.data().reason) {
@@ -193,21 +194,21 @@ const ArticleDetails = (props) => {
           //   reportMessage = "分類錯誤";
         }
         // setMessage(() => [...]);
-        let reportdata = { ...doc.data(), id: doc.id, message:reportMessage };
+        let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
         // console.log("reportData", reportdata)
         tempReport.push(reportdata);
 
 
       });
       setDenounces(() => [...tempReport]);
-      
 
-      
+
+
       // setReportMessage(reportMessage);
 
 
-    
-    
+
+
 
 
       const querySnapshot = collection(
@@ -252,55 +253,55 @@ const ArticleDetails = (props) => {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
-          if(status==="solved"){
-          try {
-            setIsLoading(true);
+          if (status === "solved") {
+            try {
+              setIsLoading(true);
 
-            await updateDoc(doc(db, "text", props.article.docId), {
-              outdate: status,
-              report: false,
-            });
-          
-            setEdited(edited + 1);
-            setExpertOutdate(status)
-            setIsLoading(false);
-            props.update();
-            // console.log("outdate:", status);
-          } catch (error) {
-            // console.log("outdateError:", error);
+              await updateDoc(doc(db, "text", props.article.docId), {
+                outdate: status,
+                report: false,
+              });
+
+              setEdited(edited + 1);
+              setExpertOutdate(status)
+              setIsLoading(false);
+              props.update();
+              // console.log("outdate:", status);
+            } catch (error) {
+              // console.log("outdateError:", error);
+            }
           }
+
+          //     if((docSnap.data().outdate)=="solved"){
+          //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
+          //       setDeleted(deleted + 1);
+          // }
+          else {
+            try {
+              setIsLoading(true);
+
+              await updateDoc(doc(db, "text", props.article.docId), {
+                outdate: status,
+                report: false,
+              });
+
+              setEdited(edited + 1);
+              setExpertOutdate(status)
+              setIsLoading(false);
+              props.update();
+              // console.log("outdate:", status);
+            } catch (error) {
+              // console.log("outdateError:", error);
+            }
+
+          }
+
         }
 
-        //     if((docSnap.data().outdate)=="solved"){
-        //       await deleteDoc(collection(db, "text", props.article.docId, "outdateCount"));
-        //       setDeleted(deleted + 1);
-        // }
-        else{
-          try {
-            setIsLoading(true);
-        
-            await updateDoc(doc(db, "text", props.article.docId), {
-              outdate: status,
-              report: false,
-            });
-          
-            setEdited(edited + 1);
-            setExpertOutdate(status)
-            setIsLoading(false);
-            props.update();
-            // console.log("outdate:", status);
-          } catch (error) {
-            // console.log("outdateError:", error);
-          }
-        
-        }
 
       }
+    }
 
-      
-    }
-    }
-    
     else {
       alert("請登入");
     }
@@ -501,39 +502,39 @@ const ArticleDetails = (props) => {
       <>
         {/* 這是專家選擇要不要下架被檢舉的文章的按鈕ㄛ */}
         <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
-            {/* <Typography variant="h6">專家權限</Typography> */}
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          alignItems="center"
-          sx={{
-            p: 2,
-            
-            mt: 2,
-            bgcolor: "#fafafa",
-            borderRadius: 1,
-          }}
-        >
+          {/* <Typography variant="h6">專家權限</Typography> */}
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            alignItems="center"
+            sx={{
+              p: 2,
 
-          <Typography variant="body1">
-            這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
-          </Typography>
-          <FormControl sx={{ width: 100 }} size="small">
-            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
-            <Button
-              color="error"
-              variant="contained"
-              onClick={reportDelete}
-              size="small"
-              sx={{ m: 1, height: 35 }}
-            >
-              需要下架
-            </Button>
-          </FormControl>
-          <br/>
-          
-        </Box>
-        <Accordion>
+              mt: 2,
+              bgcolor: "#fafafa",
+              borderRadius: 1,
+            }}
+          >
+
+            <Typography variant="body1">
+              這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
+            </Typography>
+            <FormControl sx={{ width: 100 }} size="small">
+              {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+              <Button
+                color="error"
+                variant="contained"
+                onClick={reportDelete}
+                size="small"
+                sx={{ m: 1, height: 35 }}
+              >
+                需要下架
+              </Button>
+            </FormControl>
+            <br />
+
+          </Box>
+          <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -546,7 +547,7 @@ const ArticleDetails = (props) => {
                 denounces.map((report) => renderReport(report))}
             </AccordionDetails>
           </Accordion>
-        <br />
+          <br />
         </Box>
       </>
     );
@@ -555,46 +556,47 @@ const ArticleDetails = (props) => {
   const expert = () => {
     return (
       <>
-          <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}>
-               
-            <Typography variant="h6">專家權限</Typography>
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          alignItems="center"
-          sx={{
-            p: 2,
-            mt: 2,
-            bgcolor: "#fafafa",
-            borderRadius:1,
-          }}
-        >
-          <EmojiObjectsIcon />
-          <Typography variant="body1" >
-            文章審核
-          </Typography>
-          <FormControl sx={{ width: 140, ml: 2 }} size="small">
-            {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={topicName}
-              // label="topic"
-              sx={{ height: 35 }}
-              
-            >
-              <MenuItem onClick={(e) => {
-                outdate("solved")}}>
-                沒問題
-              </MenuItem>
-              <MenuItem 
-                onClick={(e) => {outdate("stale")}}>
-                過時或無法使用
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <br />
-          {/* <Button
+        <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2, }}>
+
+          <Typography variant="h6">專家權限</Typography>
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            alignItems="center"
+            sx={{
+              p: 2,
+              mt: 2,
+              bgcolor: "#fafafa",
+              borderRadius: 1,
+            }}
+          >
+            <EmojiObjectsIcon />
+            <Typography variant="body1" >
+              文章審核
+            </Typography>
+            <FormControl sx={{ width: 140, ml: 2 }} size="small">
+              {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={topicName}
+                // label="topic"
+                sx={{ height: 35 }}
+
+              >
+                <MenuItem onClick={(e) => {
+                  outdate("solved")
+                }}>
+                  沒問題
+                </MenuItem>
+                <MenuItem
+                  onClick={(e) => { outdate("stale") }}>
+                  過時或無法使用
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <br />
+            {/* <Button
             color="primary"
             variant="contained"
             onClick={() => outdate(expertOutdate)}
@@ -605,7 +607,7 @@ const ArticleDetails = (props) => {
           >
             送出
           </Button> */}
-        </Box>
+          </Box>
         </Box>
       </>
     );
@@ -613,13 +615,13 @@ const ArticleDetails = (props) => {
 
   const outdateIcon = () => {
     return (
-      <div>
-        {(expertOutdate === "stale" ) && (
+      <Box display="flex" sx={{alignItems:"center",mr:1}}>
+        {(expertOutdate === "stale") && (
           <Tooltip title="版本疑慮">
             <WarningIcon sx={{ color: "Crimson" }} />
           </Tooltip>
         )}
-        {((expertOutdate == "pending" ||expertOutdate == "")) && (
+        {((expertOutdate == "pending" || expertOutdate == "")) && (
           <Tooltip title="專家審核中">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
@@ -629,7 +631,7 @@ const ArticleDetails = (props) => {
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>
         )}
-      </div>
+      </Box>
     );
   };
 
@@ -699,7 +701,7 @@ const ArticleDetails = (props) => {
               >
                 檢舉
               </Button> */}
-              
+
             </Box>
           </DialogContent>
         </Dialog>
@@ -748,7 +750,7 @@ const ArticleDetails = (props) => {
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="center"
+            
           >
             <Box display="flex" alignItems="center">
               {outdateIcon()}
@@ -776,10 +778,18 @@ const ArticleDetails = (props) => {
         </DialogTitle>
 
         <DialogContent>
-          <Stack spacing={1} sx={{ minHeight: 150,ml:1 }}>
+          <Stack spacing={1} sx={{ minHeight: 150, ml: 1 }}>
             {/* {props.article.content} */}
             {/* <div className={styles.card3}> */}
-            <a href={props.article.link}>
+            <Box display="flex" sx={{flexDirection:"row",alignContent:"left"}}>
+              <LinkIcon sx={{mr:1}} />
+              <a href={props.article.link} className={styles.attention} >
+                查看詳細內容
+              </a>
+              {/* <Typography href={props.article.link} color= "#7A82E7">查看詳細內容</Typography> */}
+            </Box>
+            {/* <a href={props.article.link}> */}
+            <a>
               {props.article.content.substring(0, 165)}
               {props.article.content.length > 165 ? "..." : ""}
             </a>
@@ -803,8 +813,8 @@ const ArticleDetails = (props) => {
 
           {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}> */}
 
-            {character === "專家" && expert()}
-            {expertAction === "true" && expertReport()}
+          {character === "專家" && expert()}
+          {expertAction === "true" && expertReport()}
 
           {/* </Box> */}
 

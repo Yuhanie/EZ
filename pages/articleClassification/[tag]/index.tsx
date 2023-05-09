@@ -93,7 +93,7 @@ const Article = () => {
       const temp2: Tag[] = [];
       const temp3: miniTag[] = [];
       querySnapshot.forEach(async (doc) => {
-        console.log(doc.id);
+        //console.log(doc.id);
         //console.log("tag2:",tag)
         // const querySnapshot2 = await getDocs(query(collection(db, "/tag")));
         // querySnapshot2.forEach(async (doc2) => {
@@ -101,17 +101,16 @@ const Article = () => {
         //   console.log(doc2.data());
         //   temp2.push({docId: doc.id,name:doc2.data().name}); 
         // });
-        console.log(doc.data());
+        // console.log(doc.data());
         temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart,timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
       });
 
       //console.log("tag4:",tag);
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"),orderBy("order", "asc")));
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"), orderBy("order", "asc")));
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());
         temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
-        
       });
 
 
@@ -228,7 +227,7 @@ const Article = () => {
           <Box display="flex" p={1}>
             < LocalFireDepartmentIcon color="error"/>
             <Typography>
-              更多熱門主題
+              分類小標籤
             </Typography>
           </Box>
           <Divider />

@@ -103,8 +103,8 @@ const Article = () => {
         
       });
       
-      const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
-      const docSnap = await getDoc(docRef);
+      // const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
+      // const docSnap = await getDoc(docRef);
 
       setArticles([...temp]);
       // setminiTags([...temp3]);

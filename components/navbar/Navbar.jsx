@@ -241,7 +241,7 @@ function ResponsiveAppBar() {
           ))}
           <MenuItem onClick={profile}>
             <Typography>
-              我的角色
+              My Zone
             </Typography>
           </MenuItem>
           <MenuItem onClick={logout}>

@@ -100,7 +100,7 @@ function Solgan() {
 
                         <Typography variant="body1" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000" }}>以「Tag、Link、Update」優化文章閱讀體驗，快速獲得正確知識，讓學習更省時、更高效。</Typography>
                         {/* <Typography sx={{ textAlign: "left", }}>獲取最新的資訊</Typography> */}
-                        <Button variant="contained" color="secondary" href="/note" sx={{ mt: 7 }}>筆記分享區</Button>
+                        <Button variant="contained" color="secondary" href="/note" sx={{ mt: 7 }}>資訊分享區</Button>
                     </Box>
                     <Toolbar />
                     <Box sx={{ maxWidth: 600, p: 4 }}>

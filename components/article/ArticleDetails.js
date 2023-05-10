@@ -193,6 +193,7 @@ const ArticleDetails = (props) => {
           // default:
           //   reportMessage = "分類錯誤";
         }
+       
         // setMessage(() => [...]);
         let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
         // console.log("reportData", reportdata)
@@ -200,9 +201,10 @@ const ArticleDetails = (props) => {
 
 
       });
+      
       setDenounces(() => [...tempReport]);
 
-
+      
 
       // setReportMessage(reportMessage);
 
@@ -334,6 +336,7 @@ const ArticleDetails = (props) => {
 
                 setEdited(edited + 1);
                 setExpertOutdate("pending")
+                
                 // console.log("denounce:", status)
               } catch (error) {
                 // console.log("denounceError:", error);
@@ -348,6 +351,7 @@ const ArticleDetails = (props) => {
             await updateDoc(doc(db, "text", props.article.docId), {
               report: true,
             });
+            alert("檢舉成功")
           }
         }
 
@@ -688,6 +692,8 @@ const ArticleDetails = (props) => {
                   <MenuItem value="spamming">惡意洗版</MenuItem>
                   {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
                 </Select>
+                
+
               </FormControl>
 
               {/* <Button

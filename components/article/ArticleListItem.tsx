@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import ArticleDetails from "./ArticleDetails";
-import { Article } from '../../interfaces/entities';
+import { Article, Profile } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 //import Heart from '@mui/icons-material/Heart';
 import Heart from '@mui/icons-material/Favorite';
@@ -52,12 +52,12 @@ const ArticleListItem:
     const [currentUser, setCurrentUser] = useState<User>();
     const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
     const [bookCount, setBookCount] = useState(props.article.bookmark ? props.article.bookmark.length : 0);
-    const [timestamp, setTimestamp] = useState([]);
     const [liked, setLiked] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookMarked, setBookMarked] = useState(false);
     const [character, setCharacter] = useState("學習者");
     const [userInfo, setUserInfo] = useState("");
+    const [profile, setProfile] = useState<Profile>();
 
 
 
@@ -149,6 +149,12 @@ const ArticleListItem:
           } else {
             setCharacter("學習者");
           }
+
+          const querySnapshot = await getDoc(doc(db, "profile", props.article.userid));
+          if ((querySnapshot).exists()) {
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+          }
+
         }
         //console.log(user);
       });
@@ -250,13 +256,16 @@ const ArticleListItem:
           <Box onClick={() => intro(uid)}>
             <CardHeader
               avatar={
-                <Avatar aria-label="recipe"></Avatar>
+                <Avatar>
+                  {props.article.userid && profile && profile.photoURL &&
+                  <img className={styles.googlephoto_profile} src={profile.photoURL} />}
+                </Avatar>
               }
               title={props.article.user}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
               //item 
               sx={{ p: 1.2 }}
-            />
+            ></CardHeader>
             {/* {character=="專家"&&expertIcon()} */}
           </Box>
         </div>

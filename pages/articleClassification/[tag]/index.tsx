@@ -106,7 +106,7 @@ const Article = () => {
       });
 
       //console.log("tag4:",tag);
-      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"), orderBy("order", "asc")));
+      const querySnapshot2 = await getDocs(query(collection(db, "/tag/" + tag + "/分類"), orderBy("order", "asc"),where("show", "==", true)));
       querySnapshot2.forEach(async (doc2) => {
         console.log(doc2.id);
         console.log(doc2.data());
@@ -276,7 +276,7 @@ const Article = () => {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            更多熱門主題
+            分類小標籤
           </Button>
         </Box>
 

@@ -100,7 +100,7 @@ const Article = () => {
         console.log(doc2.id);
         console.log(doc2.data());
         temp2.push({ name: doc2.data().name, pic: doc2.data().pic, order: doc2.data().order });
-        
+
       });
       
       // const docRef = doc(db, "/tag/" + tag + "/分類/" + minitag);
@@ -197,7 +197,7 @@ const Article = () => {
           <Box display="flex" p={1}>
             < LocalFireDepartmentIcon color="error" />
             <Typography>
-              更多熱門主題
+              分類小標籤
             </Typography>
           </Box>
           <Divider />

@@ -246,19 +246,19 @@ const ArticleListItem:
     //   router.push('/introduction');
     // }
 
-    const intro = (uid:any) => {
+    const intro = (uid: any) => {
       router.push('/profile?userId=' + uid);
     }
 
-    const Intro = (uid:any) => {
+    const Intro = (uid: any) => {
       return (
         <div>
           <Box onClick={() => intro(uid)}>
             <CardHeader
               avatar={
-                <Avatar>
-                  {props.article.userid && profile && profile.photoURL &&
-                  <img className={styles.googlephoto_profile} src={profile.photoURL} />}
+                <Avatar src={props.article.userid && profile && profile.photoURL && profile.photoURL}>
+                  {/* {props.article.userid && profile && profile.photoURL &&
+                  <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                 </Avatar>
               }
               title={props.article.user}
@@ -341,7 +341,7 @@ const ArticleListItem:
                 sx={{ p: 1.2 }}
               />
               {/* {character=="專家"&&expertIcon()} */}
-            
+
 
             <Box display="flex" sx={{ pr: 2 }}>
               <CardActions sx={{ p: 0 }}>

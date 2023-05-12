@@ -6,6 +6,7 @@ import router from "next/router";
 import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
+import emailjs from "@emailjs/browser";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
@@ -91,9 +92,6 @@ const ArticleDetails = (props) => {
   const [edited, setEdited] = useState(0);
   const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
-  const [open, setOpen] = useState(false);
-  const [reportMessage, setReportMessage] = useState("");
-  const [message, setMessage] = useState([]);
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
@@ -109,6 +107,10 @@ const ArticleDetails = (props) => {
       setToolOpen(false);
     }
   };
+ 
+  const SERVICE_ID = "service_5g4512y";
+  const TEMPLATE_ID = "template_bs9ya4t";
+  const PUBLIC_KEY = "ko4McNVVxA69Q3_6S";
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
@@ -134,8 +136,6 @@ const ArticleDetails = (props) => {
         } else {
           setCharacter("學習者");
         }
-
-        // 到底為什麼一直說他不是一個function啊，要中風了
 
         if (
           snapshot.data().count > 0 &&
@@ -470,6 +470,13 @@ const ArticleDetails = (props) => {
   };
 
   const reportDelete = async function () {
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      from_name : "EZ Group",
+      to_name : props.article.user,
+      from_email : "ezgroup329@gmail.com",
+      to_email : props.article.email,
+      message : "您好，由於眾多使用者檢舉您的文章，故經由專家評估後被下架，如需申訴請聯絡我們。",
+    }, PUBLIC_KEY);
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -478,14 +485,11 @@ const ArticleDetails = (props) => {
           if (character == "專家" && expertAction == "true") {
             try {
               setIsLoading(true);
-
               await deleteDoc(doc(db, "text", props.article.docId));
-
               //console.log("deleted");
-
               setDeleted(deleted + 1);
-
               setIsLoading(false);
+
               alert("下架成功");
               props.update();
             } catch (error) {

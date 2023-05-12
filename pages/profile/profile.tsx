@@ -202,7 +202,7 @@ const Profile: React.FC<Props> = (props) => {
           const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", id)) : query(collection(db, "text"), where("bookmark", "array-contains", id), limit(3)));
           const tempCollect: Article[] = [];
           queryCollect.forEach((doc) => {
-            tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+            tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email });
           });
           setCollects([...tempCollect]);
           setIsLoading(false);
@@ -218,7 +218,7 @@ const Profile: React.FC<Props> = (props) => {
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
 
-            tempMyNote.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate });
+            tempMyNote.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email });
           });
           setMyNotes([...tempMyNote]);
           setCount(count);

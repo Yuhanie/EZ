@@ -11,7 +11,7 @@ import { ListItem } from "@mui/material";
 import Chip from '@material-ui/core/Chip';
 
 type Props = {
-    MajorTag: Profile; 
+    MajorTag: Profile;
 };
 
 const MajorTagList: React.FC<Props> = (props) => {
@@ -24,7 +24,6 @@ const MajorTagList: React.FC<Props> = (props) => {
     //   const handleClose = () => {
     //     setOpen(false);
     //   };
-    console.log("MMMMMMM", props);
     
     const renderMajorTagTest = (majortag:string, i:number) => {
       return (
@@ -36,9 +35,7 @@ const MajorTagList: React.FC<Props> = (props) => {
       return (
       <ListItem>
         {/* <Link href={`/note`}> */}
-
           {(props.MajorTag.majortag&&props.MajorTag.majortag.map(renderMajorTagTest))}
-  
         {/* </Link> */}
       </ListItem>
       );

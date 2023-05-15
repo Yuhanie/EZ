@@ -310,14 +310,13 @@ const Profile: React.FC<Props> = (props) => {
   //     </>
   //   );
   // };
-  console.log("profile:", profile);
+
+  // console.log("profile:", profile);
   const renderMajorTagTest = () => {
     return (
-      <>
         <Box>
           {profile && <MajorTagList MajorTag={profile} />}
         </Box>
-      </>
     );
   };
 
@@ -624,7 +623,6 @@ const Profile: React.FC<Props> = (props) => {
 
                 </Grid>
               </Box>
-
 
               {majorTags.map(renderMajorTagTest)}
 

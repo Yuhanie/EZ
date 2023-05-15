@@ -796,8 +796,8 @@ const ArticleDetails = (props) => {
             </Box>
             {/* <a href={props.article.link}> */}
             <a>
-              {props.article.content.substring(0, 165)}
-              {props.article.content.length > 165 ? "..." : ""}
+              {props.article.content.substring(0, 245)}
+              {props.article.content.length > 245 ? "..." : ""}
             </a>
             {/* </div> */}
           </Stack>
@@ -814,7 +814,9 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
+            <a>{props.article.tag}</a>
             {/* <CircleIcon sx={{width:900}}/> */}
+
           </Box>
 
           {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}> */}

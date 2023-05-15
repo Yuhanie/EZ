@@ -370,7 +370,6 @@ const Home: NextPage = () => {
           tag: doc.data().tag,
           email: doc.data().email
         });
-
         console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
       setNewTexts([...temp2]);

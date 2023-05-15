@@ -188,7 +188,6 @@ const Introduction:
                         tag: doc.data().tag,
                         email: doc.data().email
                        });
-
                     console.log(`newtexts ${doc.id} => ${doc.data()}`);
                 });
                 setNewTexts([...temp2]);

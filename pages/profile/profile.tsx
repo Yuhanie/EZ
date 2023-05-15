@@ -233,7 +233,6 @@ const Profile: React.FC<Props> = (props) => {
             count++;
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
-
             tempMyNote.push({ 
               docId: doc.id, 
               content: doc.data().content, 
@@ -318,6 +317,20 @@ const Profile: React.FC<Props> = (props) => {
     }
   };
 
+  const profileEdited = () => {
+    return (
+       <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
+                    <EditIcon
+                      style={{
+                        color: "#7A82E7",
+                      }}
+
+                    />
+                  </IconButton> 
+    );
+  };
+
+
   const renderCollect = (collect: Article, i: number) => {
     return (
       <ArticleListItem key={collect.docId} article={collect} update={updateUpdated}></ArticleListItem>
@@ -376,14 +389,7 @@ const Profile: React.FC<Props> = (props) => {
                 <Typography fontSize={20}>個人資料</Typography>
 
                 <Box>
-                  <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
-                    <EditIcon
-                      style={{
-                        color: "#7A82E7",
-                      }}
-
-                    />
-                  </IconButton>
+                  {!userId&&profileEdited()}
                   <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>編輯個人檔案</DialogTitle>
                     <DialogContent>

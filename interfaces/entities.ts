@@ -15,6 +15,7 @@ export type Article = {
   outdate: string;
   majortag:string[];
   tag:string;
+  email:string;
 };
 
 export type Newtext = {

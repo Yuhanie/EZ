@@ -216,7 +216,8 @@ const Profile: React.FC<Props> = (props) => {
               outdateCount: doc.data().outdateCount, 
               outdate: doc.data().outdate,
               majortag: doc.data().majortag,
-              tag: doc.data().tag
+              tag: doc.data().tag,
+              email: doc.data().email
             });
           });
           setCollects([...tempCollect]);
@@ -247,7 +248,9 @@ const Profile: React.FC<Props> = (props) => {
               outdateCount: doc.data().outdateCount, 
               outdate: doc.data().outdate,
               majortag: doc.data().majortag,
-              tag: doc.data().tag });
+              tag: doc.data().tag,
+              email: doc.data().email
+            });
           });
           setMyNotes([...tempMyNote]);
           setCount(count);

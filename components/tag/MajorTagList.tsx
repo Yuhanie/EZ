@@ -31,7 +31,7 @@ const MajorTagList: React.FC<Props> = (props) => {
       );
     };
 
-
+    
       return (
       <ListItem>
         {/* <Link href={`/note`}> */}

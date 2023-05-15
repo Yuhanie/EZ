@@ -107,7 +107,7 @@ const ArticleDetails = (props) => {
       setToolOpen(false);
     }
   };
- 
+
   const SERVICE_ID = "service_5g4512y";
   const REPORT_TEMPLATE_ID = "template_bs9ya4t";
   const OUTDATE_TEMPLATE_ID = "template_lqwqzir";
@@ -194,7 +194,7 @@ const ArticleDetails = (props) => {
           // default:
           //   reportMessage = "分類錯誤";
         }
-       
+
         // setMessage(() => [...]);
         let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
         // console.log("reportData", reportdata)
@@ -202,10 +202,10 @@ const ArticleDetails = (props) => {
 
 
       });
-      
+
       setDenounces(() => [...tempReport]);
 
-      
+
 
       // setReportMessage(reportMessage);
 
@@ -282,12 +282,12 @@ const ArticleDetails = (props) => {
           else {
 
             emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-              from_name : "EZ Group",
-              to_name : props.article.user,
-              from_email : "ezgroup329@gmail.com",
-              to_email : props.article.email,
+              from_name: "EZ Group",
+              to_name: props.article.user,
+              from_email: "ezgroup329@gmail.com",
+              to_email: props.article.email,
               target_article: props.article.title,
-              message : "您好，您的文章「"+props.article.title+"」內容已被專家評估為過時，如可修改文章，請至EducationZone平台更改，謝謝。",
+              message: "您好，您的文章「" + props.article.title + "」內容已被專家評估為過時，如可修改文章，請至EducationZone平台更改，謝謝。",
             }, PUBLIC_KEY);
 
             try {
@@ -330,12 +330,12 @@ const ArticleDetails = (props) => {
           if (status == "stale") {
 
             emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-              from_name : "EZ Group",
-              to_name : props.article.user,
-              from_email : "ezgroup329@gmail.com",
-              to_email : props.article.email,
+              from_name: "EZ Group",
+              to_name: props.article.user,
+              from_email: "ezgroup329@gmail.com",
+              to_email: props.article.email,
               target_article: props.article.title,
-              message : "您好，有使用者向專家回報您的文章「"+props.article.title+"」內容已過時，我們會請專家對您的文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
+              message: "您好，有使用者向專家回報您的文章「" + props.article.title + "」內容已過時，我們會請專家對您的文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
             }, PUBLIC_KEY);
 
             if (expertOutdate == "stale") {
@@ -357,7 +357,7 @@ const ArticleDetails = (props) => {
 
                 setEdited(edited + 1);
                 setExpertOutdate("pending")
-                
+
                 // console.log("denounce:", status)
               } catch (error) {
                 // console.log("denounceError:", error);
@@ -492,11 +492,11 @@ const ArticleDetails = (props) => {
 
   const reportDelete = async function () {
     emailjs.send(SERVICE_ID, REPORT_TEMPLATE_ID, {
-      from_name : "EZ Group",
-      to_name : props.article.user,
-      from_email : "ezgroup329@gmail.com",
-      to_email : props.article.email,
-      message : "您好，由於眾多使用者檢舉您的文章，故經由專家評估後被下架，如需申訴請聯絡我們。",
+      from_name: "EZ Group",
+      to_name: props.article.user,
+      from_email: "ezgroup329@gmail.com",
+      to_email: props.article.email,
+      message: "您好，由於眾多使用者檢舉您的文章，故經由專家評估後被下架，如需申訴請聯絡我們。",
     }, PUBLIC_KEY);
     if (typeof window !== "undefined") {
       if (user) {
@@ -644,7 +644,7 @@ const ArticleDetails = (props) => {
 
   const outdateIcon = () => {
     return (
-      <Box display="flex" sx={{alignItems:"center",mr:1}}>
+      <Box display="flex" sx={{ alignItems: "center", mr: 1 }}>
         {(expertOutdate === "stale") && (
           <Tooltip title="版本疑慮">
             <WarningIcon sx={{ color: "Crimson" }} />
@@ -717,7 +717,7 @@ const ArticleDetails = (props) => {
                   <MenuItem value="spamming">惡意洗版</MenuItem>
                   {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
                 </Select>
-                
+
 
               </FormControl>
 
@@ -781,7 +781,7 @@ const ArticleDetails = (props) => {
           <Box
             display="flex"
             justifyContent="space-between"
-            
+
           >
             <Box display="flex" alignItems="center">
               {outdateIcon()}
@@ -804,27 +804,40 @@ const ArticleDetails = (props) => {
 
                 {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
               </Box>
-            </Box> 
+            </Box>
           </Box>
         </DialogTitle>
 
         <DialogContent>
+
+          {/* <CircleIcon sx={{width:900}}/> */}
           <Stack spacing={1} sx={{ minHeight: 150, ml: 1 }}>
             {/* {props.article.content} */}
             {/* <div className={styles.card3}> */}
-            <Box display="flex" sx={{flexDirection:"row",alignContent:"left"}}>
-              <LinkIcon sx={{mr:1}} />
+
+            <Stack direction="row" spacing={1}>
+              <Chip label={props.article.tag} size="small" />
+              {/* <Chip label={props.article.majortag} size="small" variant="outlined" /> */}
+            </Stack>
+
+            <Box display="flex" sx={{ flexDirection: "row", alignContent: "left" }}>
+              <LinkIcon sx={{ mr: 1 }} />
               <a href={props.article.link} className={styles.attention} >
                 查看詳細內容
               </a>
               {/* <Typography href={props.article.link} color= "#7A82E7">查看詳細內容</Typography> */}
             </Box>
+            
             {/* <a href={props.article.link}> */}
             <a>
               {props.article.content.substring(0, 245)}
               {props.article.content.length > 245 ? "..." : ""}
             </a>
             {/* </div> */}
+            
+          
+           
+
           </Stack>
           <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>
             {props.article.outdate === "stale" && (
@@ -839,9 +852,6 @@ const ArticleDetails = (props) => {
                 ? "這篇文章已經不符合現在的版本或者無法使用"
                 : ""}
             </div>
-            <a>{props.article.tag}</a>
-            <a>{props.article.majortag}</a>
-            {/* <CircleIcon sx={{width:900}}/> */}
 
           </Box>
 

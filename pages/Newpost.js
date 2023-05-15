@@ -49,7 +49,10 @@ function Newpost() {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [tags, setTags] = React.useState([]);
+  // const [majortags, setmajorTags] = React.useState([]);
   const [tagName, setTagName] = React.useState("");
+  const [majortagName, setmajorTagName] = React.useState([]);
+  // const [minitagName, setminiTagName] = React.useState("");
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
 
@@ -66,6 +69,7 @@ function Newpost() {
           setContent(docSnapshot.data().content)
           setLink(docSnapshot.data().link)
           setTagName(docSnapshot.data().tag)
+          setmajorTagName(docSnapshot.data().majortag)
         }
       }
 
@@ -123,7 +127,7 @@ function Newpost() {
 
 
   const update = async function () {
-    if (title == "" || content == "" || tagName == "" || link == "") {
+    if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
       return (false);
     }
 
@@ -145,7 +149,8 @@ function Newpost() {
           outdate: "solved",
           outdateCount: [],
           timestamp: serverTimestamp(),
-          minitag: [],
+          minitag: minitagName,
+          majortag: majortagName,
         });
         console.log(docRef.id);
       }
@@ -155,6 +160,7 @@ function Newpost() {
           content,
           tag: tagName,
           link,
+          majortag: majortagName,
         });
       }
     }
@@ -247,9 +253,6 @@ function Newpost() {
                   onChange={(e) => setContent(e.target.value)}
                 /></FormControl>
 
-
-
-
               <FormControl fullWidth>
                 <TextField
                   error={link === ""}
@@ -261,16 +264,14 @@ function Newpost() {
                   value={link}
                   margin="normal"
                   onChange={(e) => setLink(e.target.value)}
-
                 />
               </FormControl>
-
 
               <FormControl sx={{ width: 250 }}
                 error={tagName === ""}
                 margin="normal"
               >
-                <InputLabel id="demo-simple-select-label" required>請選擇筆記標籤</InputLabel>
+                <InputLabel id="demo-simple-select-label" required>請選擇筆記分類</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -278,7 +279,7 @@ function Newpost() {
                   // label="topic"
                   onChange={(e) => {
                     setTagName(e.target.value);
-                    console.log("t:")
+                    console.log("tag:")
                   }}
                 >
                   <MenuItem value="課堂筆記">課堂筆記</MenuItem>
@@ -287,8 +288,39 @@ function Newpost() {
                   <MenuItem value="業界資源">業界資源</MenuItem>
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
-                {tagName === "" && <FormHelperText>請選擇分類標籤</FormHelperText>}
+                {tagName === "" && <FormHelperText>請選擇筆記分類</FormHelperText>}
               </FormControl>
+
+              <br></br>
+
+              <FormControl sx={{ width: 250 }}
+                error={majortagName === ""}
+                margin="normal"
+              >
+                <InputLabel id="demo-simple-select-label" required>請選擇筆記標籤</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={majortagName}
+                  // label="topic"
+                  onChange={(e) => {
+                    setmajorTagName(e.target.value);
+                    console.log("majortag:")
+                  }}
+                >
+                  <MenuItem value="Java">Java</MenuItem>
+                  <MenuItem value="Python">Python</MenuItem>
+                  <MenuItem value="C">C</MenuItem>
+                  <MenuItem value="React">React</MenuItem>
+                  <MenuItem value="Next">Next</MenuItem>
+                  <MenuItem value="HTML">HTML</MenuItem>
+                  <MenuItem value="PHP">PHP</MenuItem>
+                  <MenuItem value="MySQL">MySQL</MenuItem>
+                  <MenuItem value="Firebase">Firebase</MenuItem>
+                </Select>
+                {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+              </FormControl>
+
               <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button variant="contained" onClick={update}>發布</Button><br></br><br></br>
                 <Button variant="contained" color="error">取消</Button>

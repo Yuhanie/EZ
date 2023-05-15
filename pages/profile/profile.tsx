@@ -202,7 +202,23 @@ const Profile: React.FC<Props> = (props) => {
           const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", id)) : query(collection(db, "text"), where("bookmark", "array-contains", id), limit(3)));
           const tempCollect: Article[] = [];
           queryCollect.forEach((doc) => {
-            tempCollect.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email });
+            tempCollect.push({ 
+              docId: doc.id, 
+              content: doc.data().content, 
+              title: doc.data().title, 
+              user: doc.data().user, 
+              link: doc.data().link, 
+              userid: doc.data().userid, 
+              count: doc.data().count, 
+              heart: doc.data().heart, 
+              timestamp: doc.data().timestamp, 
+              bookmark: doc.data().bookmark, 
+              outdateCount: doc.data().outdateCount, 
+              outdate: doc.data().outdate,
+              majortag: doc.data().majortag,
+              tag: doc.data().tag,
+              email: doc.data().email
+            });
           });
           setCollects([...tempCollect]);
           setIsLoading(false);
@@ -217,8 +233,23 @@ const Profile: React.FC<Props> = (props) => {
             count++;
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
-
-            tempMyNote.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email });
+            tempMyNote.push({ 
+              docId: doc.id, 
+              content: doc.data().content, 
+              title: doc.data().title, 
+              user: doc.data().user, 
+              link: doc.data().link, 
+              userid: doc.data().userid, 
+              count: doc.data().count, 
+              heart: doc.data().heart, 
+              timestamp: doc.data().timestamp, 
+              bookmark: doc.data().bookmark, 
+              outdateCount: doc.data().outdateCount, 
+              outdate: doc.data().outdate,
+              majortag: doc.data().majortag,
+              tag: doc.data().tag,
+              email: doc.data().email
+            });
           });
           setMyNotes([...tempMyNote]);
           setCount(count);
@@ -324,14 +355,13 @@ const Profile: React.FC<Props> = (props) => {
   //     </>
   //   );
   // };
-  console.log("profile:", profile);
+
+  // console.log("profile:", profile);
   const renderMajorTagTest = () => {
     return (
-      <>
         <Box>
           {profile && <MajorTagList MajorTag={profile} />}
         </Box>
-      </>
     );
   };
 
@@ -631,7 +661,6 @@ const Profile: React.FC<Props> = (props) => {
 
                 </Grid>
               </Box>
-
 
               {majorTags.map(renderMajorTagTest)}
 

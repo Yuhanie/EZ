@@ -353,8 +353,23 @@ const Home: NextPage = () => {
       const querySnapnewtext = await getDocs(queryExam);
       const temp2: Article[] = [];
       querySnapnewtext.forEach((doc) => {
-        temp2.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email });
-
+        temp2.push({ 
+          docId: doc.id, 
+          content: doc.data().content, 
+          title: doc.data().title, 
+          user: doc.data().user, 
+          link: doc.data().link, 
+          userid: doc.data().userid, 
+          count: doc.data().count, 
+          heart: doc.data().heart, 
+          timestamp: doc.data().timestamp, 
+          bookmark: doc.data().bookmark, 
+          outdateCount: doc.data().outdateCount, 
+          outdate: doc.data().outdate,
+          majortag: doc.data().majortag,
+          tag: doc.data().tag,
+          email: doc.data().email
+        });
         console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
       setNewTexts([...temp2]);
@@ -381,7 +396,21 @@ const Home: NextPage = () => {
       querySnapshotArticle.forEach((doc) => {
         //console.log(doc.id, doc.data());
         tempArticle.push({
-          docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, link: doc.data().link, userid: doc.data().userid, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate, email: doc.data().email
+          docId: doc.id, 
+          content: doc.data().content, 
+          title: doc.data().title, 
+          user: doc.data().user, 
+          link: doc.data().link, 
+          userid: doc.data().userid, 
+          count: doc.data().count, 
+          heart: doc.data().heart, 
+          timestamp: doc.data().timestamp, 
+          bookmark: doc.data().bookmark, 
+          outdateCount: doc.data().outdateCount, 
+          outdate: doc.data().outdate,
+          majortag: doc.data().majortag,
+          tag: doc.data().tag,
+          email: doc.data().email
         });
       });
       setArticles([...tempArticle]);

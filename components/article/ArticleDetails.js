@@ -779,7 +779,7 @@ const ArticleDetails = (props) => {
 
                 {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
               </Box>
-            </Box>
+            </Box> 
           </Box>
         </DialogTitle>
 
@@ -815,6 +815,7 @@ const ArticleDetails = (props) => {
                 : ""}
             </div>
             <a>{props.article.tag}</a>
+            <a>{props.article.majortag}</a>
             {/* <CircleIcon sx={{width:900}}/> */}
 
           </Box>

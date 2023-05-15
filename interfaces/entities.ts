@@ -13,6 +13,8 @@ export type Article = {
   userid: string;
   outdateCount: string[];
   outdate: string;
+  majortag:string[];
+  tag:string;
 };
 
 export type Newtext = {

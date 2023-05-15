@@ -85,7 +85,22 @@ const Article = () => {
       querySnapshot.forEach(async (doc) => {
         console.log(doc.id);
         console.log(doc.data());
-        temp.push({ docId: doc.id, content: doc.data().content, title: doc.data().title, user: doc.data().user, userid: doc.data().userid, link: doc.data().link, count: doc.data().count, heart: doc.data().heart, timestamp: doc.data().timestamp, bookmark: doc.data().bookmark, outdateCount: doc.data().outdateCount, outdate: doc.data().outdate});
+        temp.push({
+          docId: doc.id, 
+          content: doc.data().content, 
+          title: doc.data().title, 
+          user: doc.data().user, 
+          link: doc.data().link, 
+          userid: doc.data().userid, 
+          count: doc.data().count, 
+          heart: doc.data().heart, 
+          timestamp: doc.data().timestamp, 
+          bookmark: doc.data().bookmark, 
+          outdateCount: doc.data().outdateCount, 
+          outdate: doc.data().outdate,
+          majortag: doc.data().majortag,
+          tag: doc.data().tag
+        });
       });
 
       // const querySnapshot2 = await getDocs(query(collection(db, "text"), where("tag", "==", tag)));

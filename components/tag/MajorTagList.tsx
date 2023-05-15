@@ -11,33 +11,35 @@ import { ListItem } from "@mui/material";
 import Chip from '@material-ui/core/Chip';
 
 type Props = {
-    MajorTag: Profile;
+  MajorTag: Profile;
 };
 
 const MajorTagList: React.FC<Props> = (props) => {
-    //   const [open, setOpen] = useState(false);
-    
-    //   const handleOpen = () => {
-    //     setOpen(true);
-    //   };
-    
-    //   const handleClose = () => {
-    //     setOpen(false);
-    //   };
-    
-    const renderMajorTagTest = (majortag:string, i:number) => {
-      return (
-        <Chip label={majortag}/>
-      );
-    };
+  //   const [open, setOpen] = useState(false);
+
+  //   const handleOpen = () => {
+  //     setOpen(true);
+  //   };
+
+  //   const handleClose = () => {
+  //     setOpen(false);
+  //   };
+
+  const renderMajorTagTest = (majortag: string, i: number) => {
+    return (
+      <Link key={majortag} href={`/note`}>
+        <Chip label={majortag} />
+      </Link>
+    );
+  };
 
     
-      return (
+    return (
       <ListItem>
         {/* <Link href={`/note`}> */}
           {(props.MajorTag.majortag&&props.MajorTag.majortag.map(renderMajorTagTest))}
         {/* </Link> */}
       </ListItem>
-      );
-    };
-    export default MajorTagList;
+    );
+};
+export default MajorTagList;

@@ -417,7 +417,7 @@ const Profile: React.FC<Props> = (props) => {
                         </Box>
 
                         <Box display="flex" alignItems="center">
-                          <Typography sx={{ minWidth: 100 }}>興趣領域</Typography>
+                          <Typography sx={{ minWidth: 100 }}>興趣標籤</Typography>
                           <FormControl sx={{ m: 1, width: 300 }}>
                             <Select
                               labelId="demo-multiple-chip-label"
@@ -557,7 +557,7 @@ const Profile: React.FC<Props> = (props) => {
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          興趣領域
+                          興趣標籤
                         </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />

@@ -5,7 +5,7 @@ import { getFirestore, collection, addDoc, setDoc, doc, Timestamp, getDoc } from
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
-import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions } from '@mui/material'
+import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
 import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { red } from "@mui/material/colors";
+import { Check } from "@mui/icons-material";
 
 
 const MENU_LIST = [
@@ -70,6 +71,7 @@ function Newpost() {
           setLink(docSnapshot.data().link)
           setTagName(docSnapshot.data().tag)
           setmajorTagName(docSnapshot.data().majortag)
+          // setminiTagName(docSnapshot.data().minitag)
         }
       }
 
@@ -130,7 +132,6 @@ function Newpost() {
     if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
       return (false);
     }
-
     const db = getFirestore();
     try {
       if (!articleId) {
@@ -152,7 +153,7 @@ function Newpost() {
           minitag: [],
           majortag: majortagName,
         });
-        console.log(docRef.id);
+        // console.log(docRef.id);
       }
       else {
         await updateDoc(doc(db, "text", articleId), {
@@ -161,6 +162,7 @@ function Newpost() {
           tag: tagName,
           link,
           majortag: majortagName,
+          // minitag: minitagName,
         });
       }
     }
@@ -297,10 +299,11 @@ function Newpost() {
                 error={majortagName === ""}
                 margin="normal"
               >
-                <InputLabel id="demo-simple-select-label" required>請選擇筆記標籤</InputLabel>
+                <InputLabel id="demo-mutiple-name-label" required>請選擇筆記標籤</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-mutiple-name-label"
+                  id="demo-mutiple-name-label"
+                  multiple
                   value={majortagName}
                   // label="topic"
                   onChange={(e) => {

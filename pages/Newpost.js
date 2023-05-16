@@ -149,7 +149,7 @@ function Newpost() {
           outdate: "solved",
           outdateCount: [],
           timestamp: serverTimestamp(),
-          minitag: minitagName,
+          minitag: [],
           majortag: majortagName,
         });
         console.log(docRef.id);
@@ -317,6 +317,9 @@ function Newpost() {
                   <MenuItem value="PHP">PHP</MenuItem>
                   <MenuItem value="MySQL">MySQL</MenuItem>
                   <MenuItem value="Firebase">Firebase</MenuItem>
+                  <MenuItem value="會計">會計</MenuItem>
+                  <MenuItem value="統計">統計</MenuItem>
+                  <MenuItem value="其他">其他</MenuItem>
                 </Select>
                 {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>

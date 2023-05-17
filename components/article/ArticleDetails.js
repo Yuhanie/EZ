@@ -52,6 +52,7 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
+  where
 } from "firebase/firestore";
 import { getCountFromServer } from 'firebase/firestore'
 import { firebaseConfig } from "../../settings/firebaseConfig";
@@ -326,6 +327,21 @@ const ArticleDetails = (props) => {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
+
+        const querySnapshot = await getDocs(query(collection(db, "profile"), where("character", "==", "專家"), where("majortag", "array-contains-any", props.article.majortag)));
+        querySnapshot.forEach((doc) => {console.log("expert:", doc.id)
+
+        if(doc.data().email){
+        emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
+          from_name: "EZ Group",
+          to_name: doc.data().user?doc.data().user:"",
+          from_email: "ezgroup329@gmail.com",
+          to_email: doc.data().email,
+          target_article: props.article.title,
+          message: "您好，有使用者向您回報文章「" + props.article.title + "」內容已過時，請您對文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
+        }, PUBLIC_KEY);}})
+      
+
         if (docSnap.exists()) {
           if (status == "stale") {
 
@@ -337,6 +353,10 @@ const ArticleDetails = (props) => {
               target_article: props.article.title,
               message: "您好，有使用者向專家回報您的文章「" + props.article.title + "」內容已過時，我們會請專家對您的文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
             }, PUBLIC_KEY);
+
+
+
+
 
             if (expertOutdate == "stale") {
               await updateDoc(doc(db, "text", props.article.docId), {

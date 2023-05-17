@@ -313,15 +313,18 @@ function Newpost() {
                 >
                   <MenuItem value="Java">Java</MenuItem>
                   <MenuItem value="Python">Python</MenuItem>
-                  <MenuItem value="C">C</MenuItem>
                   <MenuItem value="React">React</MenuItem>
                   <MenuItem value="Next">Next</MenuItem>
                   <MenuItem value="HTML">HTML</MenuItem>
                   <MenuItem value="PHP">PHP</MenuItem>
                   <MenuItem value="MySQL">MySQL</MenuItem>
                   <MenuItem value="Firebase">Firebase</MenuItem>
+                  <MenuItem value="統計">SA</MenuItem>
                   <MenuItem value="會計">會計</MenuItem>
                   <MenuItem value="統計">統計</MenuItem>
+                  <MenuItem value="統計">作業系統</MenuItem>
+                  <MenuItem value="統計">網路行銷</MenuItem>
+                  <MenuItem value="統計">生產與作業管理</MenuItem>
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
                 {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}

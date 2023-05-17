@@ -503,7 +503,7 @@ const Profile: React.FC<Props> = (props) => {
 
                         <Box display="flex" alignItems="center" sx={{ m: 0.2 }}>
                           <Typography sx={{ minWidth: 50 }}>角色</Typography>
-                          <Chip label="學習者" />
+                          <Chip label={profile?.character} />
                           {/* <Button variant="contained" color="secondary" size='small' sx={{ m: 1 }}>升級</Button> */}
                         </Box>
 

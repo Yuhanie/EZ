@@ -53,8 +53,8 @@ const Article = () => {
       const querySnapshot = await getDocs(query(collection(db, "text"), where("majortag", "array-contains", majorTag)));
       const temp: Article[] = [];
       querySnapshot.forEach(async (doc) => {
-        console.log(doc.id);
-        console.log(doc.data());
+        console.log("id:",doc.id);
+        console.log("data:",doc.data());
         temp.push({ 
           docId: doc.id, 
           content: doc.data().content, 
@@ -74,6 +74,8 @@ const Article = () => {
         });
       });
       setArticles([...temp]);
+      setIsLoading(false);
+      console.log("end of useEffect")
     }
 
     readData();

@@ -304,7 +304,8 @@ const Profile: React.FC<Props> = (props) => {
     // if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
     //   return (false);
     // }
-    const db = getFirestore();
+    // const db = getFirestore();
+    console.log("update")
     try {
       // if (!articleId) {
       //   const docRef = await addDoc(collection(db, "text"), {
@@ -544,7 +545,7 @@ const Profile: React.FC<Props> = (props) => {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>取消</Button>
-                      <Button onClick={(e) => {update}}>確認</Button>
+                      <Button onClick={(e) => {update()}}>確認</Button>
                     </DialogActions>
                   </Dialog>
 

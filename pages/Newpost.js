@@ -296,7 +296,7 @@ function Newpost() {
               <br></br>
 
               <FormControl sx={{ width: 250 }}
-                error={majortagName === ""}
+                error={majortagName}
                 margin="normal"
               >
                 <InputLabel id="demo-mutiple-name-label" required>請選擇筆記標籤</InputLabel>
@@ -327,7 +327,7 @@ function Newpost() {
                   <MenuItem value="統計">生產與作業管理</MenuItem>
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
-                {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+                {majortagName && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>
 
               <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>

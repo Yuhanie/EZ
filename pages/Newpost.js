@@ -52,7 +52,7 @@ function Newpost() {
   // const [majortags, setmajorTags] = React.useState([]);
   const [tagName, setTagName] = React.useState("");
   const [majortagName, setmajorTagName] = React.useState([]);
-  // const [minitagName, setminiTagName] = React.useState("");
+  const [minitagName, setminiTagName] = React.useState("");
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
 
@@ -81,7 +81,7 @@ function Newpost() {
           setLink(docSnapshot.data().link)
           setTagName(docSnapshot.data().tag)
           setmajorTagName(docSnapshot.data().majortag)
-          // setminiTagName(docSnapshot.data().minitag)
+          setminiTagName(docSnapshot.data().minitag)
         }
       }
 
@@ -139,7 +139,7 @@ function Newpost() {
 
 
   const update = async function () {
-    if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
+    if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "" || minitagName == "") {
       return (false);
     }
     const db = getFirestore();
@@ -160,7 +160,7 @@ function Newpost() {
           outdate: "solved",
           outdateCount: [],
           timestamp: serverTimestamp(),
-          minitag: [],
+          minitag: minitagName,
           majortag: majortagName,
         });
         // console.log(docRef.id);
@@ -285,7 +285,6 @@ function Newpost() {
                   // label="topic"
                   onChange={(e) => {
                     setTagName(e.target.value);
-                    console.log("tag:")
                   }}
                 >
                   <MenuItem value="課堂筆記">課堂筆記</MenuItem>
@@ -295,6 +294,34 @@ function Newpost() {
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
                 {tagName === "" && <FormHelperText>請選擇筆記分類</FormHelperText>}
+              </FormControl>
+
+              <br></br>
+
+              <FormControl sx={{ width: 250 }}
+                error={minitagName === ""}
+                margin="normal"
+              >
+                {/* 修課心得 */}
+                <InputLabel id="demo-simple-select-label" required>請選擇筆記小分類</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={minitagName}
+                  // label="topic"
+                  onChange={(e) => {
+                    setminiTagName(e.target.value);
+                  }}
+                >
+                  <MenuItem value="大一">大一</MenuItem>
+                  <MenuItem value="大二">大二</MenuItem>
+                  <MenuItem value="大三">大三</MenuItem>
+                  <MenuItem value="大四">大四</MenuItem>
+                  <MenuItem value="通識課">通識課</MenuItem>
+                  <MenuItem value="選修">選修</MenuItem>
+                  <MenuItem value="體育">體育</MenuItem>
+                </Select>
+                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
               </FormControl>
 
               <br></br>

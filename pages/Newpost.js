@@ -29,7 +29,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { red } from "@mui/material/colors";
 import { Check } from "@mui/icons-material";
 
-
 const MENU_LIST = [
   { text: "登入", href: "/login" },
   //{ text: "註冊", href: "/register"},
@@ -56,6 +55,17 @@ function Newpost() {
   // const [minitagName, setminiTagName] = React.useState("");
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
+
+  const ITEM_HEIGHT = 22;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
 
   useEffect(() => {
@@ -171,12 +181,6 @@ function Newpost() {
     }
     router.push('/note');
   }
-
-
-
-
-
-
 
   // function MultilineTextFields() {
   //     return (
@@ -299,12 +303,13 @@ function Newpost() {
                 error={majortagName === ""}
                 margin="normal"
               >
-                <InputLabel id="demo-mutiple-name-label" required>請選擇筆記標籤</InputLabel>
+                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記標籤(可複選)</InputLabel>
                 <Select
-                  labelId="demo-mutiple-name-label"
-                  id="demo-mutiple-name-label"
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
                   multiple
                   value={majortagName}
+                  MenuProps={MenuProps}
                   // label="topic"
                   onChange={(e) => {
                     setmajorTagName(e.target.value);
@@ -319,12 +324,12 @@ function Newpost() {
                   <MenuItem value="PHP">PHP</MenuItem>
                   <MenuItem value="MySQL">MySQL</MenuItem>
                   <MenuItem value="Firebase">Firebase</MenuItem>
-                  <MenuItem value="統計">SA</MenuItem>
+                  <MenuItem value="SA">SA</MenuItem>
                   <MenuItem value="會計">會計</MenuItem>
                   <MenuItem value="統計">統計</MenuItem>
-                  <MenuItem value="統計">作業系統</MenuItem>
-                  <MenuItem value="統計">網路行銷</MenuItem>
-                  <MenuItem value="統計">生產與作業管理</MenuItem>
+                  <MenuItem value="作業系統">作業系統</MenuItem>
+                  <MenuItem value="網路行銷">網路行銷</MenuItem>
+                  <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
                 {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}

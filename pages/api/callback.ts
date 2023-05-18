@@ -291,7 +291,7 @@ const textEventHandler = async (
               },
               {
                 type: "text",
-                text: " 3. 貼上網址。",
+                text: "3. 貼上網址。",
                 size: "xs",
                 margin: "md",
               },

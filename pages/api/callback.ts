@@ -220,7 +220,7 @@ const textEventHandler = async (
       type: "bubble",
       hero: {
         type: "image",
-        url:"https://scontent.ftpe4-1.fna.fbcdn.net/v/t39.30808-6/344376177_258385913229382_2652593194967422598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=rFAthciA1R0AX8TGyz9&_nc_ht=scontent.ftpe4-1.fna&oh=00_AfCKChMphPQWDyv-jBYjUBkIFGjhxgKevYoWVRNSPCQFqQ&oe=645542D7",
+        url: "https://scontent.ftpe4-1.fna.fbcdn.net/v/t39.30808-6/344376177_258385913229382_2652593194967422598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=rFAthciA1R0AX8TGyz9&_nc_ht=scontent.ftpe4-1.fna&oh=00_AfCKChMphPQWDyv-jBYjUBkIFGjhxgKevYoWVRNSPCQFqQ&oe=645542D7",
         size: "full",
         aspectRatio: "20:12",
         aspectMode: "cover",
@@ -255,93 +255,66 @@ const textEventHandler = async (
     },
   }
 
- //常見問答
+  //常見問答
   const responseQA: FlexMessage = {
     type: "flex",
     altText: text,
     contents: {
-      type: "bubble",
-      hero: {
-        type: "image",
-        url: "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/343563846_142826835287947_6637212040245042921_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=conkD8VUPyYAX8uwFIi&_nc_ht=scontent-hkt1-2.xx&oh=00_AfDSWw4Sf2veKgFc3RA8k1iu1FnfuijWC8JmKMsxYB_M7Q&oe=645164D0",
-        size: "full",
-        aspectRatio: "20:12",
-        aspectMode: "cover",
-        action: {
-          type: "uri",
-          label: "link",
-          uri: "http://linecorp.com/",
-        },
-        margin: "none",
-        align: "center"
-      },
-      body: {
-        type: "box",
-        layout: "vertical",
-        contents: [
-          {
-            type: "text",
-            text: "吳老師的Next筆記",
-            weight: "bold",
-            size: "xl",
+      type: "carousel",
+      contents: [
+        {
+          type: "bubble",
+          hero: {
+            type: "image",
+            size: "full",
+            aspectMode: "cover",
+            aspectRatio: "320:200",
+            url: "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/347788277_6312576802165083_3188368708464110216_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=uogyTWnM9CMAX9VPlx1&_nc_ht=scontent-hkt1-2.xx&oh=00_AfBLqKiFTQajr_98CQumNfwiv3-AeX5ep9z3hATzy5G8uw&oe=6469B444"
           },
-          {
+          body: {
             type: "box",
             layout: "vertical",
-            margin: "lg",
-            spacing: "sm",
             contents: [
               {
-                type: "box",
-                layout: "baseline",
-                spacing: "sm",
-                contents: [
-                  {
-                    type: "text",
-                    text: "標籤",
-                    color: "#aaaaaa",
-                    size: "sm",
-                    flex: 1
-                  },
-                  {
-                    type: "text",
-                    text: "專題相關",
-                    wrap: true,
-                    color: "#666666",
-                    size: "sm",
-                    flex: 5
-                  }
-                ],
-              }
+                type: "text",
+                text: "1. 先準備好想分享的筆記，可選擇喜歡的筆記平台完成筆記、分享其他網站內容。",
+                weight: "regular",
+                size: "xs",
+                wrap: true,
+                margin: "md",
+              },
+              {
+                type: "text",
+                text: "2. 填寫標題及文章簡述。",
+                size: "xs",
+                margin: "md",
+              },
+              {
+                type: "text",
+                text: " 3. 貼上網址。",
+                size: "xs",
+                margin: "md",
+              },
+              {
+                type: "text",
+                text: "4. 選擇合適的標籤。",
+                size: "xs",
+                margin: "md",
+              },
             ],
-          }
-        ],
-      },
-      footer: {
-        type: "box",
-        layout: "vertical",
-        spacing: "sm",
-        contents: [
-          {
-            type: "button",
-            style: "link",
-            height: "sm",
-            action: {
-              type: "uri",
-              label: "WEBSITE",
-              uri: "https://fju-benwu.notion.site/Next-548a6c9fed644164ae9562510e30cffb",
-            },
+            "spacing": "sm",
+            "paddingAll": "13px"
           },
-        ],
-        flex: 0,
-      },
+        },
+      ],
+
     },
   }
 
   // Reply to the user.
   if (text === "推薦筆記") {
     await client.replyMessage(replyToken, responseRecommendNotes);
-  } 
+  }
   if (text === "最新筆記") {
     await client.replyMessage(replyToken, responseLatestNotes);
   }

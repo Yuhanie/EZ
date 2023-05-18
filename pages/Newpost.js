@@ -5,7 +5,7 @@ import { getFirestore, collection, addDoc, setDoc, doc, Timestamp, getDoc } from
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
-import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions } from '@mui/material'
+import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
 import Navbar from "../components/navbar/Navbar";
 import styles from '../styles/Home.module.css';
@@ -27,7 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { red } from "@mui/material/colors";
-
+import { Check } from "@mui/icons-material";
 
 const MENU_LIST = [
   { text: "登入", href: "/login" },
@@ -52,9 +52,20 @@ function Newpost() {
   // const [majortags, setmajorTags] = React.useState([]);
   const [tagName, setTagName] = React.useState("");
   const [majortagName, setmajorTagName] = React.useState([]);
-  // const [minitagName, setminiTagName] = React.useState("");
+  const [minitagName, setminiTagName] = React.useState("");
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
+
+  const ITEM_HEIGHT = 22;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
 
   useEffect(() => {
@@ -70,6 +81,7 @@ function Newpost() {
           setLink(docSnapshot.data().link)
           setTagName(docSnapshot.data().tag)
           setmajorTagName(docSnapshot.data().majortag)
+          setminiTagName(docSnapshot.data().minitag)
         }
       }
 
@@ -127,10 +139,9 @@ function Newpost() {
 
 
   const update = async function () {
-    if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
+    if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "" || minitagName == "") {
       return (false);
     }
-
     const db = getFirestore();
     try {
       if (!articleId) {
@@ -152,7 +163,7 @@ function Newpost() {
           minitag: minitagName,
           majortag: majortagName,
         });
-        console.log(docRef.id);
+        // console.log(docRef.id);
       }
       else {
         await updateDoc(doc(db, "text", articleId), {
@@ -161,6 +172,7 @@ function Newpost() {
           tag: tagName,
           link,
           majortag: majortagName,
+          // minitag: minitagName,
         });
       }
     }
@@ -169,12 +181,6 @@ function Newpost() {
     }
     router.push('/note');
   }
-
-
-
-
-
-
 
   // function MultilineTextFields() {
   //     return (
@@ -279,7 +285,6 @@ function Newpost() {
                   // label="topic"
                   onChange={(e) => {
                     setTagName(e.target.value);
-                    console.log("tag:")
                   }}
                 >
                   <MenuItem value="課堂筆記">課堂筆記</MenuItem>
@@ -294,14 +299,44 @@ function Newpost() {
               <br></br>
 
               <FormControl sx={{ width: 250 }}
-                error={majortagName === ""}
+                error={minitagName === ""}
                 margin="normal"
               >
-                <InputLabel id="demo-simple-select-label" required>請選擇筆記標籤</InputLabel>
+                {/* 修課心得 */}
+                <InputLabel id="demo-simple-select-label" required>請選擇筆記小分類</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
+                  value={minitagName}
+                  // label="topic"
+                  onChange={(e) => {
+                    setminiTagName(e.target.value);
+                  }}
+                >
+                  <MenuItem value="大一">大一</MenuItem>
+                  <MenuItem value="大二">大二</MenuItem>
+                  <MenuItem value="大三">大三</MenuItem>
+                  <MenuItem value="大四">大四</MenuItem>
+                  <MenuItem value="通識課">通識課</MenuItem>
+                  <MenuItem value="選修">選修</MenuItem>
+                  <MenuItem value="體育">體育</MenuItem>
+                </Select>
+                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+              </FormControl>
+
+              <br></br>
+
+              <FormControl sx={{ width: 250 }}
+                error={majortagName}
+                margin="normal"
+              >
+                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記標籤(可複選)</InputLabel>
+                <Select
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
+                  multiple
                   value={majortagName}
+                  MenuProps={MenuProps}
                   // label="topic"
                   onChange={(e) => {
                     setmajorTagName(e.target.value);
@@ -310,15 +345,21 @@ function Newpost() {
                 >
                   <MenuItem value="Java">Java</MenuItem>
                   <MenuItem value="Python">Python</MenuItem>
-                  <MenuItem value="C">C</MenuItem>
                   <MenuItem value="React">React</MenuItem>
                   <MenuItem value="Next">Next</MenuItem>
                   <MenuItem value="HTML">HTML</MenuItem>
                   <MenuItem value="PHP">PHP</MenuItem>
                   <MenuItem value="MySQL">MySQL</MenuItem>
                   <MenuItem value="Firebase">Firebase</MenuItem>
+                  <MenuItem value="SA">SA</MenuItem>
+                  <MenuItem value="會計">會計</MenuItem>
+                  <MenuItem value="統計">統計</MenuItem>
+                  <MenuItem value="作業系統">作業系統</MenuItem>
+                  <MenuItem value="網路行銷">網路行銷</MenuItem>
+                  <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
+                  <MenuItem value="其他">其他</MenuItem>
                 </Select>
-                {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+                {majortagName && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>
 
               <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>

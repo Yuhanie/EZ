@@ -2,7 +2,7 @@ import * as React from 'react';
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 import { Profile, BookMark, Article, Tag, miniTag, MajorTag } from 'interfaces/entities';
@@ -300,6 +300,53 @@ const Profile: React.FC<Props> = (props) => {
   //       }
   //     }
   //   }
+  const update = async function () {
+    // if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "") {
+    //   return (false);
+    // }
+    // const db = getFirestore();
+    console.log("update")
+    try {
+      // if (!articleId) {
+      //   const docRef = await addDoc(collection(db, "text"), {
+      //     title,
+      //     content,
+      //     userid: user.uid,
+      //     email: user.email,
+      //     tag: tagName,
+      //     user: user.displayName,
+      //     heart: [],
+      //     bookmark: [],
+      //     count: 1,
+      //     report: false,
+      //     link,
+      //     outdate: "solved",
+      //     outdateCount: [],
+      //     timestamp: serverTimestamp(),
+      //     minitag: [],
+      //     majortag: majortagName,
+      //   });
+      //   // console.log(docRef.id);
+      // }
+      // else {
+       console.log("tags:", tags)
+        if (currentUser){
+          await updateDoc(doc(db, "profile", currentUser.uid), {
+            majortag: tags,
+            // minitag: minitagName,
+          });
+          alert("成功")
+  
+        }
+      
+    }
+    catch (e) {
+      console.log(e);
+    }
+    router.push('/profile');
+  }
+
+
 
 
   const more = async function (status: string) {
@@ -417,7 +464,7 @@ const Profile: React.FC<Props> = (props) => {
                         </Box>
 
                         <Box display="flex" alignItems="center">
-                          <Typography sx={{ minWidth: 100 }}>興趣領域</Typography>
+                          <Typography sx={{ minWidth: 100 }}>興趣標籤</Typography>
                           <FormControl sx={{ m: 1, width: 300 }}>
                             <Select
                               labelId="demo-multiple-chip-label"
@@ -426,31 +473,37 @@ const Profile: React.FC<Props> = (props) => {
                               value={tags}
                               onChange={handleChange}
                               input={<OutlinedInput id="select-multiple-chip" />}
-                              renderValue={(selected) => (
-                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                  {selected.map((value) => (
-                                    <Chip key={value} label={value} />
-                                  ))}
-                                </Box>
-                              )}
+                              // renderValue={(selected) => (
+                              //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                              //     {selected.map((value) => (
+                              //       <Chip key={value} label={value} />
+                              //     ))}
+                              //   </Box>
+                              // )}
                               MenuProps={MenuProps}
                             >
-                              {names.map((name) => (
-                                <MenuItem
-                                  key={name}
-                                  value={name}
-                                  style={getStyles(name, tags, theme)}
-                                >
-                                  {name}
-                                </MenuItem>
-                              ))}
+                              <MenuItem value="Java">Java</MenuItem>
+                  <MenuItem value="Python">Python</MenuItem>
+                  <MenuItem value="React">React</MenuItem>
+                  <MenuItem value="Next">Next</MenuItem>
+                  <MenuItem value="HTML">HTML</MenuItem>
+                  <MenuItem value="PHP">PHP</MenuItem>
+                  <MenuItem value="MySQL">MySQL</MenuItem>
+                  <MenuItem value="Firebase">Firebase</MenuItem>
+                  <MenuItem value="SA">SA</MenuItem>
+                  <MenuItem value="會計">會計</MenuItem>
+                  <MenuItem value="統計">統計</MenuItem>
+                  <MenuItem value="作業系統">作業系統</MenuItem>
+                  <MenuItem value="網路行銷">網路行銷</MenuItem>
+                  <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
+                  <MenuItem value="其他">其他</MenuItem>
                             </Select>
                           </FormControl>
                         </Box>
 
                         <Box display="flex" alignItems="center" sx={{ m: 0.2 }}>
                           <Typography sx={{ minWidth: 50 }}>角色</Typography>
-                          <Chip label="學習者" />
+                          <Chip label={profile?.character} />
                           {/* <Button variant="contained" color="secondary" size='small' sx={{ m: 1 }}>升級</Button> */}
                         </Box>
 
@@ -492,7 +545,7 @@ const Profile: React.FC<Props> = (props) => {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>取消</Button>
-                      <Button onClick={handleClose}>確認</Button>
+                      <Button onClick={(e) => {update()}}>確認</Button>
                     </DialogActions>
                   </Dialog>
 
@@ -557,7 +610,7 @@ const Profile: React.FC<Props> = (props) => {
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                          興趣領域
+                          興趣標籤
                         </Typography>
                         <Stack direction="row" spacing={1}>
                           {/* <Chip label="tag 1" component="a" href="#chip" />

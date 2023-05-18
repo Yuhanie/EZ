@@ -23,21 +23,6 @@ import { useRouter } from 'next/router'
 import { List, ListItem, ListItemText, CircularProgress, IconButton, Button } from "@mui/material";
 import { ClassNames } from '@emotion/react';
 import { style, Box } from '@mui/system';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { title } from 'process';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -53,7 +38,7 @@ export async function getServerSideProps() {
 //////////////////////////////////////////////////////////////////////////
 const Article = () => {
   const router = useRouter()
-  const { majortag } = router.query
+  const { majorTag } = router.query
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -63,12 +48,13 @@ const Article = () => {
 
   useEffect(() => {
     async function readData() {
+      console.log("major:",majorTag);
       setIsLoading(true);
-      const querySnapshot = await getDocs(query(collection(db, "text"), where("majortag", "array-contains", majortag)));
+      const querySnapshot = await getDocs(query(collection(db, "text"), where("majortag", "array-contains", majorTag)));
       const temp: Article[] = [];
       querySnapshot.forEach(async (doc) => {
-        console.log(doc.id);
-        console.log(doc.data());
+        console.log("id:",doc.id);
+        console.log("data:",doc.data());
         temp.push({ 
           docId: doc.id, 
           content: doc.data().content, 
@@ -87,14 +73,15 @@ const Article = () => {
           email: doc.data().email
         });
       });
-      
       setArticles([...temp]);
+      setIsLoading(false);
+      console.log("end of useEffect")
     }
 
     readData();
     //加tag會有問題，先diable警告
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [updated]);
 
   const updateUpdated = ()=>{
     setUpdated((currentValue)=>currentValue+1)

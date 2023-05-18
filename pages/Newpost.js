@@ -49,10 +49,9 @@ function Newpost() {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [tags, setTags] = React.useState([]);
-  // const [majortags, setmajorTags] = React.useState([]);
   const [tagName, setTagName] = React.useState("");
   const [majortagName, setmajorTagName] = React.useState([]);
-  const [minitagName, setminiTagName] = React.useState("");
+  const [minitagName, setminiTagName] = React.useState([]);
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
 
@@ -172,7 +171,7 @@ function Newpost() {
           tag: tagName,
           link,
           majortag: majortagName,
-          // minitag: minitagName,
+          minitag: minitagName,
         });
       }
     }
@@ -272,7 +271,7 @@ function Newpost() {
                   onChange={(e) => setLink(e.target.value)}
                 />
               </FormControl>
-
+              
               <FormControl sx={{ width: 250 }}
                 error={tagName === ""}
                 margin="normal"
@@ -299,16 +298,17 @@ function Newpost() {
               <br></br>
 
               <FormControl sx={{ width: 250 }}
-                error={minitagName === ""}
+                error={minitagName}
                 margin="normal"
               >
                 {/* 修課心得 */}
-                <InputLabel id="demo-simple-select-label" required>請選擇筆記小分類</InputLabel>
+                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記小分類(可複選)</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
+                  multiple
                   value={minitagName}
-                  // label="topic"
+                  MenuProps={MenuProps}
                   onChange={(e) => {
                     setminiTagName(e.target.value);
                   }}
@@ -321,7 +321,7 @@ function Newpost() {
                   <MenuItem value="選修">選修</MenuItem>
                   <MenuItem value="體育">體育</MenuItem>
                 </Select>
-                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+                {minitagName && <FormHelperText>請選擇筆記小分類</FormHelperText>}
               </FormControl>
 
               <br></br>

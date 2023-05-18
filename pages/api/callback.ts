@@ -306,6 +306,58 @@ const textEventHandler = async (
             "paddingAll": "13px"
           },
         },
+        {
+          type: "bubble",
+          hero: {
+            type: "image",
+            size: "full",
+            aspectMode: "cover",
+            aspectRatio: "320:200",
+            url:"https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/347628968_1563367657406357_1792841437410945169_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=FEI-dtzRZC0AX8Jtfgf&_nc_ht=scontent-tpe1-1.xx&oh=00_AfA0YVuYWXrl-4pgirYg7UQSc2rDriKJkJxSFYxP2RvEGg&oe=646A02CA",
+          },
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "text",
+                text: "想要成為領域專家，你可以透過email向官方申請，只要提出相關證明或經由其他專家推薦，人人都可以成為專家。",
+                weight: "regular",
+                size: "xs",
+                wrap: true,
+                margin: "md",
+              },
+            ],
+            "spacing": "sm",
+            "paddingAll": "13px"
+          },
+        },
+        {
+          type: "bubble",
+          hero: {
+            type: "image",
+            size: "full",
+            aspectMode: "cover",
+            aspectRatio: "320:200",
+            url:"https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/347787137_240600635286569_4891503348819552979_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=HoA7jcYxYAwAX_SgIsV&_nc_ht=scontent-tpe1-1.xx&oh=00_AfDrsSQT3PCQkPFhUyvQP3uB90bKnvjkZASYvKIbl9-rJA&oe=646A722C",
+          },
+          body: {
+            type: "box",
+            layout: "vertical",
+            contents: [
+              {
+                type: "text",
+                text: "專家可以審核特定領域經使用者回報有問題的文章。幫助他人解決問題，並從中不斷更新舊有資訊，提升自我",
+                weight: "regular",
+                size: "xs",
+                wrap: true,
+                margin: "md",
+              },
+            ],
+            "spacing": "sm",
+            "paddingAll": "13px"
+          },
+        },
       ],
 
     },

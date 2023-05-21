@@ -837,6 +837,7 @@ const ArticleDetails = (props) => {
 
             <Stack direction="row" spacing={1}>
               <Chip label={props.article.tag} size="small" />
+              <Chip label={props.article.minitag} size="small" />
               {/* <Chip label={props.article.majortag} size="small" variant="outlined" /> */}
             </Stack>
 

@@ -14,6 +14,7 @@ export type Article = {
   outdateCount: string[];
   outdate: string;
   majortag:string[];
+  minitag:string[];
   tag:string;
   email:string;
 };

@@ -303,8 +303,8 @@ const ArticleListItem:
         <Card
           sx={{
             // maxWidth: 345,
-            width: 340,
-            height: 235,
+            width: 320,
+            height: 245,
             m: 2,
             spacing: 2,
             borderRadius: 3,
@@ -312,19 +312,18 @@ const ArticleListItem:
             boxShadow: 1,
           }}
         >
-          <CardActionArea sx={{ p: 1, height: 170 }}>
-            <CardContent onClick={handleOpen}>
-              <Typography gutterBottom variant="h5" component="div" onClick={handleOpen}>
+          <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen}>
+            
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
                 {props.article.title}
-                {/* <MenuItem>
-              
-            </MenuItem> */}
 
               </Typography>
-              <Typography variant="body2" color="text.secondary" onClick={handleOpen}>
+              <Typography variant="body2" color="text.secondary">
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
               </Typography>
             </CardContent>
+            
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
             <Box>

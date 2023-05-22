@@ -181,11 +181,11 @@ const Profile: React.FC<Props> = (props) => {
           // });
           // setMajorTags([...temp2]);
 
-          const user_Id = Array.isArray(userId)? userId[0]: userId; 
-          const id = user_Id? user_Id: user.uid;
+          const user_Id = Array.isArray(userId) ? userId[0] : userId;
+          const id = user_Id ? user_Id : user.uid;
           //alert("id in useEffect:"+id);
-          const querySnapshot = await getDoc(doc(db, "profile",id));
-          
+          const querySnapshot = await getDoc(doc(db, "profile", id));
+
 
           if ((querySnapshot).exists()) {
 
@@ -202,18 +202,18 @@ const Profile: React.FC<Props> = (props) => {
           const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", id)) : query(collection(db, "text"), where("bookmark", "array-contains", id), limit(3)));
           const tempCollect: Article[] = [];
           queryCollect.forEach((doc) => {
-            tempCollect.push({ 
-              docId: doc.id, 
-              content: doc.data().content, 
-              title: doc.data().title, 
-              user: doc.data().user, 
-              link: doc.data().link, 
-              userid: doc.data().userid, 
-              count: doc.data().count, 
-              heart: doc.data().heart, 
-              timestamp: doc.data().timestamp, 
-              bookmark: doc.data().bookmark, 
-              outdateCount: doc.data().outdateCount, 
+            tempCollect.push({
+              docId: doc.id,
+              content: doc.data().content,
+              title: doc.data().title,
+              user: doc.data().user,
+              link: doc.data().link,
+              userid: doc.data().userid,
+              count: doc.data().count,
+              heart: doc.data().heart,
+              timestamp: doc.data().timestamp,
+              bookmark: doc.data().bookmark,
+              outdateCount: doc.data().outdateCount,
               outdate: doc.data().outdate,
               majortag: doc.data().majortag,
               minitag: doc.data().minitag,
@@ -234,18 +234,18 @@ const Profile: React.FC<Props> = (props) => {
             count++;
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
-            tempMyNote.push({ 
-              docId: doc.id, 
-              content: doc.data().content, 
-              title: doc.data().title, 
-              user: doc.data().user, 
-              link: doc.data().link, 
-              userid: doc.data().userid, 
-              count: doc.data().count, 
-              heart: doc.data().heart, 
-              timestamp: doc.data().timestamp, 
-              bookmark: doc.data().bookmark, 
-              outdateCount: doc.data().outdateCount, 
+            tempMyNote.push({
+              docId: doc.id,
+              content: doc.data().content,
+              title: doc.data().title,
+              user: doc.data().user,
+              link: doc.data().link,
+              userid: doc.data().userid,
+              count: doc.data().count,
+              heart: doc.data().heart,
+              timestamp: doc.data().timestamp,
+              bookmark: doc.data().bookmark,
+              outdateCount: doc.data().outdateCount,
               outdate: doc.data().outdate,
               majortag: doc.data().majortag,
               minitag: doc.data().minitag,
@@ -331,16 +331,16 @@ const Profile: React.FC<Props> = (props) => {
       //   // console.log(docRef.id);
       // }
       // else {
-       console.log("tags:", tags)
-        if (currentUser){
-          await updateDoc(doc(db, "profile", currentUser.uid), {
-            majortag: tags,
-            // minitag: minitagName,
-          });
-          alert("成功")
-  
-        }
-      
+      console.log("tags:", tags)
+      if (currentUser) {
+        await updateDoc(doc(db, "profile", currentUser.uid), {
+          majortag: tags,
+          // minitag: minitagName,
+        });
+        alert("成功")
+
+      }
+
     }
     catch (e) {
       console.log(e);
@@ -368,14 +368,14 @@ const Profile: React.FC<Props> = (props) => {
 
   const profileEdited = () => {
     return (
-       <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
-                    <EditIcon
-                      style={{
-                        color: "#7A82E7",
-                      }}
+      <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
+        <EditIcon
+          style={{
+            color: "#7A82E7",
+          }}
 
-                    />
-                  </IconButton> 
+        />
+      </IconButton>
     );
   };
 
@@ -411,6 +411,7 @@ const Profile: React.FC<Props> = (props) => {
         <Box>
           {profile && <MajorTagList MajorTag={profile} />}
         </Box>
+
     );
   };
 
@@ -418,7 +419,7 @@ const Profile: React.FC<Props> = (props) => {
     <>
       <div>
         <Head>
-          <title>我的角色</title>
+          <title>My Zone</title>
           <meta name="description" content="Generated by create next app" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -437,8 +438,9 @@ const Profile: React.FC<Props> = (props) => {
               <Box display="flex" flexDirection="row" justifyContent="space-between" p={1.5}>
                 <Typography fontSize={20}>個人資料</Typography>
 
+                {/* Edit Profile */}
                 <Box>
-                  {!userId&&profileEdited()}
+                  {!userId && profileEdited()}
                   <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>編輯個人檔案</DialogTitle>
                     <DialogContent>
@@ -485,20 +487,20 @@ const Profile: React.FC<Props> = (props) => {
                               MenuProps={MenuProps}
                             >
                               <MenuItem value="Java">Java</MenuItem>
-                  <MenuItem value="Python">Python</MenuItem>
-                  <MenuItem value="React">React</MenuItem>
-                  <MenuItem value="Next">Next</MenuItem>
-                  <MenuItem value="HTML">HTML</MenuItem>
-                  <MenuItem value="PHP">PHP</MenuItem>
-                  <MenuItem value="MySQL">MySQL</MenuItem>
-                  <MenuItem value="Firebase">Firebase</MenuItem>
-                  <MenuItem value="SA">SA</MenuItem>
-                  <MenuItem value="會計">會計</MenuItem>
-                  <MenuItem value="統計">統計</MenuItem>
-                  <MenuItem value="作業系統">作業系統</MenuItem>
-                  <MenuItem value="網路行銷">網路行銷</MenuItem>
-                  <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
-                  <MenuItem value="其他">其他</MenuItem>
+                              <MenuItem value="Python">Python</MenuItem>
+                              <MenuItem value="React">React</MenuItem>
+                              <MenuItem value="Next">Next</MenuItem>
+                              <MenuItem value="HTML">HTML</MenuItem>
+                              <MenuItem value="PHP">PHP</MenuItem>
+                              <MenuItem value="MySQL">MySQL</MenuItem>
+                              <MenuItem value="Firebase">Firebase</MenuItem>
+                              <MenuItem value="SA">SA</MenuItem>
+                              <MenuItem value="會計">會計</MenuItem>
+                              <MenuItem value="統計">統計</MenuItem>
+                              <MenuItem value="作業系統">作業系統</MenuItem>
+                              <MenuItem value="網路行銷">網路行銷</MenuItem>
+                              <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
+                              <MenuItem value="其他">其他</MenuItem>
                             </Select>
                           </FormControl>
                         </Box>
@@ -547,7 +549,7 @@ const Profile: React.FC<Props> = (props) => {
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>取消</Button>
-                      <Button onClick={(e) => {update()}}>確認</Button>
+                      <Button onClick={(e) => { update() }}>確認</Button>
                     </DialogActions>
                   </Dialog>
 
@@ -559,7 +561,7 @@ const Profile: React.FC<Props> = (props) => {
 
               <Box display="flex" p={2} flexWrap="wrap">
                 <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
-                  <Box display="flex" flexDirection="column" sx={{ p: 2, minWidth: 300, maxWidth: 345 }} bgcolor={'#fafafa'} >
+                  <Box display="flex" flexDirection="column" sx={{ p: 2, minWidth: 300, maxWidth: 345 }} >
                     <Box display="flex">
                       <Box display="flex" flexDirection="column" sx={{ pr: 3 }}>
                         {userId && profile && profile.photoURL ?
@@ -574,18 +576,20 @@ const Profile: React.FC<Props> = (props) => {
 
 
 
+
                         {/* <Avatar
                         g04
                         >
 
                         </Avatar> */}
                         {/* <img  className={styles.googlephoto} src={currentUser?.photoURL}/> */}
-
-                        <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
+                        <Box display="flex" justifyContent="center" width="100%" sx={{ mt: 1 }}>
+                          <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
+                        </Box>
                       </Box>
                       <Box>
-                        <Typography pt={0.8} fontSize={25} >{profile ? profile.user : "未登入"}</Typography>
-                        <Typography fontSize={12}>{profile ? profile.email : "未登入"}</Typography>
+                        <Typography pt={0.8} fontSize={25} flexWrap="wrap">{profile ? profile.user : "未登入"}</Typography>
+                        <Typography fontSize={12} flexWrap="wrap">{profile ? profile.email : "未登入"}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>
@@ -608,7 +612,7 @@ const Profile: React.FC<Props> = (props) => {
 
 
                   <Grid >
-                    <Card sx={{ m: 2, width: 300,minHeight:100 }}>
+                    <Card sx={{ m: 2, width: 300, minHeight: 100 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -723,7 +727,7 @@ const Profile: React.FC<Props> = (props) => {
             </Box>
           </Card>
         </Container>
-      </div>
+      </div >
 
     </>
 

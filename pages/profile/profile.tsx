@@ -126,6 +126,7 @@ const Profile: React.FC<Props> = (props) => {
   const [count, setCount] = useState(0);
   const [heartCount, setHeartCount] = useState(0);
   const [bookMarkCount, setBookMarkCount] = useState(0);
+  const [user, setUser] = useState<any>();
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
   const router = useRouter()
   const { userId } = router.query || ""
@@ -191,6 +192,7 @@ const Profile: React.FC<Props> = (props) => {
 
             //console.log(doc.id, doc.data());
             setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+            setUser(querySnapshot.data().user);
           } else {
             setProfile({ character: "學習者" });
           }
@@ -334,6 +336,7 @@ const Profile: React.FC<Props> = (props) => {
       console.log("tags:", tags)
       if (currentUser) {
         await updateDoc(doc(db, "profile", currentUser.uid), {
+          user:user,
           majortag: tags,
           // minitag: minitagName,
         });
@@ -415,6 +418,8 @@ const Profile: React.FC<Props> = (props) => {
     );
   };
 
+
+
   return (
     <>
       <div>
@@ -461,7 +466,9 @@ const Profile: React.FC<Props> = (props) => {
                               }}
                               required
                               id="outlined-required"
-                              defaultValue={currentUser?.displayName}
+                              // defaultValue={currentUser?.displayName}
+                              defaultValue={user}
+                              onChange={(e) => setUser(e.target.value)}
                             />
 
                           </FormControl>

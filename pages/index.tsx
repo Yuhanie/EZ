@@ -77,7 +77,7 @@ function Solgan() {
                                 pb: 3
                             }}
                         >
-                            讓學習變得<br />更Easy
+                            讓學習變得<br />更EZ
                         </Typography>
                         {/* 手機 */}
                         <Typography
@@ -95,10 +95,11 @@ function Solgan() {
                                 pb: 3
                             }}
                         >
-                            讓學習變得<br />更Easy
+                            讓學習變得<br />更EZ
                         </Typography>
 
-                        <Typography variant="body1" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000" }}>以「Tag、Link、Update」優化文章閱讀體驗，快速獲得正確知識，讓學習更省時、更高效。</Typography>
+                        <Typography variant="body1" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000", lineWeight: 2 }}>是不是渴望有個專屬於資管系的資訊分享平台呢?</Typography>
+                        <Typography variant="body1" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000" }}>You can find all the information about FJUIM!!</Typography>
                         {/* <Typography sx={{ textAlign: "left", }}>獲取最新的資訊</Typography> */}
                         <Button variant="contained" color="secondary" href="/note" sx={{ mt: 7 }}>資訊分享區</Button>
                     </Box>

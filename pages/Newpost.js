@@ -298,7 +298,7 @@ function Newpost() {
               <br></br>
 
               <FormControl sx={{ width: 250 }}
-                error={minitagName}
+                error={minitagName === ""}
                 margin="normal"
               >
                 {/* 修課心得 */}
@@ -327,7 +327,7 @@ function Newpost() {
               <br></br>
 
               <FormControl sx={{ width: 250 }}
-                error={majortagName}
+                error={majortagName === ""}
                 margin="normal"
               >
                 <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記標籤(可複選)</InputLabel>

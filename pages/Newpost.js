@@ -262,6 +262,7 @@ function Newpost() {
                 <TextField
                   error={link === ""}
                   helperText={link === "" ? "請輸入連結" : ""}
+                  required
                   id="outlined-textarea"
                   label="您想分享的連結"
                   placeholder={link ? "" : "https..."}
@@ -321,7 +322,7 @@ function Newpost() {
                   <MenuItem value="選修">選修</MenuItem>
                   <MenuItem value="體育">體育</MenuItem>
                 </Select>
-                {minitagName && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
               </FormControl>
 
               <br></br>
@@ -359,7 +360,7 @@ function Newpost() {
                   <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
                   <MenuItem value="其他">其他</MenuItem>
                 </Select>
-                {majortagName && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+                {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>
 
               <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>

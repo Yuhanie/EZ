@@ -21,9 +21,9 @@ const MajorTagList: React.FC<Props> = (props) => {
 
   const renderMajorTagTest = (majortag: string, i: number) => {
     return (
-      <Link href={`/majorTag/${majortag}`}>
+      <a href={`/majorTag/${majortag}`}>
         <Chip label={majortag}/>
-      </Link>
+      </a>
     );
   };
 

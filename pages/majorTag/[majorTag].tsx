@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
+import { Toolbar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 //import DeleteIcon from '@mui/icons-material/Delete';
@@ -124,6 +124,7 @@ const Article = () => {
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
         >
+          <Toolbar />
           {!isLoading ?
             <div className={styles.grid}>
               {articles.map(renderText)} 

@@ -262,7 +262,7 @@ const ArticleListItem:
                 </Avatar>
               }
               title={props.article.user}
-              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleString()}
+              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
               //item 
               sx={{ p: 1.2 }}
             ></CardHeader>

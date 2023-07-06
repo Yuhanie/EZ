@@ -200,10 +200,9 @@ function ResponsiveAppBar() {
       <Box>
         <Tooltip title="查看更多">
           <IconButton onClick={handleOpenUserMenu}>
-            {/* <Image width="60%" height="60%" src={"/pic/" + currentUser?.photoURL}/> */}
             {photoURL ?
-              <img className={styles.googlephoto_nav} src={currentUser?.photoURL} /> :
-              <Avatar />}
+              <img className={styles.googlephoto_nav} src={currentUser?.photoURL} /> : <Avatar />
+            }
           </IconButton>
         </Tooltip>
         <Menu

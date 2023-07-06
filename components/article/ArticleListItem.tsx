@@ -304,10 +304,9 @@ const ArticleListItem:
           sx={{
             // maxWidth: 345,
             width: 320,
-            height: 245,
+            height: 235,
             m: 2,
             spacing: 2,
-            borderRadius: 3,
             bgcolor: 'background.paper',
             boxShadow: 1,
           }}

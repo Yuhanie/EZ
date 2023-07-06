@@ -50,8 +50,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import "swiper/css";
 import "swiper/css/pagination";
-
-
+import Skeleton from '@mui/material/Skeleton';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Stack from '@mui/material/Stack';
 
 // import App from 'myapp/src/App';
 
@@ -61,6 +63,8 @@ import "swiper/css/pagination";
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+//import { Stack } from 'react-bootstrap';
+//import { Card } from 'react-bootstrap';
 
 
 
@@ -208,7 +212,7 @@ const Demo: React.FC = () => {
     <div className={styles.demo}>
 
       {/* 增加"autoplay" */}
-      <Swiper spaceBetween={20} slidesPerView={1} loop autoplay pagination={{clickable: true,}}
+      <Swiper spaceBetween={20} slidesPerView={1} loop autoplay pagination={{ clickable: true, }}
         modules={[Pagination]}
         className="mySwiper" >
         {partnerLogo.map((value, index) => {
@@ -353,18 +357,18 @@ const Home: NextPage = () => {
       const querySnapnewtext = await getDocs(queryExam);
       const temp2: Article[] = [];
       querySnapnewtext.forEach((doc) => {
-        temp2.push({ 
-          docId: doc.id, 
-          content: doc.data().content, 
-          title: doc.data().title, 
-          user: doc.data().user, 
-          link: doc.data().link, 
-          userid: doc.data().userid, 
-          count: doc.data().count, 
-          heart: doc.data().heart, 
-          timestamp: doc.data().timestamp, 
-          bookmark: doc.data().bookmark, 
-          outdateCount: doc.data().outdateCount, 
+        temp2.push({
+          docId: doc.id,
+          content: doc.data().content,
+          title: doc.data().title,
+          user: doc.data().user,
+          link: doc.data().link,
+          userid: doc.data().userid,
+          count: doc.data().count,
+          heart: doc.data().heart,
+          timestamp: doc.data().timestamp,
+          bookmark: doc.data().bookmark,
+          outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
           minitag: doc.data().minitag,
@@ -385,8 +389,8 @@ const Home: NextPage = () => {
         //console.log(doc.id, doc.data());
         temp.push({ name: doc.data().name, pic: doc.data().pic, order: doc.data().order });
       });
-      setTag([...temp]); 
-      
+      setTag([...temp]);
+
       const textCollection = collection(db, "text");
       const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
       //const queryNewText =query(textCollection, orderBy("timestamp", "desc"), limit(3)); 
@@ -397,17 +401,17 @@ const Home: NextPage = () => {
       querySnapshotArticle.forEach((doc) => {
         //console.log(doc.id, doc.data());
         tempArticle.push({
-          docId: doc.id, 
-          content: doc.data().content, 
-          title: doc.data().title, 
-          user: doc.data().user, 
-          link: doc.data().link, 
-          userid: doc.data().userid, 
-          count: doc.data().count, 
-          heart: doc.data().heart, 
-          timestamp: doc.data().timestamp, 
-          bookmark: doc.data().bookmark, 
-          outdateCount: doc.data().outdateCount, 
+          docId: doc.id,
+          content: doc.data().content,
+          title: doc.data().title,
+          user: doc.data().user,
+          link: doc.data().link,
+          userid: doc.data().userid,
+          count: doc.data().count,
+          heart: doc.data().heart,
+          timestamp: doc.data().timestamp,
+          bookmark: doc.data().bookmark,
+          outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
           minitag: doc.data().minitag,
@@ -532,6 +536,51 @@ const Home: NextPage = () => {
     setValue(newValue);
   };
 
+  function Load() {
+    return (
+      <Card sx={{ width: 320, height: 235, m: 2 }}>
+        <Skeleton variant="rectangular" width={320} height={170} />
+        <CardHeader
+          avatar={
+            <Skeleton animation="wave" variant="circular" width={40} height={40} />
+          }
+          title={
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="20%"
+              style={{ marginBottom: 6 }}
+            />
+          }
+          subheader={
+            <Skeleton animation="wave" height={10} width="40%" />
+          }
+        />
+      </Card>
+    )
+  }
+
+  function ArticleLoading() {
+    return (
+      <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
+        <Load />
+        <Load />
+        <Load />
+      </Box>
+    )
+  }
+
+  function TabLoad() {
+    return (
+      <Stack display='flex' flexDirection='row' justifyContent='center' mt={2} mb={4}>
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} />
+      </Stack>
+    );
+  }
 
   return (
     <div>
@@ -548,8 +597,6 @@ const Home: NextPage = () => {
         <Demo />
       </Box>
       <Container>
-
-
         <Box
           display="flex"
           justifyContent="center"
@@ -566,7 +613,7 @@ const Home: NextPage = () => {
               {tag.map(renderTag)}
 
             </Tabs>
-            : <CircularProgress />
+            : <TabLoad />
           }
         </Box>
 
@@ -602,7 +649,7 @@ const Home: NextPage = () => {
               <div className={styles.grid}>
                 {articles.map(renderText)}
               </div>
-              : <CircularProgress />
+              : <ArticleLoading />
             }
           </Box>
 
@@ -625,7 +672,7 @@ const Home: NextPage = () => {
               <div className={styles.grid}>
                 {newTexts && newTexts.map(renderNewText)}
               </div>
-              : <CircularProgress />
+              : <ArticleLoading />
             }
           </Box>
 

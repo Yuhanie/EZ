@@ -21,7 +21,7 @@ import myImage from "../../public/pic/welcome.png";
 import { Container } from "@mui/material/Container";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import { Button, TextField, Card, Divider } from "@mui/material";
+import { Button, TextField, Card, Divider, Alert } from "@mui/material";
 import SvgIcon from '@material-ui/core/SvgIcon';
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -116,10 +116,28 @@ export default function SignIn() {
         alert("登入成功");
         router.push("/note");
       }
-    } catch (error) {
-      setMessage("" + error);
+    } 
+    catch (error) {
+      let errorMsg =''
+      switch (error.code) {
+        case 'auth/invalid-email':
+          errorMsg = '電子信箱格式錯誤'
+          break
+        case 'auth/user-not-found':
+          errorMsg = '此用戶不存在'
+          break
+        case 'auth/missing-password':
+          errorMsg = '密碼錯誤'
+          break
+        default:
+          errorMsg = error.code + ':' + error.message
+      }
+      setMessage(<Alert sx={{mt:2,mb:1.5}} severity="info">{errorMsg}</Alert>);
     }
   };
+
+
+
   const handleForgetPwd = () => {
     //const email = form.getFieldValue('email')
     const auth = getAuth();
@@ -201,17 +219,17 @@ export default function SignIn() {
             先看看其他文章 &rarr;
           </Button>
         </Card>
+
         <Card
           display="flex"
           flexDirection="column"
           sx={{
             width: 345,
-            height: 450,
             borderRadius: 2,
-            m: 2
+            m: 2,
+            pb:2
           }}
         >
-
           <Typography variant="h5" sx={{ textAlign: "center", m: 1 }}>登入</Typography>
           <Divider />
           <Box p={2}>
@@ -237,6 +255,7 @@ export default function SignIn() {
               fullWidth
               margin="dense"
             />
+
             {message}
 
             <Button

@@ -24,10 +24,14 @@ import Input from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { Theme, useTheme } from '@mui/material/styles';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { red } from "@mui/material/colors";
 import { Check } from "@mui/icons-material";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
+
 
 const MENU_LIST = [
   { text: "登入", href: "/login" },
@@ -42,10 +46,37 @@ const db = getFirestore();
 
 const auth = getAuth();
 
+const majortags = [
+  "Java",
+  "Python",
+  "React",
+  "Next",
+  "HTML",
+  "PHP",
+  "MySQL",
+  "Firebase",
+  "SA",
+  "會計",
+  "統計",
+  "作業系統",
+  "網路行銷",
+  "生產與作業管理",
+  "其他",
+];
+
+function getStyles(majortag, majortagName, theme) {
+  return {
+    fontWeight:
+    majortagName.indexOf(majortag) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 function Newpost() {
 
   const router = useRouter();
-  const { articleId } = router.query;
+  const {articleId } = router.query;
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [tags, setTags] = React.useState([]);
@@ -54,6 +85,18 @@ function Newpost() {
   const [minitagName, setminiTagName] = React.useState([]);
   const [link, setLink] = React.useState('');
   const [user, setUser] = useState();
+  const theme = useTheme();
+
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setmajorTagName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
   const ITEM_HEIGHT = 22;
   const ITEM_PADDING_TOP = 8;
@@ -65,6 +108,8 @@ function Newpost() {
       },
     },
   };
+
+  
 
 
   useEffect(() => {
@@ -217,7 +262,7 @@ function Newpost() {
               sx={{
                 // bgcolor: "#000000",
                 borderRadius: 2,
-                p:2,
+                p: 2,
                 pr: 4,
                 pl: 4,
                 m: 4,
@@ -272,7 +317,7 @@ function Newpost() {
                   onChange={(e) => setLink(e.target.value)}
                 />
               </FormControl>
-              
+
               <FormControl sx={{ width: 250 }}
                 error={tagName === ""}
                 margin="normal"
@@ -331,20 +376,40 @@ function Newpost() {
                 error={majortagName === ""}
                 margin="normal"
               >
-                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記標籤(可複選)</InputLabel>
+                <InputLabel id="demo-mutiple-chip-label" required>請選擇筆記標籤(可複選)</InputLabel>
                 <Select
-                  labelId="demo-mutiple-checkbox-label"
-                  id="demo-mutiple-checkbox"
+                  labelId="demo-mutiple-chip-label"
+                  id="demo-mutiple-chip"
                   multiple
+                  //value={aName}
                   value={majortagName}
                   MenuProps={MenuProps}
                   // label="topic"
-                  onChange={(e) => {
-                    setmajorTagName(e.target.value);
-                    console.log("majortag:")
-                  }}
+                  // onChange={(e) => {
+                  //   setmajorTagName(e.target.value);
+                  //   console.log("majortag:")
+                  // }}
+                  onChange={handleChange}
+                  input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
                 >
-                  <MenuItem value="Java">Java</MenuItem>
+                  {majortags.map((majortag) => (
+                    <MenuItem
+                      key={majortag}
+                      value={majortag}
+                      style={getStyles(majortag, majortagName, theme)}
+                    >
+                     
+                      {majortag}
+                    </MenuItem>
+                  ))}
+                  {/* <MenuItem value="Java">Java</MenuItem>
                   <MenuItem value="Python">Python</MenuItem>
                   <MenuItem value="React">React</MenuItem>
                   <MenuItem value="Next">Next</MenuItem>
@@ -358,7 +423,7 @@ function Newpost() {
                   <MenuItem value="作業系統">作業系統</MenuItem>
                   <MenuItem value="網路行銷">網路行銷</MenuItem>
                   <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
-                  <MenuItem value="其他">其他</MenuItem>
+                  <MenuItem value="其他">其他</MenuItem> */}
                 </Select>
                 {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>

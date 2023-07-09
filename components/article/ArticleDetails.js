@@ -98,6 +98,10 @@ const ArticleDetails = (props) => {
   const [expertAction, setExpertAction] = useState("");
   //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
+  // let formattedTags = "";
+  // if (typeof props.article.majortag === "string") {
+  //   formattedTags = props.article.majortag.split(",").join(" ");
+  // }
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -329,18 +333,21 @@ const ArticleDetails = (props) => {
         const docSnap = await getDoc(ref);
 
         const querySnapshot = await getDocs(query(collection(db, "profile"), where("character", "==", "專家"), where("majortag", "array-contains-any", props.article.majortag)));
-        querySnapshot.forEach((doc) => {console.log("expert:", doc.id)
+        querySnapshot.forEach((doc) => {
+          console.log("expert:", doc.id)
 
-        if(doc.data().email){
-        emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-          from_name: "EZ Group",
-          to_name: doc.data().user?doc.data().user:"",
-          from_email: "ezgroup329@gmail.com",
-          to_email: doc.data().email,
-          target_article: props.article.title,
-          message: "您好，有使用者向您回報文章「" + props.article.title + "」內容已過時，請您對文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
-        }, PUBLIC_KEY);}})
-      
+          if (doc.data().email) {
+            emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
+              from_name: "EZ Group",
+              to_name: doc.data().user ? doc.data().user : "",
+              from_email: "ezgroup329@gmail.com",
+              to_email: doc.data().email,
+              target_article: props.article.title,
+              message: "您好，有使用者向您回報文章「" + props.article.title + "」內容已過時，請您對文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
+            }, PUBLIC_KEY);
+          }
+        })
+
 
         if (docSnap.exists()) {
           if (status == "stale") {
@@ -839,7 +846,9 @@ const ArticleDetails = (props) => {
               <Chip label={props.article.tag} size="small" />
               <Chip label={props.article.minitag} size="small" />
               <Chip label={props.article.majortag} size="small" variant="outlined" />
+              {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
             </Stack>
+
 
             <Box display="flex" sx={{ flexDirection: "row", alignContent: "left" }}>
               <LinkIcon sx={{ mr: 1 }} />
@@ -848,16 +857,16 @@ const ArticleDetails = (props) => {
               </a>
               {/* <Typography href={props.article.link} color= "#7A82E7">查看詳細內容</Typography> */}
             </Box>
-            
+
             {/* <a href={props.article.link}> */}
             <a>
               {props.article.content.substring(0, 245)}
               {props.article.content.length > 245 ? "..." : ""}
             </a>
             {/* </div> */}
-            
-          
-           
+
+
+
 
           </Stack>
           <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>

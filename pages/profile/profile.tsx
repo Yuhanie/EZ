@@ -341,7 +341,6 @@ const Profile: React.FC<Props> = (props) => {
           // minitag: minitagName,
         });
         alert("成功")
-
       }
 
     }

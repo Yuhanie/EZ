@@ -113,7 +113,7 @@ const Profile: React.FC<Props> = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(true);
   const theme = useTheme();
-  const [tags, setTags] = React.useState<string[]>([]);
+  // const [tags, setTags] = React.useState<string[]>([]);
   const [profile, setProfile] = useState<Profile>();
   const [collects, setCollects] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -121,7 +121,7 @@ const Profile: React.FC<Props> = (props) => {
   const [updated, setUpdated] = useState(0);
   const [myNotes, setMyNotes] = useState<Article[]>([]);
   const [myNotesOpen, setMyNotesOpen] = useState<boolean>(false);
-  const [majorTags, setMajorTags] = useState<Profile[]>([]);
+  const [majorTags, setMajorTags] = React.useState<string[]>([]);
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   const [heartCount, setHeartCount] = useState(0);
@@ -136,11 +136,11 @@ const Profile: React.FC<Props> = (props) => {
     setUpdated((currentValue) => currentValue + 1)
   }
 
-  const handleChange = (event: SelectChangeEvent<typeof tags>) => {
+  const handleChange = (event: SelectChangeEvent<typeof majorTags>) => {
     const {
       target: { value },
     } = event;
-    setTags(
+    setMajorTags(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
@@ -192,7 +192,7 @@ const Profile: React.FC<Props> = (props) => {
             //console.log(doc.id, doc.data());
             setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
             setUser(querySnapshot.data().user);
-            setTags(querySnapshot.data().majortag)
+            setMajorTags(querySnapshot.data().majortag)
           } else {
             setProfile({ character: "學習者" });
           }
@@ -333,11 +333,11 @@ const Profile: React.FC<Props> = (props) => {
       //   // console.log(docRef.id);
       // }
       // else {
-      console.log("tags:", tags)
+      console.log("majorTags:", majorTags)
       if (currentUser) {
         await updateDoc(doc(db, "profile", currentUser.uid), {
           user:user,
-          majortag: tags,
+          majortag: majorTags,
           // minitag: minitagName,
         });
         alert("成功")
@@ -480,7 +480,7 @@ const Profile: React.FC<Props> = (props) => {
                               labelId="demo-multiple-chip-label"
                               id="demo-multiple-chip"
                               multiple
-                              value={tags}
+                              value={majorTags}
                               onChange={handleChange}
                               // onChange={(e) => setUser(e.target.value)}
                               input={<OutlinedInput id="select-multiple-chip" />}

@@ -343,11 +343,11 @@ function Newpost() {
 
               <br></br>
 
+              {/* if(tagName=="課堂筆記"){ */}
               <FormControl sx={{ width: 250 }}
                 error={minitagName === ""}
                 margin="normal"
               >
-                {/* 修課心得 */}
                 <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記小分類(可複選)</InputLabel>
                 <Select
                   labelId="demo-mutiple-checkbox-label"
@@ -369,6 +369,31 @@ function Newpost() {
                 </Select>
                 {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
               </FormControl>
+              {/* } */}
+              {/* else if(tagName=="修課心得"){
+              <FormControl sx={{ width: 250 }}
+                error={minitagName === ""}
+                margin="normal"
+              >
+                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記小分類(可複選)</InputLabel>
+                <Select
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
+                  multiple
+                  value={minitagName}
+                  MenuProps={MenuProps}
+                  onChange={(e) => {
+                    setminiTagName(e.target.value);
+                  }}
+                >
+                  <MenuItem value="大一">大一</MenuItem>
+                  <MenuItem value="大二">大二</MenuItem>
+                  <MenuItem value="大三">大三</MenuItem>
+                  <MenuItem value="大四">大四</MenuItem>
+                </Select>
+                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+              </FormControl>
+              } */}
 
               <br></br>
 

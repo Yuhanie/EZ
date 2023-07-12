@@ -189,10 +189,10 @@ const Profile: React.FC<Props> = (props) => {
 
 
           if ((querySnapshot).exists()) {
-
             //console.log(doc.id, doc.data());
             setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
             setUser(querySnapshot.data().user);
+            setTags(querySnapshot.data().majortag)
           } else {
             setProfile({ character: "學習者" });
           }
@@ -483,6 +483,7 @@ const Profile: React.FC<Props> = (props) => {
                               multiple
                               value={tags}
                               onChange={handleChange}
+                              // onChange={(e) => setUser(e.target.value)}
                               input={<OutlinedInput id="select-multiple-chip" />}
                               // renderValue={(selected) => (
                               //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

@@ -229,13 +229,8 @@ const Profile: React.FC<Props> = (props) => {
           setIsLoading(true);
           const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", id)) : query(collection(db, "text"), where("userid", "==", id), limit(3)));
           const tempMyNote: Article[] = [];
-          let count = 0;
-          let countHeart = 0;
-          let countBookMark = 0;
+
           queryMyNote.forEach((doc) => {
-            count++;
-            countHeart += doc.data().heart.length;
-            countBookMark += doc.data().bookmark.length;
             tempMyNote.push({
               docId: doc.id,
               content: doc.data().content,
@@ -256,6 +251,41 @@ const Profile: React.FC<Props> = (props) => {
             });
           });
           setMyNotes([...tempMyNote]);
+          //alert(countHeart + " " +countBookMark);
+
+          setIsLoading(false);
+
+
+          setIsLoading(true);
+          const queryCountMyNote = await getDocs(query(collection(db, "text"), where("userid", "==", id)));
+          // const tempCountMyNote: Article[] = [];
+          let count = 0;
+          let countHeart = 0;
+          let countBookMark = 0;
+          queryCountMyNote.forEach((doc) => {
+            count++;
+            countHeart += doc.data().heart.length;
+            countBookMark += doc.data().bookmark.length;
+            // tempCountMyNote.push({
+            //   docId: doc.id,
+            //   content: doc.data().content,
+            //   title: doc.data().title,
+            //   user: doc.data().user,
+            //   link: doc.data().link,
+            //   userid: doc.data().userid,
+            //   count: doc.data().count,
+            //   heart: doc.data().heart,
+            //   timestamp: doc.data().timestamp,
+            //   bookmark: doc.data().bookmark,
+            //   outdateCount: doc.data().outdateCount,
+            //   outdate: doc.data().outdate,
+            //   majortag: doc.data().majortag,
+            //   minitag: doc.data().minitag,
+            //   tag: doc.data().tag,
+            //   email: doc.data().email
+            // });
+          });
+          // setMyNotes([...tempMyNote]);
           setCount(count);
           setHeartCount(countHeart);
           setBookMarkCount(countBookMark);
@@ -336,7 +366,7 @@ const Profile: React.FC<Props> = (props) => {
       console.log("majorTags:", majorTags)
       if (currentUser) {
         await updateDoc(doc(db, "profile", currentUser.uid), {
-          user:user,
+          user: user,
           majortag: majorTags,
           // minitag: minitagName,
         });
@@ -410,9 +440,9 @@ const Profile: React.FC<Props> = (props) => {
   // console.log("profile:", profile);
   const renderMajorTagTest = () => {
     return (
-        <Box>
-          {profile && <MajorTagList MajorTag={profile} />}
-        </Box>
+      <Box>
+        {profile && <MajorTagList MajorTag={profile} />}
+      </Box>
 
     );
   };

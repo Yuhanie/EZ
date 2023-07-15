@@ -98,6 +98,7 @@ function Newpost() {
     );
   };
 
+  //下拉式選單
   const ITEM_HEIGHT = 22;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -430,25 +431,9 @@ function Newpost() {
                       value={majortag}
                       style={getStyles(majortag, majortagName, theme)}
                     >
-                     
                       {majortag}
                     </MenuItem>
                   ))}
-                  {/* <MenuItem value="Java">Java</MenuItem>
-                  <MenuItem value="Python">Python</MenuItem>
-                  <MenuItem value="React">React</MenuItem>
-                  <MenuItem value="Next">Next</MenuItem>
-                  <MenuItem value="HTML">HTML</MenuItem>
-                  <MenuItem value="PHP">PHP</MenuItem>
-                  <MenuItem value="MySQL">MySQL</MenuItem>
-                  <MenuItem value="Firebase">Firebase</MenuItem>
-                  <MenuItem value="SA">SA</MenuItem>
-                  <MenuItem value="會計">會計</MenuItem>
-                  <MenuItem value="統計">統計</MenuItem>
-                  <MenuItem value="作業系統">作業系統</MenuItem>
-                  <MenuItem value="網路行銷">網路行銷</MenuItem>
-                  <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
-                  <MenuItem value="其他">其他</MenuItem> */}
                 </Select>
                 {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
               </FormControl>

@@ -98,10 +98,6 @@ const ArticleDetails = (props) => {
   const [expertAction, setExpertAction] = useState("");
   //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
-  // let formattedTags = "";
-  // if (typeof props.article.majortag === "string") {
-  //   formattedTags = props.article.majortag.split(",").join(" ");
-  // }
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -801,6 +797,12 @@ const ArticleDetails = (props) => {
     );
   };
 
+  // let formattedTags = "";
+  // if (typeof props.article.majortag === "string") {
+  //   formattedTags = props.article.majortag.split(",").join(" ");
+  // }
+
+
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose} >
@@ -845,7 +847,10 @@ const ArticleDetails = (props) => {
             <Stack direction="row" spacing={1}>
               <Chip label={props.article.tag} size="small" />
               <Chip label={props.article.minitag} size="small" />
-              <Chip label={props.article.majortag} size="small" variant="outlined" />
+              
+                {props.article.majortag && props.article.majortag.map((value) => (
+                  <Chip key={value} label={value} size="small" />))}
+              
               {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
             </Stack>
 

@@ -15,7 +15,7 @@ export default function TestEmail() {
         method: 'post',
         url: '/api/email_test',
         data: {
-          email: email,
+          email: "email",
           // subject: subject,
           // message: message,
         },

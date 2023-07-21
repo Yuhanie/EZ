@@ -31,6 +31,8 @@ import { red } from "@mui/material/colors";
 import { Check } from "@mui/icons-material";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
+import axios from "axios";
+
 
 
 const MENU_LIST = [
@@ -209,6 +211,16 @@ function Newpost() {
           majortag: majortagName,
         });
         // console.log(docRef.id);
+        const response = await axios({
+          method: 'post',
+          url: '/api/email_test',
+          data: {
+            email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
+            subject: title,
+            // message: message,
+          },
+        });
+        console.log(response.data.message);
       }
       else {
         await updateDoc(doc(db, "text", articleId), {
@@ -219,10 +231,29 @@ function Newpost() {
           majortag: majortagName,
           minitag: minitagName,
         });
-      }
+        
+          const response = await axios({
+            method: 'post',
+            url: '/api/email_test',
+            data: {
+              email: "victoria2013chang@gmail.com",
+              subject: title,
+              // message: message,
+            },
+          });
+          // setResponse(response.data.message);
+        console.log(response.data.message);
+        }
     }
     catch (e) {
       console.log(e);
+      if (axios.isAxiosError(e)) {
+        // setResponse(e.message);
+        console.log(e.message);
+      } else {
+        // setResponse("錯誤");
+        console.log("error");
+      }
     }
     router.push('/note');
   }

@@ -2,8 +2,11 @@ import { useRouter } from 'next/router'
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { getApp, getApps, initializeApp } from 'firebase/app';
+import { Timestamp } from "firebase/firestore";
 
-import { firebaseConfig } from '../../settings/firebaseConfig';
+import { firebaseConfig } from '@/settings/firebaseConfig';
+import { Article } from 'interfaces/entities';
+import ArticleListItem from '@/components/article/ArticleListItem';
 
 
 const Article = () => {
@@ -11,17 +14,60 @@ const Article = () => {
   const db = getFirestore(firebaseApp);
   const router = useRouter();
   const { id } = router.query;
-  const [text, setText] = useState({ title: "查無此文件" });
+  const [article, setArticle] = useState<Article>({
+    docId: "無此文件",
+    content: "",
+    title: "",
+    user: "",
+    link: "",
+    userid: "",
+    count: 0,
+    heart: [],
+    timestamp: new Timestamp(0, 0),
+    bookmark: [],
+    outdateCount: [],
+    outdate: "",
+    majortag: [],
+    minitag: [],
+    tag: "",
+    email: ""
+  }
+  );
+  function updateUpdated() {
+
+  }
 
   useEffect(() => {
     async function readData() {
+
+      if (!id) {
+        return false;
+      }
+      console.log(id);
       if (typeof (id) === "string") {
         const collectionRef = collection(db, "text");
         const docRef = doc(collectionRef, id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setText({ title: docSnap.data().title });
+          setArticle({
+            docId: docSnap.id,
+            content: docSnap.data().content,
+            title: docSnap.data().title,
+            user: docSnap.data().user,
+            link: docSnap.data().link,
+            userid: docSnap.data().userid,
+            count: docSnap.data().count,
+            heart: docSnap.data().heart,
+            timestamp: docSnap.data().timestamp,
+            bookmark: docSnap.data().bookmark,
+            outdateCount: docSnap.data().outdateCount,
+            outdate: docSnap.data().outdate,
+            majortag: docSnap.data().majortag,
+            minitag: docSnap.data().minitag,
+            tag: docSnap.data().tag,
+            email: docSnap.data().email
+          });
           console.log("Document data:", docSnap.data());
         } else {
           // docSnap.data() will be undefined in this case
@@ -42,7 +88,10 @@ const Article = () => {
 
 
   return (
-    <div>{text.title}</div>
+    <div>
+      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
+    </div>
+
   )
 }
 export default Article

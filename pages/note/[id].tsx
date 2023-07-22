@@ -7,6 +7,8 @@ import { Timestamp } from "firebase/firestore";
 import { firebaseConfig } from '@/settings/firebaseConfig';
 import { Article } from 'interfaces/entities';
 import ArticleListItem from '@/components/article/ArticleListItem';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import ArticleDetails from '@/components/article/ArticleDetails';
 
 
 const Article = () => {
@@ -14,6 +16,7 @@ const Article = () => {
   const db = getFirestore(firebaseApp);
   const router = useRouter();
   const { id } = router.query;
+  const [currentUser, setCurrentUser] = useState<User>();
   const [article, setArticle] = useState<Article>({
     docId: "無此文件",
     content: "",
@@ -34,6 +37,9 @@ const Article = () => {
   }
   );
   function updateUpdated() {
+
+  }
+  function setOpen() {
 
   }
 
@@ -73,10 +79,17 @@ const Article = () => {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
         }
-
       }
 
-
+      // const auth = getAuth();
+      // const unsub = onAuthStateChanged(auth, (user) => {
+      //   if (user) {
+      //     setCurrentUser(user);
+      //   }
+      //   // else{
+      //   // setCurrentUser()}
+      //   console.log(user);
+      // });
 
     }
 
@@ -89,7 +102,9 @@ const Article = () => {
 
   return (
     <div>
-      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
+      <ArticleDetails article={article} open={true} setOpen={setOpen} update={updateUpdated} ></ArticleDetails>
+
+      {/* <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem> */}
     </div>
 
   )

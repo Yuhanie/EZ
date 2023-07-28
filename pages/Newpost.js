@@ -215,8 +215,9 @@ function Newpost() {
           method: 'post',
           url: '/api/email_test',
           data: {
-            email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
+            email: "victoria2013chang@gmail.com",
             subject: title,
+            html: content,
             // message: message,
           },
         });
@@ -238,6 +239,7 @@ function Newpost() {
             data: {
               email: "victoria2013chang@gmail.com",
               subject: title,
+              html: content,
               // message: message,
             },
           });

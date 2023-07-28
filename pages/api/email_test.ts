@@ -1,5 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import { render } from "@react-email/render";
+import WelcomeTemplate from "../WelcomeTemplate";
 
 const handler: NextApiHandler = async (
   req: NextApiRequest,
@@ -17,13 +19,14 @@ const handler: NextApiHandler = async (
   try {
     const email = req.body.email || "victoria2013chang@gmail.com";
     const subject = req.body.subject || "測試";
+    const html = req.body.html || "測試";
     const transporter = nodemailer.createTransport(smtpOptions);
     console.log("user:", process.env.SMTP_USER);
     await transporter.sendMail({
       from: process.env.SMTP_USER || "ezgroup329@gmail.com",
       to: email,
       subject: subject,
-      html: "測試 gmail",
+      html: render(WelcomeTemplate(subject, html)),
     });
     return res.status(200).json({ message: "Email成功送出" });
   } catch (error) {

@@ -60,8 +60,6 @@ const ArticleListItem:
     const [profile, setProfile] = useState<Profile>();
 
 
-
-
     const handleOpen = () => {
       setOpen(true);
       const ref = doc(db, "text", props.article.docId);
@@ -111,8 +109,6 @@ const ArticleListItem:
 
       }
     }
-
-
 
 
 

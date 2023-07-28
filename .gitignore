@@ -3,6 +3,7 @@
 # lock files
 *.lock
 package-lock.json
+package.json
 
 # dependencies
 /node_modules

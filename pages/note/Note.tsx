@@ -41,7 +41,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Container } from '@mui/material'
 //import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
-import { render } from "react-dom";
 import { green } from '@mui/material/colors';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';

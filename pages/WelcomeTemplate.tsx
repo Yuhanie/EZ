@@ -20,7 +20,7 @@ export default function WelcomeEmail(subject:string, html:string) {
 
 // Styles for the email template
 const main = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#F4F4F4",
 };
 
 const container = {
@@ -41,3 +41,4 @@ const paragraph = {
   lineHeight: "1.4",
   color: "#484848",
 };
+

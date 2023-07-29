@@ -39,6 +39,7 @@ import dynamic from "next/dynamic";
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
+import { Height } from '@mui/icons-material';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -324,13 +325,17 @@ const ArticleListItem:
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
               </Typography> */}
 
+
               {(typeof window !== "undefined") &&
                 <ReactQuillEditor
                   theme="bubble"
+                  style={{height:100}}
                   readOnly={true}
-                  value={props.article.content.substring(0, 245)}
+                  value={props.article.content}
                 />
               }
+
+
             </CardContent>
 
           </CardActionArea>

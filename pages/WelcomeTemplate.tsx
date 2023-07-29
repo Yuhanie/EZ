@@ -5,7 +5,7 @@ import { Container } from "@react-email/container";
 
 export default function WelcomeEmail(subject:string, html:string) {
   return (
-    (typeof (window)!=="undefined")&&
+    (typeof (window)!=="undefined")?
     <Html>
       <Section style={main}>
         <Container style={container}>
@@ -15,7 +15,7 @@ export default function WelcomeEmail(subject:string, html:string) {
           </Text>
         </Container>
       </Section>
-    </Html>
+    </Html>:<div></div>
   );
 }
 

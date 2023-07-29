@@ -1,11 +1,11 @@
-import { useState, useEffect, Component } from "react";
+import { useState, useEffect, Component, useMemo } from "react";
 import { useRouter } from "next/router"
 import Head from 'next/head';
 import React from "react";
 import styles from '../styles/Home.module.css';
 import Navbar from "../components/navbar/Navbar";
 import NavItem from "../components/navbar/NavItem";
-
+import dynamic from 'next/dynamic';
 //firebase
 import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -33,7 +33,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
 
 //quill
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
@@ -92,7 +92,7 @@ function Newpost() {
    const [link, setLink] = React.useState('');
    const [user, setUser] = useState();
    const theme = useTheme();
-
+   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
 
    const handleChange = (event) => {
       const {
@@ -317,7 +317,10 @@ function Newpost() {
                      </FormControl> */}
 
                      <div className={styles.ReactQuill}>
-                     <ReactQuill
+                        
+                     {(typeof window !== "undefined") &&
+
+                     <ReactQuillEditor
                            error={content === ""}
                            helperText={content === "" ? "請輸入內容" : ""}
                            required
@@ -330,7 +333,8 @@ function Newpost() {
                            multiline
                            value={content}
                            onChange={addContent}
-                        />
+                        />}
+
                      </div>
 
                      <FormControl fullWidth>

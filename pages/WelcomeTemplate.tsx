@@ -5,6 +5,7 @@ import { Container } from "@react-email/container";
 
 export default function WelcomeEmail(subject:string, html:string) {
   return (
+    (typeof (window)!=="undefined")&&
     <Html>
       <Section style={main}>
         <Container style={container}>

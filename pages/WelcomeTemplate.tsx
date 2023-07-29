@@ -10,7 +10,7 @@ export default function WelcomeEmail(subject:string, html:string) {
         <Container style={container}>
           <Text style={heading}>{subject}</Text>
           <Text style={paragraph}>{html} <br/><br/>
-            已經有新文章已發佈囉，快到<a href="https://ez-weld.vercel.app/note">EducationZone</a>看看吧~\^O^/~
+            已經有新文章已發佈囉，快到<a href="https://ez-weld.vercel.app/note">EducationZone</a>看看吧 ~\^O^/~
           </Text>
         </Container>
       </Section>

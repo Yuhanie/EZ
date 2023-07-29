@@ -215,7 +215,7 @@ function Newpost() {
           method: 'post',
           url: '/api/email_test',
           data: {
-            email: "victoria2013chang@gmail.com",
+            email: "victoria2013chang@gmail.com, mz72366816@gmail.com, prp00328evonne@gmail.com",
             subject: title,
             html: content,
             // message: message,

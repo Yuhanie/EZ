@@ -20,7 +20,6 @@ import { useRouter } from "next/router"
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs, where, doc, getDoc, getCountFromServer, or } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
-import ReactDOM from "react-dom";
 
 import { createTheme } from "@mui/material/styles";
 import ArticleListItem from '../../components/article/ArticleListItem';
@@ -142,17 +141,17 @@ const Home: NextPage = (props) => {
       const tempDenounce: Article[] = [];
       queryDenounce.forEach((doc) => {
         tempDenounce.push({
-          docId: doc.id, 
-          content: doc.data().content, 
-          title: doc.data().title, 
-          user: doc.data().user, 
-          link: doc.data().link, 
-          userid: doc.data().userid, 
-          count: doc.data().count, 
-          heart: doc.data().heart, 
-          timestamp: doc.data().timestamp, 
-          bookmark: doc.data().bookmark, 
-          outdateCount: doc.data().outdateCount, 
+          docId: doc.id,
+          content: doc.data().content,
+          title: doc.data().title,
+          user: doc.data().user,
+          link: doc.data().link,
+          userid: doc.data().userid,
+          count: doc.data().count,
+          heart: doc.data().heart,
+          timestamp: doc.data().timestamp,
+          bookmark: doc.data().bookmark,
+          outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
           minitag: doc.data().minitag,
@@ -169,24 +168,24 @@ const Home: NextPage = (props) => {
       const queryExam = await getDocs(staleOpen ? query(collection(db, "text"), where("outdate", "==", "stale")) : query(collection(db, "text"), where("outdate", "==", "stale"), limit(3)));
       const tempStale: Article[] = [];
       queryExam.forEach((doc) => {
-        tempStale.push({ 
-          docId: doc.id, 
-          content: doc.data().content, 
-          title: doc.data().title, 
-          user: doc.data().user, 
-          link: doc.data().link, 
-          userid: doc.data().userid, 
-          count: doc.data().count, 
-          heart: doc.data().heart, 
-          timestamp: doc.data().timestamp, 
-          bookmark: doc.data().bookmark, 
-          outdateCount: doc.data().outdateCount, 
+        tempStale.push({
+          docId: doc.id,
+          content: doc.data().content,
+          title: doc.data().title,
+          user: doc.data().user,
+          link: doc.data().link,
+          userid: doc.data().userid,
+          count: doc.data().count,
+          heart: doc.data().heart,
+          timestamp: doc.data().timestamp,
+          bookmark: doc.data().bookmark,
+          outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
           minitag: doc.data().minitag,
           tag: doc.data().tag,
           email: doc.data().email
-         });
+        });
 
         console.log(`newtext ${doc.id} => ${doc.data()}`);
       });
@@ -357,7 +356,7 @@ const Home: NextPage = (props) => {
           >
 
             <NotificationImportantIcon
-              sx={{ color: 'Gold', left: 200 ,mt:0.5,mr:1}}
+              sx={{ color: 'Gold', left: 200, mt: 0.5, mr: 1 }}
 
             />
             <Typography variant='h6' pr={2}>待處理</Typography>
@@ -387,7 +386,7 @@ const Home: NextPage = (props) => {
             pt={4}
           >
             <WarningIcon
-              sx={{ color: 'Crimson' ,mt:0.5,mr:1}}
+              sx={{ color: 'Crimson', mt: 0.5, mr: 1 }}
             />
             <Typography variant='h6' pr={2}>過時</Typography>
             <Button variant="contained" color="secondary" onClick={() => { more("moreStale") }}>查看更多</Button>

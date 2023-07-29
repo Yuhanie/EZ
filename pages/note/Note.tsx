@@ -41,7 +41,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Container } from '@mui/material'
 //import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
-import { render } from "react-dom";
+
 import { green } from '@mui/material/colors';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
@@ -573,10 +573,10 @@ const Home: NextPage = () => {
   function TabLoad() {
     return (
       <Stack display='flex' flexDirection='row' justifyContent='center' mt={2} mb={4}>
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
         <Skeleton animation="wave" variant="circular" width={100} height={100} />
       </Stack>
     );

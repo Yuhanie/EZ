@@ -7,7 +7,7 @@ import { Button, Menu, MenuItem, TableCell, TableRow } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Tooltip from "@mui/material/Tooltip";
 import { Timestamp } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ArticleDetails from "./ArticleDetails";
 import { Article, Profile } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
@@ -35,6 +35,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import dynamic from "next/dynamic";
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.core.css';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -58,6 +62,8 @@ const ArticleListItem:
     const [character, setCharacter] = useState("學習者");
     const [userInfo, setUserInfo] = useState("");
     const [profile, setProfile] = useState<Profile>();
+    const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+
 
 
     const handleOpen = () => {
@@ -308,17 +314,25 @@ const ArticleListItem:
           }}
         >
           <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen}>
-            
+
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {props.article.title}
 
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
                 {props.article.content.substring(0, 65)}{props.article.content.length > 65 ? "..." : ""}
-              </Typography>
+              </Typography> */}
+
+              {(typeof window !== "undefined") &&
+                <ReactQuillEditor
+                  theme="bubble"
+                  readOnly={true}
+                  value={props.article.content.substring(0, 245)}
+                />
+              }
             </CardContent>
-            
+
           </CardActionArea>
           <Box display="flex" justifyContent="space-between">
             <Box>

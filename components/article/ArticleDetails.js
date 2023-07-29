@@ -1,7 +1,7 @@
 import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
@@ -77,6 +77,11 @@ import {
 import { getApp, getApps, initializeApp } from "firebase/app";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import Tooltip from "@mui/material/Tooltip";
+import dynamic from "next/dynamic";
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.core.css';
+
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -96,6 +101,7 @@ const ArticleDetails = (props) => {
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
+  const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
   //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
 
@@ -846,11 +852,13 @@ const ArticleDetails = (props) => {
 
             <Stack direction="row" spacing={1}>
               <Chip label={props.article.tag} size="small" />
-              <Chip label={props.article.minitag} size="small" />
-              
-                {props.article.majortag && props.article.majortag.map((value) => (
-                  <Chip key={value} label={value} size="small" />))}
-              
+              {/* <Chip label={props.article.minitag} size="small" /> */}
+              {props.article.minitag && props.article.minitag.map((value) => (
+                <Chip key={value} label={value} size="small" />))}
+
+              {props.article.majortag && props.article.majortag.map((value) => (
+                <Chip key={value} label={value} size="small" />))}
+
               {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
             </Stack>
 
@@ -864,10 +872,21 @@ const ArticleDetails = (props) => {
             </Box>
 
             {/* <a href={props.article.link}> */}
-            <a>
+            {/* <a>
               {props.article.content.substring(0, 245)}
               {props.article.content.length > 245 ? "..." : ""}
-            </a>
+            </a> */}
+
+
+            {(typeof window !== "undefined") &&
+              <ReactQuillEditor
+                theme="bubble"
+                readOnly={true}
+                value={props.article.content.substring(0, 245)}
+              />
+            }
+
+
             {/* </div> */}
 
 

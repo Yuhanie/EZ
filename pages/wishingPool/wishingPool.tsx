@@ -126,137 +126,7 @@ const renderWish = (wish: Wish, i: number) => {
 
 
 
-const De = () => {
-   const numStars = 30; // 星星的數量
-   const stars = Array.from({ length: numStars }, (_, index) => {
-      const { x, y } = getRandomPosition();
-      return <Star key={index} x={x} y={y} />;
-   });
 
-   return (
-      <Grid
-         xs={12}
-         mt={5}
-         container
-         flexDirection={{ xs: 'column', sm: 'row' }}
-         sx={{ fontSize: '12px' }}
-         spacing={2}
-      >
-         <Grid item container xs={12} md={4} direction='column'>
-            <Grid item direction='column'>
-               <Grid item xs={8}>
-                  <Paper
-                     sx={{
-                        width: 330,
-                        height: 'auto',
-                        margin: 'auto',
-                        flexGrow: 1,
-                     }}
-                  >
-                     <div style={{
-                        position: 'relative',
-                        height: 280,
-                        borderTopLeftRadius: 5,
-                        borderTopRightRadius: 5,
-                        backgroundColor: '#425E99',
-                     }}>
-
-                        {stars}
-                        <Image src={magicCat} height='900' />
-                     </div>
-                     <Box sx={{ p: 2, }}>
-                        <Typography variant="body2" gutterBottom >
-                           找不到想看的內容嗎？試著在這裡許下願望，讓願望藉由大家的力量實現吧！
-                        </Typography>
-                        <Typography
-                           variant="button"
-                           display="block"
-                           gutterBottom
-                           sx={{
-                              cursor: 'pointer',
-                              textAlign: 'center',
-                              color: '#425E99',
-                              mt: 2
-                           }}
-                        >
-                           Make a wish
-                        </Typography>
-
-                     </Box>
-
-                  </Paper>
-               </Grid>
-            </Grid>
-
-
-
-            {/* <Grid item display='flex' alignContent='center'>
-                  <LocalFireDepartmentIcon sx={{ color: red[800], mr: 1, ml: 2, fontSize: 28 }} />
-                  <Typography fontSize={18} >熱門話題</Typography>
-            </Grid> */}
-
-         </Grid>
-
-         {/* wishes */}
-         <Grid item xs={12} md={8}>
-            <Paper
-               sx={{
-                  p: 2,
-                  margin: 'auto',
-                  flexGrow: 1,
-                  backgroundColor: (theme) =>
-                     theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-               }}
-            >
-               <Grid container spacing={2}>
-                  <Grid item>
-                     <CardHeader
-                        avatar={
-                           <Avatar />
-                        }
-                        title={'minnn'}
-                        subheader={'2023/02/03'}
-                        //item 
-                        sx={{ p: 1.2 }}
-                     />
-                  </Grid>
-
-                  <Grid item xs={12} md={8} container>
-                     <Grid item direction="column">
-                        <Grid item >
-                           <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                              這邊放問題
-                           </Typography>
-                        </Grid>
-                     </Grid>
-                  </Grid>
-
-                  <Grid item direction="column">
-                     <Grid item textAlign='center'>
-                        <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                           數量
-                        </Typography>
-                     </Grid>
-                     <Grid item >
-                        <Button
-                           color="info"
-                           disabled={false}
-                           size="small"
-                           variant="contained"
-                           sx={{ borderRadius: 10 }}
-                        >
-                           問問
-                        </Button>
-                     </Grid>
-                  </Grid>
-               </Grid>
-            </Paper>
-
-         </Grid>
-      </Grid>
-   )
-
-}
 
 
 
@@ -264,27 +134,27 @@ const WishingPool = () => {
    const [wishes, setWishes] = useState<Wish[]>([]);
    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-   // useEffect(() => {
-   //    async function readData() {
-   //       setIsLoading(true);
-   //       const WishCollection = collection(db, "wish");
-   //       const queryWish = query(WishCollection, orderBy("timestamp", "desc"));
-   //       const querySnapshot = await getDocs(queryWish);
-   //       const temp: Wish[] = [];
-   //       querySnapshot.forEach((doc) => {
-   //          temp.push({
-   //             docId: doc.id,
-   //             content: doc.data().content,
-   //             userid: doc.data().userid,
-   //             user: doc.data().user,
-   //             timestamp: doc.data().timestamp,
-   //          });
-   //       });
-   //       setWishes([...temp]);
-   //       setIsLoading(false);
-   //    }
-   //    readData();
-   // });
+   useEffect(() => {
+      async function readData() {
+         setIsLoading(true);
+         const WishCollection = collection(db, "wish");
+         const queryWish = query(WishCollection, orderBy("timestamp", "desc"));
+         const querySnapshot = await getDocs(queryWish);
+         const temp: Wish[] = [];
+         querySnapshot.forEach((doc) => {
+            temp.push({
+               docId: doc.id,
+               content: doc.data().content,
+               userid: doc.data().userid,
+               user: doc.data().user,
+               timestamp: doc.data().timestamp,
+            });
+         });
+         setWishes([...temp]);
+         setIsLoading(false);
+      }
+      readData();
+   },[]);
 
    return (
       <div>
@@ -309,12 +179,12 @@ const WishingPool = () => {
                   <Newwish />
                </Grid>
                <Grid item xs={12} md={8}>
-                  {/* {!isLoading ?
+                  {!isLoading ?
                      <div>
                         {wishes.map(renderWish)}
                      </div>
                      : <CircularProgress />
-                  } */}
+                  }
                </Grid>
             </Grid>
          </Container>

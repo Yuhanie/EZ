@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import router from 'next/router';
 
 //mui
+import { Box } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -25,6 +27,8 @@ type Props = {
    wish: Wish;
 };
 
+
+
 const WishListItem:
    React.FC<Props> = (props) => {
 
@@ -45,8 +49,8 @@ const WishListItem:
                      avatar={
                         <Avatar />
                      }
-                     title={'minnn'}
-                     subheader={'2023/02/03'}
+                     title={props.wish.user}
+                     subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
                      //item 
                      sx={{ p: 1.2 }}
                   />

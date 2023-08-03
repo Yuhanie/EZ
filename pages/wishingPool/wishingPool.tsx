@@ -18,6 +18,9 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
 import CircularProgress from '@mui/material/CircularProgress';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Skeleton from '@mui/material/Skeleton';
 
 import { red } from '@mui/material/colors';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -55,8 +58,8 @@ const Star: React.FC<StarProps> = ({ x, y }) => {
 };
 
 const getRandomPosition = () => {
-   const x = Math.random() * 260; // 0 to 280 (300 - star width)
-   const y = Math.random() * 260; // 0 to 280 (300 - star height)
+   const x = Math.random() * 320; // 0 to 280 (300 - star width)
+   const y = Math.random() * 280; // 0 to 280 (300 - star height)
    return { x, y };
 };
 
@@ -124,6 +127,44 @@ const renderWish = (wish: Wish, i: number) => {
 
 };
 
+function WishLoad() {
+   return (
+      <Paper
+            sx={{
+               p: 1,
+               margin: 'auto',
+               flexGrow: 1,
+            }}
+         >
+         <Grid container justifyContent='space-between'>
+            <Grid item xs={5}>
+               <CardHeader
+                  avatar={
+                     <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                  }
+                  title={
+                     <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="20%"
+                        style={{ marginBottom: 6 }}
+                     />
+                  }
+                  subheader={
+                     <Skeleton animation="wave" height={10} width="40%" />
+                  }
+               />
+            </Grid>
+            <Grid item justifyItems='flex-end'>
+               <CardContent>
+               <Skeleton variant="rounded" width={60} height={30} sx={{borderRadius:10}} />
+               </CardContent>
+            </Grid>
+         </Grid>
+      </Paper>
+   )
+}
+
 
 
 
@@ -154,7 +195,7 @@ const WishingPool = () => {
          setIsLoading(false);
       }
       readData();
-   },[]);
+   }, []);
 
    return (
       <div>
@@ -183,10 +224,11 @@ const WishingPool = () => {
                      <div>
                         {wishes.map(renderWish)}
                      </div>
-                     : <CircularProgress />
+                     : <WishLoad />
                   }
                </Grid>
             </Grid>
+            
          </Container>
       </div>
    )

@@ -102,3 +102,11 @@ export type BookMark = {
   outdateCount: string[];
   outdate: string;
 };
+
+export type Wish = {
+  userid: string;
+  user: string;
+  docId: string;
+  content: string;
+  timestamp: Timestamp;
+};

@@ -675,10 +675,6 @@ const Home: NextPage = () => {
             }
           </Box>
 
-
-
-
-
         </Box>
 
       </Container>

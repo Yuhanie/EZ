@@ -1446,3 +1446,35 @@
 .ReactQuill{
   margin-bottom: 1rem;
 }
+
+
+/* components/Star.module.css */
+.star {
+  width: 5px;
+  height: 5px;
+  border-radius: 5;
+  background-color: #ffffff; /* 星星颜色，这里使用金黄色 */
+  /* clip-path: polygon(
+    50% 0%,
+    61.8% 38.2%,
+    100% 35.4%,
+    69.1% 61.8%,
+    82.1% 100%,
+    50% 76.4%,
+    17.9% 100%,
+    30.9% 61.8%,
+    0% 35.4%,
+    38.2% 38.2%
+  ); */
+  animation: blink 2s infinite alternate;
+  position: absolute;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

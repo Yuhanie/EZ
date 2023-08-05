@@ -90,7 +90,7 @@ const Newwish = () => {
                }}>
 
                   {stars}
-                  <Image src={magicCat} height='900' />
+                  <Image alt="裝飾圖片" src={magicCat} height='900' />
                </div>
                <Box sx={{ p: 2, }}>
                   <Typography variant="body2" gutterBottom >
@@ -130,12 +130,12 @@ const renderWish = (wish: Wish, i: number) => {
 function WishLoad() {
    return (
       <Paper
-            sx={{
-               p: 1,
-               margin: 'auto',
-               flexGrow: 1,
-            }}
-         >
+         sx={{
+            p: 1,
+            margin: 'auto',
+            flexGrow: 1,
+         }}
+      >
          <Grid container justifyContent='space-between'>
             <Grid item xs={5}>
                <CardHeader
@@ -157,7 +157,7 @@ function WishLoad() {
             </Grid>
             <Grid item justifyItems='flex-end'>
                <CardContent>
-               <Skeleton variant="rounded" width={60} height={30} sx={{borderRadius:10}} />
+                  <Skeleton variant="rounded" width={60} height={30} sx={{ borderRadius: 10 }} />
                </CardContent>
             </Grid>
          </Grid>
@@ -228,7 +228,7 @@ const WishingPool = () => {
                   }
                </Grid>
             </Grid>
-            
+
          </Container>
       </div>
    )

@@ -109,4 +109,5 @@ export type Wish = {
   docId: string;
   content: string;
   timestamp: Timestamp;
+  heart: string[];
 };

@@ -119,14 +119,6 @@ const Newwish = () => {
 }
 
 
-//wishes
-const renderWish = (wish: Wish, i: number) => {
-   return (
-      <WishListItem key={wish.docId} wish={wish}></WishListItem>
-   );
-
-};
-
 function WishLoad() {
    return (
       <Paper
@@ -174,6 +166,11 @@ function WishLoad() {
 const WishingPool = () => {
    const [wishes, setWishes] = useState<Wish[]>([]);
    const [isLoading, setIsLoading] = useState<boolean>(false);
+   const [updated, setUpdated] = useState(0);
+
+   const updateUpdated = () => {
+      setUpdated((currentValue) => currentValue + 1)
+   }
 
    useEffect(() => {
       async function readData() {
@@ -189,6 +186,7 @@ const WishingPool = () => {
                userid: doc.data().userid,
                user: doc.data().user,
                timestamp: doc.data().timestamp,
+               heart: doc.data().heart,
             });
          });
          setWishes([...temp]);
@@ -196,6 +194,14 @@ const WishingPool = () => {
       }
       readData();
    }, []);
+
+   //wishes
+   const renderWish = (wish: Wish, i: number) => {
+      return (
+         <WishListItem key={wish.docId} wish={wish} update={updateUpdated}></WishListItem>
+      );
+
+   };
 
    return (
       <div>

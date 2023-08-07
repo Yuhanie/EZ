@@ -62,7 +62,114 @@ const MENU_LIST = [
 
   
   
-    
+    // useEffect(() => {
+  
+    //   async function readData() {
+    //     if (articleId) {
+    //       const ref = doc(db, "text", articleId);
+    //       const docSnapshot = await getDoc(ref);
+    //       if (docSnapshot.exists()) {
+    //         console.log("doc", docSnapshot.data())
+    //         setTitle(docSnapshot.data().title)
+    //         setContent(docSnapshot.data().content)
+    //         setLink(docSnapshot.data().link)
+    //         setTagName(docSnapshot.data().tag)
+    //       }
+    //     }
+  
+    //   }
+    //   readData();
+    // }
+    //   , [articleId])
+  
+  
+  
+    // useEffect(() => {
+    //   //   if (articleId){
+    //   //   const ref = doc(db, "text", articleId);
+    //   //   const docSnapshot = await getDoc(ref);
+    //   //   if (docSnapshot.exists()) {
+    //   //   setTitle(docSnapshot.data().title)
+    //   //   }
+    //   // }
+    //   const unsub = onAuthStateChanged(auth, (user) => {
+    //     setUser(user);
+    //     console.log(user);
+    //   });
+  
+    //   return () => {
+    //     unsub();
+    //   }
+    // }, []);
+  
+    // React.useState(() =>{
+    //     firebase
+    //     .firestore
+    //     .collection('topics')
+    //     .get()
+    //     .then((collectionSnapshot) =>{
+    //         const data = collectionSnapshot.docs.map((doc))
+    //         return docs.data();
+    //     });
+    //     setTopics(data);
+    // });
+  
+    // const handleChange = event => {
+    //     console.log(event.target.value);
+    //     setSelected(event.target.value);
+    //   };
+  
+  
+    // const options = tags.map(tag => {
+    //   return {
+    //     text: tag.name,
+    //     value: tag.name
+    //   }
+    // })
+  
+  
+  
+  
+    // const update = async function () {
+    //   if (title == "" || content == "" || tagName == "" || link == "") {
+    //     return (false);
+    //   }
+  
+    //   const db = getFirestore();
+    //   try {
+    //     if (!articleId) {
+    //       const docRef = await addDoc(collection(db, "text"), {
+    //         title,
+    //         content,
+    //         userid: user.uid,
+    //         email: user.email,
+    //         tag: tagName,
+    //         user: user.displayName,
+    //         heart: [],
+    //         bookmark: [],
+    //         count: 1,
+    //         link,
+    //         outdate: "solved",
+    //         outdateCount: [],
+    //         timestamp: serverTimestamp()
+    //       });
+    //       console.log(docRef.id);
+    //     }
+    //     else {
+    //       await updateDoc(doc(db, "text", articleId), {
+    //         title,
+    //         content,
+    //         tag: tagName,
+    //         link,
+    //       });
+    //     }
+    //   }
+    //   catch (e) {
+    //     console.log(e);
+    //   }
+    //   router.push('/');
+    // }
+
     return (
     //<div className={styles.post_container}>
     <div>
@@ -117,7 +224,7 @@ const MENU_LIST = [
                 <Box
                   component="form"
                   sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    '& .MuiTextField-root': { m: 1, width: 315 },
                   }}
                   noValidate
                   autoComplete="off"
@@ -132,7 +239,7 @@ const MENU_LIST = [
                 </Box>
                 <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button variant="contained" disabled color="primary">取消</Button><br></br><br></br>
-                  <Button variant="contained"  onClick={update}>送出</Button>
+                  <Button variant="contained"  >送出</Button>
                 </CardActions>
 
                         

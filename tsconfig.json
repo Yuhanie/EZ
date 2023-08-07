@@ -22,6 +22,6 @@
       "@/public/*": ["public/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx", "components/article/ArticleDetails.js", "components/context/UserContext.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx", "components/article/ArticleDetails.js", "components/context/UserContext.jsx", "pages/Newask.js"],
   "exclude": ["node_modules"]
 }

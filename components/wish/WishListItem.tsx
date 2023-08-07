@@ -198,7 +198,7 @@ const WishListItem:
                      </Typography>
                   </Grid>
                   <Grid item >
-                     <ButtonBase onClick={heart}>
+                     <ButtonBase onClick={heart} sx={{borderRadius:10}}>
                         {liked ? <ClickedBtn /> : <DefaultBtn />}
                      </ButtonBase>
                   </Grid>

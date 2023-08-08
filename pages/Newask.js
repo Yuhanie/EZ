@@ -47,9 +47,8 @@ const MENU_LIST = [
   
   const auth = getAuth();
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  
+  
   
   function Newask() {
   
@@ -58,8 +57,14 @@ const MENU_LIST = [
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
     const [user, setUser] = useState();
+    const [majortagName, setMajorTagName] = React.useState([]);
     
 
+    
+
+    const handleChange = (event) => {
+      setMajorTagName(event.target.value);
+   };
   
   
     // useEffect(() => {
@@ -211,14 +216,29 @@ const MENU_LIST = [
                             <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              // value={tags}
-                              label="Age"
-                              // onChange={handleChange}
+                              
+                              value={majortagName}
+                              onChange={handleChange}
+                              input={<OutlinedInput id="select-multiple-chip" />}
+                              
                             >
-                              <MenuItem >Python</MenuItem>
-                              <MenuItem >React</MenuItem>
-                              <MenuItem >Java</MenuItem>
+                              <MenuItem value="Java">Java</MenuItem>
+                              <MenuItem value="Python">Python</MenuItem>
+                              <MenuItem value="React">React</MenuItem>
+                              <MenuItem value="Next">Next</MenuItem>
+                              <MenuItem value="HTML">HTML</MenuItem>
+                              <MenuItem value="PHP">PHP</MenuItem>
+                              <MenuItem value="MySQL">MySQL</MenuItem>
+                              <MenuItem value="Firebase">Firebase</MenuItem>
+                              <MenuItem value="SA">SA</MenuItem>
+                              <MenuItem value="會計">會計</MenuItem>
+                              <MenuItem value="統計">統計</MenuItem>
+                              <MenuItem value="作業系統">作業系統</MenuItem>
+                              <MenuItem value="網路行銷">網路行銷</MenuItem>
+                              <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
+                              <MenuItem value="其他">其他</MenuItem>
                             </Select>
+                            
                           </FormControl>
                 </Box>
                 <Box

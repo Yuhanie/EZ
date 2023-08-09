@@ -58,7 +58,8 @@ const MENU_LIST = [
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
     const [user, setUser] = useState();
-    
+    const [content, setContent] = React.useState('');
+
 
   
   
@@ -130,45 +131,45 @@ const MENU_LIST = [
   
   
   
-    // const update = async function () {
-    //   if (title == "" || content == "" || tagName == "" || link == "") {
-    //     return (false);
-    //   }
+    const update = async function () {
+      if (content == "" || tagName == "" || link == "") {
+        return (false);
+      }
   
-    //   const db = getFirestore();
-    //   try {
-    //     if (!articleId) {
-    //       const docRef = await addDoc(collection(db, "text"), {
-    //         title,
-    //         content,
-    //         userid: user.uid,
-    //         email: user.email,
-    //         tag: tagName,
-    //         user: user.displayName,
-    //         heart: [],
-    //         bookmark: [],
-    //         count: 1,
-    //         link,
-    //         outdate: "solved",
-    //         outdateCount: [],
-    //         timestamp: serverTimestamp()
-    //       });
-    //       console.log(docRef.id);
-    //     }
-    //     else {
-    //       await updateDoc(doc(db, "text", articleId), {
-    //         title,
-    //         content,
-    //         tag: tagName,
-    //         link,
-    //       });
-    //     }
-    //   }
-    //   catch (e) {
-    //     console.log(e);
-    //   }
-    //   router.push('/');
-    // }
+      const db = getFirestore();
+      try {
+        if (!articleId) {
+          const docRef = await addDoc(collection(db, "text"), {
+            title,
+            content,
+            userid: user.uid,
+            email: user.email,
+            tag: tagName,
+            user: user.displayName,
+            heart: [],
+            bookmark: [],
+            count: 1,
+            link,
+            outdate: "solved",
+            outdateCount: [],
+            timestamp: serverTimestamp()
+          });
+          console.log(docRef.id);
+        }
+        else {
+          await updateDoc(doc(db, "text", articleId), {
+            title,
+            content,
+            tag: tagName,
+            link,
+          });
+        }
+      }
+      catch (e) {
+        console.log(e);
+      }
+      router.push('/');
+    }
 
     return (
     //<div className={styles.post_container}>
@@ -239,7 +240,7 @@ const MENU_LIST = [
                 </Box>
                 <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button variant="contained" disabled color="primary">取消</Button><br></br><br></br>
-                  <Button variant="contained"  >送出</Button>
+                  <Button variant="contained" onClick={update}  >送出</Button>
                 </CardActions>
 
                         

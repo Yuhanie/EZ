@@ -3,6 +3,8 @@ import Navbar from '../../components/navbar/Navbar';
 import magicCat from '../../public/pic/magicCat.png';
 import WishListItem from '@/components/wish/WishListItem';
 import { useEffect, useState } from 'react';
+import { useRouter } from "next/router"
+
 
 //mui
 import { styled } from '@mui/material/styles';
@@ -31,6 +33,8 @@ import { Wish } from '../../interfaces/entities';
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
+import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
+
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -70,6 +74,59 @@ const Newwish = () => {
       const { x, y } = getRandomPosition();
       return <Star key={index} x={x} y={y} />;
    });
+
+   const [currentUser, setCurrentUser] = useState<User>();
+   const router = useRouter();
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+   useEffect(() => {
+
+      async function readData() {
+
+
+        setIsLoading(true);
+
+        const auth = getAuth();
+      const unsub = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setCurrentUser(user);
+        }
+        // else{
+        // setCurrentUser()}
+        console.log(user);
+      });
+      setIsLoading(false);
+
+      return () => {
+        unsub();
+      }
+    }
+    readData();
+   }, []);
+
+   const changeStatus = function () {
+      if (typeof window !== "undefined") {
+
+        if (currentUser) {
+          router.push('/Newask');
+        }
+        else {
+          alert("要登入才能問問題ㄛ!")
+          //window.alert("要登入才能新增筆記ㄛ!");
+
+          // <Alert action={
+          //   <Button >
+          //     UNDO
+          //   </Button>
+          // }>要登入才能新增筆記ㄛ! </Alert>
+
+          router.push('/login');
+
+        }
+
+
+      }
+    }
    return (
       <Grid item direction='column'>
          <Grid item xs={8}>
@@ -106,6 +163,7 @@ const Newwish = () => {
                         color: '#425E99',
                         mt: 2
                      }}
+                     onClick={changeStatus}
                   >
                      Make a wish
                   </Typography>

@@ -176,14 +176,14 @@ const WishListItem:
             <Paper
                sx={{
                   p: 2,
-                  margin: 'auto',
+                  marginBottom: 2,
                   flexGrow: 1,
                   backgroundColor: (theme) =>
                      theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                }}
             >
                <Grid container spacing={2}>
-                  <Grid item>
+                  <Grid item md={2.5}>
                      <CardHeader
                         avatar={
                            <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>

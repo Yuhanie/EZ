@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import router from 'next/router';
+import WishDetails from './WishDetails';
 
 //mui
 import { Box, ButtonBase } from '@mui/material';
@@ -10,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
 
-import { Wish } from '../../interfaces/entities';
+import { Wish, Profile } from '../../interfaces/entities';
 
 //firebase
 import { firebaseConfig } from '../../settings/firebaseConfig';
@@ -33,9 +34,20 @@ type Props = {
 
 const WishListItem:
    React.FC<Props> = (props) => {
+      const [open, setOpen] = useState(false);
       const [currentUser, setCurrentUser] = useState<User>();
       const [heartCount, setHeartCount] = useState(props.wish.heart ? props.wish.heart.length : 0);
       const [liked, setLiked] = useState(false);
+      const [profile, setProfile] = useState<Profile>();
+
+
+      const handleOpen = () => {
+         setOpen(true);
+      }
+
+      const handleClose = () => {
+         setOpen(false);
+      };
 
       const setHeart = async (user: User) => {
          const ref = doc(db, "wish", props.wish.docId);
@@ -136,7 +148,7 @@ const WishListItem:
             <Button
                color="info"
                size="small"
-               
+
                variant="outlined"
                sx={{ borderRadius: 10 }}
             >
@@ -159,53 +171,56 @@ const WishListItem:
       }
 
       return (
-         <Paper
-            sx={{
-               p: 2,
-               margin: 'auto',
-               flexGrow: 1,
-               backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-            }}
-         >
-            <Grid container spacing={2}>
-               <Grid item>
-                  <CardHeader
-                     avatar={
-                        <Avatar />
-                     }
-                     title={props.wish.user}
-                     subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
-                     //item 
-                     sx={{ p: 1.2 }}
-                  />
-               </Grid>
+         <div>
+            <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update} ></WishDetails>
+            <Paper
+               sx={{
+                  p: 2,
+                  margin: 'auto',
+                  flexGrow: 1,
+                  backgroundColor: (theme) =>
+                     theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+               }}
+            >
+               <Grid container spacing={2}>
+                  <Grid item>
+                     <CardHeader
+                        avatar={
+                           <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
+                           </Avatar>
+                        }
+                        title={props.wish.user}
+                        subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
+                        //item 
+                        sx={{ p: 1.2 }}
+                     />
+                  </Grid>
 
-               <Grid item xs={12} md={8} container sx={{ cursor: 'pointer' }}>
+                  <Grid item xs={12} md={8} container sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+                     <Grid item direction="column">
+                        <Grid item >
+                           <Typography variant="body2">
+                              {props.wish.content}
+                           </Typography>
+                        </Grid>
+                     </Grid>
+                  </Grid>
+
                   <Grid item direction="column">
-                     <Grid item >
-                        <Typography variant="body2">
-                           {props.wish.content}
+                     <Grid item textAlign='center'>
+                        <Typography sx={{ cursor: 'pointer' }} variant="body2">
+                           {heartCount}
                         </Typography>
+                     </Grid>
+                     <Grid item >
+                        <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+                           {liked ? <ClickedBtn /> : <DefaultBtn />}
+                        </ButtonBase>
                      </Grid>
                   </Grid>
                </Grid>
-
-               <Grid item direction="column">
-                  <Grid item textAlign='center'>
-                     <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                        {heartCount}
-                     </Typography>
-                  </Grid>
-                  <Grid item >
-                     <ButtonBase onClick={heart} sx={{borderRadius:10}}>
-                        {liked ? <ClickedBtn /> : <DefaultBtn />}
-                     </ButtonBase>
-                  </Grid>
-               </Grid>
-            </Grid>
-         </Paper>
-
+            </Paper>
+         </div>
       )
 
    }

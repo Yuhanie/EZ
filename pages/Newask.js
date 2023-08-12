@@ -34,6 +34,7 @@ import Chip from '@material-ui/core/Chip';
 
 
 
+
 const MENU_LIST = [
     { text: "登入", href: "/login" },
     //{ text: "註冊", href: "/register"},
@@ -53,6 +54,7 @@ const MENU_LIST = [
   function Newask() {
   
     const router = useRouter();
+    const { id } = router.query;
     const [tags, setTags] = React.useState([]);
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
@@ -62,31 +64,56 @@ const MENU_LIST = [
 
     
 
-    const handleChange = (event) => {
-      setMajorTagName(event.target.value);
-   };
+  //   const handleChange = (event) => {
+  //     setMajorTagName(event.target.value);
+  //  };
+  const handleChange = (event) => {
+    const {
+       target: { value },
+    } = event;
+    setTagName(
+       // On autofill we get a stringified value.
+       typeof value === 'string' ? value.split(',') : value,
+    );
+ };
   
-  
-    // useEffect(() => {
-  
-    //   async function readData() {
-    //     if (articleId) {
-    //       const ref = doc(db, "text", articleId);
-    //       const docSnapshot = await getDoc(ref);
-    //       if (docSnapshot.exists()) {
-    //         console.log("doc", docSnapshot.data())
-    //         setTitle(docSnapshot.data().title)
-    //         setContent(docSnapshot.data().content)
-    //         setLink(docSnapshot.data().link)
-    //         setTagName(docSnapshot.data().tag)
-    //       }
-    //     }
-  
-    //   }
-    //   readData();
-    // }
-    //   , [articleId])
-  
+   useEffect(() => {
+
+    async function readData() {
+       if (id) {
+          const ref = doc(db, "wish", id);
+          const docSnapshot = await getDoc(ref);
+          if (docSnapshot.exists()) {
+             console.log("doc", docSnapshot.data())
+             setContent(docSnapshot.data().content)
+            //  setLink(docSnapshot.data().link)
+             setTagName(docSnapshot.data().tag)
+            //  setmajorTagName(docSnapshot.data().majortag)
+          }
+       }
+
+    }
+    readData();
+ }
+    , [id])
+
+    useEffect(() => {
+      //   if (articleId){
+      //   const ref = doc(db, "text", articleId);
+      //   const docSnapshot = await getDoc(ref);
+      //   if (docSnapshot.exists()) {
+      //   setTitle(docSnapshot.data().title)
+      //   }
+      // }
+      const unsub = onAuthStateChanged(auth, (user) => {
+         setUser(user);
+         console.log(user);
+      });
+
+      return () => {
+         unsub();
+      }
+   }, []);
   
   
     // useEffect(() => {
@@ -127,52 +154,57 @@ const MENU_LIST = [
   
     // const options = tags.map(tag => {
     //   return {
-    //     text: tag.name,
+    //     wish: tag.name,
     //     value: tag.name
     //   }
     // })
   
   
-  
+    const addContent = (value) =>{
+      setContent(value)
+   }
   
     const update = async function () {
-      if (content == "" || tagName == "" || link == "") {
+      if (content == "" || tagName == "") {
         return (false);
       }
   
       const db = getFirestore();
       try {
-        if (!articleId) {
-          const docRef = await addDoc(collection(db, "text"), {
-            title,
+        if (!id) {
+          const docRef = await addDoc(collection(db, "wish"), {
             content,
             userid: user.uid,
             email: user.email,
             tag: tagName,
             user: user.displayName,
             heart: [],
-            bookmark: [],
+            // bookmark: [],
             count: 1,
-            link,
-            outdate: "solved",
-            outdateCount: [],
-            timestamp: serverTimestamp()
+            // link,
+            // outdate: "solved",
+            // outdateCount: [],
+            timestamp: serverTimestamp(),
+            // majortag: majortagName,
+            tag: tagName,
+
           });
-          console.log(docRef.id);
+          // console.log(docRef.id);
         }
         else {
-          await updateDoc(doc(db, "text", articleId), {
-            title,
+          await updateDoc(doc(db, "wish", id), {
+            // title,
             content,
             tag: tagName,
-            link,
+            // link,
+            // majortag: majortagName,
           });
         }
       }
       catch (e) {
         console.log(e);
       }
-      router.push('/');
+      router.push('/wishingPool');
     }
 
     return (
@@ -211,15 +243,19 @@ const MENU_LIST = [
                </Box>
                <Box display="flex" alignItems="center" sx={{ p:1 }}>
                           {/* <Typography sx={{ minWidth: 100 }}>選擇領域</Typography> */}
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">選擇領域</InputLabel>
+                          <FormControl 
+                            fullWidth
+                            error={tagName === ""}
+                          >
+                            <InputLabel id="demo-simple-select-label">請選擇領域</InputLabel>
                             <Select
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              
-                              value={majortagName}
-                              onChange={handleChange}
-                              input={<OutlinedInput id="select-multiple-chip" />}
+                              value={tagName}
+                               onChange={(e) => {
+                                setTagName(e.target.value);
+                              }}
+                              // input={<OutlinedInput id="select-multiple-chip" />}
                               
                             >
                               <MenuItem value="Java">Java</MenuItem>
@@ -238,7 +274,7 @@ const MENU_LIST = [
                               <MenuItem value="生產與作業管理">生產與作業管理</MenuItem>
                               <MenuItem value="其他">其他</MenuItem>
                             </Select>
-                            
+                            {tagName === "" && <FormHelperText>請選擇問題分類</FormHelperText>}
                           </FormControl>
                 </Box>
                 <Box
@@ -250,11 +286,15 @@ const MENU_LIST = [
                   autoComplete="off"
                 >
                   <TextField
-                  fullWidth
+                    fullWidth
+                    error={content === ""}
                     id="outlined-multiline-flexible"
                     label="許願內容"
                     multiline
+                    required
                     maxRows={4}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                   />
                 </Box>
                 <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>

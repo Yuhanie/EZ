@@ -165,7 +165,7 @@ const MENU_LIST = [
    }
   
     const update = async function () {
-      if (content == "" || majortagName == "" || tagName == "" || link == "") {
+      if (content == "" || tagName == "") {
         return (false);
       }
   
@@ -181,7 +181,7 @@ const MENU_LIST = [
             heart: [],
             // bookmark: [],
             count: 1,
-            link,
+            // link,
             // outdate: "solved",
             // outdateCount: [],
             timestamp: serverTimestamp(),
@@ -196,7 +196,7 @@ const MENU_LIST = [
             // title,
             content,
             tag: tagName,
-            link,
+            // link,
             // majortag: majortagName,
           });
         }

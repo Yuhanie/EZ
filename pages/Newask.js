@@ -54,7 +54,7 @@ const MENU_LIST = [
   function Newask() {
   
     const router = useRouter();
-    const { articleId } = router.query;
+    const { id } = router.query;
     const [tags, setTags] = React.useState([]);
     const [tagName, setTagName] = React.useState("");
     const [link, setLink] = React.useState('');
@@ -80,22 +80,22 @@ const MENU_LIST = [
    useEffect(() => {
 
     async function readData() {
-       if (articleId) {
-          const ref = doc(db, "wish", articleId);
+       if (id) {
+          const ref = doc(db, "wish", id);
           const docSnapshot = await getDoc(ref);
           if (docSnapshot.exists()) {
              console.log("doc", docSnapshot.data())
              setContent(docSnapshot.data().content)
-             setLink(docSnapshot.data().link)
+            //  setLink(docSnapshot.data().link)
              setTagName(docSnapshot.data().tag)
-             setmajorTagName(docSnapshot.data().majortag)
+            //  setmajorTagName(docSnapshot.data().majortag)
           }
        }
 
     }
     readData();
  }
-    , [articleId])
+    , [id])
 
     useEffect(() => {
       //   if (articleId){
@@ -171,7 +171,7 @@ const MENU_LIST = [
   
       const db = getFirestore();
       try {
-        if (!articleId) {
+        if (!id) {
           const docRef = await addDoc(collection(db, "wish"), {
             content,
             userid: user.uid,
@@ -192,7 +192,7 @@ const MENU_LIST = [
           // console.log(docRef.id);
         }
         else {
-          await updateDoc(doc(db, "wish", articleId), {
+          await updateDoc(doc(db, "wish", id), {
             // title,
             content,
             tag: tagName,
@@ -252,9 +252,9 @@ const MENU_LIST = [
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
                               value={tagName}
-                              onChange={(e) => {
+                               onChange={(e) => {
                                 setTagName(e.target.value);
-                             }}
+                              }}
                               // input={<OutlinedInput id="select-multiple-chip" />}
                               
                             >

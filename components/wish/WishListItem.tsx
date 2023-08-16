@@ -175,9 +175,11 @@ const WishListItem:
             <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update} ></WishDetails>
             <Paper
                sx={{
+                  display:'flex',
                   p: 2,
                   marginBottom: 2,
                   flexGrow: 1,
+                  justifyContent:'center',
                   backgroundColor: (theme) =>
                      theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                }}

@@ -245,6 +245,7 @@ const WishingPool = () => {
                user: doc.data().user,
                timestamp: doc.data().timestamp,
                heart: doc.data().heart,
+               tag: doc.data().tag,
             });
          });
          setWishes([...temp]);

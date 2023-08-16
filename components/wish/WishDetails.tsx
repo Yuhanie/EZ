@@ -56,7 +56,7 @@ const WishDetails:
          props.setOpen(false);
       };
 
-     
+
 
       return (
          <div>
@@ -75,6 +75,7 @@ const WishDetails:
                      display: { xs: 6, md: 12 }
                   }}
                >
+
                   <CardHeader
                      avatar={
                         <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
@@ -92,10 +93,17 @@ const WishDetails:
                      tabIndex={-1}
                      sx={{ mb: 10 }}
                   >
-                     {props.wish.content}
+                     {(typeof window !== "undefined") &&
+                        <ReactQuillEditor
+                           theme="bubble"
+                           //style={{ height: 50 }}
+                           readOnly={true}
+                           value={props.wish.content}
+                        />
+                     }
                   </DialogContentText>
                   <Box>
-                  <Chip label={props.wish.tag} size="small" />
+                     <Chip label={props.wish.tag} size="small" />
                   </Box>
                </DialogContent>
                <DialogActions sx={{ alignItems: 'flex-end', }}>

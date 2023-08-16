@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import router from 'next/router';
 import WishDetails from './WishDetails';
 
@@ -18,6 +18,11 @@ import { firebaseConfig } from '../../settings/firebaseConfig';
 import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, } from "firebase/firestore";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
+
+import dynamic from "next/dynamic";
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.core.css';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -39,6 +44,7 @@ const WishListItem:
       const [heartCount, setHeartCount] = useState(props.wish.heart ? props.wish.heart.length : 0);
       const [liked, setLiked] = useState(false);
       const [profile, setProfile] = useState<Profile>();
+      const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
       const handleOpen = () => {
@@ -175,11 +181,11 @@ const WishListItem:
             <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update} ></WishDetails>
             <Paper
                sx={{
-                  display:'flex',
+                  display: 'flex',
                   p: 2,
                   marginBottom: 2,
                   flexGrow: 1,
-                  justifyContent:'center',
+                  justifyContent: 'center',
                   backgroundColor: (theme) =>
                      theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                }}
@@ -201,9 +207,14 @@ const WishListItem:
                   <Grid item xs={12} md={8} container sx={{ cursor: 'pointer' }} onClick={handleOpen}>
                      <Grid item direction="column">
                         <Grid item >
-                           <Typography variant="body2">
-                              {props.wish.content}
-                           </Typography>
+                           {(typeof window !== "undefined") &&
+                              <ReactQuillEditor
+                                 theme="bubble"
+                                 style={{ height: 50 }}
+                                 readOnly={true}
+                                 value={props.wish.content}
+                              />
+                           }
                         </Grid>
                      </Grid>
                   </Grid>

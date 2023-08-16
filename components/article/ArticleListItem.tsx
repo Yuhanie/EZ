@@ -330,7 +330,7 @@ const ArticleListItem:
               {(typeof window !== "undefined") &&
                 <ReactQuillEditor
                   theme="bubble"
-                  style={{height:100}}
+                  style={{height:80,overflow:'hidden'}}
                   readOnly={true}
                   value={props.article.content}
                 />

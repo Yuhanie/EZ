@@ -84,49 +84,49 @@ const Newwish = () => {
       async function readData() {
 
 
-        setIsLoading(true);
+         setIsLoading(true);
 
-        const auth = getAuth();
-      const unsub = onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setCurrentUser(user);
-        }
-        // else{
-        // setCurrentUser()}
-        console.log(user);
-      });
-      setIsLoading(false);
+         const auth = getAuth();
+         const unsub = onAuthStateChanged(auth, (user) => {
+            if (user) {
+               setCurrentUser(user);
+            }
+            // else{
+            // setCurrentUser()}
+            console.log(user);
+         });
+         setIsLoading(false);
 
-      return () => {
-        unsub();
+         return () => {
+            unsub();
+         }
       }
-    }
-    readData();
+      readData();
    }, []);
 
    const changeStatus = function () {
       if (typeof window !== "undefined") {
 
-        if (currentUser) {
-          router.push('/Newask');
-        }
-        else {
-          alert("要登入才能問問題ㄛ!")
-          //window.alert("要登入才能新增筆記ㄛ!");
+         if (currentUser) {
+            router.push('/Newask');
+         }
+         else {
+            alert("要登入才能問問題ㄛ!")
+            //window.alert("要登入才能新增筆記ㄛ!");
 
-          // <Alert action={
-          //   <Button >
-          //     UNDO
-          //   </Button>
-          // }>要登入才能新增筆記ㄛ! </Alert>
+            // <Alert action={
+            //   <Button >
+            //     UNDO
+            //   </Button>
+            // }>要登入才能新增筆記ㄛ! </Alert>
 
-          router.push('/login');
+            router.push('/login');
 
-        }
+         }
 
 
       }
-    }
+   }
    return (
       <Grid item direction='column'>
          <Grid item xs={8}>
@@ -182,7 +182,7 @@ function WishLoad() {
       <Paper
          sx={{
             p: 1,
-            margin: 'auto',
+            mb: 2,
             flexGrow: 1,
          }}
       >
@@ -289,7 +289,10 @@ const WishingPool = () => {
                      <div>
                         {wishes.map(renderWish)}
                      </div>
-                     : <WishLoad />
+                     :
+                     <div>
+                        <WishLoad /><WishLoad /><WishLoad /><WishLoad /><WishLoad /><WishLoad /><WishLoad />
+                     </div>
                   }
                </Grid>
             </Grid>

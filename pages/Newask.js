@@ -207,6 +207,43 @@ function Newask() {
     router.push('/wishingPool');
   }
 
+  //和quill有關的設定
+  const modules = {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      //[{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      // [
+      //   { list: 'ordered' },
+      //   { list: 'bullet' },
+      //   { indent: '-1' },
+      //   { indent: '+1' },
+      // ],
+      ['link', 'image','code-block'],
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+  };
+
+  const formats = [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'video',
+    'code-block'
+  ];
+
   return (
     //<div className={styles.post_container}>
     <div>
@@ -282,20 +319,24 @@ function Newask() {
             {tagName === "" && <FormHelperText>請選擇問題分類</FormHelperText>}
           </FormControl>
           <br />
+          <Box >
+            {(typeof window !== "undefined") &&
 
-          {(typeof window !== "undefined") &&
-
-            <ReactQuillEditor
-              required
-              InputProps
-              error={content === ""}
-              id="outlined-textarea"
-              label="許願內容"
-              placeholder={content ? "" : "許願內容"}
-              multiline
-              value={content}
-              onChange={addContent}
-            />}
+              <ReactQuillEditor
+                required
+                InputProps
+                error={content === ""}
+                id="outlined-textarea"
+                label="許願內容"
+                placeholder={content ? "" : "許願內容"}
+                value={content}
+                modules={modules}
+                formats={formats}
+                theme="snow"
+                onChange={addContent}
+                style={{minHeight:100, height: 'auto' }}
+              />}
+          </Box>
         </Box>
         <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button variant="contained" disabled color="primary">取消</Button><br></br><br></br>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useMemo } from "react";
 import dynamic from 'next/dynamic';
-
+import wishComment from "./wishComment";
 
 //mui
 import Box from '@mui/material/Box';
@@ -25,13 +25,14 @@ import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
 
 //firebase
-import { Wish, Profile } from '../../interfaces/entities';
+import { Wish, Profile, Article, Comment } from '../../interfaces/entities';
 import { firebaseConfig } from '../../settings/firebaseConfig';
-import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, query, orderBy, serverTimestamp, } from "firebase/firestore";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { ReactPropTypes } from 'react';
 import { ChatBubble } from '@mui/icons-material';
+import router from 'next/router';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -51,12 +52,130 @@ const WishDetails:
       const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
       const [profile, setProfile] = useState<Profile>();
       const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+      const [comments, setComments] = useState<Comment>();
+      const [deleted, setDeleted] = useState<number>(0);
+      const [user, setUser] = useState<User>();
+      const [edited, setEdited] = useState<number>(0);
+      const [content, setContent] = useState<string>();
 
       const handleClose = () => {
          props.setOpen(false);
       };
 
 
+      useEffect(() => {
+         async function fetchData() {
+
+            //   const querySnapshotDenounce = collection(
+            //     db,
+            //     "text",
+            //     props.article.docId,
+            //     "denounce"
+            //   );
+            //   const queryReport = query(querySnapshotDenounce);
+            //   const querySnapshotReport = await getDocs(queryReport);
+            //   const tempReport = [];
+            //   querySnapshotReport.forEach((doc) => {
+
+            //     let reportMessage = "";
+
+            //     switch (doc.data().reason) {
+            //       case "empty":
+            //         reportMessage = "內容空泛";
+            //         break;
+            //       case "curse":
+            //         reportMessage = "中傷、挑釁、謾罵他人";
+            //         break;
+            //       case "spamming":
+            //         reportMessage = "惡意洗版";
+            //         break;
+            //       // default:
+            //       //   reportMessage = "分類錯誤";
+            //     }
+
+            //     // setMessage(() => [...]);
+            //     let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
+            //     // console.log("reportData", reportdata)
+            //     tempReport.push(reportdata);
+
+
+            //   });
+
+            //   setDenounces(() => [...tempReport]);
+
+
+
+            // setReportMessage(reportMessage);
+
+
+
+
+
+
+            const querySnapshot = collection(
+               db,
+               "wish",
+               props.wish.docId,
+               "comment"
+            );
+            const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
+            const querySnapshotArticle = await getDocs(queryText);
+            const temp: Comment[] = [];
+
+            querySnapshotArticle.forEach((doc) => {
+               // let data = { ...doc.data(), id: doc.id, user: doc.user, content:doc.content };
+               temp.push({ id: doc.id, user: doc.user, content: doc.content });
+               // console.log("data:", data);
+            });
+
+            // setComments(() => [temp1, temp2]);
+            setComments(() => [...temp]);
+         }
+         fetchData();
+         // console.log("user:", user);
+         // console.log("article:", props.article);
+
+         // eslint-disable-next-line
+      }, [edited, deleted]);
+
+      async function onSubmit() {
+         if (typeof window !== "undefined") {
+            if (!user) {
+               alert("要登入才能新增留言ㄛ!");
+               router.push("/login");
+            } else {
+               await addDoc(collection(db, "text", props.wish.docId, "comment"), {
+                  content,
+                  userid: user.uid,
+                  timestamp: serverTimestamp(),
+                  heart: [],
+                  user: user.displayName,
+               });
+               setContent("");
+               setEdited(edited + 1);
+
+               //router.push('/');
+            }
+         }
+      }
+
+      const renderComment = (comment: Comment, i: number) => {
+         return (
+            <div key={comment.content}>
+               {comment && (
+                  <div style={{ padding: 14 }} className="App">
+                     <Comment key={comment.docId} comment={comment} update={updateUpdated} />
+                     {/* <Comment
+                        edited={edited}
+                        setEdited={setEdited}
+                        article={props.article}
+                        comment={comment}
+                     /> */}
+                  </div>
+               )}
+            </div>
+         );
+      };
 
       return (
          <div>
@@ -102,6 +221,7 @@ const WishDetails:
                         />
                      }
                   </DialogContentText>
+                  {comments.map((comment) => renderComment(comment))}
                   <Box>
                      <Chip label={props.wish.tag} size="small" />
                   </Box>

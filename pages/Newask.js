@@ -247,6 +247,9 @@ function Newask() {
   return (
     //<div className={styles.post_container}>
     <div>
+      <Navbar />
+      <Toolbar /><br/><br/>
+      
       <Paper
         sx={{
           width: 330,

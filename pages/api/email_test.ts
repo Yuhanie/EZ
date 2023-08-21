@@ -15,13 +15,14 @@ const handler: NextApiHandler = async (
     },
   };
   try {
-    const email = req.body.email || "053792@mail.fju.edu.tw";
+    const email = req.body.email || "victoria2013chang@gmail.com";
     const transporter = nodemailer.createTransport(smtpOptions);
+    const subject = req.body.subject || "測試";
     console.log("user:", process.env.SMTP_USER);
     await transporter.sendMail({
       from: process.env.SMTP_USER || "ezgroup329@gmail.com",
       to: email,
-      subject: "測試",
+      subject: subject,
       html: "測試 gmail",
     });
     return res.status(200).json({ message: "Email成功送出" });

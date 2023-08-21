@@ -230,6 +230,18 @@ function Newpost() {
                majortag: majortagName,
             });
             // console.log(docRef.id);
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                 email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
+                 subject: title,
+                 html: content,
+                 // message: message,
+               },
+             });
+             console.log(response.data.message);
+    
          }
          else {
             await updateDoc(doc(db, "text", articleId), {
@@ -240,10 +252,28 @@ function Newpost() {
                majortag: majortagName,
                minitag: minitagName,
             });
+         const response = await axios({
+           method: 'post',
+           url: '/api/email_test',
+           data: {
+             email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
+             subject: title,
+             html: content,
+             // message: message,
+           },
+         });
+         console.log(response.data.message);
          }
       }
       catch (e) {
          console.log(e);
+         if (axios.isAxiosError(e)) {
+            // setResponse(e.message);
+            console.log(e.message);
+          } else {
+            // setResponse("錯誤");
+            console.log("error");
+          }
       }
       router.push('/note');
    }

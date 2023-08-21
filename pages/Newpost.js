@@ -71,14 +71,14 @@ const majortags = [
 ];
 
 const formats = [
-  'font','size',
-  'bold','italic','underline','strike',
-  'color','background',
-  'script',
-  'header','blockquote','code-block',
-  'indent','list',
-  'direction','align',
-  'link','image','video','formula',
+   'font', 'size',
+   'bold', 'italic', 'underline', 'strike',
+   'color', 'background',
+   'script',
+   'header', 'blockquote', 'code-block',
+   'indent', 'list',
+   'direction', 'align',
+   'link', 'image', 'video', 'formula',
 ]
 
 function getStyles(majortag, majortagName, theme) {
@@ -102,8 +102,9 @@ function Newpost() {
    const [minitagName, setminiTagName] = React.useState([]);
    const [link, setLink] = React.useState('');
    const [user, setUser] = useState();
+   const [profile, setProfile] = useState();
    const theme = useTheme();
-   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
+   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
    const handleChange = (event) => {
       const {
@@ -145,6 +146,16 @@ function Newpost() {
                setmajorTagName(docSnapshot.data().majortag)
                setminiTagName(docSnapshot.data().minitag)
             }
+
+            const querySnapshot = await getDoc(doc(db, "profile", id));
+            if ((querySnapshot).exists()) {
+               //console.log(doc.id, doc.data());
+               setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+               setUser(querySnapshot.data().user);
+            } else {
+               setProfile({ character: "學習者" });
+            }
+
          }
 
       }
@@ -152,7 +163,7 @@ function Newpost() {
    }
       , [articleId])
 
-      
+
 
 
    useEffect(() => {
@@ -199,8 +210,8 @@ function Newpost() {
    })
 
 
-//crud
-   const addContent = (value) =>{
+   //crud
+   const addContent = (value) => {
       setContent(value)
    }
 
@@ -234,14 +245,14 @@ function Newpost() {
                method: 'post',
                url: '/api/email_test',
                data: {
-                 email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
-                 subject: title,
-                 html: content,
-                 // message: message,
+                  email: profile.email,
+                  subject: title,
+                  html: content,
+                  // message: message,
                },
-             });
-             console.log(response.data.message);
-    
+            });
+            console.log(response.data.message);
+
          }
          else {
             await updateDoc(doc(db, "text", articleId), {
@@ -252,28 +263,28 @@ function Newpost() {
                majortag: majortagName,
                minitag: minitagName,
             });
-         const response = await axios({
-           method: 'post',
-           url: '/api/email_test',
-           data: {
-             email: "victoria2013chang@gmail.com, victoria2020fam@gmail.com",
-             subject: title,
-             html: content,
-             // message: message,
-           },
-         });
-         console.log(response.data.message);
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                  email: profile.email,
+                  subject: title,
+                  html: content,
+                  // message: message,
+               },
+            });
+            console.log(response.data.message);
          }
       }
       catch (e) {
          console.log(e);
-         if (axios.isAxiosError(e)) {
-            // setResponse(e.message);
-            console.log(e.message);
-          } else {
-            // setResponse("錯誤");
-            console.log("error");
-          }
+         // if (axios.isAxiosError(e)) {
+         //    // setResponse(e.message);
+         //    console.log(e.message);
+         // } else {
+         //    // setResponse("錯誤");
+         //    console.log("error");
+         // }
       }
       router.push('/note');
    }
@@ -358,23 +369,23 @@ function Newpost() {
                      </FormControl> */}
 
                      <div className={styles.ReactQuill}>
-                        
-                     {(typeof window !== "undefined") &&
 
-                     <ReactQuillEditor
-                           error={content === ""}
-                           helperText={content === "" ? "請輸入內容" : ""}
-                           required
-                           InputProps
-                           id="outlined-textarea"
-                           label="請輸入內容"
-                           placeholder={content ? "" : "我想分享..."}
-                           margin="normal"
-                           rows={10}
-                           multiline
-                           value={content}
-                           onChange={addContent}
-                        />}
+                        {(typeof window !== "undefined") &&
+
+                           <ReactQuillEditor
+                              error={content === ""}
+                              helperText={content === "" ? "請輸入內容" : ""}
+                              required
+                              InputProps
+                              id="outlined-textarea"
+                              label="請輸入內容"
+                              placeholder={content ? "" : "我想分享..."}
+                              margin="normal"
+                              rows={10}
+                              multiline
+                              value={content}
+                              onChange={addContent}
+                           />}
 
                      </div>
 

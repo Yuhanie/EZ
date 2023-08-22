@@ -13,6 +13,7 @@ import { getFirestore, collection, addDoc, setDoc, doc, Timestamp, getDoc } from
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { firebaseConfig } from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
+import axios from "axios";
 
 //mui
 import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
@@ -102,8 +103,9 @@ function Newpost() {
    const [minitagName, setminiTagName] = React.useState([]);
    const [link, setLink] = React.useState('');
    const [user, setUser] = useState();
+   const [profile, setProfile] = useState();
    const theme = useTheme();
-   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
+   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
    const handleChange = (event) => {
       const {
@@ -145,6 +147,14 @@ function Newpost() {
                setmajorTagName(docSnapshot.data().majortag)
                setminiTagName(docSnapshot.data().minitag)
             }
+            const querySnapshot = await getDoc(doc(db, "profile", id));
+             if ((querySnapshot).exists()) {
+                //console.log(doc.id, doc.data());
+                setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+                setUser(querySnapshot.data().user);
+             } else {
+                setProfile({ character: "學習者" });
+             }
          }
 
       }
@@ -200,7 +210,7 @@ function Newpost() {
 
 
 //crud
-   const addContent = (value) =>{
+   const addContent = (value) => {
       setContent(value)
    }
 
@@ -230,6 +240,17 @@ function Newpost() {
                majortag: majortagName,
             });
             // console.log(docRef.id);
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                 email: profile.email,
+                 subject: title,
+                 html: content,
+                 // message: message,
+               },
+             });
+             console.log(response.data.message);
          }
          else {
             await updateDoc(doc(db, "text", articleId), {
@@ -240,6 +261,17 @@ function Newpost() {
                majortag: majortagName,
                minitag: minitagName,
             });
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                 email: profile.email,
+                 subject: title,
+                 html: content,
+                 // message: message,
+               },
+             });
+             console.log(response.data.message);
          }
       }
       catch (e) {

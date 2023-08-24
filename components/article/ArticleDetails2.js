@@ -155,6 +155,10 @@ const ArticleDetails2 = (props) => {
     }
   };
 
+  const addContent = (value) => {
+    setContent(value)
+  }
+
   const setHeart = async (user) => {
     const ref = doc(db, "text", props.article.docId);
     const docSnap = await getDoc(ref);
@@ -973,17 +977,19 @@ const ArticleDetails2 = (props) => {
 
   return (
     <div className={styles.container}>
-      <Dialog open={props.open} onClose={handleClose} >
-        <Navbar />
+      <Dialog
+        open={props.open}
+        onClose={handleClose}
+      >
+        {/* <Navbar /> */}
         <Container>
-          <Card sx={{ boxShadow: 'none', minWidth: 345 }}>
-
+          <Card sx={{ boxShadow: 'none', width: 345 }}>
             <Grid
               container
               display="flex"
               justifyContent="space-between"
             >
-              <Grid item>
+              <Grid item >
                 <CardHeader
                   avatar={
                     <Avatar >
@@ -997,8 +1003,7 @@ const ArticleDetails2 = (props) => {
                   sx={{ p: 1.2 }}
                 />
               </Grid>
-              <Grid item display='flex' alignItems="center">
-
+              <Grid item display='flex' alignItems="center" >
                 <FormControl>
                   {user &&
                     user.uid === props.article.userid &&
@@ -1016,23 +1021,25 @@ const ArticleDetails2 = (props) => {
 
             <Divider />
 
-            <CardContent>
-              <Typography variant="h5" color="text.secondary">
-                <Box display="flex" alignItems="center">
-                  {outdateIcon()}
-                  {props.article.title}
-                </Box>
-              </Typography>
-              {(typeof window !== "undefined") &&
-                <ReactQuillEditor
-                  theme="bubble"
-                  style={{ height: 80, overflow: 'hidden' }}
-                  readOnly={true}
-                  value={props.article.content}
-                />
-              }
+            <CardContent >
+              <Grid item>
+                <Typography variant="h5" color="text.secondary">
+                  <Box display="flex" alignItems="center">
+                    {outdateIcon()}
+                    {props.article.title}
+                  </Box>
+                </Typography>
+                {(typeof window !== "undefined") &&
+                  <ReactQuillEditor
+                    theme="bubble"
+                    style={{ height: 'auto', }}
+                    readOnly={true}
+                    value={props.article.content}
+                  />
+                }
+              </Grid>
             </CardContent>
-            <CardActions sx={{m:1}}>
+            <CardActions sx={{ m: 1 }}>
               <Stack spacing={1}>
                 {/* {props.article.content} */}
                 {/* <div className={styles.card3}> */}
@@ -1102,52 +1109,33 @@ const ArticleDetails2 = (props) => {
             </Box>
             {character === "專家" && expert()}
             {expertAction === "true" && expertReport()}
-            <div>
+            <Box >
               {comments.map((comment) => renderComment(comment))}
-            </div>
+            </Box>
 
-            {/* <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-              <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </ExpandMore>
-            </CardActions> */}
-            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                  Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                  aside for 10 minutes.
-                </Typography>
-                <Typography paragraph>
-                  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                  medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                  occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                  large plate and set aside, leaving chicken and chorizo in the pan. Add
-                  pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                  stirring often until thickened and fragrant, about 10 minutes. Add
-                  saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                </Typography>
-                <Typography paragraph>
-                  Add rice and stir very gently to distribute. Top with artichokes and
-                  peppers, and cook without stirring, until most of the liquid is absorbed,
-                  15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                  mussels, tucking them down into the rice, and cook again without
-                  stirring, until mussels have opened and rice is just tender, 5 to 7
-                  minutes more. (Discard any mussels that don&apos;t open.)
-                </Typography>
-              </CardContent>
-            </Collapse> */}
+            <CardActions sx={{ alignItems: 'flex-end', }}>
+              {/* <Grid xs={1.5} sx={{ m: 1 }}>
+                     <Avatar sx={{ width: 30, height: 30, }} />
+                  </Grid> */}
+              <Grid item width={300} >
+                {(typeof window !== "undefined") &&
+
+                  <ReactQuillEditor
+                    theme="bubble"
+                    //placeholder='留言'
+                    onChange={addContent}
+                    placeholder={`以${user && user.displayName}新增留言`}
+                    style={{
+                      minHeight: 40,
+                      border: 'solid',
+                      borderRadius: 8,
+                      margin: 8,
+                      borderColor: '#9a9a9a',
+                    }}
+                  />}
+              </Grid>
+              <IconButton onClick={onSubmit}><SendIcon sx={{ fontSize: 20, pb: 0.2 }} /></IconButton>
+            </CardActions>
           </Card>
         </Container>
 

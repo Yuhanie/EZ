@@ -1,7 +1,8 @@
 import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import dynamic from 'next/dynamic';
 import router from "next/router";
 import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
@@ -51,6 +52,13 @@ import {
   Box,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
+
+//quill
+// import ReactQuill from "react-quill";
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.core.css';
+
 // const docRef = doc(db, "English", "1");
 // const docSnap = await getDoc(docRef);
 
@@ -88,8 +96,7 @@ const Comment = (props) => {
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
-
-
+  const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
 
@@ -334,18 +341,20 @@ const Comment = (props) => {
         <Paper>
           <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" >
-              <Box display="flex" flexDirection="row" alignItems="center">
-
-                <CardHeader
+              <Box display="flex" justifyContent="space-between" alignItems="center" >
+                <Avatar sx={{ height: 25, width: 25, mr: 1 }} />
+                <Typography variant="body2"> {comment.user}</Typography>
+              </Box>
+              {/* <CardHeader
                   avatar={
-                    <Avatar sx={{ mr: 2, height: 25, width: 25 }} />
+                    
                   }
                   title={comment.user}
-                  subheader={comment.timestamp && comment.timestamp.toDate().toLocaleString()}
+                  // subheader={comment.timestamp && comment.timestamp.toDate().toLocaleString()}
                   //item 
-                  sx={{ p: 1.2 }}
-                />
-              </Box>
+                /> */}
+
+
               <Box display="flex" alignItems="center">
                 <IconButton
                   //style={{ textAlign: "left", left: 300, bottom: 80 }}
@@ -421,6 +430,9 @@ const Comment = (props) => {
                 : ""}
             </div> */}
       {renderComment(props.comment)}
+      
+
+      
       {/* </div> */}
       {/* {user && user.displayName} */}
       {/* <OutlinedInput

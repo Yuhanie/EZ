@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Image from 'next/image';
 import profilePic from '/public/pic/test1.jpeg'
 import { firebaseConfig } from '../../settings/firebaseConfig';
@@ -8,7 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Tooltip from "@mui/material/Tooltip";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState, useMemo } from "react";
-
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import ArticleDetails2 from './ArticleDetails2';
 import ArticleDetails from "./ArticleDetails";
 import { Article, Profile } from '../../interfaces/entities';
@@ -66,12 +67,14 @@ const ArticleListItem:
     const [character, setCharacter] = useState("學習者");
     const [userInfo, setUserInfo] = useState("");
     const [profile, setProfile] = useState<Profile>();
+    const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
     const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
 
-    const handleOpen = () => {
+    const handleOpen = (scrollType: DialogProps['scroll']) => () => {
       setOpen(true);
+      setScroll(scrollType);
       const ref = doc(db, "text", props.article.docId);
       updateDoc(ref, { count: increment(1) });
 
@@ -306,8 +309,15 @@ const ArticleListItem:
 
     return (
       <div>
-        <ArticleDetails article={props.article} open={open} setOpen={setOpen} update={props.update} ></ArticleDetails>
-        {/* <ArticleDetails2 article={props.article} open={open} setOpen={setOpen} update={props.update}></ArticleDetails2> */}
+        {/* <ArticleDetails article={props.article} open={open} setOpen={setOpen} update={props.update} ></ArticleDetails> */}
+        <ArticleDetails2
+          article={props.article}
+          open={open}
+          setOpen={setOpen}
+          scroll={scroll}
+          update={props.update}
+        >
+        </ArticleDetails2>
         <Card
           sx={{
             // maxWidth: 345,
@@ -319,7 +329,7 @@ const ArticleListItem:
             boxShadow: 1,
           }}
         >
-          <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen}>
+          <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen('paper')}>
 
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -334,7 +344,7 @@ const ArticleListItem:
               {(typeof window !== "undefined") &&
                 <ReactQuillEditor
                   theme="bubble"
-                  style={{height:80,overflow:'hidden'}}
+                  style={{ height: 80, overflow: 'hidden' }}
                   readOnly={true}
                   value={props.article.content}
                 />

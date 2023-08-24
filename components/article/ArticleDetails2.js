@@ -79,6 +79,21 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import Tooltip from "@mui/material/Tooltip";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
+import Navbar from '../../components/navbar/Navbar';
+import Container from '@mui//material/Container';
+import { styled } from '@mui/material/styles';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Bookmark from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ButtonBase from "@mui/material/ButtonBase";
 import dynamic from "next/dynamic";
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
@@ -90,7 +105,19 @@ const firebaseApp =
 const db = getFirestore();
 const auth = getAuth();
 
-const ArticleDetails = (props) => {
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+
+const ArticleDetails2 = (props) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [user, setUser] = useState();
@@ -106,6 +133,17 @@ const ArticleDetails = (props) => {
   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
   //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
+  const [expanded, setExpanded] = React.useState(false);
+  const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
+  const [bookCount, setBookCount] = useState(props.article.bookmark ? props.article.bookmark.length : 0);
+  const [liked, setLiked] = useState(false);
+  const [bookMarked, setBookMarked] = useState(false);
+
+
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -117,6 +155,47 @@ const ArticleDetails = (props) => {
     }
   };
 
+  const setHeart = async (user) => {
+    const ref = doc(db, "text", props.article.docId);
+    const docSnap = await getDoc(ref);
+    if (docSnap.exists()) {
+      if (user) {
+        if (props.article.heart && docSnap.data().heart.includes(user.uid)) {
+          setLiked(true)
+          console.log(props.article.title + 'liked')
+        }
+        else {
+
+          setLiked(false)
+          console.log(props.article.title + 'unliked')
+
+        }
+      }
+
+    }
+  }
+
+  const setBookmark = async (user) => {
+    const ref = doc(db, "text", props.article.docId);
+    const docSnap = await getDoc(ref);
+    if (docSnap.exists()) {
+      if (user) {
+        if (props.article.bookmark && docSnap.data().bookmark.includes(user.uid)) {
+          setBookMarked(true)
+          console.log(props.article.title + 'bookmarked')
+        }
+        else {
+
+          setBookMarked(false)
+          console.log(props.article.title + 'bookmarked')
+
+        }
+      }
+
+    }
+  }
+
+
   const SERVICE_ID = "service_5g4512y";
   const REPORT_TEMPLATE_ID = "template_bs9ya4t";
   const OUTDATE_TEMPLATE_ID = "template_lqwqzir";
@@ -124,8 +203,10 @@ const ArticleDetails = (props) => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
       if (user) {
+        setUser(user);
+        setHeart(user);
+        setBookmark(user);
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
 
@@ -170,8 +251,78 @@ const ArticleDetails = (props) => {
       unsub();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [liked, bookMarked]);
 
+  const bookmark = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if ((docSnap.exists())) {
+          if (docSnap.data().bookmark.includes(user.uid)) {
+            // alert('remove')
+            updateDoc(ref, {
+              bookmark: arrayRemove(user.uid)
+            });
+            setBookMarked(false)
+            setBookCount(bookCount - 1)
+          } else {
+            // alert('added')
+            updateDoc(ref, {
+              bookmark: arrayUnion(user.uid)
+            });
+            setBookMarked(true)
+            setBookCount(bookCount + 1)
+          }
+        }
+      }
+      else {
+        alert("要登入才能收藏ㄛ!")
+        router.push('/login');
+      }
+    }
+  }
+
+  const heart = async function () {
+    if (typeof window !== "undefined") {
+      if (user) {
+        const ref = doc(db, "text", props.article.docId);
+        const docSnap = await getDoc(ref);
+        if ((docSnap.exists())) {
+          if (docSnap.data().heart.includes(user.uid)) {
+            // alert('remove')
+            updateDoc(ref, {
+              heart: arrayRemove(user.uid)
+            });
+            setLiked(false)
+            setCount(count - 1)
+          } else {
+            // alert('added')
+            updateDoc(ref, {
+              heart: arrayUnion(user.uid)
+
+            });
+            setLiked(true)
+            setCount(count + 1)
+
+
+          }
+        }
+
+
+      }
+
+      else {
+        alert("要登入才能按讚ㄛ!")
+        router.push('/login');
+
+      }
+
+
+
+    }
+
+  }
 
 
   useEffect(() => {
@@ -775,7 +926,7 @@ const ArticleDetails = (props) => {
     return (
       <div key={comment.content}>
         {comment && (
-          <div style={{ padding: 14 }} className="App">
+          <div style={{ padding: 10 }}>
             <Comment
               edited={edited}
               setEdited={setEdited}
@@ -805,6 +956,15 @@ const ArticleDetails = (props) => {
     );
   };
 
+  function ClickedHeartBtn() {
+    return (
+      <IconButton>
+        <Heart sx={{ color: 'error' }} />
+      </IconButton>
+    )
+  }
+
+
   // let formattedTags = "";
   // if (typeof props.article.majortag === "string") {
   //   formattedTags = props.article.majortag.split(",").join(" ");
@@ -814,110 +974,117 @@ const ArticleDetails = (props) => {
   return (
     <div className={styles.container}>
       <Dialog open={props.open} onClose={handleClose} >
-        <Card>
-          <Box
-            display="flex"
-            justifyContent="space-between"
+        <Navbar />
+        <Container>
+          <Card sx={{ boxShadow: 'none', minWidth: 345 }}>
 
-          >
-            <Box>
-              <CardHeader
-                avatar={
-                  <Avatar>
-                    {/* {props.article.userid && profile && profile.photoURL &&
-                  <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
-                  </Avatar>
-                }
-                title={props.article.user}
-                subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
-                //item 
-                sx={{ p: 1.2 }}
-              /></Box>
-            <Box display="flex" alignItems="center">
-              <VI />
-              <Typography variant="body2" sx={{ ml: 0.5, pr: 0.8 }}>
-                {props.article.count}
-              </Typography>
-              <FormControl>
-                {user &&
-                  user.uid === props.article.userid &&
-                  Update(props.article.docId)}
-                {/* {user.uid}/{props.article.userid} */}
-                {/* {props.article.userid} */}
-              </FormControl>
-              <Box>
-                {user && user.uid !== props.article.userid && reportMenu()}
-
-                {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
-              </Box>
-            </Box>
-
-          </Box>
-
-          <DialogTitle>
-            <Box
+            <Grid
+              container
               display="flex"
               justifyContent="space-between"
-
             >
-              <Box display="flex" alignItems="center">
-                {outdateIcon()}
-                <a href={props.article.link}>{props.article.title}</a>
-              </Box>
+              <Grid item>
+                <CardHeader
+                  avatar={
+                    <Avatar >
+                      {/* {props.article.userid && profile && profile.photoURL &&
+                  <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
+                    </Avatar>
+                  }
+                  title={props.article.user}
+                  subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
+                  //item 
+                  sx={{ p: 1.2 }}
+                />
+              </Grid>
+              <Grid item display='flex' alignItems="center">
 
-            </Box>
-          </DialogTitle>
+                <FormControl>
+                  {user &&
+                    user.uid === props.article.userid &&
+                    Update(props.article.docId)}
+                  {/* {user.uid}/{props.article.userid} */}
+                  {/* {props.article.userid} */}
+                </FormControl>
+                <Box>
+                  {user && user.uid !== props.article.userid && reportMenu()}
 
-          <DialogContent>
+                  {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
+                </Box>
+              </Grid>
+            </Grid>
 
-            {/* <CircleIcon sx={{width:900}}/> */}
-            <Stack spacing={1} sx={{ minHeight: 150, ml: 1 }}>
-              {/* {props.article.content} */}
-              {/* <div className={styles.card3}> */}
+            <Divider />
 
-              <Stack direction="row" spacing={1}>
-                <Chip label={props.article.tag} size="small" />
-                {/* <Chip label={props.article.minitag} size="small" /> */}
-                {props.article.minitag && props.article.minitag.map((value) => (
-                  <Chip key={value} label={value} size="small" />))}
-
-                {props.article.majortag && props.article.majortag.map((value) => (
-                  <Chip key={value} label={value} size="small" />))}
-
-                {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
-              </Stack>
-
-
-              <Box display="flex" sx={{ flexDirection: "row", alignContent: "left" }}>
-                <LinkIcon sx={{ mr: 1 }} />
-                <a href={props.article.link} className={styles.attention} >
-                  查看詳細內容
-                </a>
-                {/* <Typography href={props.article.link} color= "#7A82E7">查看詳細內容</Typography> */}
-              </Box>
-
-              {/* <a href={props.article.link}> */}
-              {/* <a>
-              {props.article.content.substring(0, 245)}
-              {props.article.content.length > 245 ? "..." : ""}
-            </a> */}
-
-
+            <CardContent>
+              <Typography variant="h5" color="text.secondary">
+                <Box display="flex" alignItems="center">
+                  {outdateIcon()}
+                  {props.article.title}
+                </Box>
+              </Typography>
               {(typeof window !== "undefined") &&
                 <ReactQuillEditor
                   theme="bubble"
+                  style={{ height: 80, overflow: 'hidden' }}
                   readOnly={true}
-                  value={props.article.content.substring(0, 245)}
+                  value={props.article.content}
                 />
               }
+            </CardContent>
+            <CardActions sx={{m:1}}>
+              <Stack spacing={1}>
+                {/* {props.article.content} */}
+                {/* <div className={styles.card3}> */}
+
+                <Stack direction="row" spacing={1} >
+                  <Chip label={props.article.tag} size="small" />
+                  {/* <Chip label={props.article.minitag} size="small" /> */}
+                  {props.article.minitag && props.article.minitag.map((value) => (
+                    <Chip key={value} label={value} size="small" />))}
+
+                  {props.article.majortag && props.article.majortag.map((value) => (
+                    <Chip key={value} label={value} size="small" />))}
+
+                  {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
+                </Stack>
+              </Stack>
+
+            </CardActions>
 
 
-              {/* </div> */}
+            <Divider />
+            <Grid container display='flex' alignItems='center' sx={{ m: 1 }}>
+              <Grid item display='flex' alignItems='center' xs={2}>
+                {/* <IconButton aria-label="add to favorites" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }}>
+                  <FavoriteBorderIcon />
+                </IconButton> */}
+                <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+                  {liked ? <Heart sx={{ color: "#E2655E" }} /> : <FavoriteBorderIcon sx={{ color: '#757575' }} />}
+                </ButtonBase>
+                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                  {count}
+                </Typography>
 
+              </Grid>
+              <Grid item display='flex' alignItems='center' xs={2}>
+                <ButtonBase onClick={bookmark} sx={{ borderRadius: 10 }}>
+                  {bookMarked ? <Bookmark sx={{ color: "#7A82E7" }} /> : <BookmarkBorderIcon sx={{ color: '#757575' }} />}
+                </ButtonBase>
+                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                  {bookCount}
+                </Typography>
+              </Grid>
+              <Grid item display='flex' alignItems='center' xs={2}>
+                <VI sx={{ color: '#858585' }} />
+                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                  {props.article.count}
+                </Typography>
+              </Grid>
 
+            </Grid>
+            <Divider />
 
-
-            </Stack>
             <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>
               {props.article.outdate === "stale" && (
                 <h3>
@@ -933,67 +1100,60 @@ const ArticleDetails = (props) => {
               </div>
 
             </Box>
-
-            {/* <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius:2,}}> */}
-
             {character === "專家" && expert()}
             {expertAction === "true" && expertReport()}
-
-            {/* </Box> */}
-
-            <div style={{ padding: 10 }} >
-
-
-              {/* <IconButton
-                style={{  }}
-                aria-label="heart"
-                size="medium"
-                onClick={()=>outdateCount()}
-                sx={{textAlign: "left", left: 300, bottom: 80,
-                  color: outdated?"orange":"grey" 
-                }}
-              >
-            <LiveHelpIcon/>
-            </IconButton> */}
-
-              {/* <Typography
-                style={{ position: "relative", bottom: 110, left: 340 }}
-                variant="body2"
-                color="text.secondary"
-              >
-                {outdateCount ? count : 0}
-              </Typography> */}
-
+            <div>
               {comments.map((comment) => renderComment(comment))}
-
-              {/* <Comment article={props.article} /> */}
             </div>
-            <Box display="flex" position="relative" justifyContent="space-between">
-              {user && user.displayName}
-              <OutlinedInput
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                sx={{ ml: 2, borderRadius: 12, height: 35 }}
-                //sx={{ padding: 1, margin: 5, left: -20, top: -1, borderRadius: 12, width: 340, height: 35 }}
-                placeholder="我要留言..."
-                // onClick={onSubmit}
-                fullWidth
-              />
-              <Button
-                size="small"
-                variant="contained"
-                endIcon={<SendIcon />}
-                onClick={onSubmit}
-                sx={{ ml: 2, pl: 0.5, width: 2, height: 35 }}
-              // sx={{ padding: 0, margin: 1, right: -425, top: -84, borderRadius: 5, width: 2, height: 35 }}
-              ></Button>
-            </Box>
-          </DialogContent>
 
-        </Card>
+            {/* <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions> */}
+            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph>Method:</Typography>
+                <Typography paragraph>
+                  Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
+                  aside for 10 minutes.
+                </Typography>
+                <Typography paragraph>
+                  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
+                  medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
+                  occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
+                  large plate and set aside, leaving chicken and chorizo in the pan. Add
+                  pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
+                  stirring often until thickened and fragrant, about 10 minutes. Add
+                  saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+                </Typography>
+                <Typography paragraph>
+                  Add rice and stir very gently to distribute. Top with artichokes and
+                  peppers, and cook without stirring, until most of the liquid is absorbed,
+                  15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
+                  mussels, tucking them down into the rice, and cook again without
+                  stirring, until mussels have opened and rice is just tender, 5 to 7
+                  minutes more. (Discard any mussels that don&apos;t open.)
+                </Typography>
+              </CardContent>
+            </Collapse> */}
+          </Card>
+        </Container>
+
       </Dialog>
     </div>
   );
 };
 
-export default ArticleDetails;
+export default ArticleDetails2;

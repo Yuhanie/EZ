@@ -37,6 +37,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import SendIcon from "@mui/icons-material/Send";
 import Heart from "@mui/icons-material/Favorite";
 import Typography from "@mui/material/Typography";
+import CardHeader from "@mui/material/CardHeader";
 import {
   Dialog,
   DialogActions,
@@ -87,7 +88,7 @@ const Comment = (props) => {
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
-  
+
 
 
 
@@ -334,8 +335,16 @@ const Comment = (props) => {
           <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" >
               <Box display="flex" flexDirection="row" alignItems="center">
-                <Avatar sx={{mr:2}} alt="Remy Sharp" />
-                <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
+
+                <CardHeader
+                  avatar={
+                    <Avatar sx={{ mr: 2, height: 25, width: 25 }} />
+                  }
+                  title={comment.user}
+                  subheader={comment.timestamp && comment.timestamp.toDate().toLocaleString()}
+                  //item 
+                  sx={{ p: 1.2 }}
+                />
               </Box>
               <Box display="flex" alignItems="center">
                 <IconButton
@@ -360,9 +369,9 @@ const Comment = (props) => {
               </Box>
             </Box>
             <Box>
-              
 
-              <Typography variant="body2" sx={{m:2, textAlign: "left" }}>{comment.content}</Typography>
+
+              <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography>
               <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
                 {comment.timestamp &&
                   comment.timestamp.toDate().toLocaleString()}

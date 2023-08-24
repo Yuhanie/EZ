@@ -8,6 +8,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Tooltip from "@mui/material/Tooltip";
 import { Timestamp } from "firebase/firestore";
 import { useEffect, useState, useMemo } from "react";
+
+import ArticleDetails2 from './ArticleDetails2';
 import ArticleDetails from "./ArticleDetails";
 import { Article, Profile } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
@@ -78,6 +80,7 @@ const ArticleListItem:
     const handleClose = () => {
       setOpen(false);
     };
+
     const setHeart = async (user: User) => {
       const ref = doc(db, "text", props.article.docId);
       const docSnap = await getDoc(ref);
@@ -304,6 +307,7 @@ const ArticleListItem:
     return (
       <div>
         <ArticleDetails article={props.article} open={open} setOpen={setOpen} update={props.update} ></ArticleDetails>
+        {/* <ArticleDetails2 article={props.article} open={open} setOpen={setOpen} update={props.update}></ArticleDetails2> */}
         <Card
           sx={{
             // maxWidth: 345,

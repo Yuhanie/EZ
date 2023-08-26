@@ -378,9 +378,15 @@ const Comment = (props) => {
               </Box>
             </Box>
             <Box>
-
-
-              <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography>
+              <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>
+                {(typeof window !== "undefined") &&
+                  <ReactQuillEditor
+                    theme="bubble"
+                    readOnly={true}
+                    value={comment.content}
+                  />
+                }
+              </Typography>
               <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
                 {comment.timestamp &&
                   comment.timestamp.toDate().toLocaleString()}
@@ -430,9 +436,9 @@ const Comment = (props) => {
                 : ""}
             </div> */}
       {renderComment(props.comment)}
-      
 
-      
+
+
       {/* </div> */}
       {/* {user && user.displayName} */}
       {/* <OutlinedInput

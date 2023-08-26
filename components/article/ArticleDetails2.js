@@ -976,14 +976,15 @@ const ArticleDetails2 = (props) => {
 
 
   return (
-    <div className={styles.container}>
-      <Dialog
+    <div >
+      {/* <Dialog
         open={props.open}
         onClose={handleClose}
-      >
-        {/* <Navbar /> */}
+      > */}
+        <Navbar />
         <Container>
-          <Card sx={{ boxShadow: 'none', width: 345 }}>
+          <Grid xs={12} md={6}> 
+          <Card sx={{ boxShadow: 'none' }}>
             <Grid
               container
               display="flex"
@@ -1137,9 +1138,10 @@ const ArticleDetails2 = (props) => {
               <IconButton onClick={onSubmit}><SendIcon sx={{ fontSize: 20, pb: 0.2 }} /></IconButton>
             </CardActions>
           </Card>
+          </Grid>
         </Container>
 
-      </Dialog>
+      {/* </Dialog> */}
     </div>
   );
 };

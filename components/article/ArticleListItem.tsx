@@ -72,12 +72,12 @@ const ArticleListItem:
 
 
 
-    const handleOpen = (scrollType: DialogProps['scroll']) => () => {
-      setOpen(true);
-      setScroll(scrollType);
+    const handleOpen =  () => {
+      // setOpen(true);
+      // setScroll(scrollType);
       const ref = doc(db, "text", props.article.docId);
       updateDoc(ref, { count: increment(1) });
-
+      showNote(props.article.docId);
     };
 
     const handleClose = () => {
@@ -255,6 +255,9 @@ const ArticleListItem:
     // const changeStatus = function () {
     //   router.push('/introduction');
     // }
+    const showNote = (docId: any) => {
+      router.push('/note/' + docId);
+    }
 
     const intro = (uid: any) => {
       router.push('/profile?userId=' + uid);
@@ -310,14 +313,14 @@ const ArticleListItem:
     return (
       <div>
         {/* <ArticleDetails article={props.article} open={open} setOpen={setOpen} update={props.update} ></ArticleDetails> */}
-        <ArticleDetails2
+        {/* <ArticleDetails2
           article={props.article}
           open={open}
           setOpen={setOpen}
           scroll={scroll}
           update={props.update}
         >
-        </ArticleDetails2>
+        </ArticleDetails2> */}
         <Card
           sx={{
             // maxWidth: 345,
@@ -329,7 +332,7 @@ const ArticleListItem:
             boxShadow: 1,
           }}
         >
-          <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen('paper')}>
+          <CardActionArea sx={{ p: 1, height: 170 }} onClick={handleOpen}>
 
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">

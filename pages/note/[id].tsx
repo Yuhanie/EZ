@@ -8,7 +8,7 @@ import { firebaseConfig } from '@/settings/firebaseConfig';
 import { Article } from 'interfaces/entities';
 import ArticleListItem from '@/components/article/ArticleListItem';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import ArticleDetails2 from '@/components/article/ArticleDetails';
+import ArticleDetails2 from '@/components/article/ArticleDetails2';
 
 
 const Article = () => {

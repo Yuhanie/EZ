@@ -1026,7 +1026,7 @@ const ArticleDetails2 = (props) => {
                 <Typography variant="h5" color="text.secondary">
                   <Box display="flex" alignItems="center">
                     {outdateIcon()}
-                    {props.article.title}
+                    <a href={props.article.link}>{props.article.title}</a>
                   </Box>
                 </Typography>
                 {(typeof window !== "undefined") &&

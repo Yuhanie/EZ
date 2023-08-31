@@ -94,10 +94,14 @@ import Bookmark from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ButtonBase from "@mui/material/ButtonBase";
+import Toolbar from "@mui/material/Toolbar";
+import { useMediaQuery } from '@mui/material';
+
 import dynamic from "next/dynamic";
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
+
 
 
 const firebaseApp =
@@ -138,6 +142,7 @@ const ArticleDetails2 = (props) => {
   const [bookCount, setBookCount] = useState(props.article.bookmark ? props.article.bookmark.length : 0);
   const [liked, setLiked] = useState(false);
   const [bookMarked, setBookMarked] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
 
 
@@ -154,6 +159,21 @@ const ArticleDetails2 = (props) => {
       setToolOpen(false);
     }
   };
+
+  const ContentContainer = styled('div')({
+    display: 'flex',
+    justifyContent: 'center',
+    //alignItems: 'center',
+    minHeight: '100vh',
+    marginTop:'20px'
+    //backgroundColor: '#f0f0f0',
+  });
+
+  const ContentBox = styled('div')(({ isMobile }) => ({
+    width: isMobile ? '100%' : '50%',
+    backgroundColor: '#ffffff',
+    //boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  }));
 
   const addContent = (value) => {
     setContent(value)
@@ -981,9 +1001,11 @@ const ArticleDetails2 = (props) => {
         open={props.open}
         onClose={handleClose}
       > */}
-        <Navbar />
-        <Container>
-          <Grid xs={12} md={6}> 
+      <Navbar />
+      {/* <Container> */}
+      <ContentContainer>
+        <ContentBox isMobile={isMobile}>
+          <Toolbar />
           <Card sx={{ boxShadow: 'none' }}>
             <Grid
               container
@@ -1063,7 +1085,7 @@ const ArticleDetails2 = (props) => {
 
             <Divider />
             <Grid container display='flex' alignItems='center' sx={{ m: 1 }}>
-              <Grid item display='flex' alignItems='center' xs={2}>
+              <Grid item display='flex' alignItems='center' pr={1}>
                 {/* <IconButton aria-label="add to favorites" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }}>
                   <FavoriteBorderIcon />
                 </IconButton> */}
@@ -1075,7 +1097,7 @@ const ArticleDetails2 = (props) => {
                 </Typography>
 
               </Grid>
-              <Grid item display='flex' alignItems='center' xs={2}>
+              <Grid item display='flex' alignItems='center' pr={1}>
                 <ButtonBase onClick={bookmark} sx={{ borderRadius: 10 }}>
                   {bookMarked ? <Bookmark sx={{ color: "#7A82E7" }} /> : <BookmarkBorderIcon sx={{ color: '#757575' }} />}
                 </ButtonBase>
@@ -1083,7 +1105,7 @@ const ArticleDetails2 = (props) => {
                   {bookCount}
                 </Typography>
               </Grid>
-              <Grid item display='flex' alignItems='center' xs={2}>
+              <Grid item display='flex' alignItems='center' pr={1}>
                 <VI sx={{ color: '#858585' }} />
                 <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
                   {props.article.count}
@@ -1118,7 +1140,7 @@ const ArticleDetails2 = (props) => {
               {/* <Grid xs={1.5} sx={{ m: 1 }}>
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
-              <Grid item width={300} >
+              <Grid item minWidth={300} >
                 {(typeof window !== "undefined") &&
 
                   <ReactQuillEditor
@@ -1138,8 +1160,9 @@ const ArticleDetails2 = (props) => {
               <IconButton onClick={onSubmit}><SendIcon sx={{ fontSize: 20, pb: 0.2 }} /></IconButton>
             </CardActions>
           </Card>
-          </Grid>
-        </Container>
+        </ContentBox>
+      </ContentContainer>
+      {/* </Container> */}
 
       {/* </Dialog> */}
     </div>

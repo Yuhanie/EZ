@@ -332,8 +332,8 @@ const ArticleDetails2 = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      console.log("article:", props.article);
-      console.log("docId:", props.article.docId);
+      // console.log("article:", props.article);
+      // console.log("docId:", props.article.docId);
       const querySnapshotDenounce = collection(
         db,
         "text",
@@ -383,7 +383,7 @@ const ArticleDetails2 = (props) => {
       querySnapshotArticle.forEach((doc) => {
         let data = { ...doc.data(), id: doc.id };
         temp.push(data);
-        console.log("comment:", data);
+        // console.log("comment:", data);
       });
 
       // setComments(() => [temp1, temp2]);

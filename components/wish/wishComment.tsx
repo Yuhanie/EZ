@@ -4,8 +4,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
-// import warning from "../../public/pic/warning.jpg";
-// import styles from "/styles/Home.module.css";
+import warning from "../../public/pic/warning.jpg";
+import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
@@ -13,6 +13,7 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     onAuthStateChanged,
+    User,
 } from "firebase/auth";
 import {
     collection,
@@ -30,6 +31,7 @@ import {
     arrayRemove,
     arrayUnion,
 } from "firebase/firestore";
+import { Wish, Profile, Comment } from '../../interfaces/entities';
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import VI from "@mui/icons-material/Visibility";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -49,6 +51,7 @@ import {
     Box,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
+
 // const docRef = doc(db, "English", "1");
 // const docSnap = await getDoc(docRef);
 
@@ -63,457 +66,218 @@ const firebaseApp =
 const db = getFirestore();
 const auth = getAuth();
 
-// function Model(){
-//   const [icoStatus, setIcoStatus] = useState(true)
-//   const iconSouCangData = (event, props) => {
-//     setIcoStatus(!icoStatus)
-//   }
-//     return(
-//      <>
-//                <span className={iconSouCang ? "opts-icon icon-soucang2 soucang-color" : "icon-hide"} onClick={(e) => iconSouCangData(e,props)}></span>
-//               <span className={iconSouCang ? "icon-hide" : "opts-icon icon-soucang"} onClick={(e) => iconSouCangData(e,props)}></span>
-//      </>
-//     )}
+type Props = {
+    wish: Wish;
+    Comment: Comment;
+    update: Function;
+    open: boolean;
+    setOpen: (open: boolean) => void;
+    //currentUser: string;
+};
 
-const Comment = (props: any) => {
-    // const [comment, setComment] = useState();
-    // const [content, setContent] = useState("");
-    const [user, setUser] = useState<User>();
-    // const [currentuser, setCurrentUser] =useState();
-    const [liked, setLiked] = useState(false);
-    const [count, setCount] = useState(0);
-    //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
-    const [deleted, setDeleted] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const [edited, setEdited] = useState(0);
+const Comment:
+    React.FC<Props> = (props) => {
+        // const [comment, setComment] = useState();
+        // const [content, setContent] = useState("");
+        const [user, setUser] = useState<User>();
+        // const [currentuser, setCurrentUser] =useState();
+        const [liked, setLiked] = useState<boolean>(false);
+        const [count, setCount] = useState<number>(0);
+        //   const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
+        const [deleted, setDeleted] = useState<number>(0);
+        const [isLoading, setIsLoading] = useState<boolean>(false);
+        const [edited, setEdited] = useState<number>(0);
 
 
 
 
 
-    useEffect(() => {
-        async function fetchData() {
-            console.log("comment:", props.comment);
+        useEffect(() => {
+            // async function fetchData() {
+            //     console.log("comment:", props.comment);
+
+            // }
+            // fetchData();
 
 
+            const unsub = onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    setUser(user);
+                    // setHeart(user);
+                    console.log("user", user);
+                }
+            });
 
-            // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
-            // querySnapshot2.forEach(async (doc2) => {
-            //   console.log(doc2.id);
-            //   console.log(doc2.data());
-            //   temp2.push({ name: doc2.data().name, pic: doc2.data().pic });
+            return () => {
+                unsub();
+            };
 
-            // });
+            // eslint-disable-next-line
+        }, [edited, liked, deleted]);
 
-            // const temp1= [user];
-            // const temp2= [content];
-            // const temp = [];
+        //可能有問題
+        const deleteComment = async function (id: string) {
+            if (typeof window !== "undefined") {
+                if (user) {
+                    const ref = doc(db, "wish", props.wish.docId, "comment", id);;
+                    const docSnap = await getDoc(ref);
+                    if (docSnap.exists()) {
+                        if (docSnap.data().userid == user.uid) {
+                            try {
+                                setIsLoading(true);
 
-            // querySnapshotArticle.forEach((doc) => {
-            //   let data = { ...doc.data(), id: doc.id };
-            //   temp.push(data);
-            // });
+                                await deleteDoc(doc(db, "wish", props.wish.docId, "comment", id));
 
-            // setComments(() => [temp1, temp2]);
-            //setComment(() => {{...props.comment}});
-        }
-        fetchData();
+                                //console.log("deleted");
+
+                                setDeleted(deleted + 1);
+
+                                setIsLoading(false);
+                                alert("刪除成功");
+                                //!!!!!!!!!!!!!!!!!!!要問
+                                // props.setEdited(props.edited + 1);
 
 
-        const unsub = onAuthStateChanged(auth, (user) => {
-            setUser(user);
-            // setHeart(user);
-            console.log("user", user);
-        });
+                            } catch (error) {
+                                console.log(error);
+                            }
 
-        return () => {
-            unsub();
+                        } else {
+                            alert("不是你的留言ㄚ");
+                        }
+                    }
+                }
+            } else {
+                alert("請登入");
+            }
         };
 
-        // eslint-disable-next-line
-    }, [edited, liked, deleted]);
-
-    //   const handleClose = () => {
-    //     props.setOpen(false);
-    //   };
-
-    // async function onSubmit() {
-    //   if (typeof window !== "undefined") {
-    //     if (!user) {
-    //       alert("要登入才能新增留言ㄛ!");
-    //       //window.alert("要登入才能新增筆記ㄛ!");
-
-    //       // <Alert action={
-    //       //   <Button >
-    //       //     UNDO
-    //       //   </Button>
-    //       // }>要登入才能新增筆記ㄛ! </Alert>
-
-    //       router.push("/login");
-    //     } else {
-    //       await addDoc(collection(db, "text", props.article.docId, "comment"), {
-    //         content,
-    //         userid: user.uid,
-    //         timestamp: serverTimestamp(),
-
-    //         user: user.displayName,
-    //         heart:[],
-    //         //user,
-
-    //         // createAt:Timestamp.now(),
-    //         // author:{
-    //         //     displayName: auth.currentUser.displayName || "",
-    //         //     photoURL: auth.currentUser.photoURL || "",
-    //         //     uid: auth.currentUser.uid,
-    //         //     email: auth.currentUser.email
-    //         // },
-    //       });
-    //       setContent("");
-    //       setEdited(edited + 1);
-
-    //       //router.push('/');
-    //     }
-    //   }
-
-    //   // console.log(tagName);
-    //   // alert(user.uid)
-    //   // alert(user.email)
-    //   // await addDoc(collection(db, "text",
-    //   // props.article.docId,"comment"))
-    // }
-    // //const heart = function () {};
-
-    // const setHeart = async (user,id) => {
-    //   const ref = doc(db, "text", props.article.docId, "comment",id);
-    //   const docSnap = await getDoc(ref);
-    //   if (docSnap.exists()) {
-    //     setCount(comment.heart ? comment.heart.length : 0)
-    //     if (user) {
-    //       if (comments.heart && docSnap.data().heart.includes(user.uid)) {
-    //         setLiked(true)
-    //         console.log(comment.id + 'liked')
-    //       }
-    //       else {
-
-    //         setLiked(false)
-    //         console.log(comment.id + 'unliked')
-
-    //       }
-    //     }
-
-    //   }
-    // }
-    // useEffect(() => {
-    //   const unsub = onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //       console.log('currentUser', user)
-    //       setCurrentUser(user);
-    //       setHeart(user)
-    //     }
-    //     //console.log(user);
-    //   });
-
-    //   return () => {
-    //     unsub();
-    //   }
-
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [liked]);
 
 
 
-    const deleteComment = async function (id: any) {
-        if (typeof window !== "undefined") {
-            if (user) {
-                const ref = doc(db, "wish", props.wish.docId, "comment", id);;
-                const docSnap = await getDoc(ref);
-                if (docSnap.exists()) {
-                    if (docSnap.data().userid == user.uid) {
-                        try {
-                            setIsLoading(true);
 
-                            await deleteDoc(doc(db, "wish", props.wish.docId, "comment", id));
+        const heart = async function (id: string) {
+            if (typeof window !== "undefined") {
+                if (user) {
 
-                            //console.log("deleted");
+                    const ref = doc(db, "wish", props.wish.docId, "comment", id);
+                    const docSnap = await getDoc(ref);
+                    if ((docSnap.exists())) {
+                        // console.log(docSnap.data())
+                        if (docSnap.data().heart.includes(user.uid)) {
+                            // alert('remove')
+                            updateDoc(ref, {
+                                heart: arrayRemove(user.uid)
+                            });
+                            setLiked(false)
+                            setCount(count - 1)
+                        } else {
+                            // alert('added')
+                            updateDoc(ref, {
+                                heart: arrayUnion(user.uid)
 
-                            setDeleted(deleted + 1);
+                            });
+                            setLiked(true)
+                            setCount(count + 1)
 
-                            setIsLoading(false);
-                            alert("刪除成功");
-                            props.setEdited(props.edited + 1);
-
-
-                        } catch (error) {
-                            console.log(error);
                         }
-
-                    } else {
-                        alert("不是你的留言ㄚ");
                     }
                 }
             }
-        } else {
-            alert("請登入");
-        }
-    };
+            else {
+                alert("要登入才能按讚ㄛ!")
+                //window.alert("要登入才能新增筆記ㄛ!");
 
+                // <Alert action={
+                //   <Button >
+                //     UNDO
+                //   </Button>
+                // }>要登入才能新增筆記ㄛ! </Alert>
 
-
-
-
-    const heart = async function (id: string) {
-        if (typeof window !== "undefined") {
-            if (user) {
-
-                const ref = doc(db, "wish", props.wish.docId, "comment", id);
-                const docSnap = await getDoc(ref);
-                if ((docSnap.exists())) {
-                    // console.log(docSnap.data())
-                    if (docSnap.data().heart.includes(user.uid)) {
-                        // alert('remove')
-                        updateDoc(ref, {
-                            heart: arrayRemove(user.uid)
-                        });
-                        setLiked(false)
-                        setCount(count - 1)
-                    } else {
-                        // alert('added')
-                        updateDoc(ref, {
-                            heart: arrayUnion(user.uid)
-
-                        });
-                        setLiked(true)
-                        setCount(count + 1)
-
-                    }
-                }
+                router.push('/login');
             }
         }
-        else {
-            alert("要登入才能按讚ㄛ!")
-            //window.alert("要登入才能新增筆記ㄛ!");
-
-            // <Alert action={
-            //   <Button >
-            //     UNDO
-            //   </Button>
-            // }>要登入才能新增筆記ㄛ! </Alert>
-
-            router.push('/login');
-        }
-    }
 
 
-    const commentDelete = (comment: Comment) => {
-        return (
-            <>
-                <IconButton
-                    //style={{ textAlign: "left", left: 300, bottom: 80 }}
-                    aria-label="heart"
-                    size="small"
-                    onClick={() => deleteComment(comment.id)}
-                >
-                    <RestoreFromTrashIcon />
-                </IconButton>
-            </>
-        )
+        const commentDelete = (comment: Comment) => {
+            return (
+                <>
+                    <IconButton
+                        //style={{ textAlign: "left", left: 300, bottom: 80 }}
+                        aria-label="heart"
+                        size="small"
+                        onClick={() => deleteComment(comment.docId)}//可能與119有問題
+                    >
+                        <RestoreFromTrashIcon />
+                    </IconButton>
+                </>
+            )
 
-    };
-    const usual = () => {
-        return (
-            <>
-            </>
-        )
-    };
+        };
+        const usual = () => {
+            return (
+                <>
+                </>
+            )
+        };
 
-    const renderComment = (comment: Comment) => {
-        return (
-            <div key={comment.content} >
-                <Paper>
-                    <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
-                        <Box display="flex" justifyContent="space-between" alignItems="center" >
-                            <Box display="flex" flexDirection="row" alignItems="center">
-                                <Avatar sx={{ mr: 2 }} alt="Remy Sharp" />
-                                <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
+        const renderComment = (comment: Comment) => {
+            return (
+                <div key={comment.content} >
+                    <Paper>
+                        <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center" >
+                                <Box display="flex" flexDirection="row" alignItems="center">
+                                    <Avatar sx={{ mr: 2 }} alt="Remy Sharp" />
+                                    <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
+                                </Box>
+                                <Box display="flex" alignItems="center">
+                                    <IconButton
+                                        //style={{ textAlign: "left", left: 300, bottom: 80 }}
+                                        aria-label="heart"
+                                        size="small"
+                                        onClick={() => heart(comment.docId)}//可能與159有關
+                                        sx={
+                                            liked ? { color: "error.main" } : { color: "text.disabled" }
+                                        }
+                                    >
+                                        <Heart />
+                                    </IconButton>
+                                    <Typography
+                                        //style={{ position: "relative", bottom: 110, left: 340 }}
+                                        variant="body2"
+                                        color="text.secondary"
+                                    >
+                                        {comment.heart ? count : 0}
+                                    </Typography>
+                                    {user && user.uid === comment.userid ? commentDelete(comment) : usual()}
+                                </Box>
                             </Box>
-                            <Box display="flex" alignItems="center">
-                                <IconButton
-                                    //style={{ textAlign: "left", left: 300, bottom: 80 }}
-                                    aria-label="heart"
-                                    size="small"
-                                    onClick={() => heart(comment.id)}
-                                    sx={
-                                        liked ? { color: "error.main" } : { color: "text.disabled" }
-                                    }
-                                >
-                                    <Heart />
-                                </IconButton>
-                                <Typography
-                                    //style={{ position: "relative", bottom: 110, left: 340 }}
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
-                                    {comment.heart ? count : 0}
+                            <Box>
+
+
+                                <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography>
+                                <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
+                                    {comment.timestamp &&
+                                        comment.timestamp.toDate().toLocaleString()}
                                 </Typography>
-                                {user && user.uid === comment.userid ? commentDelete(comment) : usual()}
                             </Box>
+
                         </Box>
-                        <Box>
+                    </Paper>
+                </div >
+            );
+        };
 
+        return (
+            <div className={styles.container}>
+                {/* {comment.map(renderComment)} */}
+                {renderComment(props.Comment)}
 
-                            <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography>
-                            <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
-                                {comment.timestamp &&
-                                    comment.timestamp.toDate().toLocaleString()}
-                            </Typography>
-                        </Box>
-
-                    </Box>
-                </Paper>
-            </div >
-        );
-    };
-
-    return (
-        <div className={styles.container}>
-            {/* <Dialog open={props.open} onClose={handleClose}> */}
-            {/* <DialogTitle>
-          <a href={props.article.link}>{props.article.title}</a>
-
-          <Stack spacing={1} className={styles.view}>
-            <VI />
-            <div className={styles.views}>{props.article.count}</div>
-          </Stack>
-        </DialogTitle> */}
-
-            {/* <DialogContent> */}
-            {/* <Stack spacing={1}> */}
-            {/* {props.article.content} */}
-            {/* <div className={styles.card3}>
-              <a href={props.article.link}>
-                {props.article.content.substring(0, 165)}
-                {props.article.content.length > 165 ? "..." : ""}
-              </a>
             </div>
-          </Stack>
+        );
 
-          <div style={{ padding: 14 }} className="App">
-            {props.article.content.length > 180 && (
-              <h2>
-                <Image alt="版本疑慮" src={warning} />
-                版本疑慮
-              </h2>
-            )}
 
-            <div className={styles.yu}>
-              {props.article.content.length > 180
-                ? "這篇文章已經不符合現在的版本或者無法使用"
-                : ""}
-            </div> */}
-            {renderComment(props.comment)}
-            {/* </div> */}
-            {/* {user && user.displayName} */}
-            {/* <OutlinedInput
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        sx={{
-          padding: 1,
-          margin: 5,
-          left: -20,
-          top: -1,
-          borderRadius: 12,
-          width: 340,
-          height: 35,
-        }}
-        placeholder="我要留言..."
-        // onClick={onSubmit}
-      />
-      <Button
-        size="small"
-        variant="contained"
-        endIcon={<SendIcon />}
-        onClick={onSubmit}
-        sx={{
-          padding: 0,
-          margin: 1,
-          right: -425,
-          top: -84,
-          borderRadius: 5,
-          width: 2,
-          height: 35,
-        }}
-      ></Button> */}
-            {/* </DialogContent> */}
-
-            {/* <DialogActions> */}
-
-            {/* {user && user.uid === props.article.userid && Update()}  */}
-            {/* {user.uid}/{props.article.userid} */}
-            {/* {props.article.userid} */}
-            {/* {user && Report()} */}
-            {/* <Button color="primary" variant="contained" onClick={handleClose}>
-            關閉
-          </Button> */}
-            {/* </DialogActions> */}
-            {/* </Dialog> */}
-        </div>
-    );
-
-    // return (
-
-    //   <div className={styles.container}>
-    //       <Dialog open={props.open} onClose={handleClose}>
-    //         <DialogTitle>{props.article.title}</DialogTitle>
-
-    //         <DialogContent>
-    //           <Stack spacing={2}>
-    //           {props.article.content}
-    //           </Stack>
-
-    //           <div style={{ padding: 14 }} className="App">
-
-    //     <h2><Image src={warning}/>版本疑慮</h2>
-
-    //     <div className={styles.yu}>這篇文章已經不符合現在的版本或者無法使用</div><br/>
-    //     <Paper style={{ padding: "40px 20px" }}>
-    //       <Grid container wrap="nowrap" spacing={2}>
-    //         <Grid item>
-    //           <Avatar alt="Remy Sharp" />
-    //         </Grid>
-    //         <Grid justifyContent="left" item xs zeroMinWidth>
-    //           <h4 style={{ margin: 0, textAlign: "left" }}>aaa</h4>
-    //           <p style={{ textAlign: "left" }}>
-
-    //           </p>
-    //           <p style={{ textAlign: "left", color: "gray" }}>
-    //             posted 1 minute ago
-    //           </p>
-    //         </Grid>
-    //       </Grid>
-    //       <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-    //       </Paper>
-    //       </div>
-
-    //         </DialogContent>
-    //         <DialogActions>
-    //           <Button color="secondary" variant="contained" onClick={handleClose}>
-    //             愛心
-    //           </Button>
-    //           <Button color="secondary" variant="contained" onClick={handleClose}>
-    //             儲存
-    //           </Button>
-    //           <Button color="secondary" variant="contained" onClick={handleClose}>
-    //             分享
-    //           </Button>
-
-    //           <Button color="primary" variant="contained" onClick={handleClose}>
-    //             關閉
-    //           </Button>
-
-    //         </DialogActions>
-    //       </Dialog>
-    //   </div>
-    // );
-};
+    };
 
 export default Comment;

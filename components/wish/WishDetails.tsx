@@ -25,7 +25,7 @@ import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
 
 //firebase
-import { Wish, Profile, Article, Comment } from '../../interfaces/entities';
+import { Wish, Profile, Comment } from '../../interfaces/entities';
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, query, orderBy, serverTimestamp, } from "firebase/firestore";
 import { getApp, getApps, initializeApp } from "firebase/app";
@@ -41,6 +41,7 @@ const auth = getAuth();
 
 type Props = {
    wish: Wish;
+   Comment: Comment;
    update: Function;
    open: boolean;
    setOpen: (open: boolean) => void;
@@ -51,66 +52,15 @@ const WishDetails:
    React.FC<Props> = (props) => {
       const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
       const [profile, setProfile] = useState<Profile>();
-      const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-      const [comments, setComments] = useState<Comment>();
-      const [deleted, setDeleted] = useState<number>(0);
+      const [comments, setComments] = useState<Comment[]>();
       const [user, setUser] = useState<User>();
       const [edited, setEdited] = useState<number>(0);
-      const [content, setContent] = useState<string>();
-
-      const handleClose = () => {
-         props.setOpen(false);
-      };
-
+      const [deleted, setDeleted] = useState<number>(0);
+      const [content, setContent] = useState("");
+      const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
       useEffect(() => {
          async function fetchData() {
-
-            //   const querySnapshotDenounce = collection(
-            //     db,
-            //     "text",
-            //     props.article.docId,
-            //     "denounce"
-            //   );
-            //   const queryReport = query(querySnapshotDenounce);
-            //   const querySnapshotReport = await getDocs(queryReport);
-            //   const tempReport = [];
-            //   querySnapshotReport.forEach((doc) => {
-
-            //     let reportMessage = "";
-
-            //     switch (doc.data().reason) {
-            //       case "empty":
-            //         reportMessage = "內容空泛";
-            //         break;
-            //       case "curse":
-            //         reportMessage = "中傷、挑釁、謾罵他人";
-            //         break;
-            //       case "spamming":
-            //         reportMessage = "惡意洗版";
-            //         break;
-            //       // default:
-            //       //   reportMessage = "分類錯誤";
-            //     }
-
-            //     // setMessage(() => [...]);
-            //     let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
-            //     // console.log("reportData", reportdata)
-            //     tempReport.push(reportdata);
-
-
-            //   });
-
-            //   setDenounces(() => [...tempReport]);
-
-
-
-            // setReportMessage(reportMessage);
-
-
-
-
-
 
             const querySnapshot = collection(
                db,
@@ -123,13 +73,20 @@ const WishDetails:
             const temp: Comment[] = [];
 
             querySnapshotArticle.forEach((doc) => {
-               // let data = { ...doc.data(), id: doc.id, user: doc.user, content:doc.content };
-               temp.push({ id: doc.id, user: doc.user, content: doc.content });
+               // let data = { ...doc.data(), id: doc.id };
+               temp.push({
+                  docId: doc.data().docId,
+                  content: doc.data().content,
+                  user: doc.data().user,
+                  userid: doc.data().userid,
+                  heart: doc.data().heart,
+                  timestamp: doc.data().timestamp,
+               });
                // console.log("data:", data);
             });
 
             // setComments(() => [temp1, temp2]);
-            setComments(() => [...temp]);
+            setComments([...temp]);
          }
          fetchData();
          // console.log("user:", user);
@@ -138,13 +95,18 @@ const WishDetails:
          // eslint-disable-next-line
       }, [edited, deleted]);
 
+
+      const handleClose = () => {
+         props.setOpen(false);
+      };
+
       async function onSubmit() {
          if (typeof window !== "undefined") {
             if (!user) {
                alert("要登入才能新增留言ㄛ!");
                router.push("/login");
             } else {
-               await addDoc(collection(db, "text", props.wish.docId, "comment"), {
+               await addDoc(collection(db, "wish", props.wish.docId, "comment"), {
                   content,
                   userid: user.uid,
                   timestamp: serverTimestamp(),
@@ -164,18 +126,19 @@ const WishDetails:
             <div key={comment.content}>
                {comment && (
                   <div style={{ padding: 14 }} className="App">
-                     <Comment key={comment.docId} comment={comment} update={updateUpdated} />
-                     {/* <Comment
-                        edited={edited}
-                        setEdited={setEdited}
-                        article={props.article}
-                        comment={comment}
-                     /> */}
+
+                     <wishComment
+                     // edited={edited}
+                     // setEdited={setEdited}
+                     // article={props.article}
+                     // comment={comment}
+                     />
                   </div>
                )}
             </div>
          );
       };
+
 
       return (
          <div>
@@ -221,7 +184,6 @@ const WishDetails:
                         />
                      }
                   </DialogContentText>
-                  {comments.map((comment) => renderComment(comment))}
                   <Box>
                      <Chip label={props.wish.tag} size="small" />
                   </Box>

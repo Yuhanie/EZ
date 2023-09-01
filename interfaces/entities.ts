@@ -49,10 +49,12 @@ export type Question = {
 };
 
 export type Comment = {
+  docId: string;
   user: string;
   content: string;
-  id: string;
-  // heart:string[];
+  userid: string;
+  timestamp: Timestamp;
+  heart: string[];
 };
 
 export type Report = {

@@ -996,183 +996,183 @@ const ArticleDetails2 = (props) => {
         onClose={handleClose}
       > */}
       <Navbar />
-      {/* <Container> */}
-      <ContentContainer>
-        <ContentBox isMobile={isMobile}>
-          <Toolbar />
-          <Card sx={{ boxShadow: "none" }}>
-            <Grid container display="flex" justifyContent="space-between">
-              <Grid item>
-                <CardHeader
-                  avatar={
-                    <Avatar>
-                      {/* {props.article.userid && profile && profile.photoURL &&
+      <Container>
+        {/* <ContentContainer> */}
+        {/* <ContentBox isMobile={isMobile}> */}
+        <Toolbar />
+        <Card sx={{ boxShadow: "none" }}>
+          <Grid container display="flex" justifyContent="space-between">
+            <Grid item>
+              <CardHeader
+                avatar={
+                  <Avatar>
+                    {/* {props.article.userid && profile && profile.photoURL &&
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
-                    </Avatar>
-                  }
-                  title={props.article.user}
-                  subheader={
-                    props.article.timestamp &&
-                    props.article.timestamp.toDate().toLocaleDateString()
-                  }
-                  //item
-                  sx={{ p: 1.2 }}
-                />
-              </Grid>
-              <Grid item display="flex" alignItems="center">
-                <FormControl>
-                  {user &&
-                    user.uid === props.article.userid &&
-                    Update(props.article.docId)}
-                  {/* {user.uid}/{props.article.userid} */}
-                  {/* {props.article.userid} */}
-                </FormControl>
-                <Box>
-                  {user && user.uid !== props.article.userid && reportMenu()}
-
-                  {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
-                </Box>
-              </Grid>
+                  </Avatar>
+                }
+                title={props.article.user}
+                subheader={
+                  props.article.timestamp &&
+                  props.article.timestamp.toDate().toLocaleDateString()
+                }
+                //item
+                sx={{ p: 1.2 }}
+              />
             </Grid>
+            <Grid item display="flex" alignItems="center">
+              <FormControl>
+                {user &&
+                  user.uid === props.article.userid &&
+                  Update(props.article.docId)}
+                {/* {user.uid}/{props.article.userid} */}
+                {/* {props.article.userid} */}
+              </FormControl>
+              <Box>
+                {user && user.uid !== props.article.userid && reportMenu()}
 
-            <Divider />
+                {/* <Button color="primary" variant="contained" onClick={handleClose}>關閉</Button> */}
+              </Box>
+            </Grid>
+          </Grid>
 
-            <CardContent>
-              <Grid item>
-                <Typography variant="h5" color="text.secondary">
-                  <Box display="flex" alignItems="center">
-                    {outdateIcon()}
-                    <a href={props.article.link}>{props.article.title}</a>
-                  </Box>
-                </Typography>
-                {typeof window !== "undefined" && (
-                  <ReactQuillEditor
-                    theme="bubble"
-                    style={{ height: "auto" }}
-                    readOnly={true}
-                    value={props.article.content}
-                  />
-                )}
-              </Grid>
-            </CardContent>
-            <CardActions sx={{ m: 1 }}>
-              <Stack spacing={1}>
-                {/* {props.article.content} */}
-                {/* <div className={styles.card3}> */}
+          <Divider />
 
-                <Stack direction="row" spacing={1}>
-                  <Chip label={props.article.tag} size="small" />
-                  {/* <Chip label={props.article.minitag} size="small" /> */}
-                  {props.article.minitag &&
-                    props.article.minitag.map((value) => (
-                      <Chip key={value} label={value} size="small" />
-                    ))}
+          <CardContent>
+            <Grid item>
+              <Typography variant="h5" color="text.secondary">
+                <Box display="flex" alignItems="center">
+                  {outdateIcon()}
+                  <a href={props.article.link}>{props.article.title}</a>
+                </Box>
+              </Typography>
+              {typeof window !== "undefined" && (
+                <ReactQuillEditor
+                  theme="bubble"
+                  style={{ height: "auto" }}
+                  readOnly={true}
+                  value={props.article.content}
+                />
+              )}
+            </Grid>
+          </CardContent>
+          <CardActions sx={{ m: 1 }}>
+            <Stack spacing={1}>
+              {/* {props.article.content} */}
+              {/* <div className={styles.card3}> */}
 
-                  {props.article.majortag &&
-                    props.article.majortag.map((value) => (
-                      <Chip key={value} label={value} size="small" />
-                    ))}
+              <Stack direction="row" spacing={1}>
+                <Chip label={props.article.tag} size="small" />
+                {/* <Chip label={props.article.minitag} size="small" /> */}
+                {props.article.minitag &&
+                  props.article.minitag.map((value) => (
+                    <Chip key={value} label={value} size="small" />
+                  ))}
 
-                  {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
-                </Stack>
+                {props.article.majortag &&
+                  props.article.majortag.map((value) => (
+                    <Chip key={value} label={value} size="small" />
+                  ))}
+
+                {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
               </Stack>
-            </CardActions>
+            </Stack>
+          </CardActions>
 
-            <Divider />
-            <Grid container display="flex" alignItems="center" sx={{ m: 1 }}>
-              <Grid item display="flex" alignItems="center" pr={1}>
-                {/* <IconButton aria-label="add to favorites" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }}>
+          <Divider />
+          <Grid container display="flex" alignItems="center" sx={{ m: 1 }}>
+            <Grid item display="flex" alignItems="center" pr={1}>
+              {/* <IconButton aria-label="add to favorites" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }}>
                   <FavoriteBorderIcon />
                 </IconButton> */}
-                <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
-                  {liked ? (
-                    <Heart sx={{ color: "#E2655E" }} />
-                  ) : (
-                    <FavoriteBorderIcon sx={{ color: "#757575" }} />
-                  )}
-                </ButtonBase>
-                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
-                  {count}
-                </Typography>
-              </Grid>
-              <Grid item display="flex" alignItems="center" pr={1}>
-                <ButtonBase onClick={bookmark} sx={{ borderRadius: 10 }}>
-                  {bookMarked ? (
-                    <Bookmark sx={{ color: "#7A82E7" }} />
-                  ) : (
-                    <BookmarkBorderIcon sx={{ color: "#757575" }} />
-                  )}
-                </ButtonBase>
-                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
-                  {bookCount}
-                </Typography>
-              </Grid>
-              <Grid item display="flex" alignItems="center" pr={1}>
-                <VI sx={{ color: "#858585" }} />
-                <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
-                  {props.article.count}
-                </Typography>
-              </Grid>
+              <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+                {liked ? (
+                  <Heart sx={{ color: "#E2655E" }} />
+                ) : (
+                  <FavoriteBorderIcon sx={{ color: "#757575" }} />
+                )}
+              </ButtonBase>
+              <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                {count}
+              </Typography>
             </Grid>
-            <Divider />
+            <Grid item display="flex" alignItems="center" pr={1}>
+              <ButtonBase onClick={bookmark} sx={{ borderRadius: 10 }}>
+                {bookMarked ? (
+                  <Bookmark sx={{ color: "#7A82E7" }} />
+                ) : (
+                  <BookmarkBorderIcon sx={{ color: "#757575" }} />
+                )}
+              </ButtonBase>
+              <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                {bookCount}
+              </Typography>
+            </Grid>
+            <Grid item display="flex" alignItems="center" pr={1}>
+              <VI sx={{ color: "#858585" }} />
+              <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
+                {props.article.count}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider />
 
-            <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>
-              {props.article.outdate === "stale" && (
-                <h3>
-                  <Image alt="版本疑慮" src={warning} />
-                  版本疑慮
-                </h3>
-              )}
+          <Box sx={{ bgcolor: "#fafafa", m: 3, borderRadius: 1 }}>
+            {props.article.outdate === "stale" && (
+              <h3>
+                <Image alt="版本疑慮" src={warning} />
+                版本疑慮
+              </h3>
+            )}
 
-              <div className={styles.yu}>
-                {props.article.outdate === "stale"
-                  ? "這篇文章已經不符合現在的版本或者無法使用"
-                  : ""}
-              </div>
-            </Box>
-            {character === "專家" && expert()}
-            {expertAction === "true" && expertReport()}
-            <Box>{comments.map((comment) => renderComment(comment))}</Box>
+            <div className={styles.yu}>
+              {props.article.outdate === "stale"
+                ? "這篇文章已經不符合現在的版本或者無法使用"
+                : ""}
+            </div>
+          </Box>
+          {character === "專家" && expert()}
+          {expertAction === "true" && expertReport()}
+          <Box>{comments.map((comment) => renderComment(comment))}</Box>
 
-            <CardActions sx={{ alignItems: "flex-end" }}>
-              {/* <Grid xs={1.5} sx={{ m: 1 }}>
+          <CardActions sx={{ alignItems: "flex-end" }}>
+            {/* <Grid xs={1.5} sx={{ m: 1 }}>
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
-              <Grid item minWidth={300}>
-                {typeof window !== "undefined" && (
-                  <ReactQuillEditor
-                    theme="bubble"
-                    //placeholder='留言'
-                    // onChange={addContent}
-                    value={content}
-                    onChange={(text, delta, source, editor) => {
-                      if (source == 'user') {
-                        // place whatever function you want to execute when user types here:
-                        setContent(text);
-                      }
-                    }}
-                    placeholder={`以${user && user.displayName}新增留言`}
-                    style={{
-                      minHeight: 40,
-                      border: "solid",
-                      borderRadius: 8,
-                      margin: 8,
-                      borderColor: "#9a9a9a",
-                    }}
-                  />
-                )}
-              </Grid>
-              <IconButton onClick={onSubmit}>
-                <SendIcon sx={{ fontSize: 20, pb: 0.2 }} />
-              </IconButton>
-            </CardActions>
-          </Card>
-        </ContentBox>
-      </ContentContainer>
-      {/* </Container> */}
+            <Grid item minWidth={300}>
+              {typeof window !== "undefined" && (
+                <ReactQuillEditor
+                  theme="bubble"
+                  //placeholder='留言'
+                  // onChange={addContent}
+                  value={content}
+                  onChange={(text, delta, source, editor) => {
+                    if (source == 'user') {
+                      // place whatever function you want to execute when user types here:
+                      setContent(text);
+                    }
+                  }}
+                  placeholder={`以${user && user.displayName}新增留言`}
+                  style={{
+                    minHeight: 40,
+                    border: "solid",
+                    borderRadius: 8,
+                    margin: 8,
+                    borderColor: "#9a9a9a",
+                  }}
+                />
+              )}
+            </Grid>
+            <IconButton onClick={onSubmit}>
+              <SendIcon sx={{ fontSize: 20, pb: 0.2 }} />
+            </IconButton>
+          </CardActions>
+        </Card>
+        {/* </ContentBox> */}
+        {/* </ContentContainer> */}
+      </Container>
 
       {/* </Dialog> */}
-    </div>
+    </div >
   );
 };
 

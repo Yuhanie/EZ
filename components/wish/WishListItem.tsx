@@ -178,7 +178,7 @@ const WishListItem:
 
       return (
          <div>
-            <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update} ></WishDetails>
+            <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update}  ></WishDetails>
             <Paper
                sx={{
                   display: 'flex',

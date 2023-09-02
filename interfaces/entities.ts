@@ -3,31 +3,31 @@ import { Timestamp } from "firebase/firestore";
 export type Article = {
   title: string;
   content: string;
-  user:string;
+  user: string;
   docId: string;
   link: string;
   count: number;
   heart: string[];
-  bookmark:string[];
+  bookmark: string[];
   timestamp: Timestamp;
   userid: string;
   outdateCount: string[];
   outdate: string;
-  majortag:string[];
-  minitag:string[];
-  tag:string;
-  email:string;
+  majortag: string[];
+  minitag: string[];
+  tag: string;
+  email: string;
 };
 
 export type Newtext = {
   title: string;
   content: string;
-  user:string;
+  user: string;
   docId: string;
   link: string;
   count: number;
   heart: string[];
-  bookmark:string[];
+  bookmark: string[];
   timestamp: Timestamp;
   userid: string;
 };
@@ -36,7 +36,7 @@ export type Newtext = {
 export type Question = {
   title: string;
   content: string;
-  user:string;
+  user: string;
   docId: string;
   count: number;
   heart: string[];
@@ -44,15 +44,17 @@ export type Question = {
   timestamp: Timestamp;
   link: string;
   userid: string;
-  outdate?:string;
-  outdateCount?:string[];
+  outdate?: string;
+  outdateCount?: string[];
 };
 
 export type Comment = {
+  docId: string;
   user: string;
   content: string;
-  id:string;
-  // heart:string[];
+  userid?: string;
+  timestamp?: Timestamp;
+  heart?: string[];
 };
 
 export type Report = {
@@ -91,12 +93,12 @@ export type Profile = {
 export type BookMark = {
   title: string;
   content: string;
-  user:string;
+  user: string;
   docId: string;
   link: string;
   count: number;
   heart: string[];
-  bookmark:string[];
+  bookmark: string[];
   timestamp: Timestamp;
   userid: string;
   outdateCount: string[];

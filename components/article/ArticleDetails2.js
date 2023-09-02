@@ -227,6 +227,8 @@ const ArticleDetails2 = (props) => {
         setUser(user);
         setHeart(user);
         setBookmark(user);
+        // console.log('<3:',props.article);
+        // console.log(bookCount);
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
 
@@ -270,7 +272,7 @@ const ArticleDetails2 = (props) => {
       unsub();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liked, bookMarked]);
+  }, [liked, bookMarked,props.article]);
 
   const bookmark = async function () {
     if (typeof window !== "undefined") {
@@ -332,6 +334,8 @@ const ArticleDetails2 = (props) => {
 
   useEffect(() => {
     async function fetchData() {
+      setCount(props.article.heart.length);
+      setBookCount(props.article.bookmark.length);
       // console.log("article:", props.article);
       // console.log("docId:", props.article.docId);
       const querySnapshotDenounce = collection(

@@ -22,14 +22,14 @@ import Typography from "@mui/material/Typography";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import Chip from '@material-ui/core/Chip';
-import CircleIcon from '@mui/icons-material/Circle';
-import LinkIcon from '@mui/icons-material/Link';
+import Chip from "@material-ui/core/Chip";
+import CircleIcon from "@mui/icons-material/Circle";
+import LinkIcon from "@mui/icons-material/Link";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -52,9 +52,9 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
-  where
+  where,
 } from "firebase/firestore";
-import { getCountFromServer } from 'firebase/firestore'
+import { getCountFromServer } from "firebase/firestore";
 import { firebaseConfig } from "../../settings/firebaseConfig";
 import VI from "@mui/icons-material/Visibility";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -79,26 +79,28 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import Tooltip from "@mui/material/Tooltip";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import Navbar from '../../components/navbar/Navbar';
-import Container from '@mui//material/Container';
-import { styled } from '@mui/material/styles';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Bookmark from '@mui/icons-material/Bookmark';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Navbar from "../../components/navbar/Navbar";
+import Container from "@mui//material/Container";
+import { styled } from "@mui/material/styles";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Bookmark from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ButtonBase from "@mui/material/ButtonBase";
-import dynamic from "next/dynamic";
-import 'quill/dist/quill.snow.css';
-import 'quill/dist/quill.bubble.css';
-import 'quill/dist/quill.core.css';
+import Toolbar from "@mui/material/Toolbar";
+import { useMediaQuery } from "@mui/material";
 
+import dynamic from "next/dynamic";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.core.css";
 
 const firebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -109,13 +111,12 @@ const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
 
 const ArticleDetails2 = (props) => {
   const [comments, setComments] = useState([]);
@@ -130,16 +131,22 @@ const ArticleDetails2 = (props) => {
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
-  const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+  const ReactQuillEditor = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
   //const [outdate,setOutdate] =useState(props.article.outdate);
   // const [count, setCount] = useState(props.article.outdateCount ? props.article.outdateCount.length : 0);
   const [expanded, setExpanded] = React.useState(false);
-  const [count, setCount] = useState(props.article.heart ? props.article.heart.length : 0);
-  const [bookCount, setBookCount] = useState(props.article.bookmark ? props.article.bookmark.length : 0);
+  const [count, setCount] = useState(
+    props.article.heart ? props.article.heart.length : 0
+  );
+  const [bookCount, setBookCount] = useState(
+    props.article.bookmark ? props.article.bookmark.length : 0
+  );
   const [liked, setLiked] = useState(false);
   const [bookMarked, setBookMarked] = useState(false);
-
-
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -155,9 +162,24 @@ const ArticleDetails2 = (props) => {
     }
   };
 
+  const ContentContainer = styled("div")({
+    display: "flex",
+    justifyContent: "center",
+    //alignItems: 'center',
+    minHeight: "100vh",
+    marginTop: "20px",
+    //backgroundColor: '#f0f0f0',
+  });
+
+  const ContentBox = styled("div")(({ isMobile }) => ({
+    width: isMobile ? "100%" : "50%",
+    backgroundColor: "#ffffff",
+    //boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  }));
+
   const addContent = (value) => {
-    setContent(value)
-  }
+    setContent(value);
+  };
 
   const setHeart = async (user) => {
     const ref = doc(db, "text", props.article.docId);
@@ -165,40 +187,34 @@ const ArticleDetails2 = (props) => {
     if (docSnap.exists()) {
       if (user) {
         if (props.article.heart && docSnap.data().heart.includes(user.uid)) {
-          setLiked(true)
-          console.log(props.article.title + 'liked')
-        }
-        else {
-
-          setLiked(false)
-          console.log(props.article.title + 'unliked')
-
+          setLiked(true);
+          console.log(props.article.title + "liked");
+        } else {
+          setLiked(false);
+          console.log(props.article.title + "unliked");
         }
       }
-
     }
-  }
+  };
 
   const setBookmark = async (user) => {
     const ref = doc(db, "text", props.article.docId);
     const docSnap = await getDoc(ref);
     if (docSnap.exists()) {
       if (user) {
-        if (props.article.bookmark && docSnap.data().bookmark.includes(user.uid)) {
-          setBookMarked(true)
-          console.log(props.article.title + 'bookmarked')
-        }
-        else {
-
-          setBookMarked(false)
-          console.log(props.article.title + 'bookmarked')
-
+        if (
+          props.article.bookmark &&
+          docSnap.data().bookmark.includes(user.uid)
+        ) {
+          setBookMarked(true);
+          console.log(props.article.title + "bookmarked");
+        } else {
+          setBookMarked(false);
+          console.log(props.article.title + "bookmarked");
         }
       }
-
     }
-  }
-
+  };
 
   const SERVICE_ID = "service_5g4512y";
   const REPORT_TEMPLATE_ID = "template_bs9ya4t";
@@ -211,6 +227,8 @@ const ArticleDetails2 = (props) => {
         setUser(user);
         setHeart(user);
         setBookmark(user);
+        // console.log('<3:',props.article);
+        // console.log(bookCount);
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
 
@@ -250,88 +268,76 @@ const ArticleDetails2 = (props) => {
       // console.log("user", user);
     });
 
-
     return () => {
       unsub();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liked, bookMarked]);
+  }, [liked, bookMarked,props.article]);
 
   const bookmark = async function () {
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
-        if ((docSnap.exists())) {
+        if (docSnap.exists()) {
           if (docSnap.data().bookmark.includes(user.uid)) {
             // alert('remove')
             updateDoc(ref, {
-              bookmark: arrayRemove(user.uid)
+              bookmark: arrayRemove(user.uid),
             });
-            setBookMarked(false)
-            setBookCount(bookCount - 1)
+            setBookMarked(false);
+            setBookCount(bookCount - 1);
           } else {
             // alert('added')
             updateDoc(ref, {
-              bookmark: arrayUnion(user.uid)
+              bookmark: arrayUnion(user.uid),
             });
-            setBookMarked(true)
-            setBookCount(bookCount + 1)
+            setBookMarked(true);
+            setBookCount(bookCount + 1);
           }
         }
-      }
-      else {
-        alert("要登入才能收藏ㄛ!")
-        router.push('/login');
+      } else {
+        alert("要登入才能收藏ㄛ!");
+        router.push("/login");
       }
     }
-  }
+  };
 
   const heart = async function () {
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
-        if ((docSnap.exists())) {
+        if (docSnap.exists()) {
           if (docSnap.data().heart.includes(user.uid)) {
             // alert('remove')
             updateDoc(ref, {
-              heart: arrayRemove(user.uid)
+              heart: arrayRemove(user.uid),
             });
-            setLiked(false)
-            setCount(count - 1)
+            setLiked(false);
+            setCount(count - 1);
           } else {
             // alert('added')
             updateDoc(ref, {
-              heart: arrayUnion(user.uid)
-
+              heart: arrayUnion(user.uid),
             });
-            setLiked(true)
-            setCount(count + 1)
-
-
+            setLiked(true);
+            setCount(count + 1);
           }
         }
-
-
+      } else {
+        alert("要登入才能按讚ㄛ!");
+        router.push("/login");
       }
-
-      else {
-        alert("要登入才能按讚ㄛ!")
-        router.push('/login');
-
-      }
-
-
-
     }
-
-  }
-
+  };
 
   useEffect(() => {
     async function fetchData() {
-
+      setCount(props.article.heart.length);
+      setBookCount(props.article.bookmark.length);
+      // console.log("article:", props.article);
+      // console.log("docId:", props.article.docId);
       const querySnapshotDenounce = collection(
         db,
         "text",
@@ -342,7 +348,6 @@ const ArticleDetails2 = (props) => {
       const querySnapshotReport = await getDocs(queryReport);
       const tempReport = [];
       querySnapshotReport.forEach((doc) => {
-
         let reportMessage = "";
 
         switch (doc.data().reason) {
@@ -363,20 +368,11 @@ const ArticleDetails2 = (props) => {
         let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
         // console.log("reportData", reportdata)
         tempReport.push(reportdata);
-
-
       });
 
       setDenounces(() => [...tempReport]);
 
-
-
       // setReportMessage(reportMessage);
-
-
-
-
-
 
       const querySnapshot = collection(
         db,
@@ -391,7 +387,7 @@ const ArticleDetails2 = (props) => {
       querySnapshotArticle.forEach((doc) => {
         let data = { ...doc.data(), id: doc.id };
         temp.push(data);
-        // console.log("data:", data);
+        // console.log("comment:", data);
       });
 
       // setComments(() => [temp1, temp2]);
@@ -402,7 +398,8 @@ const ArticleDetails2 = (props) => {
     // console.log("article:", props.article);
 
     // eslint-disable-next-line
-  }, [edited, outdated, deleted]);
+  }, [props.article]); //read denounce and comment after article is updated
+  // }, [edited, outdated, deleted]);
 
   const handleClose = () => {
     props.setOpen(false);
@@ -430,7 +427,7 @@ const ArticleDetails2 = (props) => {
               });
 
               setEdited(edited + 1);
-              setExpertOutdate(status)
+              setExpertOutdate(status);
               setIsLoading(false);
               props.update();
               // console.log("outdate:", status);
@@ -444,15 +441,22 @@ const ArticleDetails2 = (props) => {
           //       setDeleted(deleted + 1);
           // }
           else {
-
-            emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-              from_name: "EZ Group",
-              to_name: props.article.user,
-              from_email: "ezgroup329@gmail.com",
-              to_email: props.article.email,
-              target_article: props.article.title,
-              message: "您好，您的文章「" + props.article.title + "」內容已被專家評估為過時，如可修改文章，請至EducationZone平台更改，謝謝。",
-            }, PUBLIC_KEY);
+            emailjs.send(
+              SERVICE_ID,
+              OUTDATE_TEMPLATE_ID,
+              {
+                from_name: "EZ Group",
+                to_name: props.article.user,
+                from_email: "ezgroup329@gmail.com",
+                to_email: props.article.email,
+                target_article: props.article.title,
+                message:
+                  "您好，您的文章「" +
+                  props.article.title +
+                  "」內容已被專家評估為過時，如可修改文章，請至EducationZone平台更改，謝謝。",
+              },
+              PUBLIC_KEY
+            );
 
             try {
               setIsLoading(true);
@@ -463,23 +467,17 @@ const ArticleDetails2 = (props) => {
               });
 
               setEdited(edited + 1);
-              setExpertOutdate(status)
+              setExpertOutdate(status);
               setIsLoading(false);
               props.update();
               // console.log("outdate:", status);
             } catch (error) {
               // console.log("outdateError:", error);
             }
-
           }
-
         }
-
-
       }
-    }
-
-    else {
+    } else {
       alert("請登入");
     }
   };
@@ -491,43 +489,58 @@ const ArticleDetails2 = (props) => {
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
 
-        const querySnapshot = await getDocs(query(collection(db, "profile"), where("character", "==", "專家"), where("majortag", "array-contains-any", props.article.majortag)));
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, "profile"),
+            where("character", "==", "專家"),
+            where("majortag", "array-contains-any", props.article.majortag)
+          )
+        );
         querySnapshot.forEach((doc) => {
-          console.log("expert:", doc.id)
+          console.log("expert:", doc.id);
 
           if (doc.data().email) {
-            emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-              from_name: "EZ Group",
-              to_name: doc.data().user ? doc.data().user : "",
-              from_email: "ezgroup329@gmail.com",
-              to_email: doc.data().email,
-              target_article: props.article.title,
-              message: "您好，有使用者向您回報文章「" + props.article.title + "」內容已過時，請您對文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
-            }, PUBLIC_KEY);
+            emailjs.send(
+              SERVICE_ID,
+              OUTDATE_TEMPLATE_ID,
+              {
+                from_name: "EZ Group",
+                to_name: doc.data().user ? doc.data().user : "",
+                from_email: "ezgroup329@gmail.com",
+                to_email: doc.data().email,
+                target_article: props.article.title,
+                message:
+                  "您好，有使用者向您回報文章「" +
+                  props.article.title +
+                  "」內容已過時，請您對文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
+              },
+              PUBLIC_KEY
+            );
           }
-        })
-
+        });
 
         if (docSnap.exists()) {
           if (status == "stale") {
-
-            emailjs.send(SERVICE_ID, OUTDATE_TEMPLATE_ID, {
-              from_name: "EZ Group",
-              to_name: props.article.user,
-              from_email: "ezgroup329@gmail.com",
-              to_email: props.article.email,
-              target_article: props.article.title,
-              message: "您好，有使用者向專家回報您的文章「" + props.article.title + "」內容已過時，我們會請專家對您的文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
-            }, PUBLIC_KEY);
-
-
-
-
+            emailjs.send(
+              SERVICE_ID,
+              OUTDATE_TEMPLATE_ID,
+              {
+                from_name: "EZ Group",
+                to_name: props.article.user,
+                from_email: "ezgroup329@gmail.com",
+                to_email: props.article.email,
+                target_article: props.article.title,
+                message:
+                  "您好，有使用者向專家回報您的文章「" +
+                  props.article.title +
+                  "」內容已過時，我們會請專家對您的文章進行評估。如可修改文章，請至EducationZone平台更改，謝謝。",
+              },
+              PUBLIC_KEY
+            );
 
             if (expertOutdate == "stale") {
               await updateDoc(doc(db, "text", props.article.docId), {
                 outdate: status,
-
               });
 
               setEdited(edited + 1);
@@ -542,7 +555,7 @@ const ArticleDetails2 = (props) => {
                 props.update();
 
                 setEdited(edited + 1);
-                setExpertOutdate("pending")
+                setExpertOutdate("pending");
 
                 // console.log("denounce:", status)
               } catch (error) {
@@ -551,14 +564,15 @@ const ArticleDetails2 = (props) => {
             }
           } else {
             await setDoc(
-              doc(db, "text", props.article.docId, "denounce", user.uid), {
-              reason: status,
-            }
+              doc(db, "text", props.article.docId, "denounce", user.uid),
+              {
+                reason: status,
+              }
             );
             await updateDoc(doc(db, "text", props.article.docId), {
               report: true,
             });
-            alert("檢舉成功")
+            alert("檢舉成功");
           }
         }
 
@@ -662,7 +676,7 @@ const ArticleDetails2 = (props) => {
               setIsLoading(false);
               alert("刪除成功");
               // props.update();
-              router.reload("/note")
+              router.reload("/note");
             } catch (error) {
               alert(error);
             }
@@ -677,13 +691,19 @@ const ArticleDetails2 = (props) => {
   };
 
   const reportDelete = async function () {
-    emailjs.send(SERVICE_ID, REPORT_TEMPLATE_ID, {
-      from_name: "EZ Group",
-      to_name: props.article.user,
-      from_email: "ezgroup329@gmail.com",
-      to_email: props.article.email,
-      message: "您好，由於眾多使用者檢舉您的文章，故經由專家評估後被下架，如需申訴請聯絡我們。",
-    }, PUBLIC_KEY);
+    emailjs.send(
+      SERVICE_ID,
+      REPORT_TEMPLATE_ID,
+      {
+        from_name: "EZ Group",
+        to_name: props.article.user,
+        from_email: "ezgroup329@gmail.com",
+        to_email: props.article.email,
+        message:
+          "您好，由於眾多使用者檢舉您的文章，故經由專家評估後被下架，如需申訴請聯絡我們。",
+      },
+      PUBLIC_KEY
+    );
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -730,7 +750,6 @@ const ArticleDetails2 = (props) => {
               borderRadius: 1,
             }}
           >
-
             <Typography variant="body1">
               這篇文章有疑慮需要下架嗎？（注意！下架即刪除）
             </Typography>
@@ -747,7 +766,6 @@ const ArticleDetails2 = (props) => {
               </Button>
             </FormControl>
             <br />
-
           </Box>
           <Accordion>
             <AccordionSummary
@@ -771,8 +789,7 @@ const ArticleDetails2 = (props) => {
   const expert = () => {
     return (
       <>
-        <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2, }}>
-
+        <Box sx={{ bgcolor: "#C7CAF2", p: 2, borderRadius: 2 }}>
           <Typography variant="h6">專家權限</Typography>
           <Box
             display="flex"
@@ -786,9 +803,7 @@ const ArticleDetails2 = (props) => {
             }}
           >
             <EmojiObjectsIcon />
-            <Typography variant="body1" >
-              文章審核
-            </Typography>
+            <Typography variant="body1">文章審核</Typography>
             <FormControl sx={{ width: 140, ml: 2 }} size="small">
               {/* <InputLabel id="demo-simple-select-label">過時與否</InputLabel> */}
               <Select
@@ -797,15 +812,19 @@ const ArticleDetails2 = (props) => {
                 // value={topicName}
                 // label="topic"
                 sx={{ height: 35 }}
-
               >
-                <MenuItem onClick={(e) => {
-                  outdate("solved")
-                }}>
+                <MenuItem
+                  onClick={(e) => {
+                    outdate("solved");
+                  }}
+                >
                   沒問題
                 </MenuItem>
                 <MenuItem
-                  onClick={(e) => { outdate("stale") }}>
+                  onClick={(e) => {
+                    outdate("stale");
+                  }}
+                >
                   過時或無法使用
                 </MenuItem>
               </Select>
@@ -831,17 +850,17 @@ const ArticleDetails2 = (props) => {
   const outdateIcon = () => {
     return (
       <Box display="flex" sx={{ alignItems: "center", mr: 1 }}>
-        {(expertOutdate === "stale") && (
+        {expertOutdate === "stale" && (
           <Tooltip title="版本疑慮">
             <WarningIcon sx={{ color: "Crimson" }} />
           </Tooltip>
         )}
-        {((expertOutdate == "pending" || expertOutdate == "")) && (
+        {(expertOutdate == "pending" || expertOutdate == "") && (
           <Tooltip title="專家審核中">
             <NotificationImportantIcon sx={{ color: "Gold" }} />
           </Tooltip>
         )}
-        {(expertOutdate === "solved") && (
+        {expertOutdate === "solved" && (
           <Tooltip title="審核通過">
             <CheckCircleIcon sx={{ color: "Green" }} />
           </Tooltip>
@@ -903,8 +922,6 @@ const ArticleDetails2 = (props) => {
                   <MenuItem value="spamming">惡意洗版</MenuItem>
                   {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
                 </Select>
-
-
               </FormControl>
 
               {/* <Button
@@ -918,7 +935,6 @@ const ArticleDetails2 = (props) => {
               >
                 檢舉
               </Button> */}
-
             </Box>
           </DialogContent>
         </Dialog>
@@ -963,47 +979,47 @@ const ArticleDetails2 = (props) => {
   function ClickedHeartBtn() {
     return (
       <IconButton>
-        <Heart sx={{ color: 'error' }} />
+        <Heart sx={{ color: "error" }} />
       </IconButton>
-    )
+    );
   }
-
 
   // let formattedTags = "";
   // if (typeof props.article.majortag === "string") {
   //   formattedTags = props.article.majortag.split(",").join(" ");
   // }
 
-
   return (
-    <div className={styles.container}>
-      <Dialog
+    <div>
+      {/* <Dialog
         open={props.open}
         onClose={handleClose}
-      >
-        {/* <Navbar /> */}
-        <Container>
-          <Card sx={{ boxShadow: 'none', width: 345 }}>
-            <Grid
-              container
-              display="flex"
-              justifyContent="space-between"
-            >
-              <Grid item >
+      > */}
+      <Navbar />
+      {/* <Container> */}
+      <ContentContainer>
+        <ContentBox isMobile={isMobile}>
+          <Toolbar />
+          <Card sx={{ boxShadow: "none" }}>
+            <Grid container display="flex" justifyContent="space-between">
+              <Grid item>
                 <CardHeader
                   avatar={
-                    <Avatar >
+                    <Avatar>
                       {/* {props.article.userid && profile && profile.photoURL &&
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                     </Avatar>
                   }
                   title={props.article.user}
-                  subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
-                  //item 
+                  subheader={
+                    props.article.timestamp &&
+                    props.article.timestamp.toDate().toLocaleDateString()
+                  }
+                  //item
                   sx={{ p: 1.2 }}
                 />
               </Grid>
-              <Grid item display='flex' alignItems="center" >
+              <Grid item display="flex" alignItems="center">
                 <FormControl>
                   {user &&
                     user.uid === props.article.userid &&
@@ -1021,7 +1037,7 @@ const ArticleDetails2 = (props) => {
 
             <Divider />
 
-            <CardContent >
+            <CardContent>
               <Grid item>
                 <Typography variant="h5" color="text.secondary">
                   <Box display="flex" alignItems="center">
@@ -1029,14 +1045,14 @@ const ArticleDetails2 = (props) => {
                     <a href={props.article.link}>{props.article.title}</a>
                   </Box>
                 </Typography>
-                {(typeof window !== "undefined") &&
+                {typeof window !== "undefined" && (
                   <ReactQuillEditor
                     theme="bubble"
-                    style={{ height: 'auto', }}
+                    style={{ height: "auto" }}
                     readOnly={true}
                     value={props.article.content}
                   />
-                }
+                )}
               </Grid>
             </CardContent>
             <CardActions sx={{ m: 1 }}>
@@ -1044,51 +1060,59 @@ const ArticleDetails2 = (props) => {
                 {/* {props.article.content} */}
                 {/* <div className={styles.card3}> */}
 
-                <Stack direction="row" spacing={1} >
+                <Stack direction="row" spacing={1}>
                   <Chip label={props.article.tag} size="small" />
                   {/* <Chip label={props.article.minitag} size="small" /> */}
-                  {props.article.minitag && props.article.minitag.map((value) => (
-                    <Chip key={value} label={value} size="small" />))}
+                  {props.article.minitag &&
+                    props.article.minitag.map((value) => (
+                      <Chip key={value} label={value} size="small" />
+                    ))}
 
-                  {props.article.majortag && props.article.majortag.map((value) => (
-                    <Chip key={value} label={value} size="small" />))}
+                  {props.article.majortag &&
+                    props.article.majortag.map((value) => (
+                      <Chip key={value} label={value} size="small" />
+                    ))}
 
                   {/* <Chip label={formattedTags} size="small" variant="outlined" /> */}
                 </Stack>
               </Stack>
-
             </CardActions>
 
-
             <Divider />
-            <Grid container display='flex' alignItems='center' sx={{ m: 1 }}>
-              <Grid item display='flex' alignItems='center' xs={2}>
+            <Grid container display="flex" alignItems="center" sx={{ m: 1 }}>
+              <Grid item display="flex" alignItems="center" pr={1}>
                 {/* <IconButton aria-label="add to favorites" onClick={heart} sx={liked ? { color: 'error.main' } : { color: 'text.disabled' }}>
                   <FavoriteBorderIcon />
                 </IconButton> */}
                 <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
-                  {liked ? <Heart sx={{ color: "#E2655E" }} /> : <FavoriteBorderIcon sx={{ color: '#757575' }} />}
+                  {liked ? (
+                    <Heart sx={{ color: "#E2655E" }} />
+                  ) : (
+                    <FavoriteBorderIcon sx={{ color: "#757575" }} />
+                  )}
                 </ButtonBase>
                 <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
                   {count}
                 </Typography>
-
               </Grid>
-              <Grid item display='flex' alignItems='center' xs={2}>
+              <Grid item display="flex" alignItems="center" pr={1}>
                 <ButtonBase onClick={bookmark} sx={{ borderRadius: 10 }}>
-                  {bookMarked ? <Bookmark sx={{ color: "#7A82E7" }} /> : <BookmarkBorderIcon sx={{ color: '#757575' }} />}
+                  {bookMarked ? (
+                    <Bookmark sx={{ color: "#7A82E7" }} />
+                  ) : (
+                    <BookmarkBorderIcon sx={{ color: "#757575" }} />
+                  )}
                 </ButtonBase>
                 <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
                   {bookCount}
                 </Typography>
               </Grid>
-              <Grid item display='flex' alignItems='center' xs={2}>
-                <VI sx={{ color: '#858585' }} />
+              <Grid item display="flex" alignItems="center" pr={1}>
+                <VI sx={{ color: "#858585" }} />
                 <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
                   {props.article.count}
                 </Typography>
               </Grid>
-
             </Grid>
             <Divider />
 
@@ -1105,21 +1129,17 @@ const ArticleDetails2 = (props) => {
                   ? "這篇文章已經不符合現在的版本或者無法使用"
                   : ""}
               </div>
-
             </Box>
             {character === "專家" && expert()}
             {expertAction === "true" && expertReport()}
-            <Box >
-              {comments.map((comment) => renderComment(comment))}
-            </Box>
+            <Box>{comments.map((comment) => renderComment(comment))}</Box>
 
-            <CardActions sx={{ alignItems: 'flex-end', }}>
+            <CardActions sx={{ alignItems: "flex-end" }}>
               {/* <Grid xs={1.5} sx={{ m: 1 }}>
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
-              <Grid item width={300} >
-                {(typeof window !== "undefined") &&
-
+              <Grid item minWidth={300}>
+                {typeof window !== "undefined" && (
                   <ReactQuillEditor
                     theme="bubble"
                     //placeholder='留言'
@@ -1127,19 +1147,24 @@ const ArticleDetails2 = (props) => {
                     placeholder={`以${user && user.displayName}新增留言`}
                     style={{
                       minHeight: 40,
-                      border: 'solid',
+                      border: "solid",
                       borderRadius: 8,
                       margin: 8,
-                      borderColor: '#9a9a9a',
+                      borderColor: "#9a9a9a",
                     }}
-                  />}
+                  />
+                )}
               </Grid>
-              <IconButton onClick={onSubmit}><SendIcon sx={{ fontSize: 20, pb: 0.2 }} /></IconButton>
+              <IconButton onClick={onSubmit}>
+                <SendIcon sx={{ fontSize: 20, pb: 0.2 }} />
+              </IconButton>
             </CardActions>
           </Card>
-        </Container>
+        </ContentBox>
+      </ContentContainer>
+      {/* </Container> */}
 
-      </Dialog>
+      {/* </Dialog> */}
     </div>
   );
 };

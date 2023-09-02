@@ -105,7 +105,7 @@ function Solgan() {
                     </Box>
                     <Toolbar />
                     <Box sx={{ maxWidth: 600, p: 4 }}>
-                        <Image src={workingPerson} />
+                        <Image alt="裝飾用圖片" src={workingPerson} />
                     </Box>
                 </Box>
             </Container>
@@ -161,7 +161,7 @@ function Character() {
                         </Grid>
                         <Grid item xs={4} sx={{ minWidth: 345, }}>
                             <CardMedia>
-                                <Image
+                                <Image alt="專家"
                                     src={expert}
                                 />
                             </CardMedia>
@@ -178,7 +178,7 @@ function Character() {
                         </Grid>
                         <Grid item xs={4} sx={{ minWidth: 345, }}>
                             <CardMedia>
-                                <Image
+                                <Image alt="學習者"
                                     src={learner}
                                 />
                             </CardMedia>
@@ -255,7 +255,7 @@ function Update() {
                 {/* 網頁*/}
                 <Card sx={{ p: 2, boxShadow: 4, display: { xs: "none", md: "flex" }, }}>
                     <Grid item minWidth={340}>
-                        <Grid display="flex" flexWrap="wrap" spacing={4}>
+                        <Grid container display="flex" flexWrap="wrap" spacing={4}>
 
                             <Grid item xs={4}>
                                 {/* <Box display="flex" flexDirection="column" flexWrap="wrap">
@@ -499,7 +499,7 @@ function Update() {
                 {/* 手機 */}
                 <Card sx={{ p: 2, boxShadow: 4, display: { xs: "flex", md: "none" }, maxWidth: 360 }}>
                     <Grid item minWidth={300} alignContent="center">
-                        <Grid display="flex" flexWrap="wrap" spacing={4}>
+                        <Grid container display="flex" flexWrap="wrap" spacing={4}>
 
                             <Grid item xs={4}>
                                 {/* <Box display="flex" flexDirection="column" flexWrap="wrap">
@@ -635,7 +635,7 @@ function Update() {
                                 <Box display="flex" flexDirection="column" >
                                     <Box sx={{ mb: 2, p: 2, bgcolor: "#FFF6E1" }}>
                                         <Typography variant="h6">學習者</Typography>
-                                        <Typography variant="caption" sx={{height:18}}>學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
+                                        <Typography variant="caption" sx={{ height: 18 }}>學習者可透過<MoreHorizIcon sx={{ fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} />內檢舉功能的「過時或無法使用」</Typography><br />
                                         <Typography variant="caption">做出過時回報，文章經回報過後，狀態更新為<NotificationImportantIcon sx={{ color: "Gold", fontSize: 18, bgcolor: "#ffffff", borderRadius: 10, p: 0.2 }} /> </Typography>
                                         <Box sx={{ p: 1, bgcolor: "#fafafa", borderRadius: 3 }}>
                                             <Box component="form" sx={{ display: "flex" }}>

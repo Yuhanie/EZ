@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, where, orderBy, } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { Timestamp } from "firebase/firestore";
@@ -8,7 +8,7 @@ import { firebaseConfig } from '@/settings/firebaseConfig';
 import { Article } from 'interfaces/entities';
 import ArticleListItem from '@/components/article/ArticleListItem';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import ArticleDetails2 from '@/components/article/ArticleDetails';
+import ArticleDetails2 from '@/components/article/ArticleDetails2';
 
 
 const Article = () => {
@@ -17,6 +17,7 @@ const Article = () => {
   const router = useRouter();
   const { id } = router.query;
   const [currentUser, setCurrentUser] = useState<User>();
+  const [comments, setComments] = useState<Comment[]>();
   const [article, setArticle] = useState<Article>({
     docId: "無此文件",
     content: "",
@@ -36,6 +37,9 @@ const Article = () => {
     email: ""
   }
   );
+
+
+
   function updateUpdated() {
 
   }
@@ -79,7 +83,20 @@ const Article = () => {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
         }
-      }
+
+      //   const commentCollectionRef = collection(db, 'text', 'comment'); 
+      //   const commentQuery = query(commentCollectionRef, where('articleId', '==', docSnap.id), orderBy("timestamp", "asc"));
+      //   const commentSnapshot = await getDocs(commentQuery);
+
+      //   const temp: Comment[] = [];
+      //   commentSnapshot.forEach((commentDoc) => {
+      //     temp.push({ ...commentDoc.data(), id: commentDoc.id });
+      //   });
+
+      //   setComments([...temp]);
+
+
+       }
 
       // const auth = getAuth();
       // const unsub = onAuthStateChanged(auth, (user) => {

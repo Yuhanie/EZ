@@ -272,7 +272,7 @@ const ArticleDetails2 = (props) => {
       unsub();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liked, bookMarked,props.article]);
+  }, [liked, bookMarked, props.article]);
 
   const bookmark = async function () {
     if (typeof window !== "undefined") {
@@ -1143,7 +1143,14 @@ const ArticleDetails2 = (props) => {
                   <ReactQuillEditor
                     theme="bubble"
                     //placeholder='留言'
-                    onChange={addContent}
+                    // onChange={addContent}
+                    value={content}
+                    onChange={(text, delta, source, editor) => {
+                      if (source == 'user') {
+                        // place whatever function you want to execute when user types here:
+                        setContent(text);
+                      }
+                    }}
                     placeholder={`以${user && user.displayName}新增留言`}
                     style={{
                       minHeight: 40,

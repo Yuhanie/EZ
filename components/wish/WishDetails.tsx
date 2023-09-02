@@ -255,95 +255,95 @@ const WishDetails:
                      vertical: 'top',
                      horizontal: 'right',
                   }}
-                  
+
                >
-               <Typography variant='body2' sx={{ ml: 2,mr:2 }}>
-                  文章內容有問題？
-               </Typography>
-               <FormControl sx={{ m: 2,minWidth:120 }}>
-                  <InputLabel id="demo-simple-select-label">選擇問題</InputLabel>
-                  <Select
-                     labelId="demo-simple-select-label"
-                     id="demo-simple-select"
-                     label="Report"
-                     value={report}
-                     onChange={handleReportChange}
-                  // value={topicName}
-                  // label="topic"
-                  // onChange={(e) => {
-                  //   Denounce(e.target.value);
-                  //   // setReport(e.target.value);
-                  // }}
+                  <Typography variant='body2' sx={{ ml: 2, mr: 2 }}>
+                     文章內容有問題？
+                  </Typography>
+                  <FormControl sx={{ m: 2, minWidth: 120 }}>
+                     <InputLabel id="demo-simple-select-label">選擇問題</InputLabel>
+                     <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Report"
+                        value={report}
+                        onChange={handleReportChange}
+                     // value={topicName}
+                     // label="topic"
+                     // onChange={(e) => {
+                     //   Denounce(e.target.value);
+                     //   // setReport(e.target.value);
+                     // }}
+                     >
+                        <MenuItem value="stale">過時或無法使用</MenuItem>
+                        <MenuItem value="empty">內容空泛</MenuItem>
+                        <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
+                        <MenuItem value="spamming">惡意洗版</MenuItem>
+                        {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
+                     </Select>
+                  </FormControl>
+
+
+                  <Box
+                     display='flex'
+                     justifyContent='flex-end'
                   >
-                     <MenuItem value="stale">過時或無法使用</MenuItem>
-                     <MenuItem value="empty">內容空泛</MenuItem>
-                     <MenuItem value="curse">中傷、挑釁、謾罵他人</MenuItem>
-                     <MenuItem value="spamming">惡意洗版</MenuItem>
-                     {/* <MenuItem value="tagerror">文章分類錯誤</MenuItem> */}
-                  </Select>
-               </FormControl>
-
-
-               <Box
-                  display='flex'
-                  justifyContent='flex-end'
-               >
-                  <Button onClick={handleToolClose} size='small'>取消</Button>
-                  <Button size='small'>回報</Button>
-               </Box>
-            </Menu>
+                     <Button onClick={handleToolClose} size='small'>取消</Button>
+                     <Button size='small'>回報</Button>
+                  </Box>
+               </Menu>
             </div >
          )
       }
 
-return (
-   <div>
-      <Dialog
-         open={props.open}
-         onClose={handleClose}
-         scroll={scroll}
-         aria-labelledby="scroll-dialog-title"
-         aria-describedby="scroll-dialog-description"
-      >
-         <DialogTitle
-            id="scroll-dialog-title"
-            display='flex'
-            justifyContent='space-between'
-            alignItems='center'
-            sx={{
-               minWidth: 320,
-               p: 1,
-               display: { xs: 6, md: 12 }
-            }}
-         >
-
-            <CardHeader
-               avatar={
-                  <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
-                  </Avatar>
-               }
-               title={props.wish.user}
-               subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
-               //item 
-               sx={{ p: 1.2 }}
-            />
-            {/* {reportMenu()} */}
-         </DialogTitle>
-         <DialogContent dividers={scroll === 'paper'} sx={{ minHeight: 150, }}>
-            <DialogContentText
-               id="scroll-dialog-description"
-               tabIndex={-1}
-               sx={{ mb: 10 }}
+      return (
+         <div>
+            <Dialog
+               open={props.open}
+               onClose={handleClose}
+               scroll={scroll}
+               aria-labelledby="scroll-dialog-title"
+               aria-describedby="scroll-dialog-description"
             >
-               {(typeof window !== "undefined") &&
-                  <ReactQuillEditor
-                     theme="bubble"
-                     //style={{ height: 50 }}
-                     readOnly={true}
-                     value={props.wish.content}
-                  />
+               <DialogTitle
+                  id="scroll-dialog-title"
+                  display='flex'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  sx={{
+                     minWidth: 320,
+                     p: 1,
+                     display: { xs: 6, md: 12 }
+                  }}
+               >
 
+                  <CardHeader
+                     avatar={
+                        <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
+                        </Avatar>
+                     }
+                     title={props.wish.user}
+                     subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
+                     //item 
+                     sx={{ p: 1.2 }}
+                  />
+                  {/* {reportMenu()} */}
                </DialogTitle>
+               <DialogContent dividers={scroll === 'paper'} sx={{ minHeight: 150, }}>
+                  <DialogContentText
+                     id="scroll-dialog-description"
+                     tabIndex={-1}
+                     sx={{ mb: 10 }}
+                  >
+                     {(typeof window !== "undefined") &&
+                        <ReactQuillEditor
+                           theme="bubble"
+                           //style={{ height: 50 }}
+                           readOnly={true}
+                           value={props.wish.content}
+                        />
+                     }</DialogContentText>
+               </DialogContent>
                <DialogContent dividers={scroll === 'paper'} sx={{ minHeight: 150, }}>
                   <DialogContentText
                      id="scroll-dialog-description"

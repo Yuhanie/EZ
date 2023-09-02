@@ -52,9 +52,9 @@ export type Comment = {
   docId: string;
   user: string;
   content: string;
-  userid: string;
-  timestamp: Timestamp;
-  heart: string[];
+  userid?: string;
+  timestamp?: Timestamp;
+  heart?: string[];
 };
 
 export type Report = {

@@ -149,24 +149,18 @@ const Newwish = () => {
                   {stars}
                   <Image alt="裝飾圖片" src={magicCat} height='900' />
                </div>
-               <Box sx={{ p: 2, }}>
+               <Box display='flex' flexDirection='column' sx={{ p: 2, justifyContent:'center',alignItems:'center' }}>
                   <Typography variant="body2" gutterBottom >
                      找不到想看的內容嗎？試著在這裡許下願望，讓願望藉由大家的力量實現吧！
                   </Typography>
-                  <Typography
-                     variant="button"
-                     display="block"
-                     gutterBottom
-                     sx={{
-                        cursor: 'pointer',
-                        textAlign: 'center',
-                        color: '#425E99',
-                        mt: 2
-                     }}
+                  <Button
+                     color="info"
+                     variant="outlined"
+                     sx={{ borderRadius: 10,m:1 }}
                      onClick={changeStatus}
                   >
-                     Make a wish
-                  </Typography>
+                      Make a wish
+                  </Button>
 
                </Box>
 

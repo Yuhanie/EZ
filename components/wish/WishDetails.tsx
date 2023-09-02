@@ -344,21 +344,6 @@ const WishDetails:
                            readOnly={true}
                            value={props.wish.content}
                         />
-                     }</DialogContentText>
-               </DialogContent>
-               <DialogContent dividers={scroll === 'paper'} sx={{ minHeight: 150, }}>
-                  <DialogContentText
-                     id="scroll-dialog-description"
-                     tabIndex={-1}
-                     sx={{ mb: 10 }}
-                  >
-                     {(typeof window !== "undefined") &&
-                        <ReactQuillEditor
-                           theme="bubble"
-                           //style={{ height: 50 }}
-                           readOnly={true}
-                           value={props.wish.content}
-                        />
                      }
 
                   </DialogContentText>

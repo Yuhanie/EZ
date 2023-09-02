@@ -236,4 +236,5 @@ const WishDetails:
          </div>
       )
    }
+   
 export default WishDetails;

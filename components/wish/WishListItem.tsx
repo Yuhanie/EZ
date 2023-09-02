@@ -158,7 +158,7 @@ const WishListItem:
                variant="outlined"
                sx={{ borderRadius: 10 }}
             >
-               問問
+               我也想問
             </Button>
          )
       }

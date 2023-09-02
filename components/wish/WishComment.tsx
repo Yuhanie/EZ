@@ -69,7 +69,8 @@ const auth = getAuth();
 type Props = {
     wish: Wish;
     comment: Comment;
-    // update: Function;
+    update: Function;
+    edited: number;
     // open: boolean;
     // setOpen: (open: boolean) => void;
     //currentUser: string;
@@ -118,6 +119,7 @@ const WishComment:
         //可能有問題
         const deleteComment = async function (id: string) {
             if (typeof window !== "undefined") {
+                console.log("id121", id);
                 if (user) {
                     const ref = doc(db, "wish", props.wish.docId, "comment", id);;
                     const docSnap = await getDoc(ref);
@@ -135,7 +137,7 @@ const WishComment:
                                 setIsLoading(false);
                                 alert("刪除成功");
                                 //!!!!!!!!!!!!!!!!!!!要問
-                                // props.setEdited(props.edited + 1);
+                                props.update(props.edited + 1);
 
 
                             } catch (error) {
@@ -229,7 +231,7 @@ const WishComment:
                             <Box display="flex" justifyContent="space-between" alignItems="center" >
                                 <Box display="flex" flexDirection="row" alignItems="center">
                                     <Avatar sx={{ mr: 2 }} alt="Remy Sharp" />
-                                    <Typography style={{ margin: 0, textAlign: "left" }}>{comment.docId}</Typography>
+                                    <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
                                 </Box>
                                 <Box display="flex" alignItems="center">
                                     <IconButton
@@ -280,4 +282,4 @@ const WishComment:
 
     };
 
-export default Comment;
+export default WishComment;

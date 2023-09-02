@@ -75,7 +75,7 @@ const WishDetails:
             querySnapshotArticle.forEach((doc) => {
                // let data = { ...doc.data(), id: doc.id };
                temp.push({
-                  docId: doc.data().docId,
+                  docId: doc.id,
                   content: doc.data().content,
                   user: doc.data().user,
                   userid: doc.data().userid,
@@ -95,6 +95,28 @@ const WishDetails:
          // eslint-disable-next-line
       }, [edited, deleted]);
 
+      useEffect(() => {
+         // async function fetchData() {
+         //     console.log("comment:", props.comment);
+
+         // }
+         // fetchData();
+
+
+         const unsub = onAuthStateChanged(auth, (user) => {
+            if (user) {
+               setUser(user);
+               // setHeart(user);
+               console.log("user", user);
+            }
+         });
+
+         return () => {
+            unsub();
+         };
+
+         // eslint-disable-next-line
+      }, [edited, deleted]);
 
       const handleClose = () => {
          props.setOpen(false);
@@ -129,6 +151,8 @@ const WishDetails:
                      <WishComment
                         wish={props.wish}
                         comment={comment}
+                        update={setEdited}
+                        edited={edited}
                      />
                   </div>
                )}
@@ -206,7 +230,7 @@ const WishDetails:
                            }}
                         />}
                   </Grid>
-                  <IconButton><SendIcon sx={{ fontSize: 20, pb: 0.2 }} /></IconButton>
+                  <IconButton><SendIcon sx={{ fontSize: 20, pb: 0.2 }} onClick={onSubmit} /></IconButton>
                </DialogActions>
             </Dialog>
          </div>

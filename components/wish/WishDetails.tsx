@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState, useMemo } from "react";
 import dynamic from 'next/dynamic';
-import WishComment from "./WishComment";
 
 //mui
 import Box from '@mui/material/Box';
@@ -33,6 +32,7 @@ import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 import { ReactPropTypes } from 'react';
 import { ChatBubble } from '@mui/icons-material';
 import router from 'next/router';
+import WishComment from './WishComment';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();

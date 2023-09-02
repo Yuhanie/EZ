@@ -41,7 +41,7 @@
     "pages/index.tsx",
     "components/article/ArticleDetails.js",
     "components/context/UserContext.jsx",
-    "components/wish/wishComment.tsx"
+    "components/wish/WishComment.tsx"
   ],
   "exclude": [
     "node_modules"

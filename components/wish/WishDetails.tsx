@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useMemo } from "react";
 import dynamic from 'next/dynamic';
-import wishComment from "./wishComment";
+import WishComment from "./WishComment";
 
 //mui
 import Box from '@mui/material/Box';
@@ -121,17 +121,14 @@ const WishDetails:
          }
       }
 
-      const renderComment = (comment: Comment, i: number) => {
+      const renderComment = (comment: Comment) => {
          return (
             <div key={comment.content}>
                {comment && (
                   <div style={{ padding: 14 }} className="App">
-
-                     <wishComment
-                     // edited={edited}
-                     // setEdited={setEdited}
-                     // article={props.article}
-                     // comment={comment}
+                     <WishComment
+                        wish={props.wish}
+                        comment={comment}
                      />
                   </div>
                )}
@@ -189,6 +186,7 @@ const WishDetails:
                   </Box>
                </DialogContent>
                <DialogActions sx={{ alignItems: 'flex-end', }}>
+                  {comments && comments.map((comment) => renderComment(comment))}
                   {/* <Grid xs={1.5} sx={{ m: 1 }}>
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}

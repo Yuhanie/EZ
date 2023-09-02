@@ -68,14 +68,14 @@ const auth = getAuth();
 
 type Props = {
     wish: Wish;
-    Comment: Comment;
-    update: Function;
-    open: boolean;
-    setOpen: (open: boolean) => void;
+    comment: Comment;
+    // update: Function;
+    // open: boolean;
+    // setOpen: (open: boolean) => void;
     //currentUser: string;
 };
 
-const Comment:
+const WishComment:
     React.FC<Props> = (props) => {
         // const [comment, setComment] = useState();
         // const [content, setContent] = useState("");
@@ -229,7 +229,7 @@ const Comment:
                             <Box display="flex" justifyContent="space-between" alignItems="center" >
                                 <Box display="flex" flexDirection="row" alignItems="center">
                                     <Avatar sx={{ mr: 2 }} alt="Remy Sharp" />
-                                    <Typography style={{ margin: 0, textAlign: "left" }}>{comment.user}</Typography>
+                                    <Typography style={{ margin: 0, textAlign: "left" }}>{comment.docId}</Typography>
                                 </Box>
                                 <Box display="flex" alignItems="center">
                                     <IconButton
@@ -272,7 +272,7 @@ const Comment:
         return (
             <div className={styles.container}>
                 {/* {comment.map(renderComment)} */}
-                {renderComment(props.Comment)}
+                {renderComment(props.comment)}
 
             </div>
         );

@@ -132,6 +132,8 @@ const WishDetails:
          // eslint-disable-next-line
       }, [edited, deleted]);
 
+
+
       const handleClose = () => {
          props.setOpen(false);
       };
@@ -358,13 +360,16 @@ const WishDetails:
                            value={props.wish.content}
                         />
                      }
+
                   </DialogContentText>
                   <Box>
                      <Chip label={props.wish.tag} size="small" />
+
                   </Box>
+                  {comments && comments.map((comment) => renderComment(comment))}
                </DialogContent>
                <DialogActions sx={{ alignItems: 'flex-end', }}>
-                  {comments && comments.map((comment) => renderComment(comment))}
+
                   {/* <Grid xs={1.5} sx={{ m: 1 }}>
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
@@ -374,7 +379,15 @@ const WishDetails:
                         <ReactQuillEditor
                            theme="bubble"
                            placeholder='留言'
-                           //placeholder={`以${props.currentUser}新增留言`}
+                           value={content}
+                           // onChange={(e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value)}
+                           onChange={(text: string, delta: any, source: string, editor: any) => {
+                              if (source == 'user') {
+                                 // place whatever function you want to execute when user types here:
+                                 setContent(text);
+                              }
+                           }}
+                           // placeholder={`以${user}新增留言`}
                            style={{
                               minHeight: 40,
                               border: 'solid',
@@ -390,5 +403,5 @@ const WishDetails:
          </div>
       )
    }
-   
+
 export default WishDetails;

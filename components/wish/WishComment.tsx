@@ -1,7 +1,7 @@
 import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import router from "next/router";
 import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
@@ -51,6 +51,7 @@ import {
     Box,
 } from "@mui/material";
 import { getApp, getApps, initializeApp } from "firebase/app";
+import dynamic from "next/dynamic";
 
 // const docRef = doc(db, "English", "1");
 // const docSnap = await getDoc(docRef);
@@ -88,7 +89,7 @@ const WishComment:
         const [deleted, setDeleted] = useState<number>(0);
         const [isLoading, setIsLoading] = useState<boolean>(false);
         const [edited, setEdited] = useState<number>(0);
-
+        const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
 
@@ -258,7 +259,16 @@ const WishComment:
                             <Box>
 
 
-                                <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography>
+
+                                {(typeof window !== "undefined") &&
+                                    <ReactQuillEditor
+                                        theme="bubble"
+                                        style={{ height: 80, overflow: 'hidden' }}
+                                        readOnly={true}
+                                        value={comment.content}
+                                    />
+                                }
+                                {/* <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>{comment.content}</Typography> */}
                                 <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
                                     {comment.timestamp &&
                                         comment.timestamp.toDate().toLocaleString()}

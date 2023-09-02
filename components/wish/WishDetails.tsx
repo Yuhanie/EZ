@@ -41,7 +41,7 @@ const auth = getAuth();
 
 type Props = {
    wish: Wish;
-   Comment: Comment;
+   Comment?: Comment;
    update: Function;
    open: boolean;
    setOpen: (open: boolean) => void;

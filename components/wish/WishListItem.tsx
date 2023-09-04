@@ -268,20 +268,20 @@ const WishListItem:
                   </Grid>
                   {decide == true && solvedIcon()}
                   <Grid item direction="column">
-                     <Grid item textAlign='center'>
+                     {decide == false && <Grid item textAlign='center'>
                         <Typography sx={{ cursor: 'pointer' }} variant="body2">
                            {heartCount}
                         </Typography>
-                     </Grid>
+                     </Grid>}
                      <Grid item >
-                        {<ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+                        {decide == false && <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
 
                            {liked ? <ClickedBtn /> : <DefaultBtn />}
 
                         </ButtonBase>}
-                        <ButtonBase sx={{ borderRadius: 10 }}>
-                           {decide == false && character === "專家" && SolvedBtn()}
-                        </ButtonBase>
+                        {decide == false && <ButtonBase sx={{ borderRadius: 10 }}>
+                           {character === "專家" && SolvedBtn()}
+                        </ButtonBase>}
                      </Grid>
                   </Grid>
                </Grid>

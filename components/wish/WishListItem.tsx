@@ -187,9 +187,8 @@ const WishListItem:
             <Button
                color="info"
                size="small"
-
                variant="outlined"
-               sx={{ borderRadius: 10 }}
+               sx={{ borderRadius: 10, mb: 0.5, fontSize: 10, p: 0.4 }}
             >
                我也想問
             </Button>
@@ -202,9 +201,8 @@ const WishListItem:
                color="info"
                size="small"
                variant="outlined"
-               sx={{ borderRadius: 10 }}
+               sx={{ borderRadius: 10, fontSize: 10 }}
                onClick={solved}
-
             >
                已實現
             </Button>
@@ -217,7 +215,7 @@ const WishListItem:
                color='info'
                size="small"
                variant="contained"
-               sx={{ borderRadius: 10 }}
+               sx={{ borderRadius: 10, mb: 0.5, fontSize: 10 }}
             >
                取消
             </Button>
@@ -238,7 +236,7 @@ const WishListItem:
                      theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                }}
             >
-               <Grid container spacing={2}>
+               <Grid container spacing={2} >
                   <Grid item md={2.5}>
                      <CardHeader
                         avatar={
@@ -252,7 +250,7 @@ const WishListItem:
                      />
                   </Grid>
 
-                  <Grid item xs={12} md={8} container sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+                  <Grid item xs={12} md={7.5} container sx={{ cursor: 'pointer' }} onClick={handleOpen}>
                      <Grid item direction="column">
                         <Grid item >
                            {(typeof window !== "undefined") &&
@@ -266,24 +264,27 @@ const WishListItem:
                         </Grid>
                      </Grid>
                   </Grid>
-                  {decide == true && solvedIcon()}
-                  <Grid item direction="column">
-                     <Grid item textAlign='center'>
-                        <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                           {heartCount}
-                        </Typography>
-                     </Grid>
+
+                  <Grid item display='flex' justifyContent='center' alignItems='center'>
                      <Grid item >
-                        {<ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
-
+                        {decide == true && solvedIcon()}
+                     </Grid>
+                     {decide == false && <Grid item md={6}>
+                        <Typography sx={{ pr: 2 }} variant="body2">
+                           123
+                           {/* {heartCount} */}
+                        </Typography>
+                     </Grid>}
+                     <Grid item display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                        {decide == false && <ButtonBase onClick={heart} sx={{ borderRadius: 10 }} >
                            {liked ? <ClickedBtn /> : <DefaultBtn />}
-
                         </ButtonBase>}
-                        <ButtonBase sx={{ borderRadius: 10 }}>
-                           {decide == false && character === "專家" && SolvedBtn()}
-                        </ButtonBase>
+                        {decide == false && <ButtonBase sx={{ borderRadius: 10 }}>
+                           {character === "專家" && SolvedBtn()}
+                        </ButtonBase>}
                      </Grid>
                   </Grid>
+
                </Grid>
             </Paper>
          </div >

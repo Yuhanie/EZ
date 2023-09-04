@@ -149,17 +149,17 @@ const Newwish = () => {
                   {stars}
                   <Image alt="裝飾圖片" src={magicCat} height='900' />
                </div>
-               <Box display='flex' flexDirection='column' sx={{ p: 2, justifyContent:'center',alignItems:'center' }}>
+               <Box display='flex' flexDirection='column' sx={{ p: 2, justifyContent: 'center', alignItems: 'center' }}>
                   <Typography variant="body2" gutterBottom >
                      找不到想看的內容嗎？試著在這裡許下願望，讓願望藉由大家的力量實現吧！
                   </Typography>
                   <Button
                      color="info"
                      variant="outlined"
-                     sx={{ borderRadius: 10,m:1 }}
+                     sx={{ borderRadius: 10, m: 1 }}
                      onClick={changeStatus}
                   >
-                      Make a wish
+                     Make a wish
                   </Button>
 
                </Box>
@@ -240,6 +240,7 @@ const WishingPool = () => {
                timestamp: doc.data().timestamp,
                heart: doc.data().heart,
                tag: doc.data().tag,
+               solved: doc.data().solved,
             });
          });
          setWishes([...temp]);

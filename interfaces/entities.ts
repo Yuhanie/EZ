@@ -113,4 +113,5 @@ export type Wish = {
   timestamp: Timestamp;
   heart: string[];
   tag: string;
+  solved: boolean;
 };

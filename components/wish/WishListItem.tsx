@@ -44,6 +44,9 @@ const WishListItem:
       const [heartCount, setHeartCount] = useState(props.wish.heart ? props.wish.heart.length : 0);
       const [liked, setLiked] = useState(false);
       const [profile, setProfile] = useState<Profile>();
+      const [character, setCharacter] = useState("學習者");
+      const [decide, setDecide] = useState<boolean>(props.wish.solved);
+      const [edited, setEdited] = useState(0);
       const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
@@ -85,20 +88,20 @@ const WishListItem:
                const ref = doc(db, "profile", user.uid);
                const docSnap = await getDoc(ref);
 
-               //   if (
-               //     docSnap.exists() &&
-               //     docSnap.data().character &&
-               //     docSnap.data().character === "專家"
-               //   ) {
-               //     setCharacter("專家");
-               //   } else {
-               //     setCharacter("學習者");
-               //   }
+               if (
+                  docSnap.exists() &&
+                  docSnap.data().character &&
+                  docSnap.data().character === "專家"
+               ) {
+                  setCharacter("專家");
+               } else {
+                  setCharacter("學習者");
+               }
 
-               //   const querySnapshot = await getDoc(doc(db, "profile", props.article.userid));
-               //   if ((querySnapshot).exists()) {
-               //     setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
-               //   }
+               // const querySnapshot = await getDoc(doc(db, "profile", props.article.userid));
+               // if ((querySnapshot).exists()) {
+               //    setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+               // }
 
             }
             //console.log(user);
@@ -110,7 +113,7 @@ const WishListItem:
             unsub();
          }
 
-      }, [liked])
+      }, [liked, edited])
 
 
       const heart = async function () {
@@ -147,6 +150,36 @@ const WishListItem:
          }
       }
 
+      const solved = async function () {
+         // let status = e.target.value
+         // console.log("outdateE", status)
+         if (typeof window !== "undefined") {
+            if (currentUser) {
+               const ref = doc(db, "wish", props.wish.docId);
+               const docSnap = await getDoc(ref);
+               if ((docSnap.exists())) {
+                  await updateDoc(doc(db, "wish", props.wish.docId), {
+                     solved: true
+                  });
+                  setEdited(edited + 1)
+                  setDecide(true);
+
+               }
+            }
+         }
+
+         else {
+            alert("請登入");
+         }
+      };
+
+      function solvedIcon() {
+         return (
+            <div>
+               已實現
+            </div>
+         )
+      }
 
       //btn
       function DefaultBtn() {
@@ -159,6 +192,21 @@ const WishListItem:
                sx={{ borderRadius: 10 }}
             >
                我也想問
+            </Button>
+         )
+      }
+
+      function SolvedBtn() {
+         return (
+            <Button
+               color="info"
+               size="small"
+               variant="outlined"
+               sx={{ borderRadius: 10 }}
+               onClick={solved}
+
+            >
+               已實現
             </Button>
          )
       }
@@ -218,7 +266,7 @@ const WishListItem:
                         </Grid>
                      </Grid>
                   </Grid>
-
+                  {decide == true && solvedIcon()}
                   <Grid item direction="column">
                      <Grid item textAlign='center'>
                         <Typography sx={{ cursor: 'pointer' }} variant="body2">
@@ -226,14 +274,19 @@ const WishListItem:
                         </Typography>
                      </Grid>
                      <Grid item >
-                        <ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+                        {<ButtonBase onClick={heart} sx={{ borderRadius: 10 }}>
+
                            {liked ? <ClickedBtn /> : <DefaultBtn />}
+
+                        </ButtonBase>}
+                        <ButtonBase sx={{ borderRadius: 10 }}>
+                           {decide == false && character === "專家" && SolvedBtn()}
                         </ButtonBase>
                      </Grid>
                   </Grid>
                </Grid>
             </Paper>
-         </div>
+         </div >
       )
 
    }

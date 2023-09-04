@@ -179,6 +179,7 @@ function Newask() {
           tag: tagName,
           user: user.displayName,
           heart: [],
+          solved: false,
           // bookmark: [],
           // count: 1,
           // link,
@@ -219,7 +220,7 @@ function Newask() {
       //   { indent: '-1' },
       //   { indent: '+1' },
       // ],
-      ['link', 'image','code-block'],
+      ['link', 'image', 'code-block'],
     ],
     clipboard: {
       matchVisual: false,
@@ -248,8 +249,8 @@ function Newask() {
     //<div className={styles.post_container}>
     <div>
       <Navbar />
-      <Toolbar /><br/><br/>
-      
+      <Toolbar /><br /><br />
+
       <Paper
         sx={{
           width: 330,
@@ -337,7 +338,7 @@ function Newask() {
                 formats={formats}
                 theme="snow"
                 onChange={addContent}
-                style={{minHeight:100, height: 'auto' }}
+                style={{ minHeight: 100, height: 'auto' }}
               />}
           </Box>
         </Box>

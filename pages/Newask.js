@@ -164,6 +164,10 @@ function Newask() {
     setContent(value)
   }
 
+  const back = async function (){
+    router.push('/wishingPool');
+  }
+
   const update = async function () {
     if (content == "" || tagName == "") {
       return (false);
@@ -343,7 +347,7 @@ function Newask() {
           </Box>
         </Box>
         <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained" disabled color="primary">取消</Button><br></br><br></br>
+          <Button variant="contained" disabled color="primary" onClick={back}>取消</Button><br></br><br></br>
           <Button variant="contained" onClick={update} >送出</Button>
         </CardActions>
 

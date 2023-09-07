@@ -271,8 +271,7 @@ const WishListItem:
                      </Grid>
                      {decide == false && <Grid item md={6}>
                         <Typography sx={{ pr: 2 }} variant="body2">
-                           123
-                           {/* {heartCount} */}
+                           {heartCount}
                         </Typography>
                      </Grid>}
                      <Grid item display='flex' flexDirection='column' justifyContent='center' alignItems='center'>

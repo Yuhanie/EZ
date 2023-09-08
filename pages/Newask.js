@@ -347,7 +347,7 @@ function Newask() {
           </Box>
         </Box>
         <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained" color="primary" onClick={back}>取消</Button><br></br><br></br>
+          <Button variant="contained" color="error" onClick={back}>取消</Button><br></br><br></br>
           <Button variant="contained" onClick={update} >送出</Button>
         </CardActions>
 

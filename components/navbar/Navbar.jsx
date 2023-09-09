@@ -74,6 +74,7 @@ ElevationScroll.propTypes = {
 const pages = [
   { text: "首頁", href: "/" },
   { text: "資訊分享區", href: "/note" },
+  // { text: "許願池", href: "/wishingPool" },
   // { text: "問答區", href: "" },
 
 ];
@@ -123,7 +124,7 @@ function ResponsiveAppBar() {
     await signOut(auth);
     if (typeof window !== "undefined") {
       alert("已登出");
-      setLogged(true);    
+      setLogged(true);
     }
     router.push('/');
   };
@@ -138,7 +139,7 @@ function ResponsiveAppBar() {
   const expert = () => {
     return (
 
-      <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign:"left"}}>
+      <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
         <Typography>
           審查筆記
         </Typography>
@@ -337,6 +338,13 @@ function ResponsiveAppBar() {
                 <MenuItem>
                   {character == "專家" && expert()}
                 </MenuItem>
+                <MenuItem>
+                  <Button variant="variant" href="/wishingPool" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
+                    <Typography>
+                      許願池
+                    </Typography>
+                  </Button>
+                </MenuItem>
 
               </Menu>
             </Box>
@@ -387,10 +395,14 @@ function ResponsiveAppBar() {
                   </Typography>
                 </Button>
 
-
-
               </Tooltip>
-
+              <Box sx={{ my: 2, color: "black", display: "block" }}>
+                <Button variant="variant" href="/wishingPool" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
+                  <Typography>
+                    許願池
+                  </Typography>
+                </Button>
+              </Box>
               <Box sx={{ my: 2, color: "black", display: "block" }}>
                 <Typography>
                   {character == "專家" && expert()}

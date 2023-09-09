@@ -1,7 +1,8 @@
 import { Html } from "@react-email/html";
-   import { Text } from "@react-email/text";
-   import { Section } from "@react-email/section";
-   import { Container } from "@react-email/container";
+import { Text } from "@react-email/text";
+import { Section } from "@react-email/section";
+import { Container } from "@react-email/container";
+import React from "react";
 
    export default function WelcomeEmail(subject:string, html:string) {
      return (

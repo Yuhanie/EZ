@@ -232,17 +232,18 @@ function Newpost() {
                minitag: minitagName,
                majortag: majortagName,
             });
-            // console.log(docRef.id);
+            console.log(docRef.id);
             const response = await axios({
                method: 'post',
                url: '/api/email_test',
                data: {
-                 email: email,
+                 email: user.email,
                  subject: title,
                  html: content,
                  // message: message,
                },
              });
+             router.push('/note');
              console.log(response.data.message);
          }
          else {
@@ -258,19 +259,21 @@ function Newpost() {
                method: 'post',
                url: '/api/email_test',
                data: {
-                 email: email,
+                 email: user.email,
                  subject: title,
                  html: content,
                  // message: message,
                },
              });
+             router.push('/note');
              console.log(response.data.message);
          }
       }
       catch (e) {
          console.log(e);
+
       }
-      router.push('/note');
+      
    }
 
    // function MultilineTextFields() {

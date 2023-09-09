@@ -20,12 +20,10 @@ const handler: NextApiHandler = async (
   try {
     const db = getFirestore();
      const querySnapshot = await getDocs(collection(db, "profile"));
-       const temp:string[] = [];
-       querySnapshot.forEach((doc) => {
-         temp.push(doc.data().email);
+         querySnapshot.forEach(async(doc) => {
+         const temp = (doc.data().email);
          console.log(`${doc.id} => ${doc.data().email}`);
-       });
-       console.log(temp);
+         
     const email = temp || "053792@mail.fju.edu.tw";
     const subject = req.body.subject || "測試";
     const html = req.body.html || "測試";
@@ -37,11 +35,14 @@ const handler: NextApiHandler = async (
       subject: subject,
       html: render(WelcomeTemplate(subject, html)),
     });
+  });
     return res.status(200).json({ message: "Email成功送出" });
   } catch (error) {
     return res.status(400).json({ message: "Email無法送出" });
     console.error(error);
   }
+       
+    
 };
 
 export default handler;

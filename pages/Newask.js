@@ -36,6 +36,8 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
 
+import axios from "axios";
+
 
 
 const MENU_LIST = [
@@ -195,6 +197,18 @@ function Newask() {
 
         });
         // console.log(docRef.id);
+        const response = await axios({
+          method: 'post',
+          url: '/api/email_test',
+          data: {
+            email: user.email,
+            subject: title,
+            html: content,
+            // message: message,
+          },
+        });
+        router.push('/note');
+        console.log(response.data.message);
       }
       else {
         await updateDoc(doc(db, "wish", id), {
@@ -204,6 +218,18 @@ function Newask() {
           // link,
           // majortag: majortagName,
         });
+        const response = await axios({
+          method: 'post',
+          url: '/api/email_test',
+          data: {
+            email: user.email,
+            subject: title,
+            html: content,
+            // message: message,
+          },
+        });
+        router.push('/note');
+        console.log(response.data.message);
       }
     }
     catch (e) {

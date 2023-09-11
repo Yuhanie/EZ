@@ -53,7 +53,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Stack from '@mui/material/Stack';
-
+import SearchToolbar from '@/components/search/Search';
 // import App from 'myapp/src/App';
 
 // const rootElement = document.getElementById("root");
@@ -615,6 +615,7 @@ const Home: NextPage = () => {
             : <TabLoad />
           }
         </Box>
+        <SearchToolbar/>
 
         {/* <Toolbar>
         <Search>

@@ -203,8 +203,8 @@ function Newask() {
           data: {
             email: user.email,
             subject: content,
-            html: content,
-            message: "有新的發問ㄛ",
+            // html: content,
+            message: "有新的許願ㄛ",
           },
         });
         router.push('/wishingPool');
@@ -222,10 +222,10 @@ function Newask() {
           method: 'post',
           url: '/api/email_test',
           data: {
-            email: "victoria2013chang@gmail.com",
+            email: user.email,
             subject: content,
-            html: content,
-            message: "有新的發問ㄛ",
+            // html: content,
+            message: "有新的許願ㄛ",
           },
         });
         router.push('/wishingPool');

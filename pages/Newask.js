@@ -181,7 +181,7 @@ function Newask() {
         const docRef = await addDoc(collection(db, "wish"), {
           content,
           userid: user.uid,
-          //email: user.email,
+          email: user.email,
           tag: tagName,
           user: user.displayName,
           heart: [],

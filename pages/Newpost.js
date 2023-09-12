@@ -240,7 +240,7 @@ function Newpost() {
                  email: user.email,
                  subject: title,
                  html: content,
-                 // message: message,
+                 message: "已經有新文章已發佈囉!",
                },
              });
              router.push('/note');

@@ -202,12 +202,12 @@ function Newask() {
           url: '/api/email_test',
           data: {
             email: user.email,
-            subject: title,
+            subject: content,
             html: content,
-            // message: message,
+            message: "有新的發問ㄛ",
           },
         });
-        router.push('/note');
+        router.push('/wishingPool');
         console.log(response.data.message);
       }
       else {
@@ -222,20 +222,20 @@ function Newask() {
           method: 'post',
           url: '/api/email_test',
           data: {
-            email: user.email,
-            subject: title,
+            email: "victoria2013chang@gmail.com",
+            subject: content,
             html: content,
-            // message: message,
+            message: "有新的發問ㄛ",
           },
         });
-        router.push('/note');
+        router.push('/wishingPool');
         console.log(response.data.message);
       }
     }
     catch (e) {
       console.log(e);
     }
-    router.push('/wishingPool');
+    
   }
 
   //和quill有關的設定

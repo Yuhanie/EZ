@@ -4,7 +4,7 @@ import { Section } from "@react-email/section";
 import { Container } from "@react-email/container";
 import React from "react";
 
-   export default function WelcomeEmail(subject:string, html:string) {
+   export default function WelcomeEmail(subject:string, html:string, message:string) {
      return (
       (typeof (window)!=="undefined")?
        <Html>
@@ -18,7 +18,7 @@ import React from "react";
          </Section>
        </Html>:
        <div>
-          已經有新文章已發佈囉，快到<a href="https://ez-weld.vercel.app/note">EducationZone</a>看看吧！
+          {message}
        </div>
      );
    }

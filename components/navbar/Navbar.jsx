@@ -138,11 +138,9 @@ function ResponsiveAppBar() {
   };
   const expert = () => {
     return (
-
       <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
-        <Typography>
+        
           審查筆記
-        </Typography>
       </Button>
     )
 

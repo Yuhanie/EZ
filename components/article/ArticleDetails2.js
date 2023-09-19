@@ -128,6 +128,8 @@ const ArticleDetails2 = (props) => {
   const [edited, setEdited] = useState(0);
   const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
+  console.log("aaa", props.article);
+  console.log("bbb", expertOutdate);
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
@@ -347,6 +349,7 @@ const ArticleDetails2 = (props) => {
       const queryReport = query(querySnapshotDenounce);
       const querySnapshotReport = await getDocs(queryReport);
       const tempReport = [];
+      setExpertOutdate(props.article.outdate);
       querySnapshotReport.forEach((doc) => {
         let reportMessage = "";
 
@@ -411,7 +414,7 @@ const ArticleDetails2 = (props) => {
 
   const outdate = async function (status) {
     // let status = e.target.value
-    // console.log("outdateE", status)
+    console.log("outdateE", status)
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -432,7 +435,7 @@ const ArticleDetails2 = (props) => {
               props.update();
               // console.log("outdate:", status);
             } catch (error) {
-              // console.log("outdateError:", error);
+              console.log("outdateError:", error);
             }
           }
 
@@ -848,6 +851,7 @@ const ArticleDetails2 = (props) => {
   };
 
   const outdateIcon = () => {
+    console.log("ddd",expertOutdate);
     return (
       <Box display="flex" sx={{ alignItems: "center", mr: 1 }}>
         {expertOutdate === "stale" && (
@@ -961,7 +965,7 @@ const ArticleDetails2 = (props) => {
 
   const renderReport = (report, i) => {
     return (
-      <div key={report.reason}>
+      <div key={i}>
         {report && (
           <div style={{ padding: 14 }} className="App">
             <Report
@@ -1013,7 +1017,7 @@ const ArticleDetails2 = (props) => {
                 title={props.article.user}
                 subheader={
                   props.article.timestamp &&
-                  props.article.timestamp.toDate().toLocaleDateString()
+                  props.article.timestamp.toDate().toDateString()
                 }
                 //item
                 sx={{ p: 1.2 }}
@@ -1040,8 +1044,8 @@ const ArticleDetails2 = (props) => {
           <CardContent>
             <Grid item>
               <Box display="flex" alignItems="center">
+                {outdateIcon()}
                 <Typography variant="h5" color="text.secondary">
-                  {outdateIcon()}
                   <a href={props.article.link}>{props.article.title}</a>
                 </Typography>
               </Box>
@@ -1140,7 +1144,7 @@ const ArticleDetails2 = (props) => {
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
             <Grid item minWidth={300}>
-            <Typography>以{user && user.displayName}新增留言</Typography>
+              <Typography>以{user && user.displayName}新增留言</Typography>
               {typeof window !== "undefined" && (
                 <ReactQuillEditor
                   theme="bubble"

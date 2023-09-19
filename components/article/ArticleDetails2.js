@@ -146,6 +146,9 @@ const ArticleDetails2 = (props) => {
   const [bookCount, setBookCount] = useState(
     props.article.bookmark ? props.article.bookmark.length : 0
   );
+  const [viewCount, setViewCount] = useState(
+    props.article.count ? props.article.count : 0
+  );
   const [liked, setLiked] = useState(false);
   const [bookMarked, setBookMarked] = useState(false);
   const isMobile = useMediaQuery("(max-width: 600px)");
@@ -338,6 +341,8 @@ const ArticleDetails2 = (props) => {
     async function fetchData() {
       setCount(props.article.heart.length);
       setBookCount(props.article.bookmark.length);
+      setViewCount(props.article.count);
+      console.log("ggg", props.article.count);
       // console.log("article:", props.article);
       // console.log("docId:", props.article.docId);
       const querySnapshotDenounce = collection(
@@ -851,7 +856,7 @@ const ArticleDetails2 = (props) => {
   };
 
   const outdateIcon = () => {
-    console.log("ddd",expertOutdate);
+    console.log("ddd", expertOutdate);
     return (
       <Box display="flex" sx={{ alignItems: "center", mr: 1 }}>
         {expertOutdate === "stale" && (
@@ -1115,7 +1120,7 @@ const ArticleDetails2 = (props) => {
             <Grid item display="flex" alignItems="center" pr={1}>
               <VI sx={{ color: "#858585" }} />
               <Typography variant="caption" sx={{ ml: 0.5, pr: 0.8 }}>
-                {props.article.count}
+                {viewCount}
               </Typography>
             </Grid>
           </Grid>

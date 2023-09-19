@@ -330,11 +330,11 @@ function ResponsiveAppBar() {
                     </Typography>
                   </MenuItem>
                 ))}
-                <MenuItem>
+                {/* <MenuItem>
                   <Typography>
                     問答區
                   </Typography>
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem>
                   {character == "專家" && expert()}
                 </MenuItem>
@@ -388,14 +388,14 @@ function ResponsiveAppBar() {
                 </Button>
               ))}
 
-              <Tooltip title="即將登場！">
+              {/* <Tooltip title="即將登場！">
                 <Button sx={{ my: 2, color: "black", display: "block" }}>
                   <Typography>
                     問答區
                   </Typography>
                 </Button>
 
-              </Tooltip>
+              </Tooltip> */}
               <Box sx={{ my: 2, color: "black", display: "block" }}>
                 <Button variant="variant" href="/wishingPool" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
                   <Typography>

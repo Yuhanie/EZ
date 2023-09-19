@@ -1140,6 +1140,7 @@ const ArticleDetails2 = (props) => {
                      <Avatar sx={{ width: 30, height: 30, }} />
                   </Grid> */}
             <Grid item minWidth={300}>
+            <Typography>以{user && user.displayName}新增留言</Typography>
               {typeof window !== "undefined" && (
                 <ReactQuillEditor
                   theme="bubble"
@@ -1152,7 +1153,7 @@ const ArticleDetails2 = (props) => {
                       setContent(text);
                     }
                   }}
-                  placeholder={`以${user && user.displayName}新增留言`}
+                  placeholder={`新增留言`}
                   style={{
                     minHeight: 40,
                     border: "solid",

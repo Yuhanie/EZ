@@ -10,6 +10,11 @@ import ArticleListItem from '@/components/article/ArticleListItem';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import ArticleDetails2 from '@/components/article/ArticleDetails2';
 
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
 
 const Article = () => {
   const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -84,19 +89,19 @@ const Article = () => {
           console.log("No such document!");
         }
 
-      //   const commentCollectionRef = collection(db, 'text', 'comment'); 
-      //   const commentQuery = query(commentCollectionRef, where('articleId', '==', docSnap.id), orderBy("timestamp", "asc"));
-      //   const commentSnapshot = await getDocs(commentQuery);
+        //   const commentCollectionRef = collection(db, 'text', 'comment'); 
+        //   const commentQuery = query(commentCollectionRef, where('articleId', '==', docSnap.id), orderBy("timestamp", "asc"));
+        //   const commentSnapshot = await getDocs(commentQuery);
 
-      //   const temp: Comment[] = [];
-      //   commentSnapshot.forEach((commentDoc) => {
-      //     temp.push({ ...commentDoc.data(), id: commentDoc.id });
-      //   });
+        //   const temp: Comment[] = [];
+        //   commentSnapshot.forEach((commentDoc) => {
+        //     temp.push({ ...commentDoc.data(), id: commentDoc.id });
+        //   });
 
-      //   setComments([...temp]);
+        //   setComments([...temp]);
 
 
-       }
+      }
 
       // const auth = getAuth();
       // const unsub = onAuthStateChanged(auth, (user) => {

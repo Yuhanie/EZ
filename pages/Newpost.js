@@ -38,6 +38,9 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
 
+import axios from "axios";
+
+
 
 const MENU_LIST = [
    { text: "登入", href: "/login" },
@@ -229,7 +232,19 @@ function Newpost() {
                minitag: minitagName,
                majortag: majortagName,
             });
-            // console.log(docRef.id);
+            console.log(docRef.id);
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                 email: user.email,
+                 subject: title,
+                 html: content,
+                 message: "已經有新文章已發佈囉!",
+               },
+             });
+             router.push('/note');
+             console.log(response.data.message);
          }
          else {
             await updateDoc(doc(db, "text", articleId), {
@@ -240,12 +255,25 @@ function Newpost() {
                majortag: majortagName,
                minitag: minitagName,
             });
+            const response = await axios({
+               method: 'post',
+               url: '/api/email_test',
+               data: {
+                 email: user.email,
+                 subject: title,
+                 html: content,
+                 // message: message,
+               },
+             });
+             router.push('/note');
+             console.log(response.data.message);
          }
       }
       catch (e) {
          console.log(e);
+
       }
-      router.push('/note');
+      
    }
 
    // function MultilineTextFields() {

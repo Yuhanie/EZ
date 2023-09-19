@@ -1039,12 +1039,13 @@ const ArticleDetails2 = (props) => {
 
           <CardContent>
             <Grid item>
-              <Typography variant="h5" color="text.secondary">
-                <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center">
+                <Typography variant="h5" color="text.secondary">
                   {outdateIcon()}
                   <a href={props.article.link}>{props.article.title}</a>
-                </Box>
-              </Typography>
+                </Typography>
+              </Box>
+
               {typeof window !== "undefined" && (
                 <ReactQuillEditor
                   theme="bubble"
@@ -1146,7 +1147,7 @@ const ArticleDetails2 = (props) => {
                   // onChange={addContent}
                   value={content}
                   onChange={(text, delta, source, editor) => {
-                    if (source == 'user') {
+                    if (source == "user") {
                       // place whatever function you want to execute when user types here:
                       setContent(text);
                     }
@@ -1172,7 +1173,7 @@ const ArticleDetails2 = (props) => {
       </Container>
 
       {/* </Dialog> */}
-    </div >
+    </div>
   );
 };
 

@@ -2,14 +2,14 @@ import { Article } from "../../interfaces/entities";
 import Image from "next/image";
 // import React from "react";
 import { useEffect, useState, useMemo } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import router from "next/router";
 import { useRouter } from "next/router";
 import warning from "../../public/pic/warning.jpg";
 import styles from "/styles/Home.module.css";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -55,9 +55,9 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 
 //quill
 // import ReactQuill from "react-quill";
-import 'quill/dist/quill.snow.css';
-import 'quill/dist/quill.bubble.css';
-import 'quill/dist/quill.core.css';
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.core.css";
 
 // const docRef = doc(db, "English", "1");
 // const docSnap = await getDoc(docRef);
@@ -96,15 +96,14 @@ const Comment = (props) => {
   const [deleted, setDeleted] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [edited, setEdited] = useState(0);
-  const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-
-
+  const ReactQuillEditor = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
 
   useEffect(() => {
     async function fetchData() {
       console.log("comment:", props.comment);
-
-
 
       // const querySnapshot2 = await getDocs(query(collection(db, "text",  props.article.docId, "comment")));
       // querySnapshot2.forEach(async (doc2) => {
@@ -127,7 +126,6 @@ const Comment = (props) => {
       //setComment(() => {{...props.comment}});
     }
     fetchData();
-
 
     const unsub = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -229,19 +227,19 @@ const Comment = (props) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [liked]);
 
-
-
   const deleteComment = async function (id) {
     if (typeof window !== "undefined") {
       if (user) {
-        const ref = doc(db, "text", props.article.docId, "comment", id);;
+        const ref = doc(db, "text", props.article.docId, "comment", id);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
           if (docSnap.data().userid == user.uid) {
             try {
               setIsLoading(true);
 
-              await deleteDoc(doc(db, "text", props.article.docId, "comment", id));
+              await deleteDoc(
+                doc(db, "text", props.article.docId, "comment", id)
+              );
 
               //console.log("deleted");
 
@@ -250,12 +248,9 @@ const Comment = (props) => {
               setIsLoading(false);
               alert("刪除成功");
               props.setEdited(props.edited + 1);
-
-
             } catch (error) {
               console.log(error);
             }
-
           } else {
             alert("不是你的留言ㄚ");
           }
@@ -266,40 +261,32 @@ const Comment = (props) => {
     }
   };
 
-
-
-
-
   const heart = async function (id) {
     if (typeof window !== "undefined") {
       if (user) {
-
         const ref = doc(db, "text", props.article.docId, "comment", id);
         const docSnap = await getDoc(ref);
-        if ((docSnap.exists())) {
+        if (docSnap.exists()) {
           // console.log(docSnap.data())
           if (docSnap.data().heart.includes(user.uid)) {
             // alert('remove')
             updateDoc(ref, {
-              heart: arrayRemove(user.uid)
+              heart: arrayRemove(user.uid),
             });
-            setLiked(false)
-            setCount(count - 1)
+            setLiked(false);
+            setCount(count - 1);
           } else {
             // alert('added')
             updateDoc(ref, {
-              heart: arrayUnion(user.uid)
-
+              heart: arrayUnion(user.uid),
             });
-            setLiked(true)
-            setCount(count + 1)
-
+            setLiked(true);
+            setCount(count + 1);
           }
         }
       }
-    }
-    else {
-      alert("要登入才能按讚ㄛ!")
+    } else {
+      alert("要登入才能按讚ㄛ!");
       //window.alert("要登入才能新增筆記ㄛ!");
 
       // <Alert action={
@@ -308,10 +295,9 @@ const Comment = (props) => {
       //   </Button>
       // }>要登入才能新增筆記ㄛ! </Alert>
 
-      router.push('/login');
+      router.push("/login");
     }
-  }
-
+  };
 
   const commentDelete = (comment) => {
     return (
@@ -325,23 +311,27 @@ const Comment = (props) => {
           <RestoreFromTrashIcon />
         </IconButton>
       </>
-    )
-
+    );
   };
   const usual = () => {
-    return (
-      <>
-      </>
-    )
+    return <></>;
   };
 
   const renderComment = (comment, i) => {
     return (
-      <div key={comment.content} >
+      <div key={comment.content}>
         <Paper>
           <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" >
-              <Box display="flex" justifyContent="space-between" alignItems="center" >
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Avatar sx={{ height: 25, width: 25, mr: 1 }} />
                 <Typography variant="body2"> {comment.user}</Typography>
               </Box>
@@ -353,7 +343,6 @@ const Comment = (props) => {
                   // subheader={comment.timestamp && comment.timestamp.toDate().toLocaleString()}
                   //item 
                 /> */}
-
 
               <Box display="flex" alignItems="center">
                 <IconButton
@@ -374,28 +363,32 @@ const Comment = (props) => {
                 >
                   {comment.heart ? count : 0}
                 </Typography>
-                {user && user.uid === comment.userid ? commentDelete(comment) : usual()}
+                {user && user.uid === comment.userid
+                  ? commentDelete(comment)
+                  : usual()}
               </Box>
             </Box>
             <Box>
-              <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}>
-                {(typeof window !== "undefined") &&
-                  <ReactQuillEditor
-                    theme="bubble"
-                    readOnly={true}
-                    value={comment.content}
-                  />
-                }
-              </Typography>
-              <Typography variant="caption" style={{ textAlign: "left", color: "grey" }}>
+              {/* <Typography variant="body2" sx={{ m: 2, textAlign: "left" }}> */}
+              {typeof window !== "undefined" && (
+                <ReactQuillEditor
+                  theme="bubble"
+                  readOnly={true}
+                  value={comment.content}
+                />
+              )}
+              {/* </Typography> */}
+              <Typography
+                variant="caption"
+                style={{ textAlign: "left", color: "grey" }}
+              >
                 {comment.timestamp &&
                   comment.timestamp.toDate().toLocaleString()}
               </Typography>
             </Box>
-
           </Box>
         </Paper>
-      </div >
+      </div>
     );
   };
 
@@ -436,8 +429,6 @@ const Comment = (props) => {
                 : ""}
             </div> */}
       {renderComment(props.comment)}
-
-
 
       {/* </div> */}
       {/* {user && user.displayName} */}

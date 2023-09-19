@@ -10,11 +10,11 @@ import ArticleListItem from '@/components/article/ArticleListItem';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import ArticleDetails2 from '@/components/article/ArticleDetails2';
 
-export async function getServerSideProps() {
-  return {
-    props: {},
-  };
-}
+// export async function getServerSideProps() {
+//   return {
+//     props: {},
+//   };
+// }
 
 const Article = () => {
   const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();

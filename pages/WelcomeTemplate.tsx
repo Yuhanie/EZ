@@ -18,16 +18,7 @@ import React from "react";
          </Section>
        </Html>:
        <div>
-        <Html>
-        <Section style={main}>
-           <Container style={container}>
-             <Text style={heading}>{subject}</Text>
-             <Text style={paragraph}>
-               {message}，快到<a href="https://ez-weld.vercel.app/note">EducationZone</a>看看吧！
-             </Text>
-           </Container>
-         </Section>
-          </Html>   
+          {message}，快到<a href="https://ez-weld.vercel.app/note">EducationZone</a>看看吧！       
        </div>
      );
    }

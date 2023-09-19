@@ -166,7 +166,7 @@ function Newask() {
     setContent(value)
   }
 
-  const back = async function (){
+  const back = async function () {
     router.push('/wishingPool');
   }
 
@@ -202,7 +202,7 @@ function Newask() {
           url: '/api/email_test',
           data: {
             email: user.email,
-            subject: content,
+            // subject: content,
             // html: content,
             message: "有新的許願ㄛ",
           },
@@ -223,7 +223,7 @@ function Newask() {
           url: '/api/email_test',
           data: {
             email: user.email,
-            subject: content,
+            // subject: content,
             // html: content,
             message: "有新的許願ㄛ",
           },
@@ -235,7 +235,7 @@ function Newask() {
     catch (e) {
       console.log(e);
     }
-    
+
   }
 
   //和quill有關的設定

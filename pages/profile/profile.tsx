@@ -654,13 +654,13 @@ const Profile: React.FC<Props> = (props) => {
 
 
                   <Grid >
-                    <Card sx={{ m: 2, width: 300, minHeight: 100 }}>
+                    <Card sx={{ m: 2, width: 300 }}>
                       {/* <Card sx={{ minWidth: 275 }}> */}
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                           興趣標籤
                         </Typography>
-                        <Stack direction="row" spacing={1}>
+                        <Stack direction="row" >
                           {/* <Chip label="tag 1" component="a" href="#chip" />
                           <Chip label="tag 2" component="a" href="#chip" />
                           <Chip label="tag 3" component="a" href="#chip" /> */}

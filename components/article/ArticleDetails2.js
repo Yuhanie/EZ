@@ -133,6 +133,7 @@ const ArticleDetails2 = (props) => {
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
+  const [profile, setProfile] = React.useState();
   const ReactQuillEditor = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -244,7 +245,9 @@ const ArticleDetails2 = (props) => {
           "denounce"
         );
         const snapshot = await getCountFromServer(refReport);
-
+        if (docSnap.exists()){
+          setProfile({user: docSnap.data().user})
+        }
         if (
           docSnap.exists() &&
           docSnap.data().character &&
@@ -1019,7 +1022,7 @@ const ArticleDetails2 = (props) => {
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                   </Avatar>
                 }
-                title={props.article.user}
+                title={profile&&profile.user}
                 subheader={
                   props.article.timestamp &&
                   props.article.timestamp.toDate().toDateString()

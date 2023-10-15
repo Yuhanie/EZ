@@ -133,7 +133,7 @@ function ResponsiveAppBar() {
   const profile = async function () {
     // const auth = getAuth();
     console.log("profile")
-    alert("請稍候...")
+    // alert("請稍候...")
     router.push("/profile");
   };
   const expert = () => {

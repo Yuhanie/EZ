@@ -1022,7 +1022,7 @@ const ArticleDetails2 = (props) => {
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                   </Avatar>
                 }
-                title={profile&&profile.user}
+                title={props.article.user}
                 subheader={
                   props.article.timestamp &&
                   props.article.timestamp.toDate().toDateString()

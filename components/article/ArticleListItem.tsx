@@ -124,7 +124,20 @@ const ArticleListItem:
       }
     }
 
-
+    useEffect(() => {
+      async function readData() {
+        //var temp: Profile;
+        // if (currentUser) {
+          const querySnapshot = await getDoc(doc(db, "profile", props.article.userid));
+          if ((querySnapshot).exists()) {
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+          }
+  
+  
+  
+      }
+      readData();
+    }, []);
 
     useEffect(() => {
 
@@ -160,10 +173,7 @@ const ArticleListItem:
             setCharacter("學習者");
           }
 
-          const querySnapshot = await getDoc(doc(db, "profile", props.article.userid));
-          if ((querySnapshot).exists()) {
-            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
-          }
+        
 
         }
         //console.log(user);
@@ -274,7 +284,7 @@ const ArticleListItem:
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                 </Avatar>
               }
-              title={profile&&currentUser&&(props.article.userid==currentUser.uid?profile.user:props.article.user)}
+              title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
               //item 
               sx={{ p: 1.2 }}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
+import { onAuthStateChanged, User, getAuth, updateProfile } from 'firebase/auth';
 import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
@@ -62,6 +62,7 @@ import { useRouter } from 'next/router';
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore();
 const auth = getAuth();
+const authData = auth.currentUser;
 
 
 //chip的style
@@ -371,6 +372,10 @@ const Profile: React.FC<Props> = (props) => {
           // minitag: minitagName,
         });
         alert("成功")
+  
+        updateProfile(user&&authData, {
+          displayName: user
+        })
       }
 
     }

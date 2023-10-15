@@ -342,6 +342,8 @@ const ArticleDetails2 = (props) => {
 
   useEffect(() => {
     async function fetchData() {
+
+
       setCount(props.article.heart.length);
       setBookCount(props.article.bookmark.length);
       setViewCount(props.article.count);

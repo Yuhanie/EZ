@@ -626,12 +626,12 @@ const Profile: React.FC<Props> = (props) => {
                         </Avatar> */}
                         {/* <img  className={styles.googlephoto} src={currentUser?.photoURL}/> */}
                         <Box display="flex" justifyContent="center" width="100%" sx={{ mt: 1 }}>
-                          <Chip label={profile ? (profile.character ? profile.character : "學習者") : "未登入"} />
+                          <Chip label={(profile?.character ? profile?.character : "學習者") } />
                         </Box>
                       </Box>
                       <Box>
-                        <Typography pt={0.8} fontSize={25} flexWrap="wrap">{profile ? profile.user : "未登入"}</Typography>
-                        <Typography fontSize={12} flexWrap="wrap">{profile ? profile.email : "未登入"}</Typography>
+                        <Typography pt={0.8} fontSize={25} flexWrap="wrap">{profile?.user}</Typography>
+                        <Typography fontSize={12} flexWrap="wrap">{ profile?.email}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>

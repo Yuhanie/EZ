@@ -67,6 +67,7 @@ const ArticleListItem:
     const [character, setCharacter] = useState("學習者");
     const [userInfo, setUserInfo] = useState("");
     const [profile, setProfile] = useState<Profile>();
+    const [otherProfile, setOtherProfile] = useState<Profile>();
     const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
     const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
@@ -132,6 +133,7 @@ const ArticleListItem:
           if ((querySnapshot).exists()) {
             setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
           }
+
   
   
   
@@ -284,7 +286,8 @@ const ArticleListItem:
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                 </Avatar>
               }
-              title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
+              // title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
+              title={(profile?.user)}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
               //item 
               sx={{ p: 1.2 }}

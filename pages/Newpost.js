@@ -105,6 +105,7 @@ function Newpost() {
    const [minitagName, setminiTagName] = React.useState([]);
    const [link, setLink] = React.useState('');
    const [user, setUser] = useState();
+   const [profile, setProfile] = useState();
    const theme = useTheme();
    const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
 
@@ -136,6 +137,11 @@ function Newpost() {
    useEffect(() => {
 
       async function readData() {
+         const querySnapshot = await getDoc(doc(db, "profile", user.uid));
+          if ((querySnapshot).exists()) {
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+          }
+
          if (articleId) {
             const ref = doc(db, "text", articleId);
             const docSnapshot = await getDoc(ref);
@@ -166,6 +172,7 @@ function Newpost() {
       //   setTitle(docSnapshot.data().title)
       //   }
       // }
+      
       const unsub = onAuthStateChanged(auth, (user) => {
          setUser(user);
          console.log(user);
@@ -220,7 +227,7 @@ function Newpost() {
                userid: user.uid,
                email: user.email,
                tag: tagName,
-               user: user.displayName,
+               user: profile.user,
                heart: [],
                bookmark: [],
                count: 1,
@@ -320,7 +327,7 @@ function Newpost() {
                   >
 
                      <Typography variant="h6">發布筆記</Typography>
-                     <Typography variant="h6">{user && user.displayName}</Typography>
+                     <Typography variant="h6">{profile&&profile.user}</Typography>
 
                      <FormControl fullWidth>
                         <TextField

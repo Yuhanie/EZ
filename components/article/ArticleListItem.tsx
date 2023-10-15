@@ -274,7 +274,7 @@ const ArticleListItem:
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                 </Avatar>
               }
-              title={currentUser&&(props.article.userid==currentUser.uid?currentUser.displayName:props.article.user)}
+              title={profile&&currentUser&&(props.article.userid==currentUser.uid?profile.user:props.article.user)}
               subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
               //item 
               sx={{ p: 1.2 }}

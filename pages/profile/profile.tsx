@@ -758,7 +758,7 @@ const Profile: React.FC<Props> = (props) => {
                 </Grid>
               </Box>
 
-              {majorTags.map(renderMajorTagTest)}
+              {/* {majorTags.map(renderMajorTagTest)} */}
 
 
             </Box>

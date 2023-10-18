@@ -30,6 +30,7 @@ const db = getFirestore();
 const auth = getAuth();
 
 type Props = {
+   
    wish: Wish;
    update: Function;
 };
@@ -84,7 +85,13 @@ const WishListItem:
                console.log('currentUser', user)
                setCurrentUser(user);
                setHeart(user);
+               const reff = doc(db, "profile", props.wish.userid);
+               const docSnapshot = await getDoc(reff);
+if (docSnapshot.exists()){
+   setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().user, email: docSnapshot.data().email, character: docSnapshot.data().character ? docSnapshot.data().character : "學習者", majortag: docSnapshot.data().majortag ? docSnapshot.data().majortag : [] });
 
+}
+               
                const ref = doc(db, "profile", user.uid);
                const docSnap = await getDoc(ref);
 
@@ -149,6 +156,29 @@ const WishListItem:
             }
          }
       }
+
+      const Intro = (uid: any) => {
+         return (
+           <div>
+
+               <CardHeader
+                 avatar={
+                   <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
+                     {/* {props.article.userid && profile && profile.photoURL &&
+                     <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
+                   </Avatar>
+                 }
+                 // title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
+                 title={(profile?.user)}
+                 subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
+                 //item 
+                 sx={{ p: 1.2 }}
+               ></CardHeader>
+               {/* {character=="專家"&&expertIcon()} */}
+
+           </div>
+         );
+       };
 
       const solved = async function () {
          // let status = e.target.value
@@ -238,11 +268,14 @@ const WishListItem:
             >
                <Grid container spacing={2} >
                   <Grid item md={2.5}>
+                  {/* {Intro(props.wish.userid)} */}
                      <CardHeader
-                        avatar={
-                           <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
-                           </Avatar>
-                        }
+                     avatar={
+                       <Avatar src={props.wish.userid && profile && profile.photoURL&& profile.photoURL}>
+                         {/* {props.article.userid && profile && profile.photoURL &&
+                         <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
+                       </Avatar>
+                     }
                         title={props.wish.user}
                         subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
                         //item 

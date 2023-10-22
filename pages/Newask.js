@@ -208,7 +208,7 @@ function Newask() {
           },
         });
         router.push('/wishingPool');
-        console.log(response.data.message);
+        console.log(response.data.message); 
       }
       else {
         await updateDoc(doc(db, "wish", id), {

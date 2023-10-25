@@ -23,6 +23,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Skeleton from "@mui/material/Skeleton";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
 
 import { red } from "@mui/material/colors";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
@@ -338,7 +339,12 @@ const WishingPool = () => {
                 flexDirection="column"
                 width={330}
               >
-                <Typography variant="h6" sx={{m:2}}>熱門願望</Typography>
+                <Box display="flex" flexDirection="row" sx={{m:2}}>
+                  <WhatshotIcon color="error" sx={{mt:0.3,mr:1}}/>
+                  <Typography variant="h6">
+                    熱門願望
+                  </Typography>
+                </Box>
                 {!isLoading ? (
                   <div>{popularWishes.map(renderPopularWish)}</div>
                 ) : (

@@ -41,6 +41,7 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
         subject: subject,
         html: render(WelcomeTemplate(subject, html, message)),
       });
+      console.log("email:", email)
     });
   });
     return res.status(200).json({ message: "Email成功送出" });

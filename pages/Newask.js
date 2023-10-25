@@ -199,7 +199,7 @@ function Newask() {
         // console.log(docRef.id);
         const response = await axios({
           method: 'post',
-          url: '/api/email_test',
+          url: '/api/email',
           data: {
             email: user.email,
             // subject: content,
@@ -220,7 +220,7 @@ function Newask() {
         });
         const response = await axios({
           method: 'post',
-          url: '/api/email_test',
+          url: '/api/email',
           data: {
             email: user.email,
             // subject: content,
@@ -235,7 +235,7 @@ function Newask() {
     catch (e) {
       console.log(e);
     }
-
+    router.push('/wishingPool');
   }
 
   //和quill有關的設定

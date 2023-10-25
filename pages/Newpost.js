@@ -242,7 +242,7 @@ function Newpost() {
             console.log(docRef.id);
             const response = await axios({
                method: 'post',
-               url: '/api/email_test',
+               url: '/api/email',
                data: {
                  email: user.email,
                  subject: title,
@@ -264,7 +264,7 @@ function Newpost() {
             });
             const response = await axios({
                method: 'post',
-               url: '/api/email_test',
+               url: '/api/email',
                data: {
                  email: user.email,
                  subject: title,

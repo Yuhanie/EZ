@@ -3,6 +3,8 @@ import nodemailer from "nodemailer";
 import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import WelcomeTemplate from "../WelcomeTemplate";
 import { render } from "@react-email/render";
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { firebaseConfig } from '../../settings/firebaseConfig';
 
 const handler: NextApiHandler = async (
   req: NextApiRequest,
@@ -17,6 +19,8 @@ const handler: NextApiHandler = async (
       pass: process.env.SMTP_PASSWORD || "password",
     },
   };
+  //firebase
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   try {
     const db = getFirestore();
     const querySnapshot = await getDocs(collection(db, "profile"));

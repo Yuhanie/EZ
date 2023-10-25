@@ -30,13 +30,15 @@ const handler: NextApiHandler = async (
       const message = req.body.message || "測試";
       const transporter = nodemailer.createTransport(smtpOptions);
       console.log("user:", process.env.SMTP_USER);
-      await transporter.sendMail({
+      await new Promise((resolve, reject) => {
+        transporter.sendMail({
         from: process.env.SMTP_USER || "ezgroup329@gmail.com",
         to: email,
         subject: subject,
         html: render(WelcomeTemplate(subject, html, message)),
       });
     });
+  });
     return res.status(200).json({ message: "Email成功送出" });
   } catch (error) {
     return res.status(400).json({ message: "Email無法送出"+error });

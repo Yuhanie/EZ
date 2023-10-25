@@ -20,7 +20,7 @@ const handler: NextApiHandler = async (
     },
   };
   const sendMessage = async (
-    email: string[],
+    email: string,
     subject: string,
     html: string,
     message: string
@@ -28,8 +28,7 @@ const handler: NextApiHandler = async (
     const transporter = nodemailer.createTransport(smtpOptions);
     await transporter.sendMail({
       from: process.env.SMTP_USER || "ezgroup329@gmail.com",
-      to: process.env.SMTP_USER || "ezgroup329@gmail.com",
-      bcc: email,
+      to: email,
       subject: subject,
       html: render(WelcomeTemplate(subject, html, message)),
     });
@@ -41,30 +40,28 @@ const handler: NextApiHandler = async (
   try {
     const db = getFirestore();
     const querySnapshot = await getDocs(collection(db, "profile"));
-    let temp: string[] = [];
     querySnapshot.forEach(async (doc) => {
-      temp.push(doc.data().email);
+      const temp = doc.data().email;
       console.log(`${doc.id} => ${doc.data().email}`);
+
+      const email = temp || "victoria2013chang@gmail.com";
+      const subject = req.body.subject || "有新的許願ㄛ！";
+      const html = req.body.html || "測試";
+      const message = req.body.message || "測試";
+      const transporter = nodemailer.createTransport(smtpOptions);
+      console.log("user:", process.env.SMTP_USER);
+      await sendMessage(email, subject, html, message);
+      console.log("email:", email);
+
+      // await new Promise((resolve, reject) => {
+      //   transporter.sendMail({
+      //   from: process.env.SMTP_USER || "ezgroup329@gmail.com",
+      //   to: email,
+      //   subject: subject,
+      //   html: render(WelcomeTemplate(subject, html, message)),
+      // });
+      // });
     });
-
-    const email = temp || "victoria2013chang@gmail.com";
-    const subject = req.body.subject || "有新的許願ㄛ！";
-    const html = req.body.html || "測試";
-    const message = req.body.message || "測試";
-    const transporter = nodemailer.createTransport(smtpOptions);
-    console.log("user:", process.env.SMTP_USER);
-    await sendMessage(email, subject, html, message);
-    console.log("email:", email);
-
-    // await new Promise((resolve, reject) => {
-    //   transporter.sendMail({
-    //   from: process.env.SMTP_USER || "ezgroup329@gmail.com",
-    //   to: email,
-    //   subject: subject,
-    //   html: render(WelcomeTemplate(subject, html, message)),
-    // });
-    // });
-
     return res.status(200).json({ message: "Email成功送出" });
   } catch (error: any) {
     console.error(error);

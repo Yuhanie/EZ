@@ -4,7 +4,7 @@ import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import WelcomeTemplate from "../WelcomeTemplate";
 import { render } from "@react-email/render";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { firebaseConfig } from '../../settings/firebaseConfig';
+import { firebaseConfig } from "../../settings/firebaseConfig";
 
 const handler: NextApiHandler = async (
   req: NextApiRequest,
@@ -19,23 +19,29 @@ const handler: NextApiHandler = async (
       pass: process.env.SMTP_PASSWORD || "password",
     },
   };
-  const sendMessage = async (email:string, subject:string, html:string, message:string)=>{
+  const sendMessage = async (
+    email: string,
+    subject: string,
+    html: string,
+    message: string
+  ) => {
     const transporter = nodemailer.createTransport(smtpOptions);
     await transporter.sendMail({
-        from: process.env.SMTP_USER || "ezgroup329@gmail.com",
-        to: email,
-        subject: subject,
-        html: render(WelcomeTemplate(subject, html, message)),
-      })
-  }
-  
-    //firebase
-const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+      from: process.env.SMTP_USER || "ezgroup329@gmail.com",
+      to: email,
+      subject: subject,
+      html: render(WelcomeTemplate(subject, html, message)),
+    });
+  };
+
+  //firebase
+  const firebaseApp =
+    getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   try {
     const db = getFirestore();
     const querySnapshot = await getDocs(collection(db, "profile"));
     querySnapshot.forEach(async (doc) => {
-      const temp = (doc.data().email);
+      const temp = doc.data().email;
       console.log(`${doc.id} => ${doc.data().email}`);
 
       const email = temp || "victoria2013chang@gmail.com";
@@ -45,8 +51,8 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
       const transporter = nodemailer.createTransport(smtpOptions);
       console.log("user:", process.env.SMTP_USER);
       await sendMessage(email, subject, html, message);
-      console.log("email:", email)
-      
+      console.log("email:", email);
+
       // await new Promise((resolve, reject) => {
       //   transporter.sendMail({
       //   from: process.env.SMTP_USER || "ezgroup329@gmail.com",
@@ -54,16 +60,13 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
       //   subject: subject,
       //   html: render(WelcomeTemplate(subject, html, message)),
       // });
-    // });
-  });
+      // });
+    });
     return res.status(200).json({ message: "Email成功送出" });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     return res.status(400).json({ message: "Email無法送出" });
-    
   }
-
-
 };
 
 export default handler;

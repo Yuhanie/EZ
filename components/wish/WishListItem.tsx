@@ -85,13 +85,14 @@ const WishListItem:
                console.log('currentUser', user)
                setCurrentUser(user);
                setHeart(user);
+            }
                const reff = doc(db, "profile", props.wish.userid);
                const docSnapshot = await getDoc(reff);
 if (docSnapshot.exists()){
    setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().user, email: docSnapshot.data().email, character: docSnapshot.data().character ? docSnapshot.data().character : "學習者", majortag: docSnapshot.data().majortag ? docSnapshot.data().majortag : [] });
 
 }
-               
+               if(user){
                const ref = doc(db, "profile", user.uid);
                const docSnap = await getDoc(ref);
 

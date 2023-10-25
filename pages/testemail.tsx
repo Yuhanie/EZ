@@ -13,7 +13,7 @@ export default function TestEmail() {
     try {
       const response = await axios({
         method: 'post',
-        url: '/api/email_test',
+        url: '/api/email',
         data: {
           email: email,
           // subject: subject,

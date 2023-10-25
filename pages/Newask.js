@@ -207,8 +207,8 @@ function Newask() {
             message: "有新的許願ㄛ",
           },
         });
-        router.push('/wishingPool');
         console.log(response.data.message);
+        router.push('/wishingPool');
       }
       else {
         await updateDoc(doc(db, "wish", id), {
@@ -228,8 +228,8 @@ function Newask() {
             message: "有新的許願ㄛ",
           },
         });
-        router.push('/wishingPool');
         console.log(response.data.message);
+        router.push('/wishingPool');
       }
     }
     catch (e) {

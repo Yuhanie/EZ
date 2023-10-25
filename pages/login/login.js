@@ -44,22 +44,23 @@ import {
   arrayRemove,
   arrayUnion,
 } from "firebase/firestore";
+import { async } from "@firebase/util";
 
 const db = getFirestore();
 export default function SignIn() {
   const [value, setValue] = useState('');
+const provider2=new GoogleAuthProvider();
 
-  const handleClick = () => {
-    signInWithPopup(auth, provider).then((data => {
+  const handleClick = async() => {
+    signInWithPopup(auth, provider2).then((async data => {
       setValue(data.user.email)
       localStorage.setItem("email", data.user.email)
+// console.log("value",data.user)
       if (value) {
-        router.push("/note")
-      }
-
       const ref = doc(db, "profile", data.user.uid);
-      const docSnap = getDoc(ref);
-      if (docSnap) {
+      const docSnap = await getDoc(ref);
+      // console.log("login!!!!",docSnap)
+      if (docSnap.exists()) {
         // updateDoc(doc(db, "profile", data.user.uid), {
         //   character: docSnap.character,
         //   majortag: [],
@@ -70,7 +71,8 @@ export default function SignIn() {
         // });
       }
       else {
-        setDoc(doc(db, "profile", data.user.uid), {
+        // console.log("login", data.user.uid)
+        await setDoc(doc(db, "profile", data.user.uid), {
           character: "學習者",
           majortag: [],
           userid: auth.currentUser.uid,
@@ -78,6 +80,9 @@ export default function SignIn() {
           email: auth.currentUser.email,
           photoURL: data.user.photoURL,
         });
+      }
+
+        router.push("/note")
       }
     }))
     // {value?router.push("/note"): }

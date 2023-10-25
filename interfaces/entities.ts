@@ -112,6 +112,7 @@ export type Wish = {
   content: string;
   timestamp: Timestamp;
   heart: string[];
+  heartCount: number;
   tag: string;
   solved: boolean;
 };

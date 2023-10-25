@@ -278,7 +278,7 @@ if (docSnapshot.exists()){
                         title={props.wish.user}
                         subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
                         //item 
-                        sx={{ p: 1.2 }}
+                        sx={{ p: 1.2,size:"small" }}
                      />
                   </Grid>
 

@@ -40,8 +40,8 @@ const handler: NextApiHandler = async (
     });
   });
     return res.status(200).json({ message: "Email成功送出" });
-  } catch (error) {
-    return res.status(400).json({ message: "Email無法送出"+error });
+  } catch (error:any) {
+    return res.status(400).json({ message: "Email無法送出:"+error.message });
     console.error(error);
   }
 

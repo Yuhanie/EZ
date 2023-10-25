@@ -8,7 +8,7 @@ const handler: NextApiHandler = async (
   const smtpOptions = {
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: parseInt(process.env.SMTP_PORT || "465"),
-    //secure: true,
+    secure: true,
     auth: {
       user: process.env.SMTP_USER || "user",
       pass: process.env.SMTP_PASSWORD || "password",

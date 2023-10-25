@@ -172,17 +172,6 @@ const Profile: React.FC<Props> = (props) => {
 
         if (user) {
 
-          // const examMajorTag = collection(db, "profile");
-          // const queryExam = query(examMajorTag);
-          // const querySnapTag = await getDocs(queryExam);
-          // const temp2: Profile[] = [];
-          // querySnapTag.forEach((doc) => {
-          //   temp2.push({majortag: doc.data().majortag});
-
-          //    console.log("MMMMMMM", temp2);
-          // });
-          // setMajorTags([...temp2]);
-
           const user_Id = Array.isArray(userId) ? userId[0] : userId;
           const id = user_Id ? user_Id : user.uid;
           //alert("id in useEffect:"+id);
@@ -302,6 +291,99 @@ const Profile: React.FC<Props> = (props) => {
           // });
           //     setMajorTag([...temp3]);
           //     setIsLoading(false);
+        }
+        else{
+          const u = userId?userId:"";
+          const user_Id = Array.isArray(u) ? u[0] : u;
+          
+          //alert("id in useEffect:"+id);
+          const querySnapshot = await getDoc(doc(db, "profile", user_Id));
+
+
+          if ((querySnapshot).exists()) {
+            //console.log(doc.id, doc.data());
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+            setUser(querySnapshot.data().user);
+            setMajorTags(querySnapshot.data().majortag)
+          } else {
+            setProfile({ character: "學習者" });
+          }
+          setIsLoading(true);
+          const queryCollect = await getDocs(collectOpen ? query(collection(db, "text"), where("bookmark", "array-contains", user_Id)) : query(collection(db, "text"), where("bookmark", "array-contains", user_Id), limit(3)));
+          const tempCollect: Article[] = [];
+          queryCollect.forEach((doc) => {
+            tempCollect.push({
+              docId: doc.id,
+              content: doc.data().content,
+              title: doc.data().title,
+              user: doc.data().user,
+              link: doc.data().link,
+              userid: doc.data().userid,
+              count: doc.data().count,
+              heart: doc.data().heart,
+              timestamp: doc.data().timestamp,
+              bookmark: doc.data().bookmark,
+              outdateCount: doc.data().outdateCount,
+              outdate: doc.data().outdate,
+              majortag: doc.data().majortag,
+              minitag: doc.data().minitag,
+              tag: doc.data().tag,
+              email: doc.data().email
+            });
+          });
+          setCollects([...tempCollect]);
+          setIsLoading(false);
+
+          setIsLoading(true);
+          const queryMyNote = await getDocs(myNotesOpen ? query(collection(db, "text"), where("userid", "==", user_Id)) : query(collection(db, "text"), where("userid", "==", user_Id), limit(3)));
+          const tempMyNote: Article[] = [];
+
+          queryMyNote.forEach((doc) => {
+            tempMyNote.push({
+              docId: doc.id,
+              content: doc.data().content,
+              title: doc.data().title,
+              user: doc.data().user,
+              link: doc.data().link,
+              userid: doc.data().userid,
+              count: doc.data().count,
+              heart: doc.data().heart,
+              timestamp: doc.data().timestamp,
+              bookmark: doc.data().bookmark,
+              outdateCount: doc.data().outdateCount,
+              outdate: doc.data().outdate,
+              majortag: doc.data().majortag,
+              minitag: doc.data().minitag,
+              tag: doc.data().tag,
+              email: doc.data().email
+            });
+          });
+          setMyNotes([...tempMyNote]);
+
+          setIsLoading(false);
+
+
+          setIsLoading(true);
+          const queryCountMyNote = await getDocs(query(collection(db, "text"), where("userid", "==", user_Id)));
+
+          let count = 0;
+          let countHeart = 0;
+          let countBookMark = 0;
+          queryCountMyNote.forEach((doc) => {
+            count++;
+            countHeart += doc.data().heart.length;
+            countBookMark += doc.data().bookmark.length;
+          
+          });
+        
+          setCount(count);
+          setHeartCount(countHeart);
+          setBookMarkCount(countBookMark);
+         
+
+          setIsLoading(false);
+
+  
         }
       });
 

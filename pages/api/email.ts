@@ -19,7 +19,17 @@ const handler: NextApiHandler = async (
       pass: process.env.SMTP_PASSWORD || "password",
     },
   };
-  //firebase
+  const sendMessage = async (email:string, subject:string, html:string, message:string)=>{
+    const transporter = nodemailer.createTransport(smtpOptions);
+    await transporter.sendMail({
+        from: process.env.SMTP_USER || "ezgroup329@gmail.com",
+        to: email,
+        subject: subject,
+        html: render(WelcomeTemplate(subject, html, message)),
+      })
+  }
+  
+    //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   try {
     const db = getFirestore();
@@ -34,15 +44,17 @@ const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : get
       const message = req.body.message || "測試";
       const transporter = nodemailer.createTransport(smtpOptions);
       console.log("user:", process.env.SMTP_USER);
-      await new Promise((resolve, reject) => {
-        transporter.sendMail({
-        from: process.env.SMTP_USER || "ezgroup329@gmail.com",
-        to: email,
-        subject: subject,
-        html: render(WelcomeTemplate(subject, html, message)),
-      });
+      await sendMessage(email, subject, html, message);
       console.log("email:", email)
-    });
+      
+      // await new Promise((resolve, reject) => {
+      //   transporter.sendMail({
+      //   from: process.env.SMTP_USER || "ezgroup329@gmail.com",
+      //   to: email,
+      //   subject: subject,
+      //   html: render(WelcomeTemplate(subject, html, message)),
+      // });
+    // });
   });
     return res.status(200).json({ message: "Email成功送出" });
   } catch (error:any) {

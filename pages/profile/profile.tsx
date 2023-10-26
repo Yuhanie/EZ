@@ -2,7 +2,7 @@ import * as React from 'react';
 //firebase
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth, updateProfile } from 'firebase/auth';
-import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { firebaseConfig } from '../../settings/firebaseConfig';
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 import { Profile, BookMark, Article, Tag, miniTag, MajorTag } from 'interfaces/entities';
@@ -174,7 +174,7 @@ const Profile: React.FC<Props> = (props) => {
 
           const user_Id = Array.isArray(userId) ? userId[0] : userId;
           const id = user_Id ? user_Id : user.uid;
-          //alert("id in useEffect:"+id);
+
           const querySnapshot = await getDoc(doc(db, "profile", id));
 
 
@@ -184,7 +184,16 @@ const Profile: React.FC<Props> = (props) => {
             setUser(querySnapshot.data().user);
             setMajorTags(querySnapshot.data().majortag)
           } else {
-            setProfile({ character: "學習者" });
+            //如果沒有資料就新增
+            alert("id in useEffect:" + id);
+            await setDoc(doc(db, "profile", id), {
+              character: "學習者",
+              user: "尚未設定，請修改...",
+              majortag: [],
+              //少了可以設定或修改email、照片的介面
+              // minitag: minitagName,
+            });
+            setProfile({ user: "尚未設定，請修改...", character: "學習者" });
           }
 
 
@@ -292,10 +301,10 @@ const Profile: React.FC<Props> = (props) => {
           //     setMajorTag([...temp3]);
           //     setIsLoading(false);
         }
-        else{
-          const u = userId?userId:"";
+        else {
+          const u = userId ? userId : "";
           const user_Id = Array.isArray(u) ? u[0] : u;
-          
+
           //alert("id in useEffect:"+id);
           const querySnapshot = await getDoc(doc(db, "profile", user_Id));
 
@@ -373,17 +382,17 @@ const Profile: React.FC<Props> = (props) => {
             count++;
             countHeart += doc.data().heart.length;
             countBookMark += doc.data().bookmark.length;
-          
+
           });
-        
+
           setCount(count);
           setHeartCount(countHeart);
           setBookMarkCount(countBookMark);
-         
+
 
           setIsLoading(false);
 
-  
+
         }
       });
 
@@ -454,8 +463,8 @@ const Profile: React.FC<Props> = (props) => {
           // minitag: minitagName,
         });
         alert("成功")
-  
-        updateProfile(user&&authData, {
+
+        updateProfile(user && authData, {
           displayName: user
         })
       }
@@ -708,12 +717,12 @@ const Profile: React.FC<Props> = (props) => {
                         </Avatar> */}
                         {/* <img  className={styles.googlephoto} src={currentUser?.photoURL}/> */}
                         <Box display="flex" justifyContent="center" width="100%" sx={{ mt: 1 }}>
-                          <Chip label={(profile?.character ? profile?.character : "學習者") } />
+                          <Chip label={(profile?.character ? profile?.character : "學習者")} />
                         </Box>
                       </Box>
                       <Box>
                         <Typography pt={0.8} fontSize={25} flexWrap="wrap">{profile?.user}</Typography>
-                        <Typography fontSize={12} flexWrap="wrap">{ profile?.email}</Typography>
+                        <Typography fontSize={12} flexWrap="wrap">{profile?.email}</Typography>
                         {/* <Stack direction="row" spacing={1}>
                           <IconButton aria-label="linkin" color="secondary">
                             <SvgIcon>

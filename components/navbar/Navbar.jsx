@@ -138,10 +138,9 @@ function ResponsiveAppBar() {
   };
   const expert = () => {
     return (
-      <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
-        
+      <Button variant="variant" href="/expert" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left",p:0 }}>
           審查筆記
-      </Button>
+      </Button >
     )
 
 
@@ -333,15 +332,17 @@ function ResponsiveAppBar() {
                     問答區
                   </Typography>
                 </MenuItem> */}
+                
                 <MenuItem>
-                  {character == "專家" && expert()}
-                </MenuItem>
-                <MenuItem>
-                  <Button variant="variant" href="/wishingPool" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left" }}>
+                  <Button variant="variant" href="/wishingPool" sx={{ color: "black", display: "block", fontSize: 16, textAlign: "left",p:0 }}>
                     <Typography>
                       許願池
                     </Typography>
                   </Button>
+                </MenuItem>
+
+                <MenuItem>
+                  {character == "專家" && expert()}
                 </MenuItem>
 
               </Menu>

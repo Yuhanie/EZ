@@ -104,7 +104,7 @@ function Newpost() {
    const [majortagName, setmajorTagName] = React.useState([]);
    const [minitagName, setminiTagName] = React.useState([]);
    const [link, setLink] = React.useState('');
-   const [user, setUser] = useState();
+   const [currentUser, setCurrentUser] = useState();
    const [profile, setProfile] = useState();
    const theme = useTheme();
    const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
@@ -134,10 +134,35 @@ function Newpost() {
 
 
 
+   
+
+      
+
+
+   useEffect(() => {
+      //   if (articleId){
+      //   const ref = doc(db, "text", articleId);
+      //   const docSnapshot = await getDoc(ref);
+      //   if (docSnapshot.exists()) {
+      //   setTitle(docSnapshot.data().title)
+      //   }
+      // }
+      
+      const unsub = onAuthStateChanged(auth, (currentUser) => {
+         setCurrentUser(currentUser);
+         console.log(currentUser);
+      });
+
+      return () => {
+         unsub();
+      }
+   }, []);
    useEffect(() => {
 
       async function readData() {
-         const querySnapshot = await getDoc(doc(db, "profile", user.uid));
+         if(currentUser){
+         console.log("currentUser", currentUser)
+         const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
           if ((querySnapshot).exists()) {
             setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
           }
@@ -155,34 +180,12 @@ function Newpost() {
                setminiTagName(docSnapshot.data().minitag)
             }
          }
+      }
 
       }
       readData();
    }
-      , [articleId])
-
-      
-
-
-   useEffect(() => {
-      //   if (articleId){
-      //   const ref = doc(db, "text", articleId);
-      //   const docSnapshot = await getDoc(ref);
-      //   if (docSnapshot.exists()) {
-      //   setTitle(docSnapshot.data().title)
-      //   }
-      // }
-      
-      const unsub = onAuthStateChanged(auth, (user) => {
-         setUser(user);
-         console.log(user);
-      });
-
-      return () => {
-         unsub();
-      }
-   }, []);
-
+      , [articleId,currentUser])
    // React.useState(() =>{
    //     firebase
    //     .firestore
@@ -224,8 +227,8 @@ function Newpost() {
             const docRef = await addDoc(collection(db, "text"), {
                title,
                content,
-               userid: user.uid,
-               email: user.email,
+               userid: currentUser.uid,
+               email: currentUser.email,
                tag: tagName,
                user: profile.user,
                heart: [],
@@ -244,7 +247,7 @@ function Newpost() {
                method: 'post',
                url: '/api/email',
                data: {
-                 email: user.email,
+                 email: currentUser.email,
                  subject: title,
                  html: content,
                  message: "已經有新文章已發佈囉!",
@@ -266,7 +269,7 @@ function Newpost() {
                method: 'post',
                url: '/api/email',
                data: {
-                 email: user.email,
+                 email: currentUser.email,
                  subject: title,
                  html: content,
                  // message: message,

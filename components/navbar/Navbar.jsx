@@ -149,7 +149,7 @@ function ResponsiveAppBar() {
   //確認是否logged
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
-      console.log("useEffect")
+      // console.log("useEffect in Navbar")
       setCurrentUser(user);
       if (user) {
         const ref = doc(db, "profile", user.uid);
@@ -172,7 +172,7 @@ function ResponsiveAppBar() {
         setLogged(true)
       }
 
-      console.log(user);
+      // console.log("user in navbar",user);
     });
 
     return () => {

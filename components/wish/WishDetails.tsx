@@ -76,6 +76,13 @@ const WishDetails:
       useEffect(() => {
          async function fetchData() {
 
+            const querySnap = await getDoc(doc(db, "profile", props.wish.userid));
+            if ((querySnap).exists()) {
+              setProfile({ photoURL: querySnap.data().photoURL, user: querySnap.data().user, email: querySnap.data().email, character: querySnap.data().character ? querySnap.data().character : "學習者", majortag: querySnap.data().majortag ? querySnap.data().majortag : [] });
+            }
+  
+
+
             const querySnapshot = collection(
                db,
                "wish",

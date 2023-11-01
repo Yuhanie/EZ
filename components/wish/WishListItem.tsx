@@ -276,7 +276,7 @@ if (docSnapshot.exists()){
                          <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                        </Avatar>
                      }
-                        title={props.wish.user}
+                        title={profile?.user}
                         subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
                         //item 
                         sx={{ p: 1.2 }}

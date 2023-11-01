@@ -128,12 +128,13 @@ const ArticleDetails2 = (props) => {
   const [edited, setEdited] = useState(0);
   const [character, setCharacter] = useState("學習者");
   const [expertOutdate, setExpertOutdate] = useState(props.article.outdate);
-  console.log("aaa", props.article);
-  console.log("bbb", expertOutdate);
+
+
   const [denounces, setDenounces] = useState([]);
   const [toolopen, setToolOpen] = React.useState(false);
   const [expertAction, setExpertAction] = useState("");
   const [profile, setProfile] = React.useState();
+  const [otherProfile, setOtherProfile] = React.useState();
   const ReactQuillEditor = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -152,11 +153,11 @@ const ArticleDetails2 = (props) => {
   );
   const [liked, setLiked] = useState(false);
   const [bookMarked, setBookMarked] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  // const isMobile = useMediaQuery("(max-width: 600px)");
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
   const handleToolClickOpen = () => {
     setToolOpen(true);
@@ -183,9 +184,9 @@ const ArticleDetails2 = (props) => {
     //boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   }));
 
-  const addContent = (value) => {
-    setContent(value);
-  };
+  // const addContent = (value) => {
+  //   setContent(value);
+  // };
 
   const setHeart = async (user) => {
     const ref = doc(db, "text", props.article.docId);
@@ -194,10 +195,10 @@ const ArticleDetails2 = (props) => {
       if (user) {
         if (props.article.heart && docSnap.data().heart.includes(user.uid)) {
           setLiked(true);
-          console.log(props.article.title + "liked");
+
         } else {
           setLiked(false);
-          console.log(props.article.title + "unliked");
+
         }
       }
     }
@@ -213,10 +214,10 @@ const ArticleDetails2 = (props) => {
           docSnap.data().bookmark.includes(user.uid)
         ) {
           setBookMarked(true);
-          console.log(props.article.title + "bookmarked");
+
         } else {
           setBookMarked(false);
-          console.log(props.article.title + "bookmarked");
+
         }
       }
     }
@@ -233,8 +234,7 @@ const ArticleDetails2 = (props) => {
         setUser(user);
         setHeart(user);
         setBookmark(user);
-        // console.log('<3:',props.article);
-        // console.log(bookCount);
+
         const ref = doc(db, "profile", user.uid);
         const docSnap = await getDoc(ref);
 
@@ -244,9 +244,10 @@ const ArticleDetails2 = (props) => {
           props.article.docId,
           "denounce"
         );
+
         const snapshot = await getCountFromServer(refReport);
         if (docSnap.exists()){
-          setProfile({user: docSnap.data().user})
+          setOtherProfile({user: docSnap.data().user})
         }
         if (
           docSnap.exists() &&
@@ -285,6 +286,7 @@ const ArticleDetails2 = (props) => {
   const bookmark = async function () {
     if (typeof window !== "undefined") {
       if (user) {
+
         const ref = doc(db, "text", props.article.docId);
         const docSnap = await getDoc(ref);
         if (docSnap.exists()) {
@@ -343,11 +345,26 @@ const ArticleDetails2 = (props) => {
   useEffect(() => {
     async function fetchData() {
 
+ 
+    if (props.article.userid){   
+      const querySnap = await getDoc(doc(db, "profile", props.article.userid));
+      if (querySnap.exists()) {
+
+        setProfile({ photoURL: querySnap.data().photoURL, user: querySnap.data().user, email: querySnap.data().email});
+      }
+
+    }
+      // const ref = doc(db, "profile", props.article.userid);
+      // const docSnap = await getDoc(ref);
+      // if (docSnap.exists()) {
+      //   setProfile({photoURL: docSnap.data().photoURL, user: docSnap.data().user, email: docSnap.data().email})
+      // }
 
       setCount(props.article.heart.length);
       setBookCount(props.article.bookmark.length);
       setViewCount(props.article.count);
-      console.log("ggg", props.article.count);
+
+      
       // console.log("article:", props.article);
       // console.log("docId:", props.article.docId);
       const querySnapshotDenounce = collection(
@@ -357,6 +374,7 @@ const ArticleDetails2 = (props) => {
         "denounce"
       );
       const queryReport = query(querySnapshotDenounce);
+
       const querySnapshotReport = await getDocs(queryReport);
       const tempReport = [];
       setExpertOutdate(props.article.outdate);
@@ -381,6 +399,7 @@ const ArticleDetails2 = (props) => {
         let reportdata = { ...doc.data(), id: doc.id, message: reportMessage };
         // console.log("reportData", reportdata)
         tempReport.push(reportdata);
+      
       });
 
       setDenounces(() => [...tempReport]);
@@ -394,6 +413,7 @@ const ArticleDetails2 = (props) => {
         "comment"
       );
       const queryText = query(querySnapshot, orderBy("timestamp", "asc"));
+
       const querySnapshotArticle = await getDocs(queryText);
       const temp = [];
 
@@ -424,7 +444,7 @@ const ArticleDetails2 = (props) => {
 
   const outdate = async function (status) {
     // let status = e.target.value
-    console.log("outdateE", status)
+
     if (typeof window !== "undefined") {
       if (user) {
         const ref = doc(db, "text", props.article.docId);
@@ -459,7 +479,7 @@ const ArticleDetails2 = (props) => {
               OUTDATE_TEMPLATE_ID,
               {
                 from_name: "EZ Group",
-                to_name: props.article.user,
+                to_name: profile?.user,
                 from_email: "ezgroup329@gmail.com",
                 to_email: props.article.email,
                 target_article: props.article.title,
@@ -510,7 +530,7 @@ const ArticleDetails2 = (props) => {
           )
         );
         querySnapshot.forEach((doc) => {
-          console.log("expert:", doc.id);
+
 
           if (doc.data().email) {
             emailjs.send(
@@ -539,7 +559,7 @@ const ArticleDetails2 = (props) => {
               OUTDATE_TEMPLATE_ID,
               {
                 from_name: "EZ Group",
-                to_name: props.article.user,
+                to_name: profile?.user,
                 from_email: "ezgroup329@gmail.com",
                 to_email: props.article.email,
                 target_article: props.article.title,
@@ -689,7 +709,7 @@ const ArticleDetails2 = (props) => {
               setIsLoading(false);
               alert("刪除成功");
               // props.update();
-              router.reload("/note");
+              router.push("/note");
             } catch (error) {
               alert(error);
             }
@@ -709,7 +729,7 @@ const ArticleDetails2 = (props) => {
       REPORT_TEMPLATE_ID,
       {
         from_name: "EZ Group",
-        to_name: props.article.user,
+        to_name: profile?.user,
         from_email: "ezgroup329@gmail.com",
         to_email: props.article.email,
         message:
@@ -861,7 +881,7 @@ const ArticleDetails2 = (props) => {
   };
 
   const outdateIcon = () => {
-    console.log("ddd", expertOutdate);
+
     return (
       <Box display="flex" sx={{ alignItems: "center", mr: 1 }}>
         {expertOutdate === "stale" && (
@@ -1017,21 +1037,19 @@ const ArticleDetails2 = (props) => {
         <Card sx={{ boxShadow: "none" }}>
           <Grid container display="flex" justifyContent="space-between">
             <Grid item>
-              <CardHeader
-                avatar={
-                  <Avatar>
-                    {/* {props.article.userid && profile && profile.photoURL &&
+            <CardHeader
+              avatar={
+                <Avatar src={props.article.userid && profile && profile.photoURL && profile.photoURL}>
+                  {/* {props.article.userid && profile && profile.photoURL &&
                   <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
-                  </Avatar>
-                }
-                title={props.article.user}
-                subheader={
-                  props.article.timestamp &&
-                  props.article.timestamp.toDate().toDateString()
-                }
-                //item
-                sx={{ p: 1.2 }}
-              />
+                </Avatar>
+              }
+              // title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
+              title={(profile?.user)}
+              subheader={props.article.timestamp && props.article.timestamp.toDate().toLocaleDateString()}
+              //item 
+              sx={{ p: 1.2 }}
+            ></CardHeader>
             </Grid>
             <Grid item display="flex" alignItems="center">
               <FormControl>

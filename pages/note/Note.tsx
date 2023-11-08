@@ -365,8 +365,10 @@ const Home: NextPage = () => {
           userid: doc.data().userid,
           count: doc.data().count,
           heart: doc.data().heart,
+          heartCount: doc.data().heartCount,
           timestamp: doc.data().timestamp,
           bookmark: doc.data().bookmark,
+          bookCount:doc.data().bookCount,
           outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
@@ -391,7 +393,7 @@ const Home: NextPage = () => {
       setTag([...temp]);
 
       const textCollection = collection(db, "text");
-      const queryText = query(textCollection, orderBy("count", "desc"), limit(3));
+      const queryText = query(textCollection, orderBy("heartCount", "desc"), limit(3));
       //const queryNewText =query(textCollection, orderBy("timestamp", "desc"), limit(3)); 
       const querySnapshotArticle = await getDocs(queryText);
       //const querySnapshotArticle  = await getDocs(collection(db, "text"));
@@ -408,8 +410,10 @@ const Home: NextPage = () => {
           userid: doc.data().userid,
           count: doc.data().count,
           heart: doc.data().heart,
+          heartCount: doc.data().heartCount,
           timestamp: doc.data().timestamp,
           bookmark: doc.data().bookmark,
+          bookCount:doc.data().bookCount,
           outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,

@@ -202,14 +202,16 @@ const ArticleListItem:
             if (docSnap.data().bookmark.includes(currentUser.uid)) {
               // alert('remove')
               updateDoc(ref, {
-                bookmark: arrayRemove(currentUser.uid)
+                bookmark: arrayRemove(currentUser.uid),
+                bookCount: bookCount - 1,
               });
               setBookMarked(false)
               setBookCount(bookCount - 1)
             } else {
               // alert('added')
               updateDoc(ref, {
-                bookmark: arrayUnion(currentUser.uid)
+                bookmark: arrayUnion(currentUser.uid),
+                bookCount: bookCount - 1,
               });
               setBookMarked(true)
               setBookCount(bookCount + 1)
@@ -232,15 +234,16 @@ const ArticleListItem:
             if (docSnap.data().heart.includes(currentUser.uid)) {
               // alert('remove')
               updateDoc(ref, {
-                heart: arrayRemove(currentUser.uid)
+                heart: arrayRemove(currentUser.uid),
+                heartCount: count - 1,
               });
               setLiked(false)
               setCount(count - 1)
             } else {
               // alert('added')
               updateDoc(ref, {
-                heart: arrayUnion(currentUser.uid)
-
+                heart: arrayUnion(currentUser.uid),
+                heartCount: count + 1,
               });
               setLiked(true)
               setCount(count + 1)

@@ -8,7 +8,9 @@ export type Article = {
   link: string;
   count: number;
   heart: string[];
+  heartCount: number;
   bookmark: string[];
+  bookCount: number;
   timestamp: Timestamp;
   userid: string;
   outdateCount: string[];

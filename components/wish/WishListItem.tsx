@@ -23,6 +23,7 @@ import dynamic from "next/dynamic";
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
+import { userAgent } from 'next/server';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -312,7 +313,7 @@ if (docSnapshot.exists()){
                            {liked ? <ClickedBtn /> : <DefaultBtn />}
                         </ButtonBase>}
                         {decide == false && <ButtonBase sx={{ borderRadius: 10 }}>
-                           {character === "專家" && SolvedBtn()}
+                           {(character === "專家" || props.wish.userid == currentUser?.uid )&& SolvedBtn()}
                         </ButtonBase>}
                      </Grid>
                   </Grid>

@@ -320,6 +320,7 @@ const Home: NextPage = () => {
   const [tag, setTag] = useState<Tag[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [newTexts, setNewTexts] = useState<any[]>();
+  const [bookText, setBookText] = useState<any[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
   const router = useRouter();
@@ -424,13 +425,34 @@ const Home: NextPage = () => {
       });
       setArticles([...tempArticle]);
 
-
-
-
-
-
-
-
+      const bookCollection = collection(db, "text");
+      const queryBook = query(bookCollection, orderBy("bookCount", "desc"), limit(3));
+      const querySnapshotBookText = await getDocs(queryBook);
+      const tempBookText: Article[] = [];
+      querySnapshotBookText.forEach((doc) => {
+        //console.log(doc.id, doc.data());
+        tempBookText.push({
+          docId: doc.id,
+          content: doc.data().content,
+          title: doc.data().title,
+          user: doc.data().user,
+          link: doc.data().link,
+          userid: doc.data().userid,
+          count: doc.data().count,
+          heart: doc.data().heart,
+          heartCount: doc.data().heartCount,
+          timestamp: doc.data().timestamp,
+          bookmark: doc.data().bookmark,
+          bookCount:doc.data().bookCount,
+          outdateCount: doc.data().outdateCount,
+          outdate: doc.data().outdate,
+          majortag: doc.data().majortag,
+          minitag: doc.data().minitag,
+          tag: doc.data().tag,
+          email: doc.data().email
+        });
+      });
+      setBookText([...tempBookText]);
 
 
 
@@ -445,15 +467,6 @@ const Home: NextPage = () => {
         // setCurrentUser()}
         console.log(user);
       });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -513,6 +526,13 @@ const Home: NextPage = () => {
 
 
   const renderText = (article: Article, i: number) => {
+    return (
+      <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
+    );
+
+  };
+
+  const renderBookText = (article: Article, i: number) => {
     return (
       <ArticleListItem key={article.docId} article={article} update={updateUpdated}></ArticleListItem>
     );
@@ -641,7 +661,7 @@ const Home: NextPage = () => {
             alignItems='center'
           >
             <LabelImportantIcon />
-            <Typography variant='h6' pr={2}>文章排行榜</Typography>
+            <Typography variant='h6' pr={2}>愛心榜</Typography>
             <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
           </Box>
           <Box
@@ -651,6 +671,27 @@ const Home: NextPage = () => {
             {!isLoading ?
               <div className={styles.grid}>
                 {articles.map(renderText)}
+              </div>
+              : <ArticleLoading />
+            }
+          </Box>
+
+          <Box
+            display="flex"
+            pl="5%"
+            pt={4}
+            alignItems='center'
+          >
+            <LabelImportantIcon />
+            <Typography variant='h6' pr={2}>收藏榜</Typography>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            {!isLoading ?
+              <div className={styles.grid}>
+                {bookText && bookText.map(renderBookText)}
               </div>
               : <ArticleLoading />
             }

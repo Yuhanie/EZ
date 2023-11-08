@@ -99,7 +99,7 @@ function Solgan() {
                         </Typography>
 
                         <Typography variant="body2" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000", lineWeight: 2 }}>是不是渴望有個專屬於資管系的資訊分享平台呢?</Typography>
-                        {/* <Typography variant="caption" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000" }}>You can find all the information about FJUIM!!</Typography> */}
+                        <Typography variant="caption" sx={{ textAlign: "left", letterSpacing: ".1rem", lineHeight: 1.8, color: "#000000" }}>You can find all the information about FJUIM!!</Typography>
                         {/* <Typography sx={{ textAlign: "left", }}>獲取最新的資訊</Typography> */}
                         <Button variant="contained" color="secondary" href="/note" sx={{ mt: 7 }}>資訊分享區</Button>
                     </Box>

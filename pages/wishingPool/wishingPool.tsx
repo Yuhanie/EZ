@@ -263,7 +263,7 @@ const WishingPool = () => {
       const querysnap = query(
         unsolvedCollection,
         where("solved", "==", false),
-
+        orderBy("timestamp", "desc")
       );
       const queryunsolvedWish = await getDocs(querysnap);
       const tempUnsolved: Wish[] = [];
@@ -288,7 +288,7 @@ const WishingPool = () => {
       const querysnapDoneWish = query(
         DoneWishCollection,
         where("solved", "==", true),
-
+        orderBy("timestamp", "desc")
       );
       const queryDoneWish = await getDocs(querysnapDoneWish);
       const tempDone: Wish[] = [];

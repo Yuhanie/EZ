@@ -127,6 +127,12 @@ const PopularWishListItem: React.FC<Props> = (props) => {
         //    setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
         // }
       }
+      const reff = doc(db, "profile", props.wish.userid);
+      const docSnapshot = await getDoc(reff);
+if (docSnapshot.exists()){
+setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().user, email: docSnapshot.data().email, character: docSnapshot.data().character ? docSnapshot.data().character : "學習者", majortag: docSnapshot.data().majortag ? docSnapshot.data().majortag : [] });
+
+}
       //console.log(user);
     });
 

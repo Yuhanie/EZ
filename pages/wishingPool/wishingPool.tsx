@@ -224,7 +224,10 @@ function WishLoad() {
 }
 
 const WishingPool = () => {
+  const [filterStatus, setFilterStatus] = useState<boolean>(false);
   const [wishes, setWishes] = useState<Wish[]>([]);
+  const [unsolvedWishes, setUnsolvedWishes] = useState<Wish[]>([]);
+  const [done, setDone] = useState<Wish[]>([]);
   const [popularWishes, setPopularWishes] = useState<Wish[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updated, setUpdated] = useState(0);
@@ -256,6 +259,55 @@ const WishingPool = () => {
       setWishes([...temp]);
 
       setIsLoading(true);
+      const unsolvedCollection = collection(db, "wish");
+      const querysnap = query(
+        unsolvedCollection,
+        where("solved", "==", false),
+
+      );
+      const queryunsolvedWish = await getDocs(querysnap);
+      const tempUnsolved: Wish[] = [];
+      queryunsolvedWish.forEach((doc) => {
+        tempUnsolved.push({
+          docId: doc.id,
+          content: doc.data().content,
+          userid: doc.data().userid,
+          user: doc.data().user,
+          timestamp: doc.data().timestamp,
+          heart: doc.data().heart,
+          heartCount: doc.data().heartCount,
+          tag: doc.data().tag,
+          solved: doc.data().solved,
+        });
+      });
+      setUnsolvedWishes([...tempUnsolved]);
+      // console.log("282:", tempDone)
+
+      setIsLoading(true);
+      const DoneWishCollection = collection(db, "wish");
+      const querysnapDoneWish = query(
+        DoneWishCollection,
+        where("solved", "==", true),
+
+      );
+      const queryDoneWish = await getDocs(querysnapDoneWish);
+      const tempDone: Wish[] = [];
+      queryDoneWish.forEach((doc) => {
+        tempDone.push({
+          docId: doc.id,
+          content: doc.data().content,
+          userid: doc.data().userid,
+          user: doc.data().user,
+          timestamp: doc.data().timestamp,
+          heart: doc.data().heart,
+          heartCount: doc.data().heartCount,
+          tag: doc.data().tag,
+          solved: doc.data().solved,
+        });
+      });
+      setDone([...tempDone]);
+
+      setIsLoading(true);
       const PopularWishCollection = collection(db, "wish");
       const queryPopularWish = query(
         PopularWishCollection,
@@ -279,6 +331,9 @@ const WishingPool = () => {
         });
       });
       setPopularWishes([...temp2]);
+
+
+
       setIsLoading(false);
     }
     readData();
@@ -304,6 +359,77 @@ const WishingPool = () => {
         update={updateUpdated}
       ></PopularWishListItem>
     );
+  };
+
+  //Done
+  const renderDone = (done: Wish, i: number) => {
+    return (
+      <WishListItem
+        key={done.docId}
+        wish={done}
+        update={updateUpdated}
+      ></WishListItem>
+    );
+  };
+
+  const renderUnsolved = (unsolvedWishes: Wish, i: number) => {
+    return (
+      <WishListItem
+        key={unsolvedWishes.docId}
+        wish={unsolvedWishes}
+        update={updateUpdated}
+      ></WishListItem>
+    );
+  };
+
+  //篩選未實現
+  const filterUnsolved = () => {
+    return (
+      <div>
+        {!isLoading ? (
+                <div>{unsolvedWishes.map(renderUnsolved)}</div>
+              ) : (
+                <div>
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                </div>
+              )}
+      </div>
+    );
+  };
+
+  //篩選已實現
+  const filterDone = () => {
+    return (
+      <div>
+        {!isLoading ? (
+                <div>{done.map(renderDone)}</div>
+              ) : (
+                <div>
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                  <WishLoad />
+                </div>
+              )}
+      </div>
+    );
+  };
+
+  const filter = function () {
+    setFilterStatus(true);
+  };
+
+  const filterFalse = function () {
+    setFilterStatus(false);
   };
 
   return (
@@ -354,20 +480,11 @@ const WishingPool = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} md={8}>
-            {!isLoading ? (
-              <div>{wishes.map(renderWish)}</div>
-            ) : (
-              <div>
-                <WishLoad />
-                <WishLoad />
-                <WishLoad />
-                <WishLoad />
-                <WishLoad />
-                <WishLoad />
-                <WishLoad />
-              </div>
-            )}
-          </Grid>
+            <Button onClick={filter}>已實現</Button>
+            <Button onClick={filterFalse}>未實現</Button>
+              {filterStatus == false ?filterUnsolved():
+              filterDone()}
+            </Grid>
         </Grid>
       </Container>
     </div>

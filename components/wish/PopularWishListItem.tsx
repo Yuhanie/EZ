@@ -304,7 +304,7 @@ setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().use
                          <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
                 </Avatar>
               }
-              title={props.wish.user}
+              title={profile?.user}
               //item
             />
             </Box>

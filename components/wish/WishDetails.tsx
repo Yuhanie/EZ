@@ -41,6 +41,7 @@ import { ReactPropTypes } from 'react';
 import { ChatBubble } from '@mui/icons-material';
 import router from 'next/router';
 import WishComment from './WishComment';
+import axios from 'axios';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -157,11 +158,22 @@ const WishDetails:
                   timestamp: serverTimestamp(),
                   heart: [],
                   user: user.displayName,
+                  email: user.email
                });
                setContent("");
                setEdited(edited + 1);
 
-               //router.push('/');
+               const response = await axios({
+                  method: 'post',
+                  url: '/commentEmail',
+                  data: {
+                    email: user.email,
+                    // subject: content,
+                    // html: content,
+                    message: "有新留言ㄛ！",
+                  },
+                });
+
             }
          }
       }

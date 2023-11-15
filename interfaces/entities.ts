@@ -57,6 +57,7 @@ export type Comment = {
   userid?: string;
   timestamp?: Timestamp;
   heart?: string[];
+  email?: string;
 };
 
 export type Report = {
@@ -117,4 +118,5 @@ export type Wish = {
   heartCount: number;
   tag: string;
   solved: boolean;
+  email: string;
 };

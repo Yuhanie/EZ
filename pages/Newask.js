@@ -186,6 +186,7 @@ function Newask() {
           user: user.displayName,
           heart: [],
           solved: false,
+          email: user.email,
           // bookmark: [],
           // count: 1,
           // link,

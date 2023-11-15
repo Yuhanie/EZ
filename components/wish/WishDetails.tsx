@@ -163,9 +163,11 @@ const WishDetails:
                setContent("");
                setEdited(edited + 1);
 
+               //router.push('/');
+
                const response = await axios({
                   method: 'post',
-                  url: '/commentEmail',
+                  url: '/api/email',
                   data: {
                     email: user.email,
                     // subject: content,

@@ -254,6 +254,7 @@ const WishingPool = () => {
           heartCount: doc.data().heartCount,
           tag: doc.data().tag,
           solved: doc.data().solved,
+          email: doc.data().email
         });
       });
       setWishes([...temp]);
@@ -278,6 +279,7 @@ const WishingPool = () => {
           heartCount: doc.data().heartCount,
           tag: doc.data().tag,
           solved: doc.data().solved,
+          email: doc.data().email
         });
       });
       setUnsolvedWishes([...tempUnsolved]);
@@ -303,6 +305,7 @@ const WishingPool = () => {
           heartCount: doc.data().heartCount,
           tag: doc.data().tag,
           solved: doc.data().solved,
+          email: doc.data().email
         });
       });
       setDone([...tempDone]);
@@ -328,6 +331,7 @@ const WishingPool = () => {
           heartCount: doc.data().heartCount,
           tag: doc.data().tag,
           solved: doc.data().solved,
+          email: doc.data().email
         });
       });
       setPopularWishes([...temp2]);

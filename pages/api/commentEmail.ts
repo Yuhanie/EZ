@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
-import WelcomeTemplate from "../../pages/WelcomeTemplate";
+import WelcomeTemplate from "../WelcomeTemplate";
 import { render } from "@react-email/render";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../settings/firebaseConfig";

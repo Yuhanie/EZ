@@ -522,7 +522,7 @@ function Newpost() {
 
                      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                         <Button variant="contained" onClick={update}>發布</Button><br></br><br></br>
-                        <Button variant="contained" color="error">取消</Button>
+                        <Button variant="contained" href="/note" color="error">取消</Button>
                      </CardActions>
 
 

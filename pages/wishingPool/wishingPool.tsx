@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Navbar from "../../components/navbar/Navbar";
 import magicCat from "../../public/pic/magicCat.png";
+import book from "../../public/pic/book.png";
 import WishListItem from "@/components/wish/WishListItem";
 import PopularWishListItem from "@/components/wish/PopularWishListItem";
 import { useEffect, useState } from "react";
@@ -76,6 +77,12 @@ const Star: React.FC<StarProps> = ({ x, y }) => {
 const getRandomPosition = () => {
   const x = Math.random() * 320; // 0 to 280 (300 - star width)
   const y = Math.random() * 280; // 0 to 280 (300 - star height)
+  return { x, y };
+};
+
+const getRandomPositionDirections = () => {
+  const x = Math.random() * 300; // 0 to 280 (300 - star width)
+  const y = Math.random() * 300; // 0 to 280 (300 - star height)
   return { x, y };
 };
 
@@ -221,6 +228,64 @@ function WishLoad() {
       </Grid>
     </Paper>
   );
+}
+
+//wish 說明
+const Directions = () => {
+  const numStars = 20; // 星星的數量
+  const stars = Array.from({ length: numStars }, (_, index) => {
+    const { x, y } = getRandomPositionDirections();
+    return <Star key={index} x={x} y={y} />;
+  });
+  return (
+    <div>
+
+      {/* <div
+        style={{
+          position: "fixed",
+          height: 300,
+          borderTopLeftRadius: 5,
+          borderTopRightRadius: 5,
+          backgroundColor: "#425E99",
+        }}
+      >
+        {stars}
+      </div> */}
+      <Box bgcolor="#425E99" minHeight={300} display="flex" justifyContent="center" alignItems="center" pb={2} flexWrap="wrap">
+          <Box>
+            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mt={6} ml={2}>
+              <Box width={300}>
+                <Image alt="裝飾圖片" src={book} />
+              </Box>
+              <Box>
+                <Button variant="contained" sx={{ bgcolor: "#FFBD59", borderRadius: 10, mr: 3.5, mt: 1 }}>Make a wish</Button>
+              </Box>
+            </Box>
+          </Box>
+          <Box >
+            <Box display="flex">
+              <Box sx={{ bgcolor: "#ffffff", height: 200, borderRadius: 5, p: 3,m:2,mt:5}}>
+                <Typography variant="body2" gutterBottom>
+                  你可以在這裡「Make a wish」，告訴別人你的需求，讓大家幫你實現願望。
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  你也可以透過「熱門願望」，知道大家都在討論什麼問題！
+                </Typography>
+                <Box display="flex" mt={2}>
+                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ borderRadius: 10, height: 25, width: 60, border: 1, borderColor: "#8FC1E4", mr: 1 }}>
+                    <Typography fontSize={10} color="#425E99">我也想問</Typography>
+                  </Box>
+                  <Typography variant="body2">當問題被解決，會收到email通知ㄛ</Typography>
+                </Box>
+
+              </Box>
+
+            </Box>
+          </Box>
+
+      </Box>
+    </div>
+  )
 }
 
 const WishingPool = () => {
@@ -387,18 +452,18 @@ const WishingPool = () => {
     return (
       <div>
         {!isLoading ? (
-                <div>{unsolvedWishes.map(renderUnsolved)}</div>
-              ) : (
-                <div>
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                </div>
-              )}
+          <div>{unsolvedWishes.map(renderUnsolved)}</div>
+        ) : (
+          <div>
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+          </div>
+        )}
       </div>
     );
   };
@@ -408,18 +473,18 @@ const WishingPool = () => {
     return (
       <div>
         {!isLoading ? (
-                <div>{done.map(renderDone)}</div>
-              ) : (
-                <div>
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                  <WishLoad />
-                </div>
-              )}
+          <div>{done.map(renderDone)}</div>
+        ) : (
+          <div>
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+            <WishLoad />
+          </div>
+        )}
       </div>
     );
   };
@@ -445,6 +510,7 @@ const WishingPool = () => {
       </Head>
       <Navbar />
       <Toolbar />
+      <Directions />
       <Container>
         <Grid
           xs={12}
@@ -456,7 +522,7 @@ const WishingPool = () => {
         >
           <Grid item container xs={12} md={4} direction="column">
             <Grid item>
-              <Newwish />
+              {/* <Newwish /> */}
             </Grid>
             <Grid item>
               <Box
@@ -465,8 +531,8 @@ const WishingPool = () => {
                 flexDirection="column"
                 width={330}
               >
-                <Box display="flex" flexDirection="row" sx={{m:2}}>
-                  <WhatshotIcon color="error" sx={{mt:0.3,mr:1}}/>
+                <Box display="flex" flexDirection="row" sx={{ m: 2 }}>
+                  <WhatshotIcon color="error" sx={{ mt: 0.3, mr: 1 }} />
                   <Typography variant="h6">
                     熱門願望
                   </Typography>
@@ -482,9 +548,9 @@ const WishingPool = () => {
           <Grid item xs={12} md={8}>
             <Button onClick={filter}>已實現</Button>
             <Button onClick={filterFalse}>未實現</Button>
-              {filterStatus == false ?filterUnsolved():
+            {filterStatus == false ? filterUnsolved() :
               filterDone()}
-            </Grid>
+          </Grid>
         </Grid>
       </Container>
     </div>

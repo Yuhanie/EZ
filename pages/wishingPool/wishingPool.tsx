@@ -139,48 +139,81 @@ const Newwish = () => {
     }
   };
   return (
-    <Grid item direction="column">
-      <Grid item xs={8}>
-        <Paper
-          sx={{
-            width: 330,
-            height: "auto",
-            margin: "auto",
-            flexGrow: 1,
-          }}
-        >
-          <div
-            style={{
-              position: "relative",
-              height: 280,
-              borderTopLeftRadius: 5,
-              borderTopRightRadius: 5,
-              backgroundColor: "#425E99",
-            }}
-          >
-            {stars}
-            <Image alt="裝飾圖片" src={magicCat} height="900" />
-          </div>
-          <Box
-            display="flex"
-            flexDirection="column"
-            sx={{ p: 2, justifyContent: "center", alignItems: "center" }}
-          >
-            <Typography variant="body2" gutterBottom>
-              找不到想看的內容嗎？試著在這裡許下願望，讓願望藉由大家的力量實現吧！
-            </Typography>
-            <Button
-              color="info"
-              variant="outlined"
-              sx={{ borderRadius: 10, m: 1 }}
-              onClick={changeStatus}
-            >
-              Make a wish
-            </Button>
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
+    // <Grid item direction="column">
+    //   <Grid item xs={8}>
+    //     <Paper
+    //       sx={{
+    //         width: 330,
+    //         height: "auto",
+    //         margin: "auto",
+    //         flexGrow: 1,
+    //       }}
+    //     >
+    //       <div
+    //         style={{
+    //           position: "relative",
+    //           height: 280,
+    //           borderTopLeftRadius: 5,
+    //           borderTopRightRadius: 5,
+    //           backgroundColor: "#425E99",
+    //         }}
+    //       >
+    //         {stars}
+    //         <Image alt="裝飾圖片" src={magicCat} height="900" />
+    //       </div>
+    //       <Box
+    //         display="flex"
+    //         flexDirection="column"
+    //         sx={{ p: 2, justifyContent: "center", alignItems: "center" }}
+    //       >
+    //         <Typography variant="body2" gutterBottom>
+    //           找不到想看的內容嗎？試著在這裡許下願望，讓願望藉由大家的力量實現吧！
+    //         </Typography>
+    //         <Button
+    //           color="info"
+    //           variant="outlined"
+    //           sx={{ borderRadius: 10, m: 1 }}
+    //           onClick={changeStatus}
+    //         >
+    //           Make a wish
+    //         </Button>
+    //       </Box>
+    //     </Paper>
+    //   </Grid>
+    // </Grid>
+     <Box bgcolor="#425E99" minHeight={300} display="flex" justifyContent="center" alignItems="center" pb={2} flexWrap="wrap">
+     <Box>
+       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mt={6} ml={2}>
+         <Box width={300}>
+           <Image alt="裝飾圖片" src={book} />
+         </Box>
+         <Box>
+           <Button onClick={changeStatus} variant="contained" sx={{ bgcolor: "#FFBD59", borderRadius: 10, mr: 3.5, mt: 1 }} >Make a wish</Button>
+         </Box>
+       </Box>
+     </Box>
+     <Box >
+       <Box display="flex">
+         <Box sx={{ bgcolor: "#ffffff", height: 200, borderRadius: 5, p: 3,m:2,mt:5}}>
+           <Typography variant="body2" gutterBottom>
+             你可以在這裡「Make a wish」，告訴別人你的需求，讓大家幫你實現願望。
+           </Typography>
+           <Typography variant="body2" gutterBottom>
+             你也可以透過「熱門願望」，知道大家都在討論什麼問題！
+           </Typography>
+           <Box display="flex" mt={2}>
+             <Box display="flex" justifyContent="center" alignItems="center" sx={{ borderRadius: 10, height: 25, width: 60, border: 1, borderColor: "#8FC1E4", mr: 1 }}>
+               <Typography fontSize={10} color="#425E99">我也想問</Typography>
+             </Box>
+             <Typography variant="body2">當問題被解決，會收到email通知ㄛ</Typography>
+           </Box>
+
+         </Box>
+
+       </Box>
+     </Box>
+
+ </Box>
   );
 };
 
@@ -230,63 +263,7 @@ function WishLoad() {
   );
 }
 
-//wish 說明
-const Directions = () => {
-  const numStars = 20; // 星星的數量
-  const stars = Array.from({ length: numStars }, (_, index) => {
-    const { x, y } = getRandomPositionDirections();
-    return <Star key={index} x={x} y={y} />;
-  });
-  return (
-    <div>
 
-      {/* <div
-        style={{
-          position: "fixed",
-          height: 300,
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
-          backgroundColor: "#425E99",
-        }}
-      >
-        {stars}
-      </div> */}
-      <Box bgcolor="#425E99" minHeight={300} display="flex" justifyContent="center" alignItems="center" pb={2} flexWrap="wrap">
-          <Box>
-            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" mt={6} ml={2}>
-              <Box width={300}>
-                <Image alt="裝飾圖片" src={book} />
-              </Box>
-              <Box>
-                <Button variant="contained" sx={{ bgcolor: "#FFBD59", borderRadius: 10, mr: 3.5, mt: 1 }}>Make a wish</Button>
-              </Box>
-            </Box>
-          </Box>
-          <Box >
-            <Box display="flex">
-              <Box sx={{ bgcolor: "#ffffff", height: 200, borderRadius: 5, p: 3,m:2,mt:5}}>
-                <Typography variant="body2" gutterBottom>
-                  你可以在這裡「Make a wish」，告訴別人你的需求，讓大家幫你實現願望。
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  你也可以透過「熱門願望」，知道大家都在討論什麼問題！
-                </Typography>
-                <Box display="flex" mt={2}>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ borderRadius: 10, height: 25, width: 60, border: 1, borderColor: "#8FC1E4", mr: 1 }}>
-                    <Typography fontSize={10} color="#425E99">我也想問</Typography>
-                  </Box>
-                  <Typography variant="body2">當問題被解決，會收到email通知ㄛ</Typography>
-                </Box>
-
-              </Box>
-
-            </Box>
-          </Box>
-
-      </Box>
-    </div>
-  )
-}
 
 const WishingPool = () => {
   const [filterStatus, setFilterStatus] = useState<boolean>(false);
@@ -514,7 +491,7 @@ const WishingPool = () => {
       </Head>
       <Navbar />
       <Toolbar />
-      <Directions />
+      <Newwish />
       <Container>
         <Grid
           xs={12}

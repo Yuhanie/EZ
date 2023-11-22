@@ -74,9 +74,6 @@ NextApiHandler = async (
     }
     temp.push(tempt)
     //   setComments(() => [...temp]);
-    
-    
-
 
 
 

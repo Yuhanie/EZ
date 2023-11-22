@@ -57,6 +57,7 @@ NextApiHandler = async (
 
 
     const id = req.body.id || "";
+    // const userid = req.body.userid || "";
 
     const db = getFirestore();
     const querySnapshot = await getDocs(collection(db, "wish" ,id,"comment"));
@@ -66,14 +67,19 @@ NextApiHandler = async (
       console.log(`${doc.id} => ${doc.data().email}`);
     });
 
-
+    const Snapshot = await getDoc(doc(db, "wish" ,id));
+    let tempt: string="";
+    if(Snapshot.exists()){
+    tempt = Snapshot.data().email? Snapshot.data().email:'';
+    }
+    temp.push(tempt)
     //   setComments(() => [...temp]);
     
 
 
 
 
-    const email = temp || "victoria2013chang@gmail.com";
+    const email = (temp) || "victoria2013chang@gmail.com";
 
     const subject = req.body.subject || "有新的留言ㄛ！";
     const html = req.body.html || "測試";

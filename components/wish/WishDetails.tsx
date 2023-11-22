@@ -171,6 +171,7 @@ const WishDetails:
                   data: {
                     email: user.email,
                     id: props.wish.docId,
+                  //   userid: props.wish.userid,
                     // html: content,
                     message: "有新留言ㄛ！",
                   },

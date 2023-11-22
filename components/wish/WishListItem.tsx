@@ -24,6 +24,7 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.core.css';
 import { userAgent } from 'next/server';
+import axios from 'axios';
 
 
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -191,7 +192,21 @@ if (docSnapshot.exists()){
                if ((docSnap.exists())) {
                   await updateDoc(doc(db, "wish", props.wish.docId), {
                      solved: true
+                     
                   });
+
+                  const response = await axios({
+                     method: 'post',
+                     url: '/api/email2',
+                     data: {
+                       email: currentUser.email,
+                       // subject: content,
+                       // html: content,
+                       id: props.wish.docId,
+                       message: "願望已實現！",
+                     },
+                   });
+                  console.log(response.data.message);
                   setEdited(edited + 1)
                   setDecide(true);
 

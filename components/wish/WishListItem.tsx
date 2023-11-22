@@ -194,6 +194,7 @@ if (docSnapshot.exists()){
                      solved: true
                      
                   });
+
                   const response = await axios({
                      method: 'post',
                      url: '/api/email2',
@@ -201,10 +202,11 @@ if (docSnapshot.exists()){
                        email: currentUser.email,
                        // subject: content,
                        // html: content,
+                       id: props.wish.docId,
                        message: "願望已實現！",
                      },
                    });
-
+                  console.log(response.data.message);
                   setEdited(edited + 1)
                   setDecide(true);
 

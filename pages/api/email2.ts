@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
-import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
 import WelcomeTemplate from "../WelcomeTemplate";
 import { render } from "@react-email/render";
 import { getApp, getApps, initializeApp } from "firebase/app";
@@ -39,15 +39,25 @@ const handler: NextApiHandler = async (
   const firebaseApp =
     getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   try {
+    const id = req.body.id || "";
+
     const db = getFirestore();
-    const querySnapshot = await getDocs(collection(db, "wish"));
+
+    const querySnapshot = await getDocs(collection(db, "wish",id,"heart"));
     let temp: string[] = [];
     querySnapshot.forEach(async (doc) => {
       temp.push(doc.data().email);
       console.log(`${doc.id} => ${doc.data().email}`);
     });
 
-    const email = temp || "victoria2013chang@gmail.com";
+    const Snapshot = await getDoc(doc(db, "wish" ,id));
+    let tempt: string="";
+    if(Snapshot.exists()){
+    tempt = Snapshot.data().email? Snapshot.data().email:'';
+    }
+    temp.push(tempt)
+    
+    const email = (temp) || "victoria2013chang@gmail.com";
     const subject = req.body.subject || "願望已實現囉";
     const html = req.body.html || "測試";
     const message = req.body.message || "測試";

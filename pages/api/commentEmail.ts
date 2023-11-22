@@ -54,28 +54,17 @@ NextApiHandler = async (
   const firebaseApp =
     getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   try {
+
+
+    const id = req.body.id || "";
+
     const db = getFirestore();
-    // const querySnapshot = await getDocs(collection(db, "profile"));
-    // let temp: string[] = [];
-    // querySnapshot.forEach(async (doc) => {
-    //   temp.push(doc.data().email);
-    //   console.log(`${doc.id} => ${doc.data().email}`);
-    // });
-
-      const querySnapshot = await getDocs(collection(
-        db,
-        "wish",
-        props.wish.docId,
-        "comment"
-      ));
-      const temp: any = [];
-
-      querySnapshot.forEach((doc) => {
-        temp.push({ user: doc.data().user, content: doc.data().content, docId: doc.id, email: doc.data().email});
-        // console.log("comment:", data);
-      });
-
-      const docSnapshot = await getDoc(doc(db, "wish", props.wish.docId));
+    const querySnapshot = await getDocs(collection(db, "wish" ,id,"comment"));
+    let temp: string[] = [];
+    querySnapshot.forEach(async (doc) => {
+      temp.push(doc.data().email);
+      console.log(`${doc.id} => ${doc.data().email}`);
+    });
 
 
     //   setComments(() => [...temp]);
@@ -84,8 +73,9 @@ NextApiHandler = async (
 
 
 
-    const email = (temp && docSnapshot.data()?.email) || "victoria2013chang@gmail.com";
-    const subject = req.body.subject || "有新的許願ㄛ！";
+    const email = temp || "victoria2013chang@gmail.com";
+
+    const subject = req.body.subject || "有新的留言ㄛ！";
     const html = req.body.html || "測試";
     const message = req.body.message || "測試";
     const transporter = nodemailer.createTransport(smtpOptions);

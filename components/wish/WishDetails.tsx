@@ -167,10 +167,10 @@ const WishDetails:
 
                const response = await axios({
                   method: 'post',
-                  url: '/api/email',
+                  url: '/api/commentEmail',
                   data: {
                     email: user.email,
-                    // subject: content,
+                    id: props.wish.docId,
                     // html: content,
                     message: "有新留言ㄛ！",
                   },

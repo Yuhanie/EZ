@@ -128,6 +128,7 @@ const Profile: React.FC<Props> = (props) => {
   const [heartCount, setHeartCount] = useState(0);
   const [bookMarkCount, setBookMarkCount] = useState(0);
   const [user, setUser] = useState<any>();
+  const [refresh, setRefresh] = useState<boolean>(false);
   // const [MajorTag, setMajorTag] = useState<Article[]>([]);
   const router = useRouter()
   const { userId } = router.query || ""
@@ -411,7 +412,7 @@ const Profile: React.FC<Props> = (props) => {
       }
     }
     readData();
-  }, [myNotesOpen, collectOpen]);
+  }, [myNotesOpen, collectOpen,refresh]);
 
   // const heart = async function () {
   //   if (typeof window !== "undefined") {
@@ -470,11 +471,14 @@ const Profile: React.FC<Props> = (props) => {
           majortag: majorTags,
           // minitag: minitagName,
         });
-        alert("成功")
+        // alert("成功")
 
         updateProfile(user && authData, {
           displayName: user
-        })
+        });
+        
+        // setRefresh((prev) => !prev);
+        window.location.reload();
       }
 
     }

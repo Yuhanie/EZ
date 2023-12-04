@@ -152,12 +152,12 @@ function AboutUs() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} display='flex'>
               <Box borderRadius={3} boxShadow={1}>
-                <Grid container sx={{alignItems:'center'}}>
+                <Grid container sx={{ alignItems: 'center' }}>
                   <Grid xs={5}>
                     <Box p={2}><Image alt="資訊散落各處" src={MuchInfo} /></Box>
                   </Grid>
                   <Grid xs={6}>
-                    <Typography sx={{fontSize:18,fontWeight: 500,}}>資訊散落各處</Typography>
+                    <Typography sx={{ fontSize: 18, fontWeight: 500, }}>資訊散落各處</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -165,12 +165,12 @@ function AboutUs() {
 
             <Grid item xs={12} md={4} display='flex'>
               <Box borderRadius={3} boxShadow={1}>
-                <Grid container sx={{alignItems:'center'}}>
+                <Grid container sx={{ alignItems: 'center' }}>
                   <Grid xs={5}>
                     <Box p={2}><Image alt="不易找到想要的內容" src={CannotFind} /></Box>
                   </Grid>
                   <Grid xs={7}>
-                    <Typography sx={{fontSize:18,fontWeight: 500,}}>不易找到想要的內容</Typography>
+                    <Typography sx={{ fontSize: 18, fontWeight: 500, }}>不易找到想要的內容</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -178,12 +178,12 @@ function AboutUs() {
 
             <Grid item xs={12} md={4} display='flex'>
               <Box borderRadius={3} boxShadow={1}>
-                <Grid container sx={{alignItems:'center'}}>
+                <Grid container sx={{ alignItems: 'center' }}>
                   <Grid xs={5}>
                     <Box p={2}><Image alt="內容時效性" src={Time} /></Box>
                   </Grid>
                   <Grid xs={6}>
-                    <Typography sx={{fontSize:18,fontWeight: 500,}}>內容時效性</Typography>
+                    <Typography sx={{ fontSize: 18, fontWeight: 500, }}>內容時效性</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -204,7 +204,7 @@ function Character() {
           <Grid container spacing={4} display="flex" flexWrap="wrap" alignItems="center" justifyContent="center" >
             <Grid item xs={4} sx={{ bgcolor: "#fafafa", minWidth: 345, }}>
               <Typography
-                variant="h2"
+                variant="h3"
                 noWrap
                 component="a"
                 sx={{
@@ -213,7 +213,7 @@ function Character() {
                   letterSpacing: ".3rem",
                   color: "#000000",
                   textDecoration: "none",
-                  mb: 5,
+                  mb: 1,
                   height: 80,
                   minWidth: 345,
                 }}
@@ -376,7 +376,21 @@ function Intro() {
 
 function ShareInfoInto() {
   return (
-    <div></div>
+    <div>
+      <Container>
+
+        {/* 網頁*/}
+        <Card sx={{ p: 2, boxShadow: 4, display: { xs: "none", md: "flex" }, }}>
+          <Typography></Typography>
+
+        </Card>
+
+        {/* 手機 */}
+        <Card sx={{ p: 2, boxShadow: 4, display: { xs: "flex", md: "none" }, maxWidth: 360 }}>
+
+        </Card>
+      </Container>
+    </div>
   )
 }
 
@@ -394,7 +408,7 @@ function Update() {
         <Typography
           display="flex"
           justifyContent="center"
-          fontSize={40}
+          fontSize={36}
           noWrap
           component="a"
           sx={{
@@ -404,11 +418,12 @@ function Update() {
             letterSpacing: ".3rem",
             color: "#ffffff",
             textDecoration: "none",
+            pt: 0.5,
             pb: 5,
             bgcolor: "#7A82E7",
             borderTopRightRadius: 12,
             borderTopLeftRadius: 12,
-            height: 80,
+            height: 60,
           }}
         >
           內容過時回報
@@ -417,7 +432,7 @@ function Update() {
         <Typography
           display="flex"
           justifyContent="center"
-          variant="h5"
+          variant="h6"
           noWrap
           component="a"
           sx={{
@@ -431,7 +446,7 @@ function Update() {
             bgcolor: "#7A82E7",
             borderTopRightRadius: 12,
             borderTopLeftRadius: 12,
-            height: 50,
+            height: 35,
           }}
         >
           內容過時回報
@@ -933,14 +948,18 @@ function Index() {
           <Toolbar />
           <Toolbar />
 
+
+
+          {/* <Intro />
+          <Toolbar /> */}
+
+
           <Character />
-
           <Toolbar />
 
-          <Intro />
+          {/* <ShareInfoInto />
+          <Toolbar /> */}
 
-          <Toolbar />
-          <ShareInfoInto />
           <WishingPoolIntro />
 
 

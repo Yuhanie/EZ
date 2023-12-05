@@ -15,7 +15,7 @@ import { Wish, Profile } from '../../interfaces/entities';
 
 //firebase
 import { firebaseConfig } from '../../settings/firebaseConfig';
-import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc, getDoc, arrayRemove, addDoc, query, } from "firebase/firestore";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { onAuthStateChanged, User, getAuth } from 'firebase/auth';
 
@@ -32,7 +32,6 @@ const db = getFirestore();
 const auth = getAuth();
 
 type Props = {
-   
    wish: Wish;
    update: Function;
 };
@@ -50,6 +49,7 @@ const WishListItem:
       const [character, setCharacter] = useState("學習者");
       const [decide, setDecide] = useState<boolean>(props.wish.solved);
       const [edited, setEdited] = useState(0);
+      const [discussing, setDiscussing] = useState(false);
       const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
@@ -88,13 +88,13 @@ const WishListItem:
                setCurrentUser(user);
                setHeart(user);
             }
-               const reff = doc(db, "profile", props.wish.userid);
-               const docSnapshot = await getDoc(reff);
-if (docSnapshot.exists()){
-   setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().user, email: docSnapshot.data().email, character: docSnapshot.data().character ? docSnapshot.data().character : "學習者", majortag: docSnapshot.data().majortag ? docSnapshot.data().majortag : [] });
+            const reff = doc(db, "profile", props.wish.userid);
+            const docSnapshot = await getDoc(reff);
+            if (docSnapshot.exists()) {
+               setProfile({ photoURL: docSnapshot.data().photoURL, user: docSnapshot.data().user, email: docSnapshot.data().email, character: docSnapshot.data().character ? docSnapshot.data().character : "學習者", majortag: docSnapshot.data().majortag ? docSnapshot.data().majortag : [] });
 
-}
-               if(user){
+            }
+            if (user) {
                const ref = doc(db, "profile", user.uid);
                const docSnap = await getDoc(ref);
 
@@ -126,6 +126,23 @@ if (docSnapshot.exists()){
       }, [liked, edited])
 
 
+     const discuss = async function() {
+      const querySnapshot = collection(
+         db,
+         "text",
+         props.wish.docId,
+         "comment"
+       );
+       const queryWish = query(querySnapshot);
+       const querySnapshotWish = await getDocs(queryWish);
+       if(querySnapshotWish!=null){
+         setDiscussing(true);
+       }else{
+         setDiscussing(false);
+       }
+     }
+
+
       const heart = async function () {
          if (typeof window !== "undefined") {
             if (currentUser) {
@@ -136,7 +153,7 @@ if (docSnapshot.exists()){
                      // alert('remove')
                      updateDoc(ref, {
                         heart: arrayRemove(currentUser.uid),
-                        heartCount: heartCount-1
+                        heartCount: heartCount - 1
                      });
                      setLiked(false)
                      setHeartCount(heartCount - 1)
@@ -144,7 +161,7 @@ if (docSnapshot.exists()){
                      // alert('added')
                      updateDoc(ref, {
                         heart: arrayUnion(currentUser.uid),
-                        heartCount: heartCount+1
+                        heartCount: heartCount + 1
                      });
                      setLiked(true)
                      setHeartCount(heartCount + 1)
@@ -161,26 +178,27 @@ if (docSnapshot.exists()){
 
       const Intro = (uid: any) => {
          return (
-           <div>
+            <div>
 
                <CardHeader
-                 avatar={
-                   <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
-                     {/* {props.article.userid && profile && profile.photoURL &&
+                  avatar={
+                     <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
+                        {/* {props.article.userid && profile && profile.photoURL &&
                      <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
-                   </Avatar>
-                 }
-                 // title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
-                 title={(profile?.user)}
-                 subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
-                 //item 
-                 sx={{ p: 1.2 }}
+                     </Avatar>
+                  }
+                  // title={(props.article.userid==currentUser?.uid?profile?.user:props.article.user)}
+                  title={(profile?.user)}
+                  subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
+                  //item 
+                  sx={{ p: 1.2 }}
                ></CardHeader>
                {/* {character=="專家"&&expertIcon()} */}
 
-           </div>
+            </div>
          );
-       };
+      };
+
 
       const solved = async function () {
          // let status = e.target.value
@@ -192,20 +210,20 @@ if (docSnapshot.exists()){
                if ((docSnap.exists())) {
                   await updateDoc(doc(db, "wish", props.wish.docId), {
                      solved: true
-                     
+
                   });
 
                   const response = await axios({
                      method: 'post',
                      url: '/api/email2',
                      data: {
-                       email: currentUser.email,
-                       // subject: content,
-                       // html: content,
-                       id: props.wish.docId,
-                       message: "願望已實現！",
+                        email: currentUser.email,
+                        // subject: content,
+                        // html: content,
+                        id: props.wish.docId,
+                        message: "願望已實現！",
                      },
-                   });
+                  });
                   console.log(response.data.message);
                   setEdited(edited + 1)
                   setDecide(true);
@@ -268,6 +286,23 @@ if (docSnapshot.exists()){
          )
       }
 
+      function Discussing() {
+         return (
+            <Box sx={{ border: 1, width: 55, color: "#E2655E", borderRadius: 50, ml: 1.5 }}>
+               <Typography
+                  sx={{
+                     fontSize: 12,
+                     color: "#E2655E",
+                     pl: 1,
+                     pr: 1
+                  }}
+               >
+                  討論中
+               </Typography>
+            </Box>
+         )
+      }
+
       return (
          <div>
             <WishDetails wish={props.wish} open={open} setOpen={setOpen} update={props.update}  ></WishDetails>
@@ -284,14 +319,14 @@ if (docSnapshot.exists()){
             >
                <Grid container spacing={2} >
                   <Grid item md={2.5}>
-                  {/* {Intro(props.wish.userid)} */}
+                     {/* {Intro(props.wish.userid)} */}
                      <CardHeader
-                     avatar={
-                       <Avatar src={props.wish.userid && profile && profile.photoURL&& profile.photoURL}>
-                         {/* {props.article.userid && profile && profile.photoURL &&
+                        avatar={
+                           <Avatar src={props.wish.userid && profile && profile.photoURL && profile.photoURL}>
+                              {/* {props.article.userid && profile && profile.photoURL &&
                          <img className={styles.googlephoto_profile} src={profile.photoURL} />} */}
-                       </Avatar>
-                     }
+                           </Avatar>
+                        }
                         title={profile?.user}
                         subheader={props.wish.timestamp && props.wish.timestamp.toDate().toLocaleDateString()}
                         //item 
@@ -300,16 +335,19 @@ if (docSnapshot.exists()){
                   </Grid>
 
                   <Grid item xs={12} md={7.5} container sx={{ cursor: 'pointer' }} onClick={handleOpen}>
-                     <Grid item direction="column">
-                        <Grid item >
+                     <Grid item container direction="column">
+                        <Grid item>
                            {(typeof window !== "undefined") &&
                               <ReactQuillEditor
                                  theme="bubble"
-                                 style={{ height: 50 }}
+                                 style={{ height: 40 }}
                                  readOnly={true}
                                  value={props.wish.content}
                               />
                            }
+                        </Grid>
+                        <Grid item>
+                           {discussing == true && Discussing()}
                         </Grid>
                      </Grid>
                   </Grid>
@@ -328,7 +366,7 @@ if (docSnapshot.exists()){
                            {liked ? <ClickedBtn /> : <DefaultBtn />}
                         </ButtonBase>}
                         {decide == false && <ButtonBase sx={{ borderRadius: 10 }}>
-                           {(character === "專家" || props.wish.userid == currentUser?.uid )&& SolvedBtn()}
+                           {(character === "專家" || props.wish.userid == currentUser?.uid) && SolvedBtn()}
                         </ButtonBase>}
                      </Grid>
                   </Grid>

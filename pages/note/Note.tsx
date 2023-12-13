@@ -33,7 +33,7 @@ import SearchBar from "material-ui-search-bar";
 // import navpic from '../../public/pic/navpic.jpg';
 // import nav from '../../public/pic/nav.png';
 // import ezlogo from '../../public/pic/ezlogo.png';
-import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
+import { List, ListItem, ListItemText, CircularProgress, Grid } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -53,6 +53,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Stack from '@mui/material/Stack';
+
 
 // import App from 'myapp/src/App';
 
@@ -369,7 +370,7 @@ const Home: NextPage = () => {
           heartCount: doc.data().heartCount,
           timestamp: doc.data().timestamp,
           bookmark: doc.data().bookmark,
-          bookCount:doc.data().bookCount,
+          bookCount: doc.data().bookCount,
           outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
@@ -414,7 +415,7 @@ const Home: NextPage = () => {
           heartCount: doc.data().heartCount,
           timestamp: doc.data().timestamp,
           bookmark: doc.data().bookmark,
-          bookCount:doc.data().bookCount,
+          bookCount: doc.data().bookCount,
           outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
@@ -443,7 +444,7 @@ const Home: NextPage = () => {
           heartCount: doc.data().heartCount,
           timestamp: doc.data().timestamp,
           bookmark: doc.data().bookmark,
-          bookCount:doc.data().bookCount,
+          bookCount: doc.data().bookCount,
           outdateCount: doc.data().outdateCount,
           outdate: doc.data().outdate,
           majortag: doc.data().majortag,
@@ -596,10 +597,10 @@ const Home: NextPage = () => {
   function TabLoad() {
     return (
       <Stack display='flex' flexDirection='row' justifyContent='center' mt={2} mb={4}>
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
-        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{mr:4}} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
+        <Skeleton animation="wave" variant="circular" width={100} height={100} sx={{ mr: 4 }} />
         <Skeleton animation="wave" variant="circular" width={100} height={100} />
       </Stack>
     );
@@ -651,7 +652,8 @@ const Home: NextPage = () => {
             />
           </Search>
         </Toolbar> */}
-
+      </Container>
+      <Container sx={{ display: { xs: "flex", md: "none" } }}>
         <Box>
           {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
           <Box
@@ -721,8 +723,102 @@ const Home: NextPage = () => {
           </Box>
 
         </Box>
-
       </Container>
+
+      <Box sx={{ m: 2 }}>
+        <Grid container sx={{ display: { xs: "none", md: "flex" } }}>
+          <Grid item >
+
+            <Box>
+              {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
+              <Box
+                display="flex"
+                pl="1%"
+                pt={4}
+                alignItems='center'
+              >
+                <LabelImportantIcon />
+                <Typography variant='h6' pr={2}>愛心榜</Typography>
+                <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+              >
+                {!isLoading ?
+                  <div className={styles.grid}>
+                    {articles.map(renderText)}
+                  </div>
+                  : <ArticleLoading />
+                }
+              </Box>
+
+              <Box
+                display="flex"
+                pl="1%"
+                pt={4}
+                alignItems='center'
+              >
+                <LabelImportantIcon />
+                <Typography variant='h6' pr={2}>收藏榜</Typography>
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+              >
+                {!isLoading ?
+                  <div className={styles.grid}>
+                    {bookText && bookText.map(renderBookText)}
+                  </div>
+                  : <ArticleLoading />
+                }
+              </Box>
+
+
+
+              <Box
+                display="flex"
+                pl="1%"
+                pt={4}
+                alignItems='center'
+              >
+                <LabelImportantIcon />
+                <Typography variant='h6' pr={2}>最新文章</Typography>
+                {/* <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button> */}
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+              >
+                {!isLoading ?
+                  <div className={styles.grid}>
+                    {newTexts && newTexts.map(renderNewText)}
+                  </div>
+                  : <ArticleLoading />
+                }
+              </Box>
+            </Box>
+
+
+          </Grid>
+          <Grid item >
+            <Box sx={{ maxWidth: 320 }}>
+              <Card sx={{ ml: 1, p: 2, width: "100%", mb: 3, mt: 5 }} >
+                <Typography variant='h6' sx={{ mb: 1 }}>觀看</Typography>
+                <Typography variant='body2'>你可以透過觀看他人撰寫的文章學習新知。並針對喜歡的文章進行按愛心、收藏鼓勵所有分享知識的人，或在留言區進行討論，也可以分享給你所有朋友~讓更多人知道這些好文章！</Typography>
+              </Card>
+              <Card sx={{ ml: 1, p: 2, width: "100%" }} >
+                <Typography variant='h6' sx={{ mb: 1 }}>分享</Typography>
+                <Typography variant='body2'>最近在學習新的知識嗎？要不要試著寫下來與大家分享呢？你可以在這邊遇到與你共同學習的夥伴，甚至是領域的專家！一起學習與討論，讓大家的學習之路不再孤單～</Typography>
+              </Card>
+            </Box>
+          </Grid>
+
+        </Grid>
+      </Box>
+
+
+
 
       <Footer />
 

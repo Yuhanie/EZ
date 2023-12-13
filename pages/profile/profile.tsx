@@ -56,6 +56,7 @@ import CircularProgress from "@mui/material";
 import MajorTagList from '../../components/tag/MajorTagList';
 
 import ArticleListItem from '../../components/article/ArticleListItem';
+import PortfolioListItem from '../../components/portfolio/portfolioListItem';
 import { useRouter } from 'next/router';
 
 //firebase
@@ -517,6 +518,13 @@ const Profile: React.FC<Props> = (props) => {
         />
       </IconButton>
     );
+  };
+
+  const renderPortfolio = (collect: Article, i: number) => {
+    return (
+      <PortfolioListItem key={collect.docId} article={collect} update={updateUpdated}></PortfolioListItem>
+    );
+
   };
 
 

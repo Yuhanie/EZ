@@ -108,7 +108,11 @@ const WishComment:
                     // setHeart(user);
                     console.log("user", user);
                 }
+
+                
             });
+
+
 
             return () => {
                 unsub();

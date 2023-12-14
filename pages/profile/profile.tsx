@@ -488,7 +488,29 @@ const Profile: React.FC<Props> = (props) => {
     router.push('/profile');
   }
 
+  const add = function () {
+    if (typeof window !== "undefined") {
 
+      if (currentUser) {
+        router.push('/NewCollection');
+      }
+      else {
+        alert("要登入才能新增筆記ㄛ!")
+        //window.alert("要登入才能新增筆記ㄛ!");
+
+        // <Alert action={
+        //   <Button >
+        //     UNDO
+        //   </Button>
+        // }>要登入才能新增筆記ㄛ! </Alert>
+
+        router.push('/login');
+
+      }
+
+
+    }
+  }
 
 
   const more = async function (status: string) {
@@ -832,6 +854,23 @@ const Profile: React.FC<Props> = (props) => {
                     </Card>
                   </Grid>
                 </Grid>
+              </Box>
+
+              <Divider />
+
+              <Box display="flex" p={2} flexWrap="wrap">
+                <Grid bgcolor={'#ffffff'} display="flex" flexDirection="row" flexWrap="wrap"  >
+                  <Grid container item>
+                    <Chip label="我的作品集" />
+                    <Button variant="contained" color="secondary" size='small' sx={{ ml: 2 }} onClick={() => { more("moreCollects") }}>查看更多</Button>
+                    <Button variant="contained" color="primary" size='small' sx={{ ml: 2 }} onClick={(add) }>新增作品集</Button>
+                  </Grid>
+
+                  <Box display="flex" flexWrap="wrap">
+                    {collects.map(renderCollect)}
+                  </Box>
+                </Grid>
+
               </Box>
 
               <Divider />

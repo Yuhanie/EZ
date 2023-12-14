@@ -1,0 +1,614 @@
+import { useState, useEffect, Component, useMemo } from "react";
+import { useRouter } from "next/router"
+import Head from 'next/head';
+import React from "react";
+import styles from '../styles/Home.module.css';
+import Navbar from "../components/navbar/Navbar";
+import NavItem from "../components/navbar/NavItem";
+import dynamic from 'next/dynamic';
+//firebase
+import { initializeApp, getApp, getApps, FirebaseError } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, collection, addDoc, setDoc, doc, Timestamp, getDoc } from "firebase/firestore";
+import { updateDoc, serverTimestamp } from "firebase/firestore";
+import { firebaseConfig } from '../settings/firebaseConfig';
+import { query, orderBy, limit } from "firebase/firestore";
+
+//mui
+import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
+import { styled, alpha } from '@mui/material/styles'
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ShareIcon from '@mui/icons-material/Share';
+import TextField from '@mui/material/TextField';
+import Input from "@mui/material";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { Theme, useTheme } from '@mui/material/styles';
+import FormHelperText from '@mui/material/FormHelperText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { red } from "@mui/material/colors";
+import { Check } from "@mui/icons-material";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
+
+//quill
+// import ReactQuill from "react-quill";
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.core.css';
+
+import axios from "axios";
+
+
+
+const MENU_LIST = [
+   { text: "登入", href: "/login" },
+   //{ text: "註冊", href: "/register"},
+];
+
+// const [navActive, setNavActive] = useState(null);
+// const [activeIdx, setActiveIdx] = useState(-1);
+
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore();
+
+const auth = getAuth();
+
+const majortags = [
+   "Java",
+   "Python",
+   "React",
+   "Next",
+   "HTML",
+   "PHP",
+   "MySQL",
+   "Firebase",
+   "SA",
+   "會計",
+   "統計",
+   "作業系統",
+   "網路行銷",
+   "生產與作業管理",
+   "其他",
+];
+
+const formats = [
+  'font','size',
+  'bold','italic','underline','strike',
+  'color','background',
+  'script',
+  'header','blockquote','code-block',
+  'indent','list',
+  'direction','align',
+  'link','image','video','formula',
+]
+
+function getStyles(majortag, majortagName, theme) {
+   return {
+      fontWeight:
+         majortagName.indexOf(majortag) === -1
+            ? theme.typography.fontWeightRegular
+            : theme.typography.fontWeightMedium,
+   };
+}
+
+function Newpost() {
+
+   const router = useRouter();
+   const { articleId } = router.query;
+   const [title, setTitle] = React.useState('');
+   const [content, setContent] = React.useState('');
+   const [feedback, setFeedback] = React.useState('');
+   const [tags, setTags] = React.useState([]);
+   const [tagName, setTagName] = React.useState("");
+   const [majortagName, setmajorTagName] = React.useState([]);
+   const [minitagName, setminiTagName] = React.useState([]);
+   const [link, setLink] = React.useState('');
+   const [currentUser, setCurrentUser] = useState();
+   const [profile, setProfile] = useState();
+   const [author, setAuthor] = React.useState([]);
+   const theme = useTheme();
+   const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
+
+   const authors = (event) => {
+      const {
+         target: { value },
+      } = event;
+      setAuthor(
+         // On autofill we get a stringified value.
+         typeof value === 'string' ? value.split(',') : value,
+       );
+   };
+
+   const handleChange = (event) => {
+      const {
+         target: { value },
+      } = event;
+      setmajorTagName(
+         // On autofill we get a stringified value.
+         typeof value === 'string' ? value.split(',') : value,
+      );
+   };
+
+   //下拉式選單
+   const ITEM_HEIGHT = 22;
+   const ITEM_PADDING_TOP = 8;
+   const MenuProps = {
+      PaperProps: {
+         style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+         },
+      },
+   };
+
+      
+
+
+   useEffect(() => {
+      //   if (articleId){
+      //   const ref = doc(db, "text", articleId);
+      //   const docSnapshot = await getDoc(ref);
+      //   if (docSnapshot.exists()) {
+      //   setTitle(docSnapshot.data().title)
+      //   }
+      // }
+      
+      const unsub = onAuthStateChanged(auth, (currentUser) => {
+         setCurrentUser(currentUser);
+         console.log(currentUser);
+      });
+
+      return () => {
+         unsub();
+      }
+   }, []);
+   useEffect(() => {
+
+      async function readData() {
+         if(currentUser){
+         console.log("currentUser", currentUser)
+         const querySnapshot = await getDoc(doc(db, "profile", currentUser.uid));
+          if ((querySnapshot).exists()) {
+            setProfile({ photoURL: querySnapshot.data().photoURL, user: querySnapshot.data().user, email: querySnapshot.data().email, character: querySnapshot.data().character ? querySnapshot.data().character : "學習者", majortag: querySnapshot.data().majortag ? querySnapshot.data().majortag : [] });
+            setAuthor(querySnapshot.data().user)
+          }
+
+          //修改
+         if (articleId) {
+            const ref = doc(db, "collection", articleId);
+            const docSnapshot = await getDoc(ref);
+            if (docSnapshot.exists()) {
+               console.log("doc", docSnapshot.data())
+               setTitle(docSnapshot.data().title)
+               setContent(docSnapshot.data().content)
+               setFeedback(docSnapshot.data().Feedback)
+               setLink(docSnapshot.data().link)
+               setTagName(docSnapshot.data().tag)
+               setmajorTagName(docSnapshot.data().majortag)
+               setminiTagName(docSnapshot.data().minitag)
+               setAuthor(querySnapshot.data().author)
+            }
+         }
+      }
+
+      }
+      readData();
+   }
+      , [articleId,currentUser])
+   // React.useState(() =>{
+   //     firebase
+   //     .firestore
+   //     .collection('topics')
+   //     .get()
+   //     .then((collectionSnapshot) =>{
+   //         const data = collectionSnapshot.docs.map((doc))
+   //         return docs.data();
+   //     });
+   //     setTopics(data);
+   // });
+
+   // const handleChange = event => {
+   //     console.log(event.target.value);
+   //     setSelected(event.target.value);
+   //   };
+
+
+   const options = tags.map(tag => {
+      return {
+         text: tag.name,
+         value: tag.name
+      }
+   })
+
+
+//crud
+   const addContent = (value) =>{
+      setContent(value)
+   }
+   const addFeedback = (value) =>{
+      setFeedback(value)
+   }
+
+   const update = async function () {
+      if (title == "" || content == "" || feedback == "" || link == "" || majortagName == "" ) {
+         return (false);
+      }
+      const db = getFirestore();
+      try {
+         if (!articleId) {
+            const docRef = await addDoc(collection(db, "collection"), {
+               title,
+               content,
+               feedback,
+               author,
+               userid: currentUser.uid,
+               email: currentUser.email,
+               user: profile.user,
+               // heart: [],
+               // bookmark: [],
+               // count: 1,
+               // report: false,
+               link,
+               timestamp: serverTimestamp(),
+               majortag: majortagName,
+            });
+            console.log(docRef.id);
+            // const response = await axios({
+            //    method: 'post',
+            //    url: '/api/email',
+            //    data: {
+            //      email: currentUser.email,
+            //      subject: title,
+            //      html: content,
+            //      message: "已經有新文章已發佈囉!",
+            //    },
+            //  });
+             router.push('/profile');
+             console.log(response.data.message);
+         }
+         //修改
+         else {
+            await updateDoc(doc(db, "text", articleId), {
+               title,
+               content,
+               feedback,
+               tag: tagName,
+               link,
+               majortag: majortagName,
+               minitag: minitagName,
+            });
+            // const response = await axios({
+            //    method: 'post',
+            //    url: '/api/email',
+            //    data: {
+            //      email: currentUser.email,
+            //      subject: title,
+            //      html: content,
+            //      // message: message,
+            //    },
+            // });
+             router.push('/profile');
+             console.log(response.data.message);
+         }
+      }
+      catch (e) {
+         console.log(e);
+
+      }
+      
+   }
+
+   // function MultilineTextFields() {
+   //     return (
+   //       <Box
+   //         component="form"
+   //         sx={{
+   //           '& .MuiTextField-root': { m: 1, width: '80ch' },
+   //         }}
+   //         noValidate
+   //         autoComplete="off"
+   //       >
+   //         {/* <div>
+   //           <TextField
+   //             id="outlined-multiline-flexible"
+   //             label="Multiline"
+   //             multiline
+   //             maxRows={4}
+   //           />
+   //         </div> */}
+   //         </Box>
+   //         );
+   //         }
+
+   const renderAuthor = (author, i) => {
+      return (
+        <MenuItem author={author} update={updateUpdated}></MenuItem>
+      );
+  
+    };
+
+   return (
+      // <div className={styles.post_container}>
+      <div>
+         <div>
+            <Navbar />
+            <Toolbar />
+            <Container>
+               <Box display="flex" flexDirection="column" flexWrap="wrap" justifyContent="center" >
+                  <Card
+                     display="flex"
+                     flexDirection="column"
+                     sx={{
+                        // bgcolor: "#000000",
+                        borderRadius: 2,
+                        p: 2,
+                        pr: 4,
+                        pl: 4,
+                        m: 4,
+                     }}
+                  >
+
+                     <Typography variant="h6">新增作品集</Typography>
+                     <Typography variant="h6">{profile&&profile.user}</Typography>
+
+                     <FormControl fullWidth>
+                        <TextField
+                           error={title === ""}
+                           helperText={title === "" ? "請輸入主題" : ""}
+                           required
+                           id="outlined-textarea"
+                           label="請輸入作品主題"
+                           placeholder={title ? "" : "我的作品主要是..."}
+                           multiline
+                           value={title}
+                           margin="normal"
+                           onChange={(e) => setTitle(e.target.value)}
+                        />
+                     </FormControl>
+
+                     {/* 共編作者 */}
+                     <FormControl sx={{ width: 250 }}
+                        error={author === ""}
+                        margin="normal"
+                     >
+                        <InputLabel id="demo-mutiple-chip-label" required>請選共同編輯的作者(可複選)</InputLabel>
+                        <Select
+                           labelId="demo-mutiple-chip-label"
+                           id="demo-mutiple-chip"
+                           multiple
+                           //value={aName}
+                           value={author}
+                           MenuProps={MenuProps}
+                           // label="topic"
+                           // onChange={(e) => {
+                           //   setmajorTagName(e.target.value);
+                           //   console.log("majortag:")
+                           // }}
+                           onChange={authors}
+                           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                           renderValue={(selected) => (
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                 {selected.map((value) => (
+                                    <Chip key={value} label={value} />
+                                 ))}
+                              </Box>
+                           )}
+                        >
+                           {author.map(renderAuthor)}
+                           {/* {renderAuthor.map((author) => (
+                              <MenuItem
+                                 key={author}
+                                 value={author}
+                                 style={getStyles(majortag, majortagName, theme)}
+                              >
+                                 {author}
+                              </MenuItem>
+                           ))} */}
+                        </Select>
+                        {author === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+                     </FormControl>
+
+
+                     <Typography sx={{ mt: 2, mb: 1, ml: 0.5 }}>請輸入作品細節</Typography>
+
+                     <div className={styles.ReactQuill}>
+                        
+                     {(typeof window !== "undefined") &&
+
+                     <ReactQuillEditor
+                           error={content === ""}
+                           helperText={content === "" ? "請輸入內容" : ""}
+                           required
+                           InputProps
+                           id="outlined-textarea"
+                           label="請輸入內容"
+                           placeholder={content ? "" : "我想分享..."}
+                           margin="normal"
+                           rows={10}
+                           multiline
+                           value={content}
+                           onChange={addContent}
+                        />}
+
+                     </div>
+
+                     <Typography sx={{ mt: 2, mb: 1, ml: 0.5 }}>請輸入此作品開發心得</Typography>
+
+                     <div className={styles.ReactQuill}>
+                        
+                     {(typeof window !== "undefined") &&
+
+                     <ReactQuillEditor
+                           error={feedback === ""}
+                           helperText={feedback === "" ? "請輸入內容" : ""}
+                           required
+                           InputProps
+                           id="outlined-textarea"
+                           label="請輸入內容"
+                           placeholder={feedback ? "" : "我想分享..."}
+                           margin="normal"
+                           rows={10}
+                           multiline
+                           value={feedback}
+                           onChange={addFeedback}
+                        />}
+
+                     </div>
+
+                     <FormControl fullWidth>
+                        <TextField
+                           error={link === ""}
+                           helperText={link === "" ? "請輸入作品連結" : ""}
+                           required
+                           id="outlined-textarea"
+                           label="你的作品連結"
+                           placeholder={link ? "" : "https..."}
+                           multiline
+                           value={link}
+                           margin="normal"
+                           onChange={(e) => setLink(e.target.value)}
+                        />
+                     </FormControl>
+
+                     {/* <FormControl sx={{ width: 250 }}
+                        error={tagName === ""}
+                        margin="normal"
+                     >
+                        <InputLabel id="demo-simple-select-label" required>請選擇作品分類</InputLabel>
+                        <Select
+                           labelId="demo-simple-select-label"
+                           id="demo-simple-select"
+                           value={tagName}
+                           // label="topic"
+                           onChange={(e) => {
+                              setTagName(e.target.value);
+                           }}
+                        >
+                           <MenuItem value="課堂筆記">課堂筆記</MenuItem>
+                           <MenuItem value="修課心得">修課心得</MenuItem>
+                           <MenuItem value="專題相關">專題相關</MenuItem>
+                           <MenuItem value="業界資源">業界資源</MenuItem>
+                           <MenuItem value="其他">其他</MenuItem>
+                        </Select>
+                        {tagName === "" && <FormHelperText>請選擇筆記分類</FormHelperText>}
+                     </FormControl>
+
+                     <br></br> */}
+
+                     {/* if(tagName=="課堂筆記"){ */}
+                     {/* <FormControl sx={{ width: 250 }}
+                        error={minitagName === ""}
+                        margin="normal"
+                     >
+                        <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記小分類(可複選)</InputLabel>
+                        <Select
+                           labelId="demo-mutiple-checkbox-label"
+                           id="demo-mutiple-checkbox"
+                           multiple
+                           value={minitagName}
+                           MenuProps={MenuProps}
+                           onChange={(e) => {
+                              setminiTagName(e.target.value);
+                           }}
+                        >
+                           <MenuItem value="大一">大一</MenuItem>
+                           <MenuItem value="大二">大二</MenuItem>
+                           <MenuItem value="大三">大三</MenuItem>
+                           <MenuItem value="大四">大四</MenuItem>
+                           <MenuItem value="通識課">通識課</MenuItem>
+                           <MenuItem value="選修">選修</MenuItem>
+                           <MenuItem value="體育">體育</MenuItem>
+                        </Select>
+                        {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+                     </FormControl> */}
+                     {/* } */}
+                     {/* else if(tagName=="修課心得"){
+              <FormControl sx={{ width: 250 }}
+                error={minitagName === ""}
+                margin="normal"
+              >
+                <InputLabel id="demo-mutiple-checkbox-label" required>請選擇筆記小分類(可複選)</InputLabel>
+                <Select
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
+                  multiple
+                  value={minitagName}
+                  MenuProps={MenuProps}
+                  onChange={(e) => {
+                    setminiTagName(e.target.value);
+                  }}
+                >
+                  <MenuItem value="大一">大一</MenuItem>
+                  <MenuItem value="大二">大二</MenuItem>
+                  <MenuItem value="大三">大三</MenuItem>
+                  <MenuItem value="大四">大四</MenuItem>
+                </Select>
+                {minitagName === "" && <FormHelperText>請選擇筆記小分類</FormHelperText>}
+              </FormControl>
+              } */}
+
+                     <br></br>
+
+                     <FormControl sx={{ width: 250 }}
+                        error={majortagName === ""}
+                        margin="normal"
+                     >
+                        <InputLabel id="demo-mutiple-chip-label" required>請選作品標籤(可複選)</InputLabel>
+                        <Select
+                           labelId="demo-mutiple-chip-label"
+                           id="demo-mutiple-chip"
+                           multiple
+                           //value={aName}
+                           value={majortagName}
+                           MenuProps={MenuProps}
+                           // label="topic"
+                           // onChange={(e) => {
+                           //   setmajorTagName(e.target.value);
+                           //   console.log("majortag:")
+                           // }}
+                           onChange={handleChange}
+                           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                           renderValue={(selected) => (
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                 {selected.map((value) => (
+                                    <Chip key={value} label={value} />
+                                 ))}
+                              </Box>
+                           )}
+                        >
+                           {majortags.map((majortag) => (
+                              <MenuItem
+                                 key={majortag}
+                                 value={majortag}
+                                 style={getStyles(majortag, majortagName, theme)}
+                              >
+                                 {majortag}
+                              </MenuItem>
+                           ))}
+                        </Select>
+                        {majortagName === "" && <FormHelperText>請選擇筆記標籤</FormHelperText>}
+                     </FormControl>
+
+                     <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
+                        <Button variant="contained" onClick={update}>發布</Button><br></br><br></br>
+                        <Button variant="contained" href="/note" color="error">取消</Button>
+                     </CardActions>
+
+
+                  </Card>
+               </Box>
+            </Container>
+
+         </div>
+      </div>
+
+
+
+
+
+   )
+}
+
+export default Newpost;

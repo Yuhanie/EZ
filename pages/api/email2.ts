@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
-import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, where } from "firebase/firestore";
 import WelcomeTemplate from "../WelcomeTemplate";
 import { render } from "@react-email/render";
 import { getApp, getApps, initializeApp } from "firebase/app";
@@ -42,13 +42,28 @@ const handler: NextApiHandler = async (
     const id = req.body.id || "";
 
     const db = getFirestore();
-
-    const querySnapshot = await getDocs(collection(db, "wish",id,"heart"));
+    const querySnapshot = await getDoc(doc(db, "wish" ,id));
+    // const querySnapshot = await getDocs(query(collection(db, "wish" ,id),where("heart", "!=", "null")));
+    // const querySnapshot = await getDocs(collection(db, "wish", where("heart", "!=", "null")));
     let temp: string[] = [];
-    querySnapshot.forEach(async (doc) => {
-      temp.push(doc.data().email);
-      console.log(`${doc.id} => ${doc.data().email}`);
+    if(querySnapshot.exists()){
+      temp = querySnapshot.data().heart? querySnapshot.data().heart:[];
+      }
+    let heartemail2: string[] = [];
+    temp.forEach(async (id) => {
+      const Snapshot = await getDoc(doc(db, "profile" ,id));
+      let heartemail: string="";
+      if(Snapshot.exists()){
+        heartemail = Snapshot.data().email? Snapshot.data().email:'';
+      }
+      heartemail2.push(heartemail)
+      // temp.push(...doc.data().heart); 
+      // temp.push(doc.data().email);
+      console.log(heartemail2);
+      // console.log(`${doc.id} => ${doc.data().email}`);
+      // console.log(`${doc.id} => ${doc.data().heart}`);
     });
+    
 
     const Snapshot = await getDoc(doc(db, "wish" ,id));
     let tempt: string="";

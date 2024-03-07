@@ -18,7 +18,6 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
 import { Avatar } from '@mui/material';

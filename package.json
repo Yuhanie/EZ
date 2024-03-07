@@ -15,7 +15,6 @@
     "@line/bot-sdk": "^7.5.2",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.10.16",
-    "@mui/styles": "^5.15.12",
     "@react-email/container": "^0.0.8",
     "@react-email/html": "^0.0.4",
     "@react-email/render": "^0.0.7",

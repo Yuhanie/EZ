@@ -15,6 +15,7 @@ import { firebaseConfig } from '../settings/firebaseConfig';
 import { query, orderBy, limit } from "firebase/firestore";
 
 //mui
+import { Box, ButtonBase } from '@mui/material';
 import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -217,6 +218,21 @@ function Newpost() {
       setContent(value)
    }
 
+
+   function publishedBtn() {
+      return (
+         <Button
+            color="info"
+            size="small"
+            variant="outlined"
+            sx={{ borderRadius: 10, fontSize: 10 }}
+            onClick={published}
+         >
+            已實現
+         </Button>
+      )
+   }
+
    const update = async function () {
       if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "" || minitagName == "") {
          return (false);
@@ -285,6 +301,8 @@ function Newpost() {
       }
       
    }
+
+   
 
    // function MultilineTextFields() {
    //     return (
@@ -521,7 +539,10 @@ function Newpost() {
                      </FormControl>
 
                      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button variant="contained" onClick={update}>發布</Button><br></br><br></br>
+                        <Button variant="contained" onClick={update}>發布</Button>
+                        {published == false && <ButtonBase sx={{ borderRadius: 10 }}>
+                           {publishedBtn()}
+                        </ButtonBase>}
                         <Button variant="contained" href="/note" color="error">取消</Button>
                      </CardActions>
 

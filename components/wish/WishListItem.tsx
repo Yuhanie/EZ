@@ -50,6 +50,7 @@ const WishListItem:
       const [decide, setDecide] = useState<boolean>(props.wish.solved);
       const [edited, setEdited] = useState(0);
       const [discussing, setDiscussing] = useState(false);
+      const [publiced, setPubliced] = useState("false");
       const ReactQuillEditor = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 

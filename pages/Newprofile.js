@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
-import Chip from '@material-ui/core/Chip';
+import Chip from '@mui/material/Chip';
 import InputLabel from '@mui/material/InputLabel';
 import { Theme, useTheme } from '@mui/material/styles';
 

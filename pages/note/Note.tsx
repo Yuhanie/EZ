@@ -652,9 +652,10 @@ const Home: NextPage = () => {
           </Search>
         </Toolbar> */}
       </Container>
-      <Container   sx={{ display: { xs: "flex", md: "none" }, justifyContent:"center" }}>
-        <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
+      <Container sx={{ display: { xs: "flex", md: "none" }, justifyContent: "center" }}>
+
         <Box>
+          <Button variant="contained" color="secondary" onClick={changeStatus} sx={{mt:3,mb:-0.8,ml:2}}>新增文章</Button>
           {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
           <Box
             display="flex"
@@ -724,10 +725,10 @@ const Home: NextPage = () => {
         </Box>
       </Container>
 
-      <Box sx={{ m: 2,}}>
-        <Grid container sx={{ display: { xs: "none", md: "flex" }, justifyContent:"center" }}>
+      <Box sx={{ m: 2, }}>
+        <Grid container sx={{ display: { xs: "none", md: "flex" }, justifyContent: "center" }}>
           <Grid item >
-          <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
+            <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
             <Box>
               {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
               <Box

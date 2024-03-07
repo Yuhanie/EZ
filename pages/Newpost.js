@@ -221,7 +221,7 @@ function Newpost() {
 
 
    const update = async function () {
-      if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "" || minitagName == "") {
+      if (title == "" || content == "" || tagName == "" || majortagName == "" || minitagName == "") {
          return (false);
       }
       const db = getFirestore();
@@ -245,6 +245,7 @@ function Newpost() {
                minitag: minitagName,
                majortag: majortagName,
             });
+            alert('文章已發佈！')
             console.log(docRef.id);
             const response = await axios({
                method: 'post',
@@ -393,9 +394,9 @@ function Newpost() {
 
                      <FormControl fullWidth>
                         <TextField
-                           error={link === ""}
+                           // error={link === ""}
                            helperText={link === "" ? "請輸入連結" : ""}
-                           required
+                           
                            id="outlined-textarea"
                            label="您想分享的連結"
                            placeholder={link ? "" : "https..."}

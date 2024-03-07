@@ -219,19 +219,6 @@ function Newpost() {
    }
 
 
-   function publishedBtn() {
-      return (
-         <Button
-            color="info"
-            size="small"
-            variant="outlined"
-            sx={{ borderRadius: 10, fontSize: 10 }}
-            onClick={published}
-         >
-            已實現
-         </Button>
-      )
-   }
 
    const update = async function () {
       if (title == "" || content == "" || tagName == "" || link == "" || majortagName == "" || minitagName == "") {
@@ -540,9 +527,6 @@ function Newpost() {
 
                      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                         <Button variant="contained" onClick={update}>發布</Button>
-                        {published == false && <ButtonBase sx={{ borderRadius: 10 }}>
-                           {publishedBtn()}
-                        </ButtonBase>}
                         <Button variant="contained" href="/note" color="error">取消</Button>
                      </CardActions>
 

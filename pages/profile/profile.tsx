@@ -64,17 +64,7 @@ const auth = getAuth();
 const authData = auth.currentUser;
 
 
-//chip的style
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(0.5),
-    },
-  },
-}));
+
 
 //edit_chip_select
 const ITEM_HEIGHT = 48;

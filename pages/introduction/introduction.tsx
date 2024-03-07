@@ -50,6 +50,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import useId from '@mui/material/utils/useId';
 import ArticleListItem from '../../components/article/ArticleListItem';
+import { makeStyles } from '@mui/styles';
 
 //firebase
 const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -57,17 +58,6 @@ const db = getFirestore();
 const auth = getAuth();
 
 
-//chip的style
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        '& > *': {
-            margin: theme.spacing(0.5),
-        },
-    },
-}));
 
 //edit_chip_select
 const ITEM_HEIGHT = 48;

@@ -27,7 +27,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import Chip from "@material-ui/core/Chip";
+import Chip from '@mui/material/Chip';
 import CircleIcon from "@mui/icons-material/Circle";
 import LinkIcon from "@mui/icons-material/Link";
 import {

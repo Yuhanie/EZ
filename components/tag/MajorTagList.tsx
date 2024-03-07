@@ -2,7 +2,7 @@ import Link from "next/link";
 import { MajorTag, Profile } from "../../interfaces/entities";
 import styles from "../../styles/Home.module.css";
 import { Box, ListItem } from "@mui/material";
-import Chip from "@material-ui/core/Chip";
+import Chip from '@mui/material/Chip';
 
 type Props = {
   MajorTag: Profile;

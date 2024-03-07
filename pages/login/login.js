@@ -22,7 +22,7 @@ import { Container } from "@mui/material/Container";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Button, TextField, Card, Divider, Alert } from "@mui/material";
-import SvgIcon from '@material-ui/core/SvgIcon';
+
 //import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, provider } from "myapp/src/firebase";

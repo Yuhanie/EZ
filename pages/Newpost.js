@@ -16,7 +16,7 @@ import { query, orderBy, limit } from "firebase/firestore";
 
 //mui
 import { Box, ButtonBase } from '@mui/material';
-import { Container, AppBar, Box, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
+import { Container, AppBar, Toolbar, IconButton, Typography, Button, InputBase, Card, CardActions, Checkbox } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShareIcon from '@mui/icons-material/Share';

@@ -653,7 +653,8 @@ const Home: NextPage = () => {
           </Search>
         </Toolbar> */}
       </Container>
-      <Container sx={{ display: { xs: "flex", md: "none" } }}>
+      <Container   sx={{ display: { xs: "flex", md: "none" }, justifyContent:"center" }}>
+        <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
         <Box>
           {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
           <Box
@@ -664,7 +665,6 @@ const Home: NextPage = () => {
           >
             <LabelImportantIcon />
             <Typography variant='h6' pr={2}>愛心榜</Typography>
-            <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
           </Box>
           <Box
             display="flex"
@@ -725,10 +725,10 @@ const Home: NextPage = () => {
         </Box>
       </Container>
 
-      <Box sx={{ m: 2 }}>
-        <Grid container sx={{ display: { xs: "none", md: "flex" } }}>
+      <Box sx={{ m: 2,}}>
+        <Grid container sx={{ display: { xs: "none", md: "flex" }, justifyContent:"center" }}>
           <Grid item >
-
+          <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
             <Box>
               {/* <h3 className={styles.text_cs}>文章排行榜 <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button></h3> */}
               <Box
@@ -739,7 +739,6 @@ const Home: NextPage = () => {
               >
                 <LabelImportantIcon />
                 <Typography variant='h6' pr={2}>愛心榜</Typography>
-                <Button variant="contained" color="secondary" onClick={changeStatus}>新增文章</Button>
               </Box>
               <Box
                 display="flex"

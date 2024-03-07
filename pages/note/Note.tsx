@@ -29,7 +29,6 @@ import { Article, Newtext, Tag } from '../../interfaces/entities';
 import styles from '../../styles/Home.module.css';
 import { query, orderBy, limit } from "firebase/firestore";
 import Navbar from "../../components/navbar/Navbar";
-import SearchBar from "material-ui-search-bar";
 // import navpic from '../../public/pic/navpic.jpg';
 // import nav from '../../public/pic/nav.png';
 // import ezlogo from '../../public/pic/ezlogo.png';
